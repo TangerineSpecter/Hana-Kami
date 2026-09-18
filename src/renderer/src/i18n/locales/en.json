@@ -18,6 +18,13 @@
     "restarting": "restarting…",
     "add": "add"
   },
+  "floorBoot": {
+    "wakingTitle": "WAKING THE FLOOR",
+    "clockingIn": "{{name}} is clocking in.",
+    "terminalReady": "The terminal will land here once they're seated.",
+    "panelTitle": "CLOCKING IN",
+    "panelMessage": "{{name}} is settling into the corner office and getting the floor ready. Hang tight…"
+  },
   "commandBar": {
     "free": "free",
     "skill": "/skill",

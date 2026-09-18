@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useStore, selectedAgent } from '@/store/store';
 import { startMockLoop, stopMockLoop } from '@/store/mockEvents';
 import type { HarnessConfig } from '@/store/config';
@@ -37,6 +38,7 @@ import brandLogo from '@brand/logo.png?url';
 declare const __APP_VERSION__: string;
 
 export function App() {
+  const { t } = useTranslation();
   // Point every {{godName}} string at the orchestrator's real, renameable name.
   useGodNameSync();
   // Mirror the document only for a user who has picked an RTL app language.
@@ -447,10 +449,10 @@ export function App() {
               <div style={{
                 fontFamily: 'var(--cth-font-display)', fontSize: 10, lineHeight: '14px',
                 color: 'var(--cth-ink-500)'
-              }}>WAKING THE FLOOR</div>
+              }}>{t('floorBoot.wakingTitle')}</div>
               <p style={{ margin: 0, fontSize: 13, textAlign: 'center', color: 'var(--cth-ink-700)' }}>
-                {bootingGodName} is clocking in.<br />
-                The terminal will land here once he's seated.
+                {t('floorBoot.clockingIn', { name: bootingGodName })}<br />
+                {t('floorBoot.terminalReady')}
               </p>
             </PixelPanel>
           ) : (

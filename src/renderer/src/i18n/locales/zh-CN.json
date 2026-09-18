@@ -18,6 +18,13 @@
     "restarting": "重启中…",
     "add": "添加"
   },
+  "floorBoot": {
+    "wakingTitle": "正在唤醒办公室",
+    "clockingIn": "{{name}} 正在上线。",
+    "terminalReady": "终端会在它就座后显示在这里。",
+    "panelTitle": "正在打卡",
+    "panelMessage": "{{name}} 正在进入办公室并准备楼层，请稍候……"
+  },
   "commandBar": {
     "free": "自由",
     "skill": "/技能",
