@@ -5,7 +5,7 @@ import { Application, Container, Graphics, Ticker, Texture } from 'pixi.js';
 // PixiJS uses new Function() internally, blocked by Electron CSP — this patches it.
 import 'pixi.js/unsafe-eval';
 import { useStore, type Agent } from '@/store/store';
-import { TiledMapRenderer } from './TiledMapRenderer';
+import { TiledMapRenderer, WARM_OAK_OFFICE_SURFACE_STYLE } from './TiledMapRenderer';
 import { Camera } from './Camera';
 import { Character, paintCup } from './Character';
 import { DeskScreen } from './DeskScreen';
@@ -319,7 +319,11 @@ export function OfficeFloor() {
       const world = new Container();
       app.stage.addChild(world);
 
-      const mapRenderer = new TiledMapRenderer(resolveThemeMap(theme), tilesetTextures);
+      const mapRenderer = new TiledMapRenderer(
+        resolveThemeMap(theme),
+        tilesetTextures,
+        theme.id === 'office' ? WARM_OAK_OFFICE_SURFACE_STYLE : undefined,
+      );
       if (theme.id === 'office') installExecutiveDesk(mapRenderer);
       world.addChild(mapRenderer.getContainer());
       const charLayer = mapRenderer.getCharacterContainer();

@@ -1,4 +1,5 @@
-import { Container, Sprite, Texture, Rectangle } from 'pixi.js';
+import { Container, Graphics, Sprite, Texture, Rectangle } from 'pixi.js';
+import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool } from './warmOfficeArt';
 
 // Trimmed port of shahar061/the-office (office/engine/TiledMapRenderer.ts):
 // renders floor/walls/furniture tile layers and parses collision, spawn-points
@@ -47,6 +48,17 @@ export interface TiledTilesetRef {
 export interface ZoneRect { x: number; y: number; width: number; height: number; }
 export interface Point { x: number; y: number; }
 
+/** A visual-only surface pass for a theme. It deliberately leaves the Tiled
+ * map's geometry, collision and furniture coordinates untouched. */
+export interface SurfaceStyle {
+  warmOffice: true;
+}
+
+/** Warm office palette approved for the current floor redesign. */
+export const WARM_OAK_OFFICE_SURFACE_STYLE: SurfaceStyle = {
+  warmOffice: true,
+};
+
 const TILE_LAYERS = ['floor', 'walls', 'furniture-below', 'furniture-above'] as const;
 const COLLISION_LAYER = 'collision';
 const SPAWN_POINTS_LAYER = 'spawn-points';
@@ -65,7 +77,11 @@ export class TiledMapRenderer {
 
   private static readonly WALKABLE_SPAWN_PREFIXES = ['desk-', 'pc-', 'warroom-', 'entrance'];
 
-  constructor(private mapData: TiledMap, private tilesetTextures: Texture[]) {
+  constructor(
+    private mapData: TiledMap,
+    private tilesetTextures: Texture[],
+    private surfaceStyle?: SurfaceStyle,
+  ) {
     this.width = mapData.width;
     this.height = mapData.height;
     this.tileSize = mapData.tilewidth;
@@ -188,11 +204,33 @@ export class TiledMapRenderer {
   private buildTileLayers(): void {
     if (this.mapData.tilesets.length === 0) return;
 
+    // Locate actual computer desks, not every occurrence of shared stool gids
+    // (the cafe and executive office reuse those). Coordinates stay map-owned.
+    const desks: Point[] = [];
+    if (this.surfaceStyle?.warmOffice && this.tileSize === 16) {
+      for (let y = 0; y < this.height; y++) for (let x = 0; x < this.width; x++) {
+        if (this.gidAt('furniture-above', x, y) === 365
+          && this.gidAt('furniture-below', x - 1, y + 1) === 2) desks.push({ x: x - 1, y: y + 1 });
+      }
+    }
+    const styled = this.surfaceStyle?.warmOffice && this.tileSize === 16;
+
     for (const layerName of TILE_LAYERS) {
       const layer = this.findLayer(layerName, 'tilelayer');
       const container = new Container();
       container.label = layerName;
 
+      const art = styled ? new Graphics() : undefined;
+      if (art) {
+        art.eventMode = 'none';
+        container.addChild(art);
+        if (layerName === 'furniture-below') desks.forEach((d) => {
+          paintWalnutDesk(art, d.x, d.y);
+          const row = desks.filter(p => p.y === d.y).sort((a, b) => a.x - b.x);
+          const column = row.findIndex(p => p.x === d.x);
+          paintRoundStool(art, d.x + 1, d.y + 1.25, (column + (d.y === 17 || d.y === 4 ? 1 : 0)) % 2 === 0);
+        });
+      }
       if (layer?.data) {
         for (let y = 0; y < this.height; y++) {
           for (let x = 0; x < this.width; x++) {
@@ -203,6 +241,16 @@ export class TiledMapRenderer {
             const flippedV = (raw & FLIPPED_V_FLAG) !== 0;
             const flippedD = (raw & FLIPPED_D_FLAG) !== 0;
             const tileId = raw & TILE_ID_MASK;
+
+            if (art) {
+              if (layerName === 'floor' && OAK_FLOOR_GIDS.has(tileId)) {
+                paintOakTile(art, x, y); continue;
+              }
+              if (layerName === 'walls' && paintWarmWall(art, tileId, x, y)) continue;
+              const desk = desks.find(d => x >= d.x && x < d.x + 3 && y >= d.y && y <= d.y + 2);
+              if (desk && ((layerName === 'furniture-below' && [2, 3, 4, 289, 305].includes(tileId))
+                || (layerName === 'furniture-above' && [18, 19, 20].includes(tileId)))) continue;
+            }
 
             const resolved = this.resolveTileset(tileId);
             if (!resolved) continue;
@@ -248,6 +296,12 @@ export class TiledMapRenderer {
         }
       }
 
+      if (styled && layerName === 'furniture-above') {
+        const accessories = new Graphics();
+        accessories.eventMode = 'none';
+        desks.forEach(d => paintDeskAccessories(accessories, d.x, d.y));
+        container.addChild(accessories);
+      }
       this.rootContainer.addChild(container);
     }
 

@@ -103,10 +103,10 @@ export function AgentCard({
   // making its box bigger or its border heavier.
   // 196 was too tight once god's row carried NAME + BOSS + status: the name
   // truncated to "MIC…" — the one word on the card that must never be the thing
-  // that gets cut. Widened for every card so the dock stays uniform, with enough
-  // slack that Talk's info mark (which only appears when the OpenAI key is
-  // missing) has somewhere to sit rather than pushing the row apart.
-  const width = 236;
+  // that gets cut. 236px still left too little room for localized names and the
+  // voice controls, so keep one wider size for every card; AgentStrip already
+  // scrolls horizontally when the roster exceeds the available window.
+  const width = 280;
   const height = 84;
   const lift = (isGod ? -2 : 0) - (hover ? 1 : 0) - (selected ? 1 : 0);
   /** God's distinction: a tinted surface plus a thin accent border all the way
@@ -209,14 +209,19 @@ export function AgentCard({
                   width: '100%', height: '100%', objectFit: 'contain', display: 'block',
                   // Hide the PNG's off-white outer paper while keeping the
                   // inner square picture frame even on all four sides.
-                  imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)'
+                  imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)',
+                  // Slightly enlarge the framed portrait so it sits closer to
+                  // the card edge instead of reading as a small image inside
+                  // a large tile.
+                  transform: 'scale(1.08)'
                 }}
               />
             ) : <SpritePortrait character={character} scale={2} />}
           </div>
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-            {/* Identity row: name (+ BOSS tag) + status. */}
+            {/* Identity row: name (+ BOSS tag) + status. The wider card gives
+                the name enough room without moving the status to another row. */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between', minWidth: 0 }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, minWidth: 0, flex: 1 }}>
                 {onRename ? (
@@ -238,10 +243,8 @@ export function AgentCard({
                     padding: '1px 8px 0', flexShrink: 0, whiteSpace: 'nowrap'
                   }}>{t('agentCard.boss')}</span>                )}
               </span>
-              {/* flexShrink:0 — the badge is a fixed 2-to-5 character chip; when
-                  it was allowed to shrink, the browser resolved the overflow by
-                  eating the NAME instead. Truncation should land on the longest,
-                  most redundant thing, not on the identity. */}
+              {/* Keep the status chip fixed-width so it never steals the
+                  newly available name space. */}
               <PixelBadge status={typing ? 'typing' : status} style={{ flexShrink: 0 }} />
             </div>
 

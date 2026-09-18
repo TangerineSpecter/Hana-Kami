@@ -173,7 +173,10 @@ export function CommandCenterPanel({ agent, fullscreen = false }: { agent: Agent
               draggable={false}
               style={{
                 width: '100%', height: '100%', objectFit: 'contain', display: 'block',
-                imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)'
+                imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)',
+                // Keep the command-center header portrait in step with the
+                // avatar card while preserving the existing inner frame.
+                transform: 'scale(1.08)'
               }}
             />
           ) : <SpritePortrait character={agent.character} scale={1} />}
