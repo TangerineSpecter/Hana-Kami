@@ -37,6 +37,7 @@ import {
 import { canReceiveInbox } from '@shared/agentProvider';
 import { isComposingKey } from '@shared/imeGuard';
 import { useRtl } from '@/i18n/useDirection';
+import feilenAvatar from '@/assets/feilen.png';
 
 /** Michael's control surface. Shown instead of the plain terminal/files panel
  *  when the god agent is selected: terminal + queue, the floor roster (with
@@ -165,7 +166,17 @@ export function CommandCenterPanel({ agent, fullscreen = false }: { agent: Agent
           boxShadow: 'inset 0 0 0 1px var(--cth-ink-300)',
           display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden', flexShrink: 0
         }}>
-          <SpritePortrait character={agent.character} scale={1} />
+          {agent.isGod ? (
+            <img
+              src={feilenAvatar}
+              alt={`${agent.name} avatar`}
+              draggable={false}
+              style={{
+                width: '100%', height: '100%', objectFit: 'contain', display: 'block',
+                imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)'
+              }}
+            />
+          ) : <SpritePortrait character={agent.character} scale={1} />}
         </div>
         {/* Title + subtitle truncate; the control cluster never shrinks. At
             sidebar width the old header wrapped its 24-char display-font title

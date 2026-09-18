@@ -791,7 +791,20 @@
       "compacting": "正在压缩上下文",
       "looping": "循环中——断路器已启动",
       "runningFloor": "正在管理楼层",
-      "idle": "空闲"
+      "idle": "空闲",
+      "usingTool": "正在使用 {{tool}}",
+      "thinking": "思考中",
+      "readingInbox": "正在读取收件箱",
+      "awaiting": "等待中",
+      "resumed": "已恢复",
+      "starting": "正在启动",
+      "reconnecting": "正在重新连接…",
+      "archived": "已归档",
+      "restarting": "正在重启…",
+      "recreatingTerminal": "正在重建终端…",
+      "continuing": "继续中…",
+      "revivedAfterSleep": "已从休眠中恢复",
+      "waitingOnGod": "等待菲伦处理"
     }
   },
   "setupPanel": {

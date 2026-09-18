@@ -9,6 +9,7 @@ import { CostHud } from '@/realtime/CostHud';
 import { AccentColorName } from '@/design/tokens';
 import { OfficeCharacterName } from '@/scene/office/cast';
 import { AgentNameEditor } from './AgentNameEditor';
+import feilenAvatar from '@/assets/feilen.png';
 
 export interface AgentCardProps {
   name: string;
@@ -62,6 +63,9 @@ export function AgentCard({
   const { t } = useTranslation();
   const [hover, setHover] = useState(false);
   const typing = useHasTerminalDraft(ptyId);
+  const hasCjkName = /[\u3400-\u9fff]/.test(name);
+  const nameFontSize = hasCjkName ? 13 : 'var(--cth-text-display-sm)';
+  const nameLineHeight = hasCjkName ? '18px' : 'var(--cth-lh-display-sm)';
   // IDENTITY and SELECTION are two different things, and conflating them is why
   // selecting Michael appeared to do nothing.
   //
@@ -102,8 +106,8 @@ export function AgentCard({
   // that gets cut. Widened for every card so the dock stays uniform, with enough
   // slack that Talk's info mark (which only appears when the OpenAI key is
   // missing) has somewhere to sit rather than pushing the row apart.
-  const width = 220;
-  const height = 78;
+  const width = 236;
+  const height = 84;
   const lift = (isGod ? -2 : 0) - (hover ? 1 : 0) - (selected ? 1 : 0);
   /** God's distinction: a tinted surface plus a thin accent border all the way
    *  around — NOT the 3px rule that used to sit on the top edge alone. That rule
@@ -184,20 +188,31 @@ export function AgentCard({
         noPadding
       >
         <div style={{ display: 'flex', gap: 8, height: '100%' }}>
-          {/* Portrait tile — vertically centred so the card reads calm and even. */}
+          {/* Portrait tile — square for both the default Feilen avatar and the
+              procedural worker portraits. */}
           <div style={{
-            width: 36, height: isGod ? 50 : 46, alignSelf: 'center',
-            // God's CARD is now accent-light, so the tile cannot be — it would
-            // vanish into its own background. Paper reads as an inset frame
-            // against the tint, which is what the tile is meant to look like.
-            background: isGod ? 'var(--cth-paper-100)' : `var(--cth-${accent}-light)`,
-            boxShadow: `inset 0 0 0 1px var(--cth-ink-${isGod ? '300' : '100'})`,
-            // Anchor the sprite's TOP: the 56px-tall portrait overflows this
-            // tile, and bottom-anchoring cropped the head — crop feet, not face.
+            width: 60, height: 60, alignSelf: 'center',
+            // The Feilen PNG already contains its own purple frame. Do not add
+            // a second paper/inset frame around it — onboarding shows the same
+            // image directly, and the extra frame is what creates the visible gap.
+            background: isGod ? 'transparent' : `var(--cth-${accent}-light)`,
+            boxShadow: isGod ? 'none' : 'inset 0 0 0 1px var(--cth-ink-100)',
             display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflow: 'hidden',
             flexShrink: 0
           }}>
-            <SpritePortrait character={character} scale={2} />
+            {isGod ? (
+              <img
+                src={feilenAvatar}
+                alt={`${name} avatar`}
+                draggable={false}
+                style={{
+                  width: '100%', height: '100%', objectFit: 'contain', display: 'block',
+                  // Hide the PNG's off-white outer paper while keeping the
+                  // inner square picture frame even on all four sides.
+                  imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)'
+                }}
+              />
+            ) : <SpritePortrait character={character} scale={2} />}
           </div>
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
@@ -205,12 +220,12 @@ export function AgentCard({
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between', minWidth: 0 }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, minWidth: 0, flex: 1 }}>
                 {onRename ? (
-                  <AgentNameEditor name={name} onCommit={onRename} uppercase />
+                  <AgentNameEditor name={name} onCommit={onRename} uppercase fontSize={nameFontSize} />
                 ) : (
                   <span style={{
-                    fontFamily: 'var(--cth-font-display)',
-                    fontSize: 'var(--cth-text-display-sm)',
-                    lineHeight: 'var(--cth-lh-display-sm)',
+                    fontFamily: hasCjkName ? 'var(--cth-font-ui)' : 'var(--cth-font-display)',
+                    fontSize: nameFontSize,
+                    lineHeight: nameLineHeight,
                     color: 'var(--cth-ink-900)',
                     flex: 1, minWidth: 0,
                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
@@ -218,9 +233,9 @@ export function AgentCard({
                 )}
                 {isGod && (
                   <span style={{
-                    fontFamily: 'var(--cth-font-display)', fontSize: 7, lineHeight: '11px',
+                    fontFamily: 'var(--cth-font-ui)', fontSize: 12, lineHeight: '18px',
                     background: `var(--cth-${accent})`, color: 'var(--cth-ink-900)',
-                    padding: '1px 4px 0', flexShrink: 0
+                    padding: '1px 8px 0', flexShrink: 0, whiteSpace: 'nowrap'
                   }}>{t('agentCard.boss')}</span>                )}
               </span>
               {/* flexShrink:0 — the badge is a fixed 2-to-5 character chip; when

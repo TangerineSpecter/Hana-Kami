@@ -791,7 +791,20 @@
       "compacting": "compacting context",
       "looping": "looping — breaker armed",
       "runningFloor": "running the floor",
-      "idle": "idle"
+      "idle": "idle",
+      "usingTool": "using {{tool}}",
+      "thinking": "thinking",
+      "readingInbox": "reading inbox",
+      "awaiting": "awaiting",
+      "resumed": "resumed",
+      "starting": "starting up",
+      "reconnecting": "reconnecting…",
+      "archived": "archived",
+      "restarting": "restarting…",
+      "recreatingTerminal": "recreating terminal…",
+      "continuing": "continuing…",
+      "revivedAfterSleep": "revived after sleep",
+      "waitingOnGod": "waiting on the orchestrator"
     }
   },
   "setupPanel": {
