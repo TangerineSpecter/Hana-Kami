@@ -34,6 +34,7 @@ export class CharacterSprite {
   private frameW: number;
   private frameH: number;
   private cropMask: Graphics | null = null;
+  private seated = false;
 
   constructor(frames: Texture[][]) {
     this.frames = frames;
@@ -50,7 +51,7 @@ export class CharacterSprite {
     this.frameH = this.sprite.texture.frame.height || this.sprite.height || 32;
 
     this.container.addChild(this.sprite);
-    this.container.scale.set(CHAR_SCALE);
+    this.container.scale.set(CHAR_SCALE * 32 / this.frameH);
   }
 
   /**
@@ -60,6 +61,13 @@ export class CharacterSprite {
    * status glyphs / bubbles parented elsewhere are unaffected.
    */
   setSeatedCrop(cropPx: number): void {
+    const seated = cropPx > 0;
+    if (seated !== this.seated) {
+      this.seated = seated;
+      this.sprite.textures = this.getFrames(this.currentDirection, this.currentAnim);
+      this.sprite.play();
+    }
+    cropPx *= this.frameH / 32;
     if (cropPx <= 0) {
       if (this.cropMask) {
         this.sprite.mask = null;
@@ -85,6 +93,12 @@ export class CharacterSprite {
 
   private getFrames(direction: Direction, anim: AnimState): Texture[] {
     const row = DIRECTION_ROW[direction];
+    if (this.frames[row].length >= 16) {
+      const offset = { walk: 0, type: 4, read: 8, idle: 12 }[anim]
+        + (this.seated && this.frames[row].length >= 32 ? 16 : 0);
+      const sequence = anim === 'idle' ? [0, 0, 0, 0, 0, 0, 1, 2, 3, 0] : [0, 1, 2, 3];
+      return sequence.map(col => this.frames[row][offset + col]);
+    }
     return ANIM_FRAMES[anim].map((col) => this.frames[row][col]);
   }
 

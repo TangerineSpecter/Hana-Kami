@@ -11,6 +11,7 @@ import { Character, paintCup } from './Character';
 import { DeskScreen } from './DeskScreen';
 import { MessageEnvelope, type MessageAct } from './MessageEnvelope';
 import { hexToNumber, DEFAULT_CHARACTER } from './cast';
+import { getFeilenFrames } from './feilenFrames';
 import { pickSoloLine, pickExchange, type BreakSpot } from './cafeteriaLines';
 import { colors } from '@/design/tokens';
 import { loadTheme, resolveThemeMap, themeTilesetUrls } from './themeLoader';
@@ -1417,7 +1418,7 @@ export function OfficeFloor() {
           ?? mapRenderer.getSpawnPoint('entrance')
           ?? { x: 2, y: 2 };
         const waitTile = waitTiles[(seatIndex ?? 0) % waitTiles.length];
-        const frames = await theme.cast.getFrames(charName);
+        const frames = agent.isGod ? getFeilenFrames() : await theme.cast.getFrames(charName);
         // Bail if the agent was removed (or scene torn down) while loading.
         if (mountIdRef.current !== mountId) return;
         if (!useStore.getState().agents.some((a) => a.id === agent.id)) {
