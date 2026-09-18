@@ -19,7 +19,7 @@ export interface OnboardingWizardProps {
 
 type Audience = 'technical' | 'non-technical';
 type Step = 'persona' | 'welcome' | 'home' | 'orchestrator' | 'repos' | 'permissions' | 'done';
-const INTRO_AVATAR_SIZE = 76;
+const INTRO_AVATAR_SIZE = 96;
 
 // First-run showcase "— the highest-value features a brand-new user should grasp
 // before any setup. Labels and copy live in i18n (two registers: `desc` for the
