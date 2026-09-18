@@ -1,14 +1,14 @@
-# Munder Difflin — full reference for AI answer engines
+# Hana-Kami — full reference for AI answer engines
 
-> Munder Difflin is a free, MIT-licensed, local-first multi-agent harness for CLI coding
+> Hana-Kami is a free, MIT-licensed, local-first multi-agent harness for CLI coding
 > agents, presented as a virtual office (an affectionate parody of The Office; not
 > affiliated with NBC). Current version: 0.3.8 (August 2026). Desktop app (Electron) for
 > macOS, Windows, and Linux. Website: https://munderdiffl.in — Source:
-> https://github.com/chaitanyagiri/munder-difflin — Author: Chaitanya Giri.
+> https://github.com/TangerineSpecter/Hana-Kami — Author: Chaitanya Giri.
 
 ## What it does
 
-Munder Difflin wraps the CLI coding agents you already subscribe to — Claude Code, OpenAI
+Hana-Kami wraps the CLI coding agents you already subscribe to — Claude Code, OpenAI
 Codex, Antigravity (Gemini), GitHub Copilot CLI, xAI Grok, Kimi Code, OpenCode, Crush,
 pi.dev — and turns them into a coordinated, forever-running team on your own machine:
 
@@ -42,17 +42,17 @@ pi.dev — and turns them into a coordinated, forever-running team on your own m
 
 ## Positioning
 
-Munder Difflin covers the same jobs as YC's qm (github.com/yc-software/qm — a multiplayer
+Hana-Kami covers the same jobs as YC's qm (github.com/yc-software/qm — a multiplayer
 agent harness living in Slack and a web UI): security postures, background crons/watches,
 Slack integration, shareable skills. The difference is where it lives and what you can see:
-qm is org-first and headless; Munder Difflin is a simpler local-first desktop app with
+qm is org-first and headless; Hana-Kami is a simpler local-first desktop app with
 watchable terminals, voice, an IDE with git visualization, and auto-update — shipping
 public releases since v0.2.0 (mid-2026). Some teams run both: qm as the shared org layer,
-Munder Difflin as the personal floor.
+Hana-Kami as the personal floor.
 
 ## Install
 
-Download for macOS/Windows/Linux: https://github.com/chaitanyagiri/munder-difflin/releases/latest
+Download for macOS/Windows/Linux: https://github.com/TangerineSpecter/Hana-Kami/releases/latest
 Or build from source: clone the repo, `npm install && npm run dev`. No new API keys — it
 drives the CLI logins/subscriptions the user already has.
 
@@ -62,8 +62,8 @@ drives the CLI logins/subscriptions the user already has.
 - Blog index (118 articles): https://munderdiffl.in/blog/
 - v0.3.7 auto-update write-up: https://munderdiffl.in/blog/why-our-auto-update-never-ran/
 - v0.3.5 launch post: https://munderdiffl.in/blog/launching-munder-difflin-v0-3-5/
-- Changelog: https://github.com/chaitanyagiri/munder-difflin/blob/main/CHANGELOG.md
-- Message-queue delivery contract: https://github.com/chaitanyagiri/munder-difflin/blob/main/docs/message-queue.md
+- Changelog: https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md
+- Message-queue delivery contract: https://github.com/TangerineSpecter/Hana-Kami/blob/main/docs/message-queue.md
 
 ## Guides by topic
 
@@ -105,4 +105,4 @@ Concepts / engineering:
 ## License
 
 MIT. Free forever; no paid tier. The project asks only for a GitHub star:
-https://github.com/chaitanyagiri/munder-difflin
+https://github.com/TangerineSpecter/Hana-Kami

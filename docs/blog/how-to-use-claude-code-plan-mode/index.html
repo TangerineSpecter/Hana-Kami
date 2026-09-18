@@ -18,7 +18,7 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>How to Use Claude Code Plan Mode — Munder Difflin Blog</title>
+<title>How to Use Claude Code Plan Mode — Hana-Kami Blog</title>
 <meta name="description" content="How Claude Code&#39;s plan mode works: turning it on, what it blocks, what a real headless plan mode run prints, and how to leave it." />
 <link rel="canonical" href="https://munderdiffl.in/blog/how-to-use-claude-code-plan-mode/" />
 
@@ -27,9 +27,9 @@
 <meta name="theme-color" content="#F5F2E8" />
 
 <!-- Open Graph -->
-<meta property="og:site_name" content="Munder Difflin Blog" />
+<meta property="og:site_name" content="Hana-Kami Blog" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="How to Use Claude Code Plan Mode — Munder Difflin Blog" />
+<meta property="og:title" content="How to Use Claude Code Plan Mode — Hana-Kami Blog" />
 <meta property="og:description" content="How Claude Code&#39;s plan mode works: turning it on, what it blocks, what a real headless plan mode run prints, and how to leave it." />
 <meta property="og:url" content="https://munderdiffl.in/blog/how-to-use-claude-code-plan-mode/" />
 <meta property="og:image" content="https://munderdiffl.in/blog/assets/media/how-to-use-claude-code-plan-mode/hero.png" />
@@ -47,12 +47,12 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="How to Use Claude Code Plan Mode — Munder Difflin Blog" />
+<meta name="twitter:title" content="How to Use Claude Code Plan Mode — Hana-Kami Blog" />
 <meta name="twitter:description" content="How Claude Code&#39;s plan mode works: turning it on, what it blocks, what a real headless plan mode run prints, and how to leave it." />
 <meta name="twitter:image" content="https://munderdiffl.in/blog/assets/media/how-to-use-claude-code-plan-mode/hero.png" />
 <meta name="twitter:image:alt" content="Illustration: How to Use Claude Code Plan Mode" />
 
-<link rel="alternate" type="application/atom+xml" title="Munder Difflin Blog" href="https://munderdiffl.in/blog/feed.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hana-Kami Blog" href="https://munderdiffl.in/blog/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
@@ -70,7 +70,7 @@
   "author": { "@type": "Person", "name": "Chaitanya Giri" },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://munderdiffl.in/blog/how-to-use-claude-code-plan-mode/" },
@@ -146,8 +146,8 @@
 <body class="theme-press">
 <a class="skip-link" href="#main">Skip to content</a>
 <nav id="nav">
-  <a class="brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+  <a class="brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
   </a>
   <span class="spacer"></span>
   <div class="links">
@@ -217,7 +217,7 @@ Turn plan mode off (Shift+Tab in the CLI, or restart without plan mode) and tell
 <p>Partly. Plan mode applies in a <code>-p</code> run, but there’s no approval step: Claude writes the plan, prints its summary, and exits, as the run above shows. Claude Code’s own headless docs are direct about the default: “the built-in starting permission mode is Manual on every plan, so pass the permission mode you want” (checked 11 Sep 2026, <a href="https://code.claude.com/docs/en/headless">Run Claude Code programmatically</a>), unless a project’s <code>permissions.defaultMode</code> setting already sets <code>plan</code>. Passing <code>--permission-mode plan</code> in a CI step gets you a proposed change with no edits. Set <code>plansDirectory</code> to a path inside the project (the default is <code>~/.claude/plans</code>) so a later step can upload the plan for review, the same gate as <a href="/blog/human-in-the-loop-approving-ai-agents/">approving AI agents without a queue</a>.</p>
 <h2 id="plan-mode-vs-accept-edits-mode-which-do-you-actually-want" tabindex="-1">Plan mode vs accept edits mode: which do you actually want? <a class="anchor" href="#plan-mode-vs-accept-edits-mode-which-do-you-actually-want" aria-hidden="true">#</a></h2>
 <p>Different phases of the same job, not competitors. <code>acceptEdits</code> mode auto-approves file writes and common filesystem commands like <code>mkdir</code> and <code>mv</code>, so you review changes afterward in <code>git diff</code>; plan mode blocks the edits and hands you a document to read first. Claude Code’s best practices page says planning is most useful “when you’re uncertain about the approach, when the change modifies multiple files, or when you’re unfamiliar with the code being modified” (checked 11 Sep 2026, <a href="https://code.claude.com/docs/en/best-practices">Best practices</a>). If you only want to gate one risky command rather than a whole session, <a href="/blog/claude-code-hooks-explained/">Claude Code’s hooks</a> can block a single tool call.</p>
-<p>None of this needs Munder Difflin. Each Claude Code agent on the floor is a real <code>claude</code> process, but as of Munder Difflin 0.5.2, Auto Mode is on by default and starts it with <code>--permission-mode bypassPermissions</code>, and in a session like that Claude Code does not enforce plan mode’s blocks (checked 11 Sep 2026, <a href="https://code.claude.com/docs/en/permission-modes#skip-all-checks-with-bypasspermissions-mode">Choose a permission mode</a>). Turn Auto Mode off and restart the agent if you want plan mode to hold for your Claude Code agents. <a href="https://munderdiffl.in/download">Download Munder Difflin</a> to try it, the classic office is free, and <a href="https://munderdiffl.in/#pricing">pricing</a> covers the paid plans.</p>
+<p>None of this needs Hana-Kami. Each Claude Code agent on the floor is a real <code>claude</code> process, but as of Hana-Kami 0.5.2, Auto Mode is on by default and starts it with <code>--permission-mode bypassPermissions</code>, and in a session like that Claude Code does not enforce plan mode’s blocks (checked 11 Sep 2026, <a href="https://code.claude.com/docs/en/permission-modes#skip-all-checks-with-bypasspermissions-mode">Choose a permission mode</a>). Turn Auto Mode off and restart the agent if you want plan mode to hold for your Claude Code agents. <a href="https://munderdiffl.in/download">Download Hana-Kami</a> to try it, the classic office is free, and <a href="https://munderdiffl.in/#pricing">pricing</a> covers the paid plans.</p>
 
 
       
@@ -291,11 +291,11 @@ Turn plan mode off (Shift+Tab in the CLI, or restart without plan mode) and tell
       <span class="dot" aria-hidden="true"></span>
       <span>9 min</span>
     </div>
-    <h3><a href="/blog/build-your-personal-agi-on-your-computer/">Build Your Personal AGI on Your Computer Using Claude Code and Munder Difflin</a></h3>
-    <p class="dek">Turn Claude Code into a personal AGI on your own computer: agents with memory, schedules, Gmail, Calendar, voice and Slack, set up in Munder Difflin 0.5.2.</p>
+    <h3><a href="/blog/build-your-personal-agi-on-your-computer/">Build Your Personal AGI on Your Computer Using Claude Code and Hana-Kami</a></h3>
+    <p class="dek">Turn Claude Code into a personal AGI on your own computer: agents with memory, schedules, Gmail, Calendar, voice and Slack, set up in Hana-Kami 0.5.2.</p>
     <div class="foot">
       <span class="tag kind">Guides</span>
-      <a class="more" href="/blog/build-your-personal-agi-on-your-computer/" aria-label="Read: Build Your Personal AGI on Your Computer Using Claude Code and Munder Difflin">Read →</a>
+      <a class="more" href="/blog/build-your-personal-agi-on-your-computer/" aria-label="Read: Build Your Personal AGI on Your Computer Using Claude Code and Hana-Kami">Read →</a>
     </div>
   </div>
 </article>
@@ -342,20 +342,20 @@ Turn plan mode off (Shift+Tab in the CLI, or restart without plan mode) and tell
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
-      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
       </a>
       <div class="foot-links">
         <a href="/blog/">Latest</a>
         <a href="/blog/topics/">Topics</a>
         <a href="/blog/about/">About</a>
         <a href="https://munderdiffl.in/blog/feed.xml">RSS</a>
-        <a href="https://github.com/chaitanyagiri/munder-difflin">GitHub</a>
+        <a href="https://github.com/TangerineSpecter/Hana-Kami">GitHub</a>
         <a href="https://munderdiffl.in">munderdiffl.in ↗</a>
       </div>
     </div>
     <div class="foot-meta">
-      © 2026 Munder Difflin · Local-first · MIT-licensed ·
+      © 2026 Hana-Kami · Local-first · MIT-licensed ·
       Built on <a href="https://munderdiffl.in">Electron, React, Pixi.js, xterm.js &amp; node-pty</a>.
       Run an office of agents while you sleep.
     </div>

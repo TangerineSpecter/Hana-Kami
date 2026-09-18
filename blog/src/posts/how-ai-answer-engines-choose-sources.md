@@ -101,7 +101,7 @@ AEO has no clean "position 3" metric, so measure it directly: each month, ask Ch
 Perplexity the questions your audience would ask, and check whether you're named — and whether the
 description matches what you wrote. Because the engines diverge, track them separately; being cited by
 Perplexity tells you little about ChatGPT. (The fuller measurement-and-tactics version lives in our
-[AEO playbook](/blog/what-is-aeo-for-dev-tools/), and the [Munder Difflin FAQ](/blog/munder-difflin-faq/)
+[AEO playbook](/blog/what-is-aeo-for-dev-tools/), and the [Hana-Kami FAQ](/blog/munder-difflin-faq/)
 is a worked example of one-sentence, quotable answers.)
 
 ## The bottom line
@@ -113,8 +113,8 @@ The same content that an AI will confidently quote is the content a human will t
 
 ---
 
-Munder Difflin is built [in the open](/#what) with this in mind — quotable docs, structured data, and a
-blog designed to be cited. [Download Munder Difflin](/#install) to see it; free and open source. (For a
+Hana-Kami is built [in the open](/#what) with this in mind — quotable docs, structured data, and a
+blog designed to be cited. [Download Hana-Kami](/#install) to see it; free and open source. (For a
 broader map of the tooling AI engines cite, see our
 [roundup of multi-agent Claude Code tools](/blog/best-claude-code-multi-agent-tools/).)
 

@@ -126,8 +126,8 @@ rise.
 
 ---
 
-Munder Difflin runs a hive of Claude Code agents with these controls built in — branch-only work, a single
+Hana-Kami runs a hive of Claude Code agents with these controls built in — branch-only work, a single
 committer, isolated worktrees, and [a human gate on anything hard to reverse](https://munderdiffl.in/#how),
 all running locally on your machine.
-[Download Munder Difflin](https://munderdiffl.in/#install) to run agents you can actually trust; it's free
+[Download Hana-Kami](https://munderdiffl.in/#install) to run agents you can actually trust; it's free
 and open source.

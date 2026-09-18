@@ -8,11 +8,12 @@ const { join } = require('node:path');
 const loadTs = require('./load-ts.cjs');
 
 const { readHireManifestFiles } = loadTs('src/main/hire.ts');
+const { parseHireDeepLink } = loadTs('src/shared/hire.ts');
 
-const manifest = (name) => ({ spec: 'munder-difflin/hire@1', name });
+const manifest = (name) => ({ spec: 'hanakami/hire@1', name });
 
 test('batch import keeps every valid manifest and reports invalid files independently', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'munder-hire-import-'));
+  const dir = mkdtempSync(join(tmpdir(), 'hanakami-hire-import-'));
   try {
     const jim = join(dir, '01-jim.json');
     const brokenJson = join(dir, '02-broken.json');
@@ -20,7 +21,7 @@ test('batch import keeps every valid manifest and reports invalid files independ
     const pam = join(dir, '04-pam.json');
     writeFileSync(jim, JSON.stringify(manifest('Jim')));
     writeFileSync(brokenJson, '{ definitely not json');
-    writeFileSync(invalidManifest, JSON.stringify({ spec: 'munder-difflin/hire@1' }));
+    writeFileSync(invalidManifest, JSON.stringify({ spec: 'hanakami/hire@1' }));
     writeFileSync(pam, JSON.stringify(manifest('Pam')));
 
     const result = readHireManifestFiles([jim, brokenJson, invalidManifest, pam]);
@@ -36,6 +37,22 @@ test('batch import keeps every valid manifest and reports invalid files independ
 
 test('an empty file selection is a valid empty batch', () => {
   assert.deepEqual(readHireManifestFiles([]), { manifests: [], errors: [] });
+});
+
+test('previously shared hire files and links still import', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'hanakami-legacy-hire-'));
+  try {
+    const file = join(dir, 'legacy.hire.json');
+    writeFileSync(file, JSON.stringify({ spec: 'munder-difflin/hire@1', name: 'Pam' }));
+    const result = readHireManifestFiles([file]);
+    assert.deepEqual(result.errors, []);
+    assert.equal(result.manifests[0].spec, 'hanakami/hire@1');
+    const source = 'https://example.com/pam.hire.json';
+    assert.equal(parseHireDeepLink(`munderdifflin://hire?src=${encodeURIComponent(source)}`), source);
+    assert.equal(parseHireDeepLink(`hanakami://hire?src=${encodeURIComponent(source)}`), source);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('batch errors identify the file without exposing its parent directory', () => {

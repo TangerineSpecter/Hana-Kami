@@ -119,6 +119,31 @@ test('ensureHive writes an executable bundled-node launcher', async (t) => {
   if (POSIX) assert.ok(fs.statSync(launcher).mode & 0o111, 'must be executable');
 });
 
+test('brand migration leaves only one active Antigravity and Grok hook bridge', (t) => {
+  const { home, harness } = isolatedHomes(t, 'hanakami-hooks-');
+  const hive = new HiveManager(() => harness);
+  hive.ensureHive();
+
+  const agyFile = path.join(home, '.gemini/config/hooks.json');
+  fs.mkdirSync(path.dirname(agyFile), { recursive: true });
+  fs.writeFileSync(agyFile, JSON.stringify({ 'munder-hive': { Stop: [] }, unrelated: { Stop: [] } }));
+  const grokDir = path.join(home, '.grok/hooks');
+  fs.mkdirSync(grokDir, { recursive: true });
+  const oldGrok = path.join(grokDir, 'munder-hive.json');
+  fs.writeFileSync(oldGrok, JSON.stringify({ hooks: { Stop: [{ hooks: [{ command: 'node grok-hook.cjs' }] }] } }));
+
+  hive.installAgyHooks();
+  hive.installGrokHooks();
+
+  const agy = JSON.parse(fs.readFileSync(agyFile, 'utf8'));
+  assert.equal(agy['munder-hive'], undefined);
+  assert.ok(agy['hanakami-hive']);
+  assert.ok(agy.unrelated);
+  assert.equal(fs.existsSync(oldGrok), false);
+  assert.equal(fs.existsSync(`${oldGrok}.bak`), true);
+  assert.equal(fs.existsSync(path.join(grokDir, 'hanakami-hive.json')), true);
+});
+
 test('the claude hook + statusLine commands run through the launcher', async (t) => {
   const home = tmpHome();
   t.after(() => fs.rmSync(home, { recursive: true, force: true }));
@@ -301,7 +326,7 @@ test('Codex rollouts remain isolated and are visible under the standard scan roo
       `${kind} must stay reachable from the isolated CODEX_HOME`);
     targets[kind] = fs.realpathSync(isolated);
     assert.equal(targets[kind].startsWith(
-      path.join(fs.realpathSync(home), '.codex', kind, 'munder-difflin') + path.sep
+      path.join(fs.realpathSync(home), '.codex', kind, 'hanakami') + path.sep
     ), true, `${targets[kind]} is outside the standard Codex scan root under ${home}`);
     assert.equal(fs.readFileSync(path.join(isolated, relative), 'utf8'), `${kind}\n`,
       `existing ${kind} data was lost during exposure`);
@@ -331,7 +356,7 @@ test('bootstrap exposes archived Codex agents without respawning them', (t) => {
   assert.equal(fs.lstatSync(sessions).isSymbolicLink(), true,
     'an archived agent is never respawned, so bootstrap must expose its rollouts');
   assert.equal(fs.realpathSync(sessions).startsWith(
-    path.join(fs.realpathSync(home), '.codex', 'sessions', 'munder-difflin') + path.sep
+    path.join(fs.realpathSync(home), '.codex', 'sessions', 'hanakami') + path.sep
   ), true);
   assert.equal(fs.readFileSync(path.join(sessions, 'rollout-old.jsonl'), 'utf8'), 'old\n');
 });
@@ -342,7 +367,7 @@ test('a missing exposed directory is repaired on the next spawn', (t) => {
   hive.ensureHive();
   const agentDir = path.join(harness, 'hive', 'agents', 'a1');
   const sessions = path.join(agentDir, '.codex', 'sessions');
-  const staleTarget = path.join(home, '.codex', 'sessions', 'munder-difflin', 'stale', 'a1');
+  const staleTarget = path.join(home, '.codex', 'sessions', 'hanakami', 'stale', 'a1');
   fs.mkdirSync(staleTarget, { recursive: true });
   fs.mkdirSync(path.dirname(sessions), { recursive: true });
   fs.symlinkSync(staleTarget, sessions, process.platform === 'win32' ? 'junction' : 'dir');
@@ -354,7 +379,7 @@ test('a missing exposed directory is repaired on the next spawn', (t) => {
   assert.equal(fs.statSync(sessions).isDirectory(), true, 'the stale link still has no writable target');
 });
 
-test('an unsafe agent id cannot escape the Munder scan namespace', (t) => {
+test('an unsafe agent id cannot escape the Hana-Kami scan namespace', (t) => {
   const { home, harness } = isolatedHomes(t);
   const hive = new HiveManager(() => harness);
   hive.ensureHive();
@@ -367,17 +392,17 @@ test('an unsafe agent id cannot escape the Munder scan namespace', (t) => {
     codexHome, path.join(home, '.codex'), '../outside', 'sessions'
   ), /invalid agent id/);
   assert.equal(fs.readFileSync(path.join(sessions, 'rollout.jsonl'), 'utf8'), 'safe\n');
-  assert.equal(fs.existsSync(path.join(home, '.codex', 'sessions', 'munder-difflin', 'outside')), false);
+  assert.equal(fs.existsSync(path.join(home, '.codex', 'sessions', 'hanakami', 'outside')), false);
 });
 
-test('reset cleanup removes only exposed Munder rollouts', (t) => {
+test('reset cleanup removes only exposed Hana-Kami rollouts', (t) => {
   const { home, harness } = isolatedHomes(t);
   const hive = new HiveManager(() => harness);
   hive.ensureHive();
   const agentDir = path.join(harness, 'hive', 'agents', 'a1');
   const isolated = path.join(agentDir, '.codex', 'sessions');
   fs.mkdirSync(isolated, { recursive: true });
-  fs.writeFileSync(path.join(isolated, 'rollout-munder.jsonl'), 'munder\n', 'utf8');
+  fs.writeFileSync(path.join(isolated, 'rollout-hanakami.jsonl'), 'hanakami\n', 'utf8');
   const personal = path.join(home, '.codex', 'sessions', '2026', '08', '21', 'rollout-personal.jsonl');
   fs.mkdirSync(path.dirname(personal), { recursive: true });
   fs.writeFileSync(personal, 'personal\n', 'utf8');
@@ -386,7 +411,7 @@ test('reset cleanup removes only exposed Munder rollouts', (t) => {
 
   hive.removeExposedCodexData();
 
-  assert.equal(fs.existsSync(exposed), false, 'reset left Munder rollout data behind');
+  assert.equal(fs.existsSync(exposed), false, 'reset left Hana-Kami rollout data behind');
   assert.equal(fs.readFileSync(personal, 'utf8'), 'personal\n', 'reset touched a personal Codex session');
 });
 

@@ -117,6 +117,6 @@ analysis paralysis.
 
 ---
 
-If your scores point at memory + messaging + orchestration, Munder Difflin is built squarely for that
-profile — and it's free to test the thesis. [Download Munder Difflin](/#install); it's open source and
+If your scores point at memory + messaging + orchestration, Hana-Kami is built squarely for that
+profile — and it's free to test the thesis. [Download Hana-Kami](/#install); it's open source and
 local-first.

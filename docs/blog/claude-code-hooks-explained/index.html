@@ -18,7 +18,7 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop) — Munder Difflin Blog</title>
+<title>Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop) — Hana-Kami Blog</title>
 <meta name="description" content="A practical tour of Claude Code hooks — the PreToolUse, PostToolUse, and Stop lifecycle — and how a Unix-socket hook shim drives a live office floor." />
 <link rel="canonical" href="https://munderdiffl.in/blog/claude-code-hooks-explained/" />
 
@@ -27,9 +27,9 @@
 <meta name="theme-color" content="#F5F2E8" />
 
 <!-- Open Graph -->
-<meta property="og:site_name" content="Munder Difflin Blog" />
+<meta property="og:site_name" content="Hana-Kami Blog" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop) — Munder Difflin Blog" />
+<meta property="og:title" content="Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop) — Hana-Kami Blog" />
 <meta property="og:description" content="A practical tour of Claude Code hooks — the PreToolUse, PostToolUse, and Stop lifecycle — and how a Unix-socket hook shim drives a live office floor." />
 <meta property="og:url" content="https://munderdiffl.in/blog/claude-code-hooks-explained/" />
 <meta property="og:image" content="https://munderdiffl.in/blog/assets/media/claude-code-hooks-explained/hero.png" />
@@ -47,12 +47,12 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop) — Munder Difflin Blog" />
+<meta name="twitter:title" content="Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop) — Hana-Kami Blog" />
 <meta name="twitter:description" content="A practical tour of Claude Code hooks — the PreToolUse, PostToolUse, and Stop lifecycle — and how a Unix-socket hook shim drives a live office floor." />
 <meta name="twitter:image" content="https://munderdiffl.in/blog/assets/media/claude-code-hooks-explained/hero.png" />
 <meta name="twitter:image:alt" content="Illustration: Claude Code Hooks, Explained (PreToolUse, PostToolUse, Stop)" />
 
-<link rel="alternate" type="application/atom+xml" title="Munder Difflin Blog" href="https://munderdiffl.in/blog/feed.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hana-Kami Blog" href="https://munderdiffl.in/blog/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
@@ -70,7 +70,7 @@
   "author": { "@type": "Person", "name": "Chaitanya Giri" },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://munderdiffl.in/blog/claude-code-hooks-explained/" },
@@ -143,8 +143,8 @@
 <body class="theme-press">
 <a class="skip-link" href="#main">Skip to content</a>
 <nav id="nav">
-  <a class="brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+  <a class="brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
   </a>
   <span class="spacer"></span>
   <div class="links">
@@ -188,14 +188,14 @@
       <div class="callout tldr"><span class="ic">TL;DR</span><p><strong>Claude Code hooks</strong> are
 commands that run at lifecycle points — <code>PreToolUse</code>, <code>PostToolUse</code>,
 <code>Stop</code>, <code>Notification</code>, and more. Each gets a JSON payload on stdin and can
-return JSON to steer Claude. Munder Difflin attaches a tiny <strong>hook shim</strong> via
+return JSON to steer Claude. Hana-Kami attaches a tiny <strong>hook shim</strong> via
 <code>--settings</code> that forwards every event to the harness over a Unix socket — driving live
 avatars from <code>PreToolUse</code>/<code>PostToolUse</code>, and building an <strong>autonomous
 loop</strong> out of the <code>Stop</code> hook.</p></div>
 <p>Hooks are the most underrated part of Claude Code. They’re the official extension point for “do
 something when Claude does something” — and once you understand them, a lot of agent tooling that
 looks like magic turns out to be a well-placed hook. This post walks the lifecycle, then shows exactly
-how Munder Difflin uses hooks to animate a multi-agent office floor and keep agents working
+how Hana-Kami uses hooks to animate a multi-agent office floor and keep agents working
 autonomously.</p>
 <h2 id="what-a-hook-is" tabindex="-1">What a hook is <a class="anchor" href="#what-a-hook-is" aria-hidden="true">#</a></h2>
 <p>A hook is a command Claude Code runs at a defined moment in its lifecycle. When the moment arrives,
@@ -242,8 +242,8 @@ input, or asking permission. The payload’s text lets you tell “needs you” 
 <li><strong>UserPromptSubmit</strong> fires when a prompt is submitted — a clean “the agent started working” signal.</li>
 <li><strong>SessionStart</strong> fires when a session begins — handy for setup or registration.</li>
 </ul>
-<h2 id="how-munder-difflin-uses-hooks" tabindex="-1">How Munder Difflin uses hooks <a class="anchor" href="#how-munder-difflin-uses-hooks" aria-hidden="true">#</a></h2>
-<p>Munder Difflin runs many <code>claude</code> agents at once and needs two things from each: a live view of what
+<h2 id="how-munder-difflin-uses-hooks" tabindex="-1">How Hana-Kami uses hooks <a class="anchor" href="#how-munder-difflin-uses-hooks" aria-hidden="true">#</a></h2>
+<p>Hana-Kami runs many <code>claude</code> agents at once and needs two things from each: a live view of what
 it’s doing, and a way to keep it working through a queue. Both come from hooks.</p>
 <h3 id="a-hook-shim-over-a-unix-socket" tabindex="-1">A hook shim over a Unix socket <a class="anchor" href="#a-hook-shim-over-a-unix-socket" aria-hidden="true">#</a></h3>
 <p>The harness can’t run heavy logic inside each hook invocation — hooks fire constantly and must be fast.
@@ -297,15 +297,15 @@ project clean and lets you apply the same hooks to many sessions.</li>
 </ul>
 <h2 id="faq" tabindex="-1">FAQ <a class="anchor" href="#faq" aria-hidden="true">#</a></h2>
 <p><strong>Can a hook block a dangerous tool call?</strong> Yes — PreToolUse can return a decision that prevents a tool
-from running, which is useful for guardrails. Munder Difflin leans on its orchestrator and approval
+from running, which is useful for guardrails. Hana-Kami leans on its orchestrator and approval
 queue for that judgment, but the hook-level gate is available.</p>
 <p><strong>Do hooks slow Claude down?</strong> Only as much as your hook command does. A shim that just forwards a
 payload over a local socket adds negligible overhead, which is exactly why the heavy logic lives
 elsewhere.</p>
 <hr>
-<p>Munder Difflin turns Claude Code’s hook lifecycle into <a href="https://munderdiffl.in/#how">a live, autonomous office</a>: real-time avatars
+<p>Hana-Kami turns Claude Code’s hook lifecycle into <a href="https://munderdiffl.in/#how">a live, autonomous office</a>: real-time avatars
 from tool events and a self-draining work loop from the Stop hook — all without editing your repo.
-<a href="https://munderdiffl.in/#install">Download Munder Difflin</a> to see hooks driving a hive of agents; it’s
+<a href="https://munderdiffl.in/#install">Download Hana-Kami</a> to see hooks driving a hive of agents; it’s
 free and open source.</p>
 
 
@@ -344,7 +344,7 @@ free and open source.</p>
     <aside class="toc-rail" aria-label="Table of contents">
       <div class="tt">On this page</div>
       <ol>
-        <li class="lvl-2"><a href="#what-a-hook-is">What a hook is</a></li><li class="lvl-2"><a href="#the-lifecycle-events-that-matter">The lifecycle events that matter</a></li><li class="lvl-3"><a href="#pretooluse">PreToolUse</a></li><li class="lvl-3"><a href="#posttooluse">PostToolUse</a></li><li class="lvl-3"><a href="#stop-and-subagentstop">Stop (and SubagentStop)</a></li><li class="lvl-3"><a href="#notification-userpromptsubmit-sessionstart">Notification, UserPromptSubmit, SessionStart</a></li><li class="lvl-2"><a href="#how-munder-difflin-uses-hooks">How Munder Difflin uses hooks</a></li><li class="lvl-3"><a href="#a-hook-shim-over-a-unix-socket">A hook shim over a Unix socket</a></li><li class="lvl-3"><a href="#attached-without-touching-your-repo">Attached without touching your repo</a></li><li class="lvl-3"><a href="#pretooluseposttooluse-live-avatars">PreToolUse/PostToolUse → live avatars</a></li><li class="lvl-3"><a href="#stop-the-autonomous-loop">Stop → the autonomous loop</a></li><li class="lvl-2"><a href="#writing-your-own-hooks-practical-tips">Writing your own hooks: practical tips</a></li><li class="lvl-2"><a href="#faq">FAQ</a></li>
+        <li class="lvl-2"><a href="#what-a-hook-is">What a hook is</a></li><li class="lvl-2"><a href="#the-lifecycle-events-that-matter">The lifecycle events that matter</a></li><li class="lvl-3"><a href="#pretooluse">PreToolUse</a></li><li class="lvl-3"><a href="#posttooluse">PostToolUse</a></li><li class="lvl-3"><a href="#stop-and-subagentstop">Stop (and SubagentStop)</a></li><li class="lvl-3"><a href="#notification-userpromptsubmit-sessionstart">Notification, UserPromptSubmit, SessionStart</a></li><li class="lvl-2"><a href="#how-munder-difflin-uses-hooks">How Hana-Kami uses hooks</a></li><li class="lvl-3"><a href="#a-hook-shim-over-a-unix-socket">A hook shim over a Unix socket</a></li><li class="lvl-3"><a href="#attached-without-touching-your-repo">Attached without touching your repo</a></li><li class="lvl-3"><a href="#pretooluseposttooluse-live-avatars">PreToolUse/PostToolUse → live avatars</a></li><li class="lvl-3"><a href="#stop-the-autonomous-loop">Stop → the autonomous loop</a></li><li class="lvl-2"><a href="#writing-your-own-hooks-practical-tips">Writing your own hooks: practical tips</a></li><li class="lvl-2"><a href="#faq">FAQ</a></li>
       </ol>
     </aside>
     
@@ -398,7 +398,7 @@ free and open source.</p>
       <span>5 min</span>
     </div>
     <h3><a href="/blog/why-our-auto-update-never-ran/">Our Auto-Update Never Ran Once: A CommonJS Export That Vanished Into an ESM Namespace</a></h3>
-    <p class="dek">Munder Difflin shipped auto-update in v0.3.4 and it silently never worked in a single packaged build. The cause was one destructuring assignment across the CommonJS/ESM boundary — and a catch block that threw the evidence away. Here&#39;s how we found it, and what v0.3.7 changes.</p>
+    <p class="dek">Hana-Kami shipped auto-update in v0.3.4 and it silently never worked in a single packaged build. The cause was one destructuring assignment across the CommonJS/ESM boundary — and a catch block that threw the evidence away. Here&#39;s how we found it, and what v0.3.7 changes.</p>
     <div class="foot">
       <span class="tag kind">Internals</span>
       <a class="more" href="/blog/why-our-auto-update-never-ran/" aria-label="Read: Our Auto-Update Never Ran Once: A CommonJS Export That Vanished Into an ESM Namespace">Read →</a>
@@ -416,20 +416,20 @@ free and open source.</p>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
-      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
       </a>
       <div class="foot-links">
         <a href="/blog/">Latest</a>
         <a href="/blog/topics/">Topics</a>
         <a href="/blog/about/">About</a>
         <a href="https://munderdiffl.in/blog/feed.xml">RSS</a>
-        <a href="https://github.com/chaitanyagiri/munder-difflin">GitHub</a>
+        <a href="https://github.com/TangerineSpecter/Hana-Kami">GitHub</a>
         <a href="https://munderdiffl.in">munderdiffl.in ↗</a>
       </div>
     </div>
     <div class="foot-meta">
-      © 2026 Munder Difflin · Local-first · MIT-licensed ·
+      © 2026 Hana-Kami · Local-first · MIT-licensed ·
       Built on <a href="https://munderdiffl.in">Electron, React, Pixi.js, xterm.js &amp; node-pty</a>.
       Run an office of agents while you sleep.
     </div>

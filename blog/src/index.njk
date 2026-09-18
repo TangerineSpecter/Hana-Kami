@@ -1,8 +1,8 @@
 ---
 layout: base.njk
-title: The Munder Difflin Blog
+title: The Hana-Kami Blog
 description: "Guides, deep dives, and comparisons on running multi-agent Claude Code: orchestration, agent memory, automation, and the tooling landscape."
-seoTitle: "Multi-agent & Claude Code blog — Munder Difflin"
+seoTitle: "Multi-agent & Claude Code blog — Hana-Kami"
 permalink: /index.html
 ---
 {% block head %}
@@ -13,7 +13,7 @@ permalink: /index.html
   "name": "{{ site.blogName }}",
   "description": {{ site.description | dump | safe }},
   "url": "{{ site.baseUrl }}",
-  "publisher": { "@type": "Organization", "name": "Munder Difflin", "logo": { "@type": "ImageObject", "url": "{{ site.origin }}/logo.png" } }
+  "publisher": { "@type": "Organization", "name": "Hana-Kami", "logo": { "@type": "ImageObject", "url": "{{ site.origin }}/logo.png" } }
 }
 </script>
 <script type="application/ld+json">
@@ -31,7 +31,7 @@ permalink: /index.html
 {%- set posts = collections.posts -%}
 <header class="page-head wrap">
   <p class="eyebrow">Notes from the office floor</p>
-  <h1>The Munder Difflin <span class="hl">Blog.</span></h1>
+  <h1>The Hana-Kami <span class="hl">Blog.</span></h1>
   <p class="lead">Guides, deep dives, and comparisons on running <strong>multi-agent Claude
   Code</strong> — orchestration, agent memory, automation, and the tooling landscape. From the team
   building a self-coordinating hive of agents with a GOD orchestrator you talk to.</p>

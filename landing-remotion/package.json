@@ -1,8 +1,8 @@
 {
-  "name": "munder-difflin-landing-remotion",
+  "name": "hanakami-landing-remotion",
   "version": "0.1.0",
   "private": true,
-  "description": "Remotion compositions for the Munder Difflin landing page. Renders looping HOW-it-works clips into ../docs/media.",
+  "description": "Remotion compositions for the Hana-Kami landing page. Renders looping HOW-it-works clips into ../docs/media.",
   "scripts": {
     "studio": "remotion studio",
     "upgrade": "remotion upgrade",

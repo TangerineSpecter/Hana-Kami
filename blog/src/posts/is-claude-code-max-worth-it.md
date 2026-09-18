@@ -27,7 +27,7 @@ It is worth paying for Claude Code Max when Pro's limit stops you most weeks and
 
 This post covers only the decision. Once you have Max, our guide on [getting the most out of your Claude Code Max plan](/blog/claude-code-max-plan-tips/) covers spending it well, and [what Claude Code costs](/blog/how-much-does-claude-code-cost/) lists every plan and token rate.
 
-If you want Max so several agents can work at once, you can run them in separate terminals, or use [Munder Difflin](https://harnessmd.com/download), a free and open source desktop app that runs several Claude Code agents on one plan, each with its own token cap, set on the agent's card in the Command Center. The cap counts that agent's own work tokens, not your plan's weekly meter, and the circuit breaker steps in when an agent passes it.
+If you want Max so several agents can work at once, you can run them in separate terminals, or use [Hana-Kami](https://harnessmd.com/download), a free and open source desktop app that runs several Claude Code agents on one plan, each with its own token cap, set on the agent's card in the Command Center. The cap counts that agent's own work tokens, not your plan's weekly meter, and the circuit breaker steps in when an agent passes it.
 
 ## Is Claude Max worth it over Pro?
 
@@ -70,7 +70,7 @@ The practical test is your usage credits bill: if 5x plus credits would cost mor
 
 ## Is Claude Max worth it for Fable?
 
-Yes, if you want Fable inside Claude Code, because Max is the only individual plan that includes it. The pricing page on 14 Sep 2026 shows Fable as usage credits on Pro and as up to half of weekly limits on both Max tiers. Fable use still comes out of the weekly limit every other model shares. On Pro, Fable requests bill usage credits at standard API rates, and in an interactive session Claude Code asks once, before the first one. Munder Difflin 0.5.2 starts every hired agent on Fable 5, so on Pro pick another default under Settings, Agents & Models unless you mean to spend credits.
+Yes, if you want Fable inside Claude Code, because Max is the only individual plan that includes it. The pricing page on 14 Sep 2026 shows Fable as usage credits on Pro and as up to half of weekly limits on both Max tiers. Fable use still comes out of the weekly limit every other model shares. On Pro, Fable requests bill usage credits at standard API rates, and in an interactive session Claude Code asks once, before the first one. Hana-Kami 0.5.2 starts every hired agent on Fable 5, so on Pro pick another default under Settings, Agents & Models unless you mean to spend credits.
 
 ## Does the September 2026 limit change affect the decision?
 

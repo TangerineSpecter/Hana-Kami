@@ -1,5 +1,5 @@
 /* ============================================================
-   PRESSROOM — Munder Difflin blog theme B
+   PRESSROOM — Hana-Kami blog theme B
    A bold editorial magazine. Inspired by The Verge's 2022
    redesign: paper + ink, loud per-topic color, huge wonky serif
    headlines, thick rules, drop caps. Serious long-read body type
@@ -8,7 +8,7 @@
    ============================================================ */
 
 :root {
-  /* Munder Difflin app palette (DESIGN.md tokens) */
+  /* Hana-Kami app palette (DESIGN.md tokens) */
   --paper: #FCFAF0;        /* paper-100 — terminal background */
   --cream: #FFF8E7;        /* cream-100 — panel fill */
   --cream-2: #F4E9C7;      /* cream-200 — inset / alt row */

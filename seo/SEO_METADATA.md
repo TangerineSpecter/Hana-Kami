@@ -1,8 +1,8 @@
-# Munder Difflin — SEO & AEO Metadata (Single Source of Truth)
+# Hana-Kami — SEO & AEO Metadata (Single Source of Truth)
 
 > **Author:** Kevin (SEO strategist) · **Status:** v1 · **Scope:** marketing site
 > (`https://munderdiffl.in/`) **and** the blog (`https://munderdiffl.in/blog/`, GitHub Pages).
-> **Repo:** `https://github.com/chaitanyagiri/munder-difflin`
+> **Repo:** `https://github.com/TangerineSpecter/Hana-Kami`
 >
 > This file is copy-paste-ready. Titles, descriptions, JSON-LD, robots, and sitemap entries are
 > real values, not placeholders. Where a fact is genuinely unknowable (e.g. patron URL, GA ID),
@@ -31,7 +31,7 @@ the expense of the keyword.
 
 ## 1. Keyword strategy — prioritized taxonomy + keyword→URL map
 
-**Winnability principle:** Munder Difflin is a brand-new, low-authority site. We chase **long-tail,
+**Winnability principle:** Hana-Kami is a brand-new, low-authority site. We chase **long-tail,
 question, and "alternative" terms first** (achievable + high-intent), build topical authority via
 the blog, and only then compete for head terms like `claude code multi-agent`. Volume labels below
 are **rough estimates** (Low/Med/High relative within this niche), not measured data.
@@ -40,7 +40,7 @@ are **rough estimates** (Low/Med/High relative within this niche), not measured 
 
 | Tier | Why | Examples |
 |---|---|---|
-| **P0 — Branded** | Must own 100%. Zero competition. | `munder difflin`, `munder difflin claude code`, `munderdiffl` |
+| **P0 — Branded** | Must own 100%. Zero competition. | `hana-kami`, `hana-kami claude code`, `munderdiffl` |
 | **P1 — Long-tail / question** | Winnable now; powers blog + AEO + featured snippets. | `how to run multiple claude code agents`, `how to give claude code long-term memory` |
 | **P2 — Competitor / alternative** | High commercial intent; people comparison-shop tools. | `claude squad alternative`, `conductor claude code alternative` |
 | **P3 — Secondary / concept** | Builds topical authority via cluster posts. | `semantic memory for ai agents`, `single committer git multi agent` |
@@ -53,11 +53,11 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 #### Branded (P0)
 | Keyword | Intent | Est. vol | Target URL |
 |---|---|---|---|
-| munder difflin | navigational | Low→ | `/` |
-| munder difflin app | navigational | Low | `/` |
-| munder difflin claude code | navigational | Low | `/` |
-| munder difflin download | transactional | Low | `/#install` |
-| munder difflin github | navigational | Low | `GH` |
+| hana-kami | navigational | Low→ | `/` |
+| hana-kami app | navigational | Low | `/` |
+| hana-kami claude code | navigational | Low | `/` |
+| hana-kami download | transactional | Low | `/#install` |
+| hana-kami github | navigational | Low | `GH` |
 | munderdiffl | navigational | Low | `/` |
 
 #### Primary / head terms (P4)
@@ -111,7 +111,7 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 #### Comparison (P2)
 | Keyword | Intent | Est. vol | Target URL |
 |---|---|---|---|
-| claude squad vs munder difflin | commercial | Low | `/blog/claude-squad-vs-munder-difflin` |
+| claude squad vs hana-kami | commercial | Low | `/blog/claude-squad-vs-hanakami` |
 | best tools to run multiple claude code agents | commercial | Low-Med | `/blog/best-claude-code-multi-agent-tools` |
 | claude code orchestration tools compared | commercial | Low | `/blog/claude-code-orchestration-tools-compared` |
 
@@ -136,7 +136,7 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 | local ai dev environment | informational | Low | `/blog/local-first-ai-agent-orchestration` |
 
 ### 1.3 Top 10 priority keywords (track these first in GSC)
-1. munder difflin *(+ all branded variants)*
+1. hana-kami *(+ all branded variants)*
 2. how to run multiple claude code agents
 3. claude code multi-agent
 4. claude squad alternative
@@ -153,18 +153,18 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 
 | Field | Value |
 |---|---|
-| Site name | `Munder Difflin` |
-| Legal/org name | `Munder Difflin` (project; affectionate Office parody — not affiliated with NBC/Dunder Mifflin) |
+| Site name | `Hana-Kami` |
+| Legal/org name | `Hana-Kami` (project; affectionate Office parody — not affiliated with NBC/Dunder Mifflin) |
 | Canonical origin | `https://munderdiffl.in` |
 | Default locale | `en_US` |
-| Title template | `%s — Munder Difflin` (home uses full title verbatim, no suffix) |
-| Default `<title>` (home) | `Munder Difflin — Local multi-agent harness for Claude Code` (60 chars) |
-| Default meta description | `Munder Difflin turns the Claude Code terminals you already run into a self-coordinating hive of agents — they message, route, and remember, run by a GOD orchestrator you talk to. Local, open source.` *(trim to ≤155 for tag, see §3 home)* |
+| Title template | `%s — Hana-Kami` (home uses full title verbatim, no suffix) |
+| Default `<title>` (home) | `Hana-Kami — Local multi-agent harness for Claude Code` (60 chars) |
+| Default meta description | `Hana-Kami turns the Claude Code terminals you already run into a self-coordinating hive of agents — they message, route, and remember, run by a GOD orchestrator you talk to. Local, open source.` *(trim to ≤155 for tag, see §3 home)* |
 | Brand OG image | `https://munderdiffl.in/media/og.png` (2880×1640, PNG) |
 | Twitter card | `summary_large_image` |
 | Twitter handle | `‹FILL — none currently; omit twitter:site/creator until a handle exists›` |
 | theme-color | `#F5F2E8` |
-| Author / publisher | `Chaitanya Giri` (publisher: `Munder Difflin`) |
+| Author / publisher | `Chaitanya Giri` (publisher: `Hana-Kami`) |
 | Favicon / apple-touch | `/logo.png` |
 | Fonts | Geist (sans), JetBrains Mono (mono) — already preconnected |
 
@@ -178,54 +178,54 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 > anchor descriptions for sitemap/snippet purposes. The blog blocks are live specs for Angela.
 
 ### 3.1 Home — `https://munderdiffl.in/`
-- **title** (≤60): `Munder Difflin — Local multi-agent harness for Claude Code`
+- **title** (≤60): `Hana-Kami — Local multi-agent harness for Claude Code`
 - **description** (≤155): `Run a self-coordinating hive of Claude Code agents that message, route, and remember — orchestrated by a GOD agent you talk to. Local & open source.` *(151)*
 - **canonical:** `https://munderdiffl.in/`
 - **H1:** `Agents that build while you do your thing.` *(keep existing brand hero; SEO carried by title/description + section H2s)*
-- **OG:** `og:title` = `Munder Difflin — multi-agent harness for Claude Code` · `og:description` = `A local hive of Claude Code agents that message, route, and remember — coordinated by a GOD orchestrator you talk to. macOS, Windows & Linux.` · `og:type` = `website` · `og:url` = `https://munderdiffl.in/` · `og:image` = `https://munderdiffl.in/media/og.png`
+- **OG:** `og:title` = `Hana-Kami — multi-agent harness for Claude Code` · `og:description` = `A local hive of Claude Code agents that message, route, and remember — coordinated by a GOD orchestrator you talk to. macOS, Windows & Linux.` · `og:type` = `website` · `og:url` = `https://munderdiffl.in/` · `og:image` = `https://munderdiffl.in/media/og.png`
 - **Twitter:** `twitter:card` = `summary_large_image` · `twitter:title` / `twitter:description` mirror OG · `twitter:image` = og.png
 
 > ✅ **APPLIED on `docs/index.html` (2026-06-03):** (1) trimmed the meta description to the ≤155 version above; (2) platform claim kept at all three (macOS, Windows, Linux) per sign-off; (3) added the `SoftwareApplication` + `Organization` + `WebSite` JSON-LD from §4; (4) added `twitter:title` + `twitter:description`; (5) added the blog RSS `<link rel="alternate">`. Additive head-only changes — page structure untouched.
 
 ### 3.2 "Why" section/anchor — `/#why`
-- **(if split) title:** `Why a local Claude Code hive beats one terminal — Munder Difflin`
+- **(if split) title:** `Why a local Claude Code hive beats one terminal — Hana-Kami`
 - **description:** `Four reasons a coordinated, local hive of agents does more than a lone Claude Code session: cost-smart orchestration, full control, built-in memory, high-agency outcomes.`
 - **H2:** `Yes, it's fun to watch. It's also genuinely useful.`
 
 ### 3.3 "What it is" — `/#what`
-- **(if split) title:** `What is Munder Difflin? Multi-agent harness for Claude Code`
-- **description:** `Munder Difflin is an intelligent multi-agent harness for Claude Code agents that live locally in your terminal — wired into a hive mind with long-term memory and a GOD orchestrator.`
+- **(if split) title:** `What is Hana-Kami? Multi-agent harness for Claude Code`
+- **description:** `Hana-Kami is an intelligent multi-agent harness for Claude Code agents that live locally in your terminal — wired into a hive mind with long-term memory and a GOD orchestrator.`
 - **H2:** `An intelligent multi-agent harness for Claude Code`
 
 ### 3.4 "How it works" — `/#how`
-- **(if split) title:** `How Munder Difflin orchestrates Claude Code agents`
+- **(if split) title:** `How Hana-Kami orchestrates Claude Code agents`
 - **description:** `See how the office floor works: many terminal agents managed and visualized, MemPalace shared memory, and a GOD agent that runs the floor through a hive mind.`
 - **H2:** `An office you can actually see.`
 
 ### 3.5 "Claude" (integration) — `/#claude`
-- **(if split) title:** `Use your existing Claude Code setup — Munder Difflin`
-- **description:** `Munder Difflin plugs into the Claude Code you already run — your tools, MCP, and skills — and lets you remote-control the whole office. Just orchestrated.`
+- **(if split) title:** `Use your existing Claude Code setup — Hana-Kami`
+- **description:** `Hana-Kami plugs into the Claude Code you already run — your tools, MCP, and skills — and lets you remote-control the whole office. Just orchestrated.`
 - **H2:** `Your Claude Code. Just orchestrated.`
 
 ### 3.6 "Open source" — `/#opensource`
-- **(if split) title:** `Open source multi-agent harness (MIT) — Munder Difflin`
-- **description:** `Munder Difflin is built in the open under the MIT license. Read the code, file issues, and contribute on GitHub.`
+- **(if split) title:** `Open source multi-agent harness (MIT) — Hana-Kami`
+- **description:** `Hana-Kami is built in the open under the MIT license. Read the code, file issues, and contribute on GitHub.`
 - **H2:** `Built in the open, on purpose.`
 
 ### 3.7 Download / Install — `/#install`
-- **(if split) title:** `Download Munder Difflin — free for macOS, Windows, Linux`
-- **description:** `Download Munder Difflin free for macOS, Windows & Linux, or build from source in two commands. Open source, local-first multi-agent harness for Claude Code.`
+- **(if split) title:** `Download Hana-Kami — free for macOS, Windows, Linux`
+- **description:** `Download Hana-Kami free for macOS, Windows & Linux, or build from source in two commands. Open source, local-first multi-agent harness for Claude Code.`
 - **H2:** `Download, or build from source.`
-- **Note:** this anchor is the target for `munder difflin download`. The download button links to `…/releases/latest`. If a standalone `/download/` page is ever created, give it its own canonical + `SoftwareApplication` JSON-LD.
+- **Note:** this anchor is the target for `hana-kami download`. The download button links to `…/releases/latest`. If a standalone `/download/` page is ever created, give it its own canonical + `SoftwareApplication` JSON-LD.
 
 ### 3.8 Support — `/#support`
 - **H2:** `Keep the office running.` *(star + patron CTAs; no dedicated metadata needed)*
 
 ### 3.9 Blog index — `https://munderdiffl.in/blog/`
-- **title** (≤60): `Blog — Munder Difflin` *(or `Multi-agent & Claude Code blog — Munder Difflin`)*
+- **title** (≤60): `Blog — Hana-Kami` *(or `Multi-agent & Claude Code blog — Hana-Kami`)*
 - **description** (≤155): `Guides, deep dives, and comparisons on running multi-agent Claude Code: orchestration, agent memory, automation, and the tooling landscape.`
 - **canonical:** `https://munderdiffl.in/blog/`
-- **H1:** `The Munder Difflin Blog`
+- **H1:** `The Hana-Kami Blog`
 - **OG:** `og:type` = `website` · image = og.png (or a dedicated blog OG) · url = `/blog/`
 - **JSON-LD:** `Blog` + `Breadcrumb` (Home › Blog) — see §4.
 
@@ -240,12 +240,12 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 
 ### 3.11 FAQ block (embeddable on home + posts)
 - Use the `FAQPage` JSON-LD in §4. Recommended seed Q&As (AEO-optimized, one-sentence answers):
-  - **What is Munder Difflin?** — "Munder Difflin is a local, open-source desktop app that turns the Claude Code terminals you already run into a self-coordinating hive of agents with shared memory, messaging, and a GOD orchestrator you talk to."
-  - **Is Munder Difflin free?** — "Yes. Munder Difflin is free and open source under the MIT license; you can download a build or run it from source."
-  - **Does it run my data in the cloud?** — "No. Munder Difflin is local-first — the harness, agents, and memory live on your own machine."
+  - **What is Hana-Kami?** — "Hana-Kami is a local, open-source desktop app that turns the Claude Code terminals you already run into a self-coordinating hive of agents with shared memory, messaging, and a GOD orchestrator you talk to."
+  - **Is Hana-Kami free?** — "Yes. Hana-Kami is free and open source under the MIT license; you can download a build or run it from source."
+  - **Does it run my data in the cloud?** — "No. Hana-Kami is local-first — the harness, agents, and memory live on your own machine."
   - **What platforms does it support?** — "macOS, Windows, and Linux."
   - **Can Claude Code agents talk to each other?** — "Yes. Each agent has a mailbox; the harness router delivers messages between agents, and a GOD orchestrator routes and adjudicates work."
-  - **How is this different from running several Claude Code terminals?** — "Munder Difflin adds coordination: shared long-term memory (MemPalace), inter-agent messaging, a GOD orchestrator, and a visual office floor — so the sessions act as one team instead of isolated windows."
+  - **How is this different from running several Claude Code terminals?** — "Hana-Kami adds coordination: shared long-term memory (MemPalace), inter-agent messaging, a GOD orchestrator, and a visual office floor — so the sessions act as one team instead of isolated windows."
 
 ---
 
@@ -260,15 +260,15 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Munder Difflin",
+  "name": "Hana-Kami",
   "description": "Local, open-source multi-agent harness for Claude Code. Turns the Claude Code terminals you already run into a self-coordinating hive of agents with long-term memory, inter-agent messaging, and a GOD orchestrator you talk to.",
   "url": "https://munderdiffl.in/",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "macOS, Windows, Linux",
   "softwareVersion": "0.1.3",
-  "downloadUrl": "https://github.com/chaitanyagiri/munder-difflin/releases/latest",
-  "softwareHelp": "https://github.com/chaitanyagiri/munder-difflin#readme",
-  "license": "https://github.com/chaitanyagiri/munder-difflin/blob/main/LICENSE",
+  "downloadUrl": "https://github.com/TangerineSpecter/Hana-Kami/releases/latest",
+  "softwareHelp": "https://github.com/TangerineSpecter/Hana-Kami#readme",
+  "license": "https://github.com/TangerineSpecter/Hana-Kami/blob/main/LICENSE",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
@@ -281,7 +281,7 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "url": "https://munderdiffl.in/"
   },
   "image": "https://munderdiffl.in/media/og.png",
@@ -297,12 +297,12 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Munder Difflin",
+  "name": "Hana-Kami",
   "url": "https://munderdiffl.in/",
   "logo": "https://munderdiffl.in/logo.png",
   "description": "Open-source local multi-agent harness for Claude Code.",
   "sameAs": [
-    "https://github.com/chaitanyagiri/munder-difflin"
+    "https://github.com/TangerineSpecter/Hana-Kami"
   ]
 }
 ```
@@ -314,7 +314,7 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Munder Difflin",
+  "name": "Hana-Kami",
   "url": "https://munderdiffl.in/",
   "inLanguage": "en-US"
 }
@@ -324,7 +324,7 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Munder Difflin",
+  "name": "Hana-Kami",
   "url": "https://munderdiffl.in/",
   "potentialAction": {
     "@type": "SearchAction",
@@ -339,12 +339,12 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
 {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "name": "Munder Difflin Blog",
+  "name": "Hana-Kami Blog",
   "url": "https://munderdiffl.in/blog/",
   "description": "Guides and deep dives on running multi-agent Claude Code: orchestration, agent memory, automation, and tooling.",
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   }
 }
@@ -363,7 +363,7 @@ URL key: `/` = home, `#x` = home anchor, `/blog/...` = blog post (see BLOG_IDEAS
   "author": { "@type": "Person", "name": "‹Author name›" },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   },
   "mainEntityOfPage": {
@@ -434,7 +434,7 @@ Allow: /
 Sitemap: https://munderdiffl.in/sitemap.xml
 ```
 > Decision rationale: this is an open-source, awareness-stage product whose audience asks LLMs.
-> We **allow** AI crawlers on purpose so ChatGPT/Claude/Perplexity can cite Munder Difflin. If the
+> We **allow** AI crawlers on purpose so ChatGPT/Claude/Perplexity can cite Hana-Kami. If the
 > human wants to block training crawlers later, flip `GPTBot`/`Google-Extended`/`ClaudeBot` to
 > `Disallow: /` — note that also reduces citations.
 
@@ -481,13 +481,13 @@ Single-page site + blog. `<lastmod>` must be updated on real changes (don't fake
 ### 5.4 RSS feed plan
 - Serve `https://munderdiffl.in/blog/feed.xml` (Atom or RSS 2.0).
 - Link it from `<head>` on every page:
-  `<link rel="alternate" type="application/rss+xml" title="Munder Difflin Blog" href="https://munderdiffl.in/blog/feed.xml">`
+  `<link rel="alternate" type="application/rss+xml" title="Hana-Kami Blog" href="https://munderdiffl.in/blog/feed.xml">`
 - Include full or generous-excerpt content, `<pubDate>`, `<guid isPermaLink="true">` = post URL.
 - If Jekyll: add `jekyll-feed` (emits `/feed.xml`). Otherwise Angela's build emits it.
 
 ### 5.5 Image `alt` guidelines
 - Describe content + function, include a keyword **only when natural**. No keyword stuffing.
-- Good (already in repo): *"Munder Difflin running a floor of Claude Code agents — avatars at their desks, the GOD orchestrator in Michael's office, and a live terminal session."*
+- Good (already in repo): *"Hana-Kami running a floor of Claude Code agents — avatars at their desks, the GOD orchestrator in Michael's office, and a live terminal session."*
 - Decorative images (pure ornament): `alt=""`.
 - Blog hero images: `alt` = post topic in plain language, e.g. *"Diagram of a GOD orchestrator routing tasks to three Claude Code agents."*
 - Provide `width`/`height` on every `<img>` (prevents CLS — the repo already does this on the logo).
@@ -504,7 +504,7 @@ Single-page site + blog. `<lastmod>` must be updated on real changes (don't fake
 - **Pillars** = home anchors: `#what` (what is a harness), `#how` (orchestration), MemPalace (memory).
 - **Clusters** = blog posts. Every post links **up** to its pillar with a descriptive anchor
   (e.g. anchor text "multi-agent harness" → `/#what`) and **sideways** to 2–4 sibling posts.
-- Every post includes a contextual CTA link to `/#install` (download) with anchor "download Munder Difflin".
+- Every post includes a contextual CTA link to `/#install` (download) with anchor "download Hana-Kami".
 - Comparison/alternative posts link to the relevant guide posts and vice-versa.
 - Use descriptive anchor text, never "click here". The `Internal links` column in BLOG_IDEAS.md
   pre-specifies these for each post.
@@ -533,7 +533,7 @@ ai-orchestration · agent-memory · local-first · developer-tools · hive · mc
 > Keep the brand line, but ensure the **first sentence** contains the head keyword. Suggested:
 
 ```markdown
-**Munder Difflin is a local, open-source multi-agent harness for [Claude Code](https://claude.com/claude-code).**
+**Hana-Kami is a local, open-source multi-agent harness for [Claude Code](https://claude.com/claude-code).**
 It turns the Claude Code terminal sessions you already run into a self-coordinating **hive of
 autonomous agents** — each with long-term memory and a mailbox — coordinated by a **GOD orchestrator
 agent you talk to**, and visualized as avatars working a shared office floor. Run a whole office of
@@ -551,7 +551,7 @@ build while you do your thing.
 
 ### 6.6 Release SEO
 - Every GitHub Release gets a keyword-aware title + notes (the `releases/latest` URL is the download
-  target for `munder difflin download`). Tie into the existing release process
+  target for `hana-kami download`). Tie into the existing release process
   ([[release-process]]): tag `v*`, update landing page, CHANGELOG, RELEASE.md.
 
 ---
@@ -563,7 +563,7 @@ build while you do your thing.
 - [ ] **Google Search Console** — verify `munderdiffl.in`, submit `sitemap.xml`.
 - [ ] **Bing Webmaster Tools** — verify + submit sitemap (also feeds ChatGPT search).
 - [ ] **awesome-claude-code** and **awesome-ai-agents** lists — submit PRs (highest-intent dev traffic).
-- [ ] **Show HN** — "Show HN: Munder Difflin — run an office of Claude Code agents locally". Link site + repo.
+- [ ] **Show HN** — "Show HN: Hana-Kami — run an office of Claude Code agents locally". Link site + repo.
 - [ ] **Product Hunt** launch — gallery from `og.png` + the hero clip.
 - [ ] **Reddit** — r/ClaudeAI, r/LocalLLaMA, r/programming, r/SideProject (value-first posts, not spam).
 - [ ] **dev.to / Hashnode cross-posts** — republish 2–3 top blog posts with `rel=canonical` back to `munderdiffl.in/blog/...` (avoid duplicate-content dilution).
@@ -591,7 +591,7 @@ build while you do your thing.
    target).
 4. GitHub stars trend (proxy for awareness).
 5. **AEO check (manual, monthly):** ask ChatGPT/Claude/Perplexity *"how do I run multiple Claude
-   Code agents"* / *"Claude Squad alternative"* and log whether Munder Difflin is mentioned/cited.
+   Code agents"* / *"Claude Squad alternative"* and log whether Hana-Kami is mentioned/cited.
 
 **Cadence:** weekly GSC glance, monthly full review + AEO citation check.
 
@@ -607,7 +607,7 @@ front-matter, JSON, etc. — expose these fields):
 
 | Field | Maps to | Required |
 |---|---|---|
-| `title` | `<title>` (append ` — Munder Difflin`, keep ≤60 incl. suffix where possible) + `<h1>` + OG/Twitter title | ✅ |
+| `title` | `<title>` (append ` — Hana-Kami`, keep ≤60 incl. suffix where possible) + `<h1>` + OG/Twitter title | ✅ |
 | `description` | meta description (≤155) + OG/Twitter description | ✅ |
 | `slug` | URL `/blog/<slug>/` + canonical | ✅ |
 | `date` / `updated` | `article:published_time` / `dateModified` in BlogPosting | ✅ |
@@ -629,7 +629,7 @@ front-matter, JSON, etc. — expose these fields):
 5. `<link rel="alternate" type="application/rss+xml" href="https://munderdiffl.in/blog/feed.xml">`.
 6. Exactly one `<h1>`; descriptive, keyword-bearing `<h2>/<h3>`.
 7. Every post: a **TL;DR** at top, link **up to a home pillar anchor**, **2–4 sibling-post links**,
-   and a **"download Munder Difflin" CTA** to `/#install`.
+   and a **"download Hana-Kami" CTA** to `/#install`.
 8. Add each post's URL to `docs/sitemap.xml` and the blog index list on publish (no orphans).
 9. Images: `width`/`height` set, meaningful `alt`, lazy-load below the fold.
 10. Match the marketing site's neo-brutalist warm-paper system (Geist + JetBrains Mono, cream

@@ -151,24 +151,24 @@
     "youtube": []
   },
   "architecture-two-planes-one-renderer": {
-    "title": "Munder Difflin's Architecture: Two Data Planes, One Renderer",
+    "title": "Hana-Kami's Architecture: Two Data Planes, One Renderer",
     "category": "internals",
     "hero": {
       "file": "assets/media/architecture-two-planes-one-renderer/hero.png",
-      "alt": "Illustration: Munder Difflin's Architecture: Two Data Planes, One Renderer",
-      "prompt": "Hero image for a blog post titled \"Munder Difflin's Architecture: Two Data Planes, One Renderer\". The post is about: A walkthrough of the multi-agent harness architecture: a node-pty terminal plane and a hooks/hive event plane feeding one React + Pixi.js renderer.",
+      "alt": "Illustration: Hana-Kami's Architecture: Two Data Planes, One Renderer",
+      "prompt": "Hero image for a blog post titled \"Hana-Kami's Architecture: Two Data Planes, One Renderer\". The post is about: A walkthrough of the multi-agent harness architecture: a node-pty terminal plane and a hooks/hive event plane feeding one React + Pixi.js renderer.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/architecture-two-planes-one-renderer/note-1.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin's Architecture: Two Data Planes, One Renderer”",
+        "alt": "Hand-drawn sketch from “Hana-Kami's Architecture: Two Data Planes, One Renderer”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/architecture-two-planes-one-renderer/note-2.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin's Architecture: Two Data Planes, One Renderer”",
+        "alt": "Hand-drawn sketch from “Hana-Kami's Architecture: Two Data Planes, One Renderer”",
         "prompt": "",
         "status": "ready"
       }
@@ -231,7 +231,7 @@
     "hero": {
       "file": "assets/media/best-claude-code-multi-agent-tools/hero.png",
       "alt": "Illustration: The Best Tools to Run Multiple Claude Code Agents (2026)",
-      "prompt": "Hero image for a blog post titled \"The Best Tools to Run Multiple Claude Code Agents (2026)\". The post is about: An honest 2026 roundup of tools to run multiple Claude Code agents — Claude Squad, Conductor, Crystal, vibe-kanban, and Munder Difflin — compared.",
+      "prompt": "Hero image for a blog post titled \"The Best Tools to Run Multiple Claude Code Agents (2026)\". The post is about: An honest 2026 roundup of tools to run multiple Claude Code agents — Claude Squad, Conductor, Crystal, vibe-kanban, and Hana-Kami — compared.",
       "status": "ready"
     },
     "inline": {
@@ -456,7 +456,7 @@
     "hero": {
       "file": "assets/media/claude-code-multi-agent-setup-tutorial/hero.png",
       "alt": "Illustration: Set Up a Claude Code Multi-Agent Workflow in 10 Minutes",
-      "prompt": "Hero image for a blog post titled \"Set Up a Claude Code Multi-Agent Workflow in 10 Minutes\". The post is about: A from-zero Claude Code multi-agent setup: install Munder Difflin, onboard, spawn a few agents, and watch the GOD orchestrator route your first task.",
+      "prompt": "Hero image for a blog post titled \"Set Up a Claude Code Multi-Agent Workflow in 10 Minutes\". The post is about: A from-zero Claude Code multi-agent setup: install Hana-Kami, onboard, spawn a few agents, and watch the GOD orchestrator route your first task.",
       "status": "ready"
     },
     "inline": {
@@ -626,24 +626,24 @@
     "youtube": []
   },
   "claude-squad-vs-munder-difflin": {
-    "title": "Claude Squad vs Munder Difflin: Which Should You Use?",
+    "title": "Claude Squad vs Hana-Kami: Which Should You Use?",
     "category": "comparisons",
     "hero": {
       "file": "assets/media/claude-squad-vs-munder-difflin/hero.png",
-      "alt": "Illustration: Claude Squad vs Munder Difflin: Which Should You Use?",
-      "prompt": "Hero image for a blog post titled \"Claude Squad vs Munder Difflin: Which Should You Use?\". The post is about: Claude Squad vs Munder Difflin: a lean terminal session manager against a memory-backed, orchestrated, visual hive. Feature table and an honest verdict.",
+      "alt": "Illustration: Claude Squad vs Hana-Kami: Which Should You Use?",
+      "prompt": "Hero image for a blog post titled \"Claude Squad vs Hana-Kami: Which Should You Use?\". The post is about: Claude Squad vs Hana-Kami: a lean terminal session manager against a memory-backed, orchestrated, visual hive. Feature table and an honest verdict.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/claude-squad-vs-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “Claude Squad vs Munder Difflin: Which Should You Use?”",
+        "alt": "Hand-drawn sketch from “Claude Squad vs Hana-Kami: Which Should You Use?”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/claude-squad-vs-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “Claude Squad vs Munder Difflin: Which Should You Use?”",
+        "alt": "Hand-drawn sketch from “Claude Squad vs Hana-Kami: Which Should You Use?”",
         "prompt": "",
         "status": "ready"
       }
@@ -651,24 +651,24 @@
     "youtube": []
   },
   "cline-vs-munder-difflin": {
-    "title": "Cline vs Munder Difflin: In-Editor Agent or Local Hive?",
+    "title": "Cline vs Hana-Kami: In-Editor Agent or Local Hive?",
     "category": "comparisons",
     "hero": {
       "file": "assets/media/cline-vs-munder-difflin/hero.png",
-      "alt": "Illustration: Cline vs Munder Difflin: In-Editor Agent or Local Hive?",
-      "prompt": "Hero image for a blog post titled \"Cline vs Munder Difflin: In-Editor Agent or Local Hive?\". The post is about: A fair comparison of Cline and Munder Difflin — an in-editor BYOK coding agent vs a local multi-agent orchestration hive — and when to pick which.",
+      "alt": "Illustration: Cline vs Hana-Kami: In-Editor Agent or Local Hive?",
+      "prompt": "Hero image for a blog post titled \"Cline vs Hana-Kami: In-Editor Agent or Local Hive?\". The post is about: A fair comparison of Cline and Hana-Kami — an in-editor BYOK coding agent vs a local multi-agent orchestration hive — and when to pick which.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/cline-vs-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “Cline vs Munder Difflin: In-Editor Agent or Local Hive?”",
+        "alt": "Hand-drawn sketch from “Cline vs Hana-Kami: In-Editor Agent or Local Hive?”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/cline-vs-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “Cline vs Munder Difflin: In-Editor Agent or Local Hive?”",
+        "alt": "Hand-drawn sketch from “Cline vs Hana-Kami: In-Editor Agent or Local Hive?”",
         "prompt": "",
         "status": "ready"
       }
@@ -731,7 +731,7 @@
     "hero": {
       "file": "assets/media/command-center-guide/hero.png",
       "alt": "Illustration: The Command Center: Kanban, Fleet, and Budgets in One Place",
-      "prompt": "Hero image for a blog post titled \"The Command Center: Kanban, Fleet, and Budgets in One Place\". The post is about: A guide to Munder Difflin's Command Center — the task kanban, live fleet monitoring, per-agent budgets and cost telemetry — and when to watch the board instead of the floor.",
+      "prompt": "Hero image for a blog post titled \"The Command Center: Kanban, Fleet, and Budgets in One Place\". The post is about: A guide to Hana-Kami's Command Center — the task kanban, live fleet monitoring, per-agent budgets and cost telemetry — and when to watch the board instead of the floor.",
       "status": "ready"
     },
     "inline": {
@@ -931,7 +931,7 @@
     "hero": {
       "file": "assets/media/deploy-a-blog-writer-agent/hero.png",
       "alt": "Illustration: Deploy a Blog-Writer Agent: The One That Wrote This Post",
-      "prompt": "Hero image for a blog post titled \"Deploy a Blog-Writer Agent: The One That Wrote This Post\". The post is about: How Munder Difflin's blog is written by an automated writer agent in the hive — drafts in a worktree, single-committer integration, Eleventy build, human-gated deploy. Build your own.",
+      "prompt": "Hero image for a blog post titled \"Deploy a Blog-Writer Agent: The One That Wrote This Post\". The post is about: How Hana-Kami's blog is written by an automated writer agent in the hive — drafts in a worktree, single-committer integration, Eleventy build, human-gated deploy. Build your own.",
       "status": "ready"
     },
     "inline": {
@@ -956,7 +956,7 @@
     "hero": {
       "file": "assets/media/deploy-automated-pr-reviewer-agent/hero.png",
       "alt": "Illustration: Deploy a PR Reviewer That Never Sleeps — In About One Prompt",
-      "prompt": "Hero image for a blog post titled \"Deploy a PR Reviewer That Never Sleeps — In About One Prompt\". The post is about: A how-to for standing up a fully automated PR-reviewing agent in Munder Difflin — one that reads your real source (not just the PR description), de-dupes noise, and only escalates what matters. With a real triage run that turned 22 duplicate firings into a clean v0.2.5 patch queue.",
+      "prompt": "Hero image for a blog post titled \"Deploy a PR Reviewer That Never Sleeps — In About One Prompt\". The post is about: A how-to for standing up a fully automated PR-reviewing agent in Hana-Kami — one that reads your real source (not just the PR description), de-dupes noise, and only escalates what matters. With a real triage run that turned 22 duplicate firings into a clean v0.2.5 patch queue.",
       "status": "ready"
     },
     "inline": {
@@ -1001,24 +1001,24 @@
     "youtube": []
   },
   "does-the-june-2026-agent-sdk-change-affect-munder-difflin": {
-    "title": "Does the June 2026 Agent SDK Change Affect Munder Difflin?",
+    "title": "Does the June 2026 Agent SDK Change Affect Hana-Kami?",
     "category": "guides",
     "hero": {
       "file": "assets/media/does-the-june-2026-agent-sdk-change-affect-munder-difflin/hero.png",
-      "alt": "Illustration: Does the June 2026 Agent SDK Change Affect Munder Difflin?",
-      "prompt": "Hero image for a blog post titled \"Does the June 2026 Agent SDK Change Affect Munder Difflin?\". The post is about: From June 15, 2026 the Claude Agent SDK gets a separate credit. Munder Difflin drives the native Claude Code CLI, so your hive runs on your plan as before.",
+      "alt": "Illustration: Does the June 2026 Agent SDK Change Affect Hana-Kami?",
+      "prompt": "Hero image for a blog post titled \"Does the June 2026 Agent SDK Change Affect Hana-Kami?\". The post is about: From June 15, 2026 the Claude Agent SDK gets a separate credit. Hana-Kami drives the native Claude Code CLI, so your hive runs on your plan as before.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/does-the-june-2026-agent-sdk-change-affect-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “Does the June 2026 Agent SDK Change Affect Munder Difflin?”",
+        "alt": "Hand-drawn sketch from “Does the June 2026 Agent SDK Change Affect Hana-Kami?”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/does-the-june-2026-agent-sdk-change-affect-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “Does the June 2026 Agent SDK Change Affect Munder Difflin?”",
+        "alt": "Hand-drawn sketch from “Does the June 2026 Agent SDK Change Affect Hana-Kami?”",
         "prompt": "",
         "status": "ready"
       }
@@ -1231,7 +1231,7 @@
     "hero": {
       "file": "assets/media/hire-manifest-untrusted-input/hero.png",
       "alt": "Illustration: Treating a Hire Manifest as Untrusted Input",
-      "prompt": "Hero image for a blog post titled \"Treating a Hire Manifest as Untrusted Input\". The post is about: A shareable agent-config manifest is attacker input. How Munder Difflin's import pipeline stays inert: no auto-spawn, default-deny flags, and an SSRF-safe bounded fetch.",
+      "prompt": "Hero image for a blog post titled \"Treating a Hire Manifest as Untrusted Input\". The post is about: A shareable agent-config manifest is attacker input. How Hana-Kami's import pipeline stays inert: no auto-spawn, default-deny flags, and an SSRF-safe bounded fetch.",
       "status": "ready"
     },
     "inline": {
@@ -1406,7 +1406,7 @@
     "hero": {
       "file": "assets/media/how-to-add-an-mcp-server-to-claude-code/hero.png",
       "alt": "Illustration: How to Add an MCP Server to Claude Code",
-      "prompt": "Hero image for a blog post titled \"How to Add an MCP Server to Claude Code\". The post is about: The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin's Capabilities screen grants an MCP server to one agent at a time.",
+      "prompt": "Hero image for a blog post titled \"How to Add an MCP Server to Claude Code\". The post is about: The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami's Capabilities screen grants an MCP server to one agent at a time.",
       "status": "ready"
     },
     "inline": {
@@ -1481,7 +1481,7 @@
     "hero": {
       "file": "assets/media/how-to-hire-from-the-agent-gallery/hero.png",
       "alt": "Illustration: How to Hire From the Agent Gallery",
-      "prompt": "Hero image for a blog post titled \"How to Hire From the Agent Gallery\". The post is about: A practical guide to Munder Difflin's Agent Gallery: browse six off-the-shelf hires, import one from a link or file, review the pre-filled manifest, customize identity, workspace, engine, and briefing — then spawn it yourself.",
+      "prompt": "Hero image for a blog post titled \"How to Hire From the Agent Gallery\". The post is about: A practical guide to Hana-Kami's Agent Gallery: browse six off-the-shelf hires, import one from a link or file, review the pre-filled manifest, customize identity, workspace, engine, and briefing — then spawn it yourself.",
       "status": "ready"
     },
     "inline": {
@@ -1501,24 +1501,24 @@
     "youtube": []
   },
   "how-to-install-and-use-munder-difflin": {
-    "title": "How to Install and Use Munder Difflin: A Beginner's Guide",
+    "title": "How to Install and Use Hana-Kami: A Beginner's Guide",
     "category": "guides",
     "hero": {
       "file": "assets/media/how-to-install-and-use-munder-difflin/hero.png",
-      "alt": "The first Munder Difflin onboarding screen, asking whether you are technical or non-technical",
+      "alt": "The first Hana-Kami onboarding screen, asking whether you are technical or non-technical",
       "prompt": "",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/how-to-install-and-use-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “How to Install and Use Munder Difflin”",
+        "alt": "Hand-drawn sketch from “How to Install and Use Hana-Kami”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/how-to-install-and-use-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “How to Install and Use Munder Difflin”",
+        "alt": "Hand-drawn sketch from “How to Install and Use Hana-Kami”",
         "prompt": "",
         "status": "ready"
       },
@@ -1530,7 +1530,7 @@
       },
       "shot-download": {
         "file": "assets/media/how-to-install-and-use-munder-difflin/shot-download.png",
-        "alt": "The Munder Difflin download page showing builds for macOS, Windows and Linux",
+        "alt": "The Hana-Kami download page showing builds for macOS, Windows and Linux",
         "prompt": "",
         "status": "ready"
       },
@@ -1572,7 +1572,7 @@
       },
       "shot-floor": {
         "file": "assets/media/how-to-install-and-use-munder-difflin/shot-floor.png",
-        "alt": "The Munder Difflin office floor on a fresh setup, with Michael the orchestrator at his desk and the Command Center panel on the right",
+        "alt": "The Hana-Kami office floor on a fresh setup, with Michael the orchestrator at his desk and the Command Center panel on the right",
         "prompt": "",
         "status": "ready"
       },
@@ -1596,13 +1596,13 @@
       },
       "shot-settings": {
         "file": "assets/media/how-to-install-and-use-munder-difflin/shot-settings.png",
-        "alt": "The Munder Difflin settings panel with the Prerequisites section open, listing uv, git and Node.js as ready",
+        "alt": "The Hana-Kami settings panel with the Prerequisites section open, listing uv, git and Node.js as ready",
         "prompt": "",
         "status": "ready"
       },
       "shot-focus": {
         "file": "assets/media/how-to-install-and-use-munder-difflin/shot-focus.png",
-        "alt": "Munder Difflin in focus mode, showing a single agent's terminal at full width with the agent list on the left",
+        "alt": "Hana-Kami in focus mode, showing a single agent's terminal at full width with the agent list on the left",
         "prompt": "",
         "status": "ready"
       }
@@ -1665,7 +1665,7 @@
     "hero": {
       "file": "assets/media/how-to-talk-to-your-orchestrator/hero.png",
       "alt": "Illustration: How to Brief Your Orchestrator (So the Floor Actually Ships)",
-      "prompt": "Hero image for a blog post titled \"How to Brief Your Orchestrator (So the Floor Actually Ships)\". The post is about: A practical guide to briefing Munder Difflin's GOD orchestrator: state the goal not the steps, set constraints and budgets, name the deliverable, and let Michael staff the floor. With bad-vs-good brief examples, mid-run steering, and Talk mode.",
+      "prompt": "Hero image for a blog post titled \"How to Brief Your Orchestrator (So the Floor Actually Ships)\". The post is about: A practical guide to briefing Hana-Kami's GOD orchestrator: state the goal not the steps, set constraints and budgets, name the deliverable, and let Michael staff the floor. With bad-vs-good brief examples, mid-run steering, and Talk mode.",
       "status": "ready"
     },
     "inline": {
@@ -1715,7 +1715,7 @@
     "hero": {
       "file": "assets/media/how-to-use-the-built-in-monaco-ide/hero.png",
       "alt": "Illustration: How to Use the Built-in Monaco IDE",
-      "prompt": "Hero image for a blog post titled \"How to Use the Built-in Monaco IDE\". The post is about: A practical walkthrough of Munder Difflin v0.3.3's built-in Monaco IDE: the title-bar IDE button, the git CHANGES rail with side-by-side diffs vs HEAD, the file tree, tabs, Cmd/Ctrl+S save — and the agent review workflow it enables.",
+      "prompt": "Hero image for a blog post titled \"How to Use the Built-in Monaco IDE\". The post is about: A practical walkthrough of Hana-Kami v0.3.3's built-in Monaco IDE: the title-bar IDE button, the git CHANGES rail with side-by-side diffs vs HEAD, the file tree, tabs, Cmd/Ctrl+S save — and the agent review workflow it enables.",
       "status": "ready"
     },
     "inline": {
@@ -1860,24 +1860,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-2-0": {
-    "title": "Launching Munder Difflin v0.2.0",
+    "title": "Launching Hana-Kami v0.2.0",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-2-0/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.2.0",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.2.0\". The post is about: Munder Difflin v0.2.0 is here: a Command Center overhaul, per-agent token budgets, live OpenTelemetry observability, a circuit breaker, durable SQLite persistence, and a big round of community fixes.",
+      "alt": "Illustration: Launching Hana-Kami v0.2.0",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.2.0\". The post is about: Hana-Kami v0.2.0 is here: a Command Center overhaul, per-agent token budgets, live OpenTelemetry observability, a circuit breaker, durable SQLite persistence, and a big round of community fixes.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-2-0/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.2.0”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.2.0”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-2-0/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.2.0”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.2.0”",
         "prompt": "",
         "status": "ready"
       }
@@ -1885,24 +1885,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-2-4": {
-    "title": "Launching Munder Difflin v0.2.4",
+    "title": "Launching Hana-Kami v0.2.4",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-2-4/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.2.4",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.2.4\". The post is about: Munder Difflin v0.2.4 is here: Claude Code, OpenAI Codex, and Antigravity (Gemini) agents now run as one hive with full parity — no API keys, no setup. Brief a GOD orchestrator, automate basically anything in one prompt, and close the lid while it keeps working.",
+      "alt": "Illustration: Launching Hana-Kami v0.2.4",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.2.4\". The post is about: Hana-Kami v0.2.4 is here: Claude Code, OpenAI Codex, and Antigravity (Gemini) agents now run as one hive with full parity — no API keys, no setup. Brief a GOD orchestrator, automate basically anything in one prompt, and close the lid while it keeps working.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-2-4/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.2.4”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.2.4”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-2-4/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.2.4”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.2.4”",
         "prompt": "",
         "status": "ready"
       }
@@ -1910,24 +1910,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-2-8": {
-    "title": "Launching Munder Difflin v0.2.8: Shareable Hires",
+    "title": "Launching Hana-Kami v0.2.8: Shareable Hires",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-2-8/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.2.8: Shareable Hires",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.2.8: Shareable Hires\". The post is about: Munder Difflin v0.2.8 ships Shareable Hires: a one-click, portable agent role manifest + The Hiring Fair gallery. Click a hire link, review every field, then spawn it yourself.",
+      "alt": "Illustration: Launching Hana-Kami v0.2.8: Shareable Hires",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.2.8: Shareable Hires\". The post is about: Hana-Kami v0.2.8 ships Shareable Hires: a one-click, portable agent role manifest + The Hiring Fair gallery. Click a hire link, review every field, then spawn it yourself.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-2-8/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.2.8: Shareable Hires”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.2.8: Shareable Hires”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-2-8/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.2.8: Shareable Hires”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.2.8: Shareable Hires”",
         "prompt": "",
         "status": "ready"
       }
@@ -1935,24 +1935,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-3-0": {
-    "title": "Launching Munder Difflin v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers",
+    "title": "Launching Hana-Kami v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-3-0/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers\". The post is about: Munder Difflin v0.3.0 makes every hire — and Michael himself — a pluggable engine, adds an integrations registry with a write-only secret broker, and lets the god orchestrator spawn an ephemeral worker straight from Slack.",
+      "alt": "Illustration: Launching Hana-Kami v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers\". The post is about: Hana-Kami v0.3.0 makes every hire — and Michael himself — a pluggable engine, adds an integrations registry with a write-only secret broker, and lets the god orchestrator spawn an ephemeral worker straight from Slack.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-3-0/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-3-0/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.0: Selectable Engines, Integrations & Slack-Spawned Workers”",
         "prompt": "",
         "status": "ready"
       }
@@ -1960,24 +1960,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-3-2": {
-    "title": "Launching Munder Difflin v0.3.2: Talk to Michael, a Realtime Voice Orchestrator",
+    "title": "Launching Hana-Kami v0.3.2: Talk to Michael, a Realtime Voice Orchestrator",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-3-2/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.3.2: Talk to Michael, a Realtime Voice Orchestrator",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.3.2: Talk to Michael, a Realtime Voice Orchestrator\". The post is about: Munder Difflin v0.3.2 adds Realtime Michael — a low-latency voice channel to the GOD orchestrator. Talk to Michael and he listens, answers, and acts: reading the hive and, behind spoken echo-back confirmation, dispatching, spawning, and steering the floor in real time.",
+      "alt": "Illustration: Launching Hana-Kami v0.3.2: Talk to Michael, a Realtime Voice Orchestrator",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.3.2: Talk to Michael, a Realtime Voice Orchestrator\". The post is about: Hana-Kami v0.3.2 adds Realtime Michael — a low-latency voice channel to the GOD orchestrator. Talk to Michael and he listens, answers, and acts: reading the hive and, behind spoken echo-back confirmation, dispatching, spawning, and steering the floor in real time.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-3-2/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.2: Talk to Michael, a Realtime Voice Orchestrator”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.2: Talk to Michael, a Realtime Voice Orchestrator”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-3-2/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.2: Talk to Michael, a Realtime Voice Orchestrator”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.2: Talk to Michael, a Realtime Voice Orchestrator”",
         "prompt": "",
         "status": "ready"
       }
@@ -1985,24 +1985,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-3-3": {
-    "title": "Launching Munder Difflin v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support",
+    "title": "Launching Hana-Kami v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-3-3/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support\". The post is about: Munder Difflin v0.3.3 adds a full Monaco IDE — file tree, editor tabs, save, and side-by-side git diffs of your agents' changes — plus GitHub Copilot CLI as a first-class agent engine, our first community-contributed provider.",
+      "alt": "Illustration: Launching Hana-Kami v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support\". The post is about: Hana-Kami v0.3.3 adds a full Monaco IDE — file tree, editor tabs, save, and side-by-side git diffs of your agents' changes — plus GitHub Copilot CLI as a first-class agent engine, our first community-contributed provider.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-3-3/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-3-3/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support”",
         "prompt": "",
         "status": "ready"
       }
@@ -2010,24 +2010,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-3-5": {
-    "title": "Launching Munder Difflin v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself",
+    "title": "Launching Hana-Kami v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-3-5/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself\". The post is about: The v0.3.4 + v0.3.5 wave: voice orchestration with live floor context and full app control, markdown previews everywhere, commit history and branch compare in the built-in IDE, a six-tab Settings redesign, xAI Grok and Kimi Code engines, auto-update, and a queue that always has an escape hatch.",
+      "alt": "Illustration: Launching Hana-Kami v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself\". The post is about: The v0.3.4 + v0.3.5 wave: voice orchestration with live floor context and full app control, markdown previews everywhere, commit history and branch compare in the built-in IDE, a six-tab Settings redesign, xAI Grok and Kimi Code engines, auto-update, and a queue that always has an escape hatch.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-3-5/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-3-5/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself”",
         "prompt": "",
         "status": "ready"
       }
@@ -2035,30 +2035,30 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-4-4": {
-    "title": "Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk",
+    "title": "Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-4-4/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk\". The post is about: v0.4.4 fixes the bug that silently broke agent-to-agent messaging on Windows, starts hive services on the very first run, rebuilds dark mode so you can read it, and adds a 227-skill catalog, a Prerequisites page, and designed release notes.",
+      "alt": "Illustration: Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk\". The post is about: v0.4.4 fixes the bug that silently broke agent-to-agent messaging on Windows, starts hive services on the very first run, rebuilds dark mode so you can read it, and adds a 227-skill catalog, a Prerequisites page, and designed release notes.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-4-4/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-4-4/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk”",
         "prompt": "",
         "status": "ready"
       },
       "note-3": {
         "file": "assets/media/launching-munder-difflin-v0-4-4/note-3.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk”",
         "prompt": "",
         "status": "ready"
       }
@@ -2066,30 +2066,30 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-4-6": {
-    "title": "Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now",
+    "title": "Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-4-6/hero.png",
-      "alt": "Illustration: Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now",
-      "prompt": "Hero image for a blog post titled \"Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now\". The post is about: v0.4.6 adds Chinese and Arabic interfaces with right-to-left support, ships its fonts inside the app so nothing is fetched from Google, and makes the updater actually update itself instead of pointing at a download page.",
+      "alt": "Illustration: Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now",
+      "prompt": "Hero image for a blog post titled \"Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now\". The post is about: v0.4.6 adds Chinese and Arabic interfaces with right-to-left support, ships its fonts inside the app so nothing is fetched from Google, and makes the updater actually update itself instead of pointing at a download page.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-4-6/note-1.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-4-6/note-2.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now”",
         "prompt": "",
         "status": "ready"
       },
       "note-3": {
         "file": "assets/media/launching-munder-difflin-v0-4-6/note-3.png",
-        "alt": "Hand-drawn sketch from “Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now”",
+        "alt": "Hand-drawn sketch from “Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now”",
         "prompt": "",
         "status": "ready"
       }
@@ -2097,24 +2097,24 @@
     "youtube": []
   },
   "launching-munder-difflin-v0-5-2": {
-    "title": "Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6",
+    "title": "Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6",
     "category": "story",
     "hero": {
       "file": "assets/media/launching-munder-difflin-v0-5-2/hero.png",
-      "alt": "Illustration: Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6",
-      "prompt": "Hero image for a blog post titled \"Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6\". The post is about: Munder Difflin 0.5.2 is out: how to install it, how to start Pro, what Pro adds, what changed since 0.4.6, and the end of signed Community builds.",
+      "alt": "Illustration: Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6",
+      "prompt": "Hero image for a blog post titled \"Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6\". The post is about: Hana-Kami 0.5.2 is out: how to install it, how to start Pro, what Pro adds, what changed since 0.4.6, and the end of signed Community builds.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/launching-munder-difflin-v0-5-2/note-1.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6”",
+        "alt": "Hand-drawn sketch from “Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/launching-munder-difflin-v0-5-2/note-2.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6”",
+        "alt": "Hand-drawn sketch from “Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6”",
         "prompt": "",
         "status": "ready"
       }
@@ -2347,18 +2347,18 @@
     "youtube": []
   },
   "munder-difflin-faq": {
-    "title": "Munder Difflin FAQ: Everything People Ask",
+    "title": "Hana-Kami FAQ: Everything People Ask",
     "category": "concepts",
     "hero": {
       "file": "assets/media/munder-difflin-faq/hero.png",
-      "alt": "Illustration: Munder Difflin FAQ: Everything People Ask",
-      "prompt": "Hero image for a blog post titled \"Munder Difflin FAQ: Everything People Ask\". The post is about: Answers to the top Munder Difflin questions — what it is, is it free, does it run locally, which platforms, and how it differs from many terminals.",
+      "alt": "Illustration: Hana-Kami FAQ: Everything People Ask",
+      "prompt": "Hero image for a blog post titled \"Hana-Kami FAQ: Everything People Ask\". The post is about: Answers to the top Hana-Kami questions — what it is, is it free, does it run locally, which platforms, and how it differs from many terminals.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/munder-difflin-faq/note-1.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin FAQ: Everything People Ask”",
+        "alt": "Hand-drawn sketch from “Hana-Kami FAQ: Everything People Ask”",
         "prompt": "",
         "status": "ready"
       }
@@ -2366,24 +2366,24 @@
     "youtube": []
   },
   "munder-difflin-v0-2-4-feature-walkthrough": {
-    "title": "Munder Difflin v0.2.4 Feature Walkthrough",
+    "title": "Hana-Kami v0.2.4 Feature Walkthrough",
     "category": "guides",
     "hero": {
       "file": "assets/media/munder-difflin-v0-2-4-feature-walkthrough/hero.png",
-      "alt": "Illustration: Munder Difflin v0.2.4 Feature Walkthrough",
-      "prompt": "Hero image for a blog post titled \"Munder Difflin v0.2.4 Feature Walkthrough\". The post is about: A comprehensive guide to every change in Munder Difflin v0.2.4 — how the Codex lifecycle-hook bridge achieves full hive parity, what the Schedules tab adds, why tunnelmole replaced localtunnel, and what else shipped.",
+      "alt": "Illustration: Hana-Kami v0.2.4 Feature Walkthrough",
+      "prompt": "Hero image for a blog post titled \"Hana-Kami v0.2.4 Feature Walkthrough\". The post is about: A comprehensive guide to every change in Hana-Kami v0.2.4 — how the Codex lifecycle-hook bridge achieves full hive parity, what the Schedules tab adds, why tunnelmole replaced localtunnel, and what else shipped.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/munder-difflin-v0-2-4-feature-walkthrough/note-1.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin v0.2.4 Feature Walkthrough”",
+        "alt": "Hand-drawn sketch from “Hana-Kami v0.2.4 Feature Walkthrough”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/munder-difflin-v0-2-4-feature-walkthrough/note-2.png",
-        "alt": "Hand-drawn sketch from “Munder Difflin v0.2.4 Feature Walkthrough”",
+        "alt": "Hand-drawn sketch from “Hana-Kami v0.2.4 Feature Walkthrough”",
         "prompt": "",
         "status": "ready"
       }
@@ -2421,7 +2421,7 @@
     "hero": {
       "file": "assets/media/number-five-on-product-hunt/hero.png",
       "alt": "Illustration: Nº 5 Product of the Day: How Our First Product Hunt Launch Went",
-      "prompt": "Hero image for a blog post titled \"Nº 5 Product of the Day: Our Product Hunt Launch, by the Numbers\". The post is about: Munder Difflin finished #5 Product of the Day on Product Hunt — ahead of DeepSeek's harness launch that day. Here's what actually happened: the numbers, the people who showed up, and the two pieces of feedback we're already shipping fixes for.",
+      "prompt": "Hero image for a blog post titled \"Nº 5 Product of the Day: Our Product Hunt Launch, by the Numbers\". The post is about: Hana-Kami finished #5 Product of the Day on Product Hunt — ahead of DeepSeek's harness launch that day. Here's what actually happened: the numbers, the people who showed up, and the two pieces of feedback we're already shipping fixes for.",
       "status": "ready"
     },
     "inline": {
@@ -2496,7 +2496,7 @@
     "hero": {
       "file": "assets/media/one-prompt-automated-pr-review/hero.png",
       "alt": "Illustration: One Prompt, Five PR Reviews, and an Hourly Automation — A Dogfooding Story",
-      "prompt": "Hero image for a blog post titled \"One Prompt, Five PR Reviews, and an Hourly Automation — A Dogfooding Story\". The post is about: How a single prompt to the Munder Difflin god agent reviewed all open PRs and set up a recurring hourly PR reviewer — while the repo was blowing up with 400+ stars.",
+      "prompt": "Hero image for a blog post titled \"One Prompt, Five PR Reviews, and an Hourly Automation — A Dogfooding Story\". The post is about: How a single prompt to the Hana-Kami god agent reviewed all open PRs and set up a recurring hourly PR reviewer — while the repo was blowing up with 400+ stars.",
       "status": "ready"
     },
     "inline": {
@@ -2541,24 +2541,24 @@
     "youtube": []
   },
   "orca-vs-munder-difflin": {
-    "title": "Orca vs Munder Difflin: Agent IDE or Agent Office?",
+    "title": "Orca vs Hana-Kami: Agent IDE or Agent Office?",
     "category": "comparisons",
     "hero": {
       "file": "assets/media/orca-vs-munder-difflin/hero.png",
-      "alt": "Illustration: Orca vs Munder Difflin: Agent IDE or Agent Office?",
-      "prompt": "Hero image for a blog post titled \"Orca vs Munder Difflin: Agent IDE or Agent Office?\". The post is about: Orca is a YC-backed Agent IDE for driving coding agents side by side in isolated worktrees. Munder Difflin is an agent office that runs itself. An honest comparison of the two — and when each one is the right pick.",
+      "alt": "Illustration: Orca vs Hana-Kami: Agent IDE or Agent Office?",
+      "prompt": "Hero image for a blog post titled \"Orca vs Hana-Kami: Agent IDE or Agent Office?\". The post is about: Orca is a YC-backed Agent IDE for driving coding agents side by side in isolated worktrees. Hana-Kami is an agent office that runs itself. An honest comparison of the two — and when each one is the right pick.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/orca-vs-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “Orca vs Munder Difflin: Agent IDE or Agent Office?”",
+        "alt": "Hand-drawn sketch from “Orca vs Hana-Kami: Agent IDE or Agent Office?”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/orca-vs-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “Orca vs Munder Difflin: Agent IDE or Agent Office?”",
+        "alt": "Hand-drawn sketch from “Orca vs Hana-Kami: Agent IDE or Agent Office?”",
         "prompt": "",
         "status": "ready"
       }
@@ -2616,24 +2616,24 @@
     "youtube": []
   },
   "qm-vs-munder-difflin": {
-    "title": "qm vs Munder Difflin: YC's Multiplayer Harness or a Local-First Agent Office?",
+    "title": "qm vs Hana-Kami: YC's Multiplayer Harness or a Local-First Agent Office?",
     "category": "comparisons",
     "hero": {
       "file": "assets/media/qm-vs-munder-difflin/hero.png",
-      "alt": "Illustration: qm vs Munder Difflin: YC's Multiplayer Harness or a Local-First Agent Office?",
-      "prompt": "Hero image for a blog post titled \"qm vs Munder Difflin: YC's Multiplayer Harness or a Local-First Agent Office?\". The post is about: An honest comparison of YC's qm and Munder Difflin: both orchestrate fleets of CLI coding agents with security postures, scheduled background work, and Slack — one as a headless multiplayer harness for teams, one as a local-first desktop office with real terminals, voice, and a built-in IDE.",
+      "alt": "Illustration: qm vs Hana-Kami: YC's Multiplayer Harness or a Local-First Agent Office?",
+      "prompt": "Hero image for a blog post titled \"qm vs Hana-Kami: YC's Multiplayer Harness or a Local-First Agent Office?\". The post is about: An honest comparison of YC's qm and Hana-Kami: both orchestrate fleets of CLI coding agents with security postures, scheduled background work, and Slack — one as a headless multiplayer harness for teams, one as a local-first desktop office with real terminals, voice, and a built-in IDE.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/qm-vs-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “qm vs Munder Difflin: YC's Multiplayer Harness or a Local-First Agent Office?”",
+        "alt": "Hand-drawn sketch from “qm vs Hana-Kami: YC's Multiplayer Harness or a Local-First Agent Office?”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/qm-vs-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “qm vs Munder Difflin: YC's Multiplayer Harness or a Local-First Agent Office?”",
+        "alt": "Hand-drawn sketch from “qm vs Hana-Kami: YC's Multiplayer Harness or a Local-First Agent Office?”",
         "prompt": "",
         "status": "ready"
       }
@@ -2696,7 +2696,7 @@
     "hero": {
       "file": "assets/media/review-agent-work-where-it-happens/hero.png",
       "alt": "Illustration: Review Agent Work Where It Happens",
-      "prompt": "Hero image for a blog post titled \"Review Agent Work Where It Happens\". The post is about: AI agents produce diffs faster than humans can review them, and alt-tabbing to an external editor breaks supervision flow. The case for review-in-place: Munder Difflin's built-in Monaco IDE puts a CHANGES rail and side-by-side diffs vs HEAD right on the office floor.",
+      "prompt": "Hero image for a blog post titled \"Review Agent Work Where It Happens\". The post is about: AI agents produce diffs faster than humans can review them, and alt-tabbing to an external editor breaks supervision flow. The case for review-in-place: Hana-Kami's built-in Monaco IDE puts a CHANGES rail and side-by-side diffs vs HEAD right on the office floor.",
       "status": "ready"
     },
     "inline": {
@@ -2721,7 +2721,7 @@
     "hero": {
       "file": "assets/media/run-a-mixed-engine-office/hero.png",
       "alt": "Illustration: Run a Mixed-Engine Office: the Right CLI for Every Desk",
-      "prompt": "Hero image for a blog post titled \"Run a Mixed-Engine Office: the Right CLI for Every Desk\". The post is about: A practical guide to mixing agent engines on one Munder Difflin floor: Claude Code as orchestrator, Codex for coding bursts, Copilot for dispatched tasks, and OpenCode/Crush/pi.dev for BYOK keys and local models.",
+      "prompt": "Hero image for a blog post titled \"Run a Mixed-Engine Office: the Right CLI for Every Desk\". The post is about: A practical guide to mixing agent engines on one Hana-Kami floor: Claude Code as orchestrator, Codex for coding bursts, Copilot for dispatched tasks, and OpenCode/Crush/pi.dev for BYOK keys and local models.",
       "status": "ready"
     },
     "inline": {
@@ -2771,7 +2771,7 @@
     "hero": {
       "file": "assets/media/run-ai-agent-hive-from-slack-setup/hero.png",
       "alt": "Illustration: Run Your AI Agent Hive from Slack: The Complete Setup",
-      "prompt": "Hero image for a blog post titled \"Run Your AI Agent Hive from Slack: The Complete Setup\". The post is about: Step-by-step setup for driving Munder Difflin's AI agent hive from Slack: create the app, set scopes, paste the tunnel Request URL, and @mention your bot to start work — done-summaries post back in-thread.",
+      "prompt": "Hero image for a blog post titled \"Run Your AI Agent Hive from Slack: The Complete Setup\". The post is about: Step-by-step setup for driving Hana-Kami's AI agent hive from Slack: create the app, set scopes, paste the tunnel Request URL, and @mention your bot to start work — done-summaries post back in-thread.",
       "status": "ready"
     },
     "inline": {
@@ -2816,24 +2816,24 @@
     "youtube": []
   },
   "run-munder-difflin-on-a-mac-mini": {
-    "title": "Run Munder Difflin Locally on a Mac Mini",
+    "title": "Run Hana-Kami Locally on a Mac Mini",
     "category": "guides",
     "hero": {
       "file": "assets/media/run-munder-difflin-on-a-mac-mini/hero.png",
-      "alt": "Illustration: Run Munder Difflin Locally on a Mac Mini",
-      "prompt": "Hero image for a blog post titled \"Run Munder Difflin Locally on a Mac Mini\". The post is about: A step-by-step guide to running a whole Munder Difflin hive offline on an Apple Silicon Mac Mini — how to size models to your unified memory, install Ollama or LM Studio, and wire OpenCode and Crush to a local endpoint.",
+      "alt": "Illustration: Run Hana-Kami Locally on a Mac Mini",
+      "prompt": "Hero image for a blog post titled \"Run Hana-Kami Locally on a Mac Mini\". The post is about: A step-by-step guide to running a whole Hana-Kami hive offline on an Apple Silicon Mac Mini — how to size models to your unified memory, install Ollama or LM Studio, and wire OpenCode and Crush to a local endpoint.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/run-munder-difflin-on-a-mac-mini/note-1.png",
-        "alt": "Hand-drawn sketch from “Run Munder Difflin Locally on a Mac Mini”",
+        "alt": "Hand-drawn sketch from “Run Hana-Kami Locally on a Mac Mini”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/run-munder-difflin-on-a-mac-mini/note-2.png",
-        "alt": "Hand-drawn sketch from “Run Munder Difflin Locally on a Mac Mini”",
+        "alt": "Hand-drawn sketch from “Run Hana-Kami Locally on a Mac Mini”",
         "prompt": "",
         "status": "ready"
       }
@@ -2841,24 +2841,24 @@
     "youtube": []
   },
   "run-munder-difflin-on-open-models": {
-    "title": "Run Munder Difflin on Open-Source Models — Fully Local or via a Third-Party Provider",
+    "title": "Run Hana-Kami on Open-Source Models — Fully Local or via a Third-Party Provider",
     "category": "guides",
     "hero": {
       "file": "assets/media/run-munder-difflin-on-open-models/hero.png",
-      "alt": "Illustration: Run Munder Difflin on Open-Source Models — Fully Local or via a Third-Party Provider",
-      "prompt": "Hero image for a blog post titled \"Run Munder Difflin on Open-Source Models — Fully Local or via a Third-Party Provider\". The post is about: Munder Difflin v0.3.1 runs your agent floor on open-weight models — gpt-oss, Qwen3, DeepSeek, Llama, Mistral, GLM, Kimi — either fully local (Ollama/LM Studio/vLLM) or through a third-party OSS provider. Here's how to wire each across the OpenCode, Crush, and pi engines.",
+      "alt": "Illustration: Run Hana-Kami on Open-Source Models — Fully Local or via a Third-Party Provider",
+      "prompt": "Hero image for a blog post titled \"Run Hana-Kami on Open-Source Models — Fully Local or via a Third-Party Provider\". The post is about: Hana-Kami v0.3.1 runs your agent floor on open-weight models — gpt-oss, Qwen3, DeepSeek, Llama, Mistral, GLM, Kimi — either fully local (Ollama/LM Studio/vLLM) or through a third-party OSS provider. Here's how to wire each across the OpenCode, Crush, and pi engines.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/run-munder-difflin-on-open-models/note-1.png",
-        "alt": "Hand-drawn sketch from “Run Munder Difflin on Open-Source Models — Fully Local or via a Third-Party Provider”",
+        "alt": "Hand-drawn sketch from “Run Hana-Kami on Open-Source Models — Fully Local or via a Third-Party Provider”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/run-munder-difflin-on-open-models/note-2.png",
-        "alt": "Hand-drawn sketch from “Run Munder Difflin on Open-Source Models — Fully Local or via a Third-Party Provider”",
+        "alt": "Hand-drawn sketch from “Run Hana-Kami on Open-Source Models — Fully Local or via a Third-Party Provider”",
         "prompt": "",
         "status": "ready"
       }
@@ -3172,24 +3172,24 @@
     "youtube": []
   },
   "the-office-parody-behind-munder-difflin": {
-    "title": "The Office Parody Behind Munder Difflin (and Why It Helps)",
+    "title": "The Office Parody Behind Hana-Kami (and Why It Helps)",
     "category": "story",
     "hero": {
       "file": "assets/media/the-office-parody-behind-munder-difflin/hero.png",
-      "alt": "Illustration: The Office Parody Behind Munder Difflin (and Why It Helps)",
-      "prompt": "Hero image for a blog post titled \"The Office Parody Behind Munder Difflin (and Why It Helps)\". The post is about: Why Munder Difflin is a loving parody of The Office — and how the office metaphor makes a hive of AI agents genuinely easier to understand and trust.",
+      "alt": "Illustration: The Office Parody Behind Hana-Kami (and Why It Helps)",
+      "prompt": "Hero image for a blog post titled \"The Office Parody Behind Hana-Kami (and Why It Helps)\". The post is about: Why Hana-Kami is a loving parody of The Office — and how the office metaphor makes a hive of AI agents genuinely easier to understand and trust.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/the-office-parody-behind-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “The Office Parody Behind Munder Difflin (and Why It Helps)”",
+        "alt": "Hand-drawn sketch from “The Office Parody Behind Hana-Kami (and Why It Helps)”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/the-office-parody-behind-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “The Office Parody Behind Munder Difflin (and Why It Helps)”",
+        "alt": "Hand-drawn sketch from “The Office Parody Behind Hana-Kami (and Why It Helps)”",
         "prompt": "",
         "status": "ready"
       }
@@ -3252,7 +3252,7 @@
     "hero": {
       "file": "assets/media/trigger-ai-agents-from-github-webhook/hero.png",
       "alt": "Illustration: How to Trigger Your AI Agent Hive from a GitHub Webhook",
-      "prompt": "Hero image for a blog post titled \"How to Trigger Your AI Agent Hive from a GitHub Webhook\". The post is about: Wire a GitHub webhook to Munder Difflin: a secret-gated local endpoint turns each repo event into a task for your GOD orchestrator — POST a message, get a token, poll the result. No server to host.",
+      "prompt": "Hero image for a blog post titled \"How to Trigger Your AI Agent Hive from a GitHub Webhook\". The post is about: Wire a GitHub webhook to Hana-Kami: a secret-gated local endpoint turns each repo event into a task for your GOD orchestrator — POST a message, get a token, poll the result. No server to host.",
       "status": "ready"
     },
     "inline": {
@@ -3377,7 +3377,7 @@
     "hero": {
       "file": "assets/media/voice-as-a-control-plane-for-agent-fleets/hero.png",
       "alt": "Illustration: Voice Is a Control Plane, Not a Gimmick",
-      "prompt": "Hero image for a blog post titled \"Voice Is a Control Plane, Not a Gimmick\". The post is about: Voice is a terrible way to write code and a great way to run a fleet. Why low-bandwidth commands over high-bandwidth work is the right split — with Munder Difflin's Talk mode (echo-back confirmation, spend caps, michael-voice attribution) as the case study.",
+      "prompt": "Hero image for a blog post titled \"Voice Is a Control Plane, Not a Gimmick\". The post is about: Voice is a terrible way to write code and a great way to run a fleet. Why low-bandwidth commands over high-bandwidth work is the right split — with Hana-Kami's Talk mode (echo-back confirmation, spend caps, michael-voice attribution) as the case study.",
       "status": "ready"
     },
     "inline": {
@@ -3402,7 +3402,7 @@
     "hero": {
       "file": "assets/media/we-opened-a-discord/hero.png",
       "alt": "Illustration: We Opened a Discord (Merge a PR, Become Employee of the Month)",
-      "prompt": "Hero image for a blog post titled \"We Opened a Discord (Merge a PR, Become Employee of the Month)\". The post is about: Munder Difflin has a Discord now. Come watch releases land, get help with your floor, and earn the most thematically necessary contributor role in open source.",
+      "prompt": "Hero image for a blog post titled \"We Opened a Discord (Merge a PR, Become Employee of the Month)\". The post is about: Hana-Kami has a Discord now. Come watch releases land, get help with your floor, and earn the most thematically necessary contributor role in open source.",
       "status": "ready"
     },
     "inline": {
@@ -3552,7 +3552,7 @@
     "hero": {
       "file": "assets/media/what-is-harness-engineering/hero.png",
       "alt": "Illustration: What Is Harness Engineering?",
-      "prompt": "Hero image for a blog post titled \"What Is Harness Engineering?\". The post is about: Harness engineering is the discipline of building everything around the model — PTY plumbing, lifecycle hooks, mailboxes, memory, budgets, human gates, observability — because that's where agent reliability actually comes from. A definition, and four case studies from inside Munder Difflin.",
+      "prompt": "Hero image for a blog post titled \"What Is Harness Engineering?\". The post is about: Harness engineering is the discipline of building everything around the model — PTY plumbing, lifecycle hooks, mailboxes, memory, budgets, human gates, observability — because that's where agent reliability actually comes from. A definition, and four case studies from inside Hana-Kami.",
       "status": "ready"
     },
     "inline": {
@@ -3597,24 +3597,24 @@
     "youtube": []
   },
   "what-reddit-told-us-about-munder-difflin": {
-    "title": "What Reddit Told Us About Munder Difflin",
+    "title": "What Reddit Told Us About Hana-Kami",
     "category": "story",
     "hero": {
       "file": "assets/media/what-reddit-told-us-about-munder-difflin/hero.png",
-      "alt": "Illustration: What Reddit Told Us About Munder Difflin",
-      "prompt": "Hero image for a blog post titled \"What 516 Reddit Comments Told Us About Munder Difflin\". The post is about: We launched across ten subreddits, collected 2,233 combined upvotes and 516 comments, and then read every single one. What landed, what got roasted, and what we shipped because of it.",
+      "alt": "Illustration: What Reddit Told Us About Hana-Kami",
+      "prompt": "Hero image for a blog post titled \"What 516 Reddit Comments Told Us About Hana-Kami\". The post is about: We launched across ten subreddits, collected 2,233 combined upvotes and 516 comments, and then read every single one. What landed, what got roasted, and what we shipped because of it.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/what-reddit-told-us-about-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “What Reddit Told Us About Munder Difflin”",
+        "alt": "Hand-drawn sketch from “What Reddit Told Us About Hana-Kami”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/what-reddit-told-us-about-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “What Reddit Told Us About Munder Difflin”",
+        "alt": "Hand-drawn sketch from “What Reddit Told Us About Hana-Kami”",
         "prompt": "",
         "status": "ready"
       }
@@ -3647,24 +3647,24 @@
     "youtube": []
   },
   "whats-up-with-munder-difflin": {
-    "title": "What's Up With Munder Difflin: Six Weeks, Four Releases, and the Part of the Stack You Actually Own",
+    "title": "What's Up With Hana-Kami: Six Weeks, Four Releases, and the Part of the Stack You Actually Own",
     "category": "story",
     "hero": {
       "file": "assets/media/whats-up-with-munder-difflin/hero.png",
-      "alt": "Illustration: What's Up With Munder Difflin: Six Weeks, Four Releases, and the Part of the Stack You Actually Own",
-      "prompt": "Hero image for a blog post titled \"What's Up With Munder Difflin: Six Weeks, Four Releases, and the Part of the Stack You Actually Own\". The post is about: Everything that shipped between v0.3.3 and v0.3.7 — a Michael who knows the floor and runs the app by voice, a git time-machine in the IDE, nine agent engines, a queue that respects your draft, Node that installs itself, and the auto-update bug that had been silently broken since the day we shipped it.",
+      "alt": "Illustration: What's Up With Hana-Kami: Six Weeks, Four Releases, and the Part of the Stack You Actually Own",
+      "prompt": "Hero image for a blog post titled \"What's Up With Hana-Kami: Six Weeks, Four Releases, and the Part of the Stack You Actually Own\". The post is about: Everything that shipped between v0.3.3 and v0.3.7 — a Michael who knows the floor and runs the app by voice, a git time-machine in the IDE, nine agent engines, a queue that respects your draft, Node that installs itself, and the auto-update bug that had been silently broken since the day we shipped it.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/whats-up-with-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “What's Up With Munder Difflin: Six Weeks, Four Releases, and the Part of the Stack You Actually Own”",
+        "alt": "Hand-drawn sketch from “What's Up With Hana-Kami: Six Weeks, Four Releases, and the Part of the Stack You Actually Own”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/whats-up-with-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “What's Up With Munder Difflin: Six Weeks, Four Releases, and the Part of the Stack You Actually Own”",
+        "alt": "Hand-drawn sketch from “What's Up With Hana-Kami: Six Weeks, Four Releases, and the Part of the Stack You Actually Own”",
         "prompt": "",
         "status": "ready"
       }
@@ -3697,24 +3697,24 @@
     "youtube": []
   },
   "why-cli-agents-are-powerful": {
-    "title": "Why CLI Agents Are So Powerful — and How Munder Difflin Spends Fewer Tokens Doing the Same Work",
+    "title": "Why CLI Agents Are So Powerful — and How Hana-Kami Spends Fewer Tokens Doing the Same Work",
     "category": "concepts",
     "hero": {
       "file": "assets/media/why-cli-agents-are-powerful/hero.png",
-      "alt": "Illustration: Why CLI Agents Are So Powerful — and How Munder Difflin Spends Fewer Tokens Doing the Same Work",
-      "prompt": "Hero image for a blog post titled \"Why CLI Agents Are So Powerful — and How Munder Difflin Spends Fewer Tokens Doing the Same Work\". The post is about: CLI agents are powerful because they have terminal-level access: they run builds, tests, and git, and verify their own work by executing it. Here's why that matters — and the concrete ways Munder Difflin cuts token consumption while doing it.",
+      "alt": "Illustration: Why CLI Agents Are So Powerful — and How Hana-Kami Spends Fewer Tokens Doing the Same Work",
+      "prompt": "Hero image for a blog post titled \"Why CLI Agents Are So Powerful — and How Hana-Kami Spends Fewer Tokens Doing the Same Work\". The post is about: CLI agents are powerful because they have terminal-level access: they run builds, tests, and git, and verify their own work by executing it. Here's why that matters — and the concrete ways Hana-Kami cuts token consumption while doing it.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/why-cli-agents-are-powerful/note-1.png",
-        "alt": "Hand-drawn sketch from “Why CLI Agents Are So Powerful — and How Munder Difflin Spends Fewer Tokens Doing the Same Work”",
+        "alt": "Hand-drawn sketch from “Why CLI Agents Are So Powerful — and How Hana-Kami Spends Fewer Tokens Doing the Same Work”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/why-cli-agents-are-powerful/note-2.png",
-        "alt": "Hand-drawn sketch from “Why CLI Agents Are So Powerful — and How Munder Difflin Spends Fewer Tokens Doing the Same Work”",
+        "alt": "Hand-drawn sketch from “Why CLI Agents Are So Powerful — and How Hana-Kami Spends Fewer Tokens Doing the Same Work”",
         "prompt": "",
         "status": "ready"
       }
@@ -3777,7 +3777,7 @@
     "hero": {
       "file": "assets/media/why-our-auto-update-never-ran/hero.png",
       "alt": "Illustration: Our Auto-Update Never Ran Once: A CommonJS Export That Vanished Into an ESM Namespace",
-      "prompt": "Hero image for a blog post titled \"Our Auto-Update Never Ran Once: A CommonJS Export That Vanished Into an ESM Namespace\". The post is about: Munder Difflin shipped auto-update in v0.3.4 and it silently never worked in a single packaged build. The cause was one destructuring assignment across the CommonJS/ESM boundary — and a catch block that threw the evidence away. Here's how we found it, and what v0.3.7 changes.",
+      "prompt": "Hero image for a blog post titled \"Our Auto-Update Never Ran Once: A CommonJS Export That Vanished Into an ESM Namespace\". The post is about: Hana-Kami shipped auto-update in v0.3.4 and it silently never worked in a single packaged build. The cause was one destructuring assignment across the CommonJS/ESM boundary — and a catch block that threw the evidence away. Here's how we found it, and what v0.3.7 changes.",
       "status": "ready"
     },
     "inline": {
@@ -3797,24 +3797,24 @@
     "youtube": []
   },
   "why-we-built-munder-difflin": {
-    "title": "Why We Built Munder Difflin",
+    "title": "Why We Built Hana-Kami",
     "category": "story",
     "hero": {
       "file": "assets/media/why-we-built-munder-difflin/hero.png",
-      "alt": "Illustration: Why We Built Munder Difflin",
-      "prompt": "Hero image for a blog post titled \"Why We Built Munder Difflin\". The post is about: The origin story of Munder Difflin — how the pain of juggling Claude Code terminals led to a coordinated, memory-backed hive of agents you can watch.",
+      "alt": "Illustration: Why We Built Hana-Kami",
+      "prompt": "Hero image for a blog post titled \"Why We Built Hana-Kami\". The post is about: The origin story of Hana-Kami — how the pain of juggling Claude Code terminals led to a coordinated, memory-backed hive of agents you can watch.",
       "status": "ready"
     },
     "inline": {
       "note-1": {
         "file": "assets/media/why-we-built-munder-difflin/note-1.png",
-        "alt": "Hand-drawn sketch from “Why We Built Munder Difflin”",
+        "alt": "Hand-drawn sketch from “Why We Built Hana-Kami”",
         "prompt": "",
         "status": "ready"
       },
       "note-2": {
         "file": "assets/media/why-we-built-munder-difflin/note-2.png",
-        "alt": "Hand-drawn sketch from “Why We Built Munder Difflin”",
+        "alt": "Hand-drawn sketch from “Why We Built Hana-Kami”",
         "prompt": "",
         "status": "ready"
       }
@@ -3822,7 +3822,7 @@
     "youtube": []
   },
   "your-first-hour-with-munder-difflin": {
-    "title": "Your First Hour With Munder Difflin: Onboarding to a Pro Office",
+    "title": "Your First Hour With Hana-Kami: Onboarding to a Pro Office",
     "category": "guides",
     "hero": {
       "file": "assets/media/your-first-hour-with-munder-difflin/hero.png",
@@ -3839,7 +3839,7 @@
       },
       "a3-download": {
         "file": "assets/media/your-first-hour-with-munder-difflin/a3-download.png",
-        "alt": "The Munder Difflin 0.5.2 download card with macOS, Windows and Linux builds",
+        "alt": "The Hana-Kami 0.5.2 download card with macOS, Windows and Linux builds",
         "prompt": "",
         "status": "ready"
       },
@@ -3851,13 +3851,13 @@
       },
       "b2-prerequisites": {
         "file": "assets/media/your-first-hour-with-munder-difflin/b2-prerequisites.png",
-        "alt": "Settings, Prerequisites in Munder Difflin listing agent engines, with Claude Code, Codex and OpenCode marked Found",
+        "alt": "Settings, Prerequisites in Hana-Kami listing agent engines, with Claude Code, Codex and OpenCode marked Found",
         "prompt": "",
         "status": "ready"
       },
       "c1-entry": {
         "file": "assets/media/your-first-hour-with-munder-difflin/c1-entry.png",
-        "alt": "The first onboarding step, How are you using Munder Difflin, with On my own selected",
+        "alt": "The first onboarding step, How are you using Hana-Kami, with On my own selected",
         "prompt": "",
         "status": "ready"
       },
@@ -3991,17 +3991,17 @@
     "youtube": [
       {
         "id": "",
-        "title": "Your first hour with Munder Difflin — full walkthrough",
+        "title": "Your first hour with Hana-Kami — full walkthrough",
         "status": "placeholder"
       }
     ]
   },
   "connect-slack-to-munder-difflin": {
-    "title": "How to Connect Slack to Munder Difflin 0.5.2",
+    "title": "How to Connect Slack to Hana-Kami 0.5.2",
     "category": "guides",
     "hero": {
       "file": "assets/media/connect-slack-to-munder-difflin/hero.png",
-      "alt": "The Slack card in Munder Difflin 0.5.2 settings, with the bot token field, required scopes and Test connection",
+      "alt": "The Slack card in Hana-Kami 0.5.2 settings, with the bot token field, required scopes and Test connection",
       "prompt": "",
       "status": "ready"
     },
@@ -4034,11 +4034,11 @@
     "youtube": []
   },
   "build-your-personal-agi-on-your-computer": {
-    "title": "Build Your Personal AGI on Your Computer Using Claude Code and Munder Difflin",
+    "title": "Build Your Personal AGI on Your Computer Using Claude Code and Hana-Kami",
     "category": "guides",
     "hero": {
       "file": "assets/media/build-your-personal-agi-on-your-computer/hero.png",
-      "alt": "The Munder Difflin 0.5.2 Agents screen: Michael the orchestrator with spend, circuit breaker, tasks and one question waiting, above Jim, Dwight, Angela and Oscar",
+      "alt": "The Hana-Kami 0.5.2 Agents screen: Michael the orchestrator with spend, circuit breaker, tasks and one question waiting, above Jim, Dwight, Angela and Oscar",
       "prompt": "",
       "status": "ready"
     },

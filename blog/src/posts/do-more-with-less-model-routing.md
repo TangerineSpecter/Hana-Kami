@@ -125,6 +125,6 @@ model, reserve the frontier model for the hard minority, and measure enough to k
 end up spending less, answering faster, and — because you're no longer drowning genuinely hard tasks in
 the same undifferentiated pool — often getting *better* results where it counts.
 
-Munder Difflin is built for exactly this posture: a lean [orchestrator](/#how) that routes work across a hive and
-escalates only when a task earns it. [Download Munder Difflin](https://munderdiffl.in/#install) to run an
+Hana-Kami is built for exactly this posture: a lean [orchestrator](/#how) that routes work across a hive and
+escalates only when a task earns it. [Download Hana-Kami](https://munderdiffl.in/#install) to run an
 agent team that does more with less — it's free and open source.

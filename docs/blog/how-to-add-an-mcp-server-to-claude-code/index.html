@@ -18,8 +18,8 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>How to Add an MCP Server to Claude Code — Munder Difflin Blog</title>
-<meta name="description" content="The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin&#39;s Capabilities screen grants an MCP server to one agent at a time." />
+<title>How to Add an MCP Server to Claude Code — Hana-Kami Blog</title>
+<meta name="description" content="The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami&#39;s Capabilities screen grants an MCP server to one agent at a time." />
 <link rel="canonical" href="https://munderdiffl.in/blog/how-to-add-an-mcp-server-to-claude-code/" />
 
 <link rel="icon" type="image/png" href="https://munderdiffl.in/logo.png" />
@@ -27,10 +27,10 @@
 <meta name="theme-color" content="#F5F2E8" />
 
 <!-- Open Graph -->
-<meta property="og:site_name" content="Munder Difflin Blog" />
+<meta property="og:site_name" content="Hana-Kami Blog" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="How to Add an MCP Server to Claude Code — Munder Difflin Blog" />
-<meta property="og:description" content="The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin&#39;s Capabilities screen grants an MCP server to one agent at a time." />
+<meta property="og:title" content="How to Add an MCP Server to Claude Code — Hana-Kami Blog" />
+<meta property="og:description" content="The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami&#39;s Capabilities screen grants an MCP server to one agent at a time." />
 <meta property="og:url" content="https://munderdiffl.in/blog/how-to-add-an-mcp-server-to-claude-code/" />
 <meta property="og:image" content="https://munderdiffl.in/blog/assets/media/how-to-add-an-mcp-server-to-claude-code/hero.png" />
 <meta property="og:image:width" content="1600" />
@@ -47,12 +47,12 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="How to Add an MCP Server to Claude Code — Munder Difflin Blog" />
-<meta name="twitter:description" content="The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin&#39;s Capabilities screen grants an MCP server to one agent at a time." />
+<meta name="twitter:title" content="How to Add an MCP Server to Claude Code — Hana-Kami Blog" />
+<meta name="twitter:description" content="The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami&#39;s Capabilities screen grants an MCP server to one agent at a time." />
 <meta name="twitter:image" content="https://munderdiffl.in/blog/assets/media/how-to-add-an-mcp-server-to-claude-code/hero.png" />
 <meta name="twitter:image:alt" content="Illustration: How to Add an MCP Server to Claude Code" />
 
-<link rel="alternate" type="application/atom+xml" title="Munder Difflin Blog" href="https://munderdiffl.in/blog/feed.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hana-Kami Blog" href="https://munderdiffl.in/blog/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
@@ -63,14 +63,14 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "How to Add an MCP Server to Claude Code",
-  "description": "The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin's Capabilities screen grants an MCP server to one agent at a time.",
+  "description": "The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami's Capabilities screen grants an MCP server to one agent at a time.",
   "image": ["https://munderdiffl.in/blog/assets/media/how-to-add-an-mcp-server-to-claude-code/hero.png"],
   "datePublished": "2026-09-10T00:00:00.000Z",
   "dateModified": "2026-09-10T00:00:00.000Z",
   "author": { "@type": "Person", "name": "Chaitanya Giri" },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://munderdiffl.in/blog/how-to-add-an-mcp-server-to-claude-code/" },
@@ -101,7 +101,7 @@
     { "@type": "Question", "name": "How do I add an MCP server to Claude Code from the command line?", "acceptedAnswer": { "@type": "Answer", "text": "Run claude mcp add with a name you choose, then the command that starts the server after the separator Claude Code expects, or, for a hosted server, add a URL with the transport flag set to http. Run claude mcp list afterward to confirm it connected." } },
     { "@type": "Question", "name": "What is the difference between local, project and user scope?", "acceptedAnswer": { "@type": "Answer", "text": "Local scope, the default, is private to you and only active in the project where you added the server. Project scope writes the entry to a .mcp.json file you commit, so teammates who clone the project get the same server. User scope registers the server once for every project you open, still private to you." } },
     { "@type": "Question", "name": "How do I add an MCP server that needs an API key?", "acceptedAnswer": { "@type": "Answer", "text": "Pass it with the -e flag when you add the server, for example -e API_KEY=xxx. A server that signs in through a browser instead, such as ones that use OAuth, is added with just its URL and authenticated afterward from inside a session with the /mcp command." } },
-    { "@type": "Question", "name": "Does Munder Difflin let me control which agent gets which MCP server?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Since Munder Difflin 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and off for another, and servers that can write or hold secrets still need an explicit yes. Each Claude Code agent still picks up the servers you added at user or project scope, the same as any other claude session." } }
+    { "@type": "Question", "name": "Does Hana-Kami let me control which agent gets which MCP server?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Since Hana-Kami 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and off for another, and servers that can write or hold secrets still need an explicit yes. Each Claude Code agent still picks up the servers you added at user or project scope, the same as any other claude session." } }
     
   ]
 }
@@ -145,8 +145,8 @@
 <body class="theme-press">
 <a class="skip-link" href="#main">Skip to content</a>
 <nav id="nav">
-  <a class="brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+  <a class="brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
   </a>
   <span class="spacer"></span>
   <div class="links">
@@ -171,7 +171,7 @@
       <a href="/blog/topics/guides/">Guides</a>
     </nav>
     <h1>How to Add an MCP Server to Claude Code</h1>
-    <p class="dek">The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin&#39;s Capabilities screen grants an MCP server to one agent at a time.</p>
+    <p class="dek">The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami&#39;s Capabilities screen grants an MCP server to one agent at a time.</p>
     <div class="byline">
       <span class="av" aria-hidden="true">MD</span>
       <strong>Chaitanya Giri</strong>
@@ -238,16 +238,16 @@ $ <span class="token function">cat</span> .mcp.json
 <p>Claude Code reads <code>.mcp.json</code> at the start of a session, not while one is running. And a project scoped server needs a yes the first time Claude Code sees it: when we ran <code>claude mcp list</code> against the demo folder above, it showed <code>demo-docs</code> as pending approval rather than connected, which is the point. Approve a server because you’ve read what it does, not on reflex; a server’s own tool descriptions are text Claude reads, and a rogue change to them is exactly the kind of attack <a href="/blog/mcp-security-tool-poisoning/">this blog has covered before</a>.</p>
 <h2 id="do-mcp-servers-work-the-same-way-in-vs-code-or-the-desktop-app" tabindex="-1">Do MCP servers work the same way in VS Code or the desktop app? <a class="anchor" href="#do-mcp-servers-work-the-same-way-in-vs-code-or-the-desktop-app" aria-hidden="true">#</a></h2>
 <p>Mostly, with a different entry point. VS Code and the Claude Code desktop app each have their own place to add a server instead of a terminal command, and Claude Code on the web just reads whatever <code>.mcp.json</code> is already checked into the repository. The CLI steps above are for a terminal session. The desktop app and the CLI read the same <code>~/.claude.json</code> and <code>.mcp.json</code> files, although a server in the desktop app’s own <code>claude_desktop_config.json</code> wins when the names collide (checked 10 Sep 2026, <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop docs</a>).</p>
-<h2 id="can-munder-difflin-grant-an-mcp-server-to-just-one-agent" tabindex="-1">Can Munder Difflin grant an MCP server to just one agent? <a class="anchor" href="#can-munder-difflin-grant-an-mcp-server-to-just-one-agent" aria-hidden="true">#</a></h2>
-<p>Yes. Since Munder Difflin 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and
+<h2 id="can-munder-difflin-grant-an-mcp-server-to-just-one-agent" tabindex="-1">Can Hana-Kami grant an MCP server to just one agent? <a class="anchor" href="#can-munder-difflin-grant-an-mcp-server-to-just-one-agent" aria-hidden="true">#</a></h2>
+<p>Yes. Since Hana-Kami 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and
 off for another on the same floor, and servers that can write or hold secrets still need an explicit yes.</p>
 <p>That sits on top of Claude Code’s own setup, not instead of it. Each Claude Code agent in the office is a real
 <code>claude</code> session, so it still picks up the servers you added at user or project scope, as
 <a href="/blog/mcp-and-skills-in-a-hive/">an earlier post on MCP in a hive</a> explains. Capabilities is the extra dial for
 keeping a server away from one agent that could otherwise reach it.</p>
-<p>None of this needs Munder Difflin: <code>claude mcp add</code> is Claude Code’s own command and works the same in a bare
+<p>None of this needs Hana-Kami: <code>claude mcp add</code> is Claude Code’s own command and works the same in a bare
 terminal. A harness earns its place once several agents are running and only one of them should hold a given key.
-<a href="https://munderdiffl.in/download">Download Munder Difflin</a>; the classic office is free, and Capabilities comes with
+<a href="https://munderdiffl.in/download">Download Hana-Kami</a>; the classic office is free, and Capabilities comes with
 <a href="https://munderdiffl.in/#pricing">Pro</a>.</p>
 
 
@@ -276,8 +276,8 @@ terminal. A harness earns its place once several agents are running and only one
         </div>
         
         <div class="qa">
-          <p class="q">Does Munder Difflin let me control which agent gets which MCP server?</p>
-          <p class="a">Yes. Since Munder Difflin 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and off for another, and servers that can write or hold secrets still need an explicit yes. Each Claude Code agent still picks up the servers you added at user or project scope, the same as any other claude session.</p>
+          <p class="q">Does Hana-Kami let me control which agent gets which MCP server?</p>
+          <p class="a">Yes. Since Hana-Kami 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and off for another, and servers that can write or hold secrets still need an explicit yes. Each Claude Code agent still picks up the servers you added at user or project scope, the same as any other claude session.</p>
         </div>
         
       </section>
@@ -296,14 +296,14 @@ terminal. A harness earns its place once several agents are running and only one
     <aside class="toc-rail" aria-label="Table of contents">
       <div class="tt">On this page</div>
       <ol>
-        <li class="lvl-2"><a href="#what-is-an-mcp-server">What is an MCP server?</a></li><li class="lvl-2"><a href="#how-do-you-add-an-mcp-server-to-claude-code">How do you add an MCP server to Claude Code?</a></li><li class="lvl-2"><a href="#whats-the-difference-between-local-project-and-user-scope">What’s the difference between local, project and user scope?</a></li><li class="lvl-2"><a href="#how-do-you-add-a-server-that-needs-an-api-key">How do you add a server that needs an API key?</a></li><li class="lvl-2"><a href="#can-you-edit-mcpjson-directly-instead-of-using-the-cli">Can you edit .mcp.json directly instead of using the CLI?</a></li><li class="lvl-2"><a href="#do-mcp-servers-work-the-same-way-in-vs-code-or-the-desktop-app">Do MCP servers work the same way in VS Code or the desktop app?</a></li><li class="lvl-2"><a href="#can-munder-difflin-grant-an-mcp-server-to-just-one-agent">Can Munder Difflin grant an MCP server to just one agent?</a></li>
+        <li class="lvl-2"><a href="#what-is-an-mcp-server">What is an MCP server?</a></li><li class="lvl-2"><a href="#how-do-you-add-an-mcp-server-to-claude-code">How do you add an MCP server to Claude Code?</a></li><li class="lvl-2"><a href="#whats-the-difference-between-local-project-and-user-scope">What’s the difference between local, project and user scope?</a></li><li class="lvl-2"><a href="#how-do-you-add-a-server-that-needs-an-api-key">How do you add a server that needs an API key?</a></li><li class="lvl-2"><a href="#can-you-edit-mcpjson-directly-instead-of-using-the-cli">Can you edit .mcp.json directly instead of using the CLI?</a></li><li class="lvl-2"><a href="#do-mcp-servers-work-the-same-way-in-vs-code-or-the-desktop-app">Do MCP servers work the same way in VS Code or the desktop app?</a></li><li class="lvl-2"><a href="#can-munder-difflin-grant-an-mcp-server-to-just-one-agent">Can Hana-Kami grant an MCP server to just one agent?</a></li>
       </ol>
     </aside>
     
   </div>
 
   <footer class="post-foot wrap"><div class="prevnext">
-      <a class="pn prev" href="/blog/launching-munder-difflin-v0-5-2/"><span class="k">← Older</span><span class="t">Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6</span></a>
+      <a class="pn prev" href="/blog/launching-munder-difflin-v0-5-2/"><span class="k">← Older</span><span class="t">Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6</span></a>
       <a class="pn next" href="/blog/how-much-does-claude-code-cost/"><span class="k">Newer →</span><span class="t">How Much Does Claude Code Cost?</span></a>
     </div>
     <section class="related">
@@ -317,11 +317,11 @@ terminal. A harness earns its place once several agents are running and only one
       <span class="dot" aria-hidden="true"></span>
       <span>9 min</span>
     </div>
-    <h3><a href="/blog/build-your-personal-agi-on-your-computer/">Build Your Personal AGI on Your Computer Using Claude Code and Munder Difflin</a></h3>
-    <p class="dek">Turn Claude Code into a personal AGI on your own computer: agents with memory, schedules, Gmail, Calendar, voice and Slack, set up in Munder Difflin 0.5.2.</p>
+    <h3><a href="/blog/build-your-personal-agi-on-your-computer/">Build Your Personal AGI on Your Computer Using Claude Code and Hana-Kami</a></h3>
+    <p class="dek">Turn Claude Code into a personal AGI on your own computer: agents with memory, schedules, Gmail, Calendar, voice and Slack, set up in Hana-Kami 0.5.2.</p>
     <div class="foot">
       <span class="tag kind">Guides</span>
-      <a class="more" href="/blog/build-your-personal-agi-on-your-computer/" aria-label="Read: Build Your Personal AGI on Your Computer Using Claude Code and Munder Difflin">Read →</a>
+      <a class="more" href="/blog/build-your-personal-agi-on-your-computer/" aria-label="Read: Build Your Personal AGI on Your Computer Using Claude Code and Hana-Kami">Read →</a>
     </div>
   </div>
 </article>
@@ -368,20 +368,20 @@ terminal. A harness earns its place once several agents are running and only one
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
-      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
       </a>
       <div class="foot-links">
         <a href="/blog/">Latest</a>
         <a href="/blog/topics/">Topics</a>
         <a href="/blog/about/">About</a>
         <a href="https://munderdiffl.in/blog/feed.xml">RSS</a>
-        <a href="https://github.com/chaitanyagiri/munder-difflin">GitHub</a>
+        <a href="https://github.com/TangerineSpecter/Hana-Kami">GitHub</a>
         <a href="https://munderdiffl.in">munderdiffl.in ↗</a>
       </div>
     </div>
     <div class="foot-meta">
-      © 2026 Munder Difflin · Local-first · MIT-licensed ·
+      © 2026 Hana-Kami · Local-first · MIT-licensed ·
       Built on <a href="https://munderdiffl.in">Electron, React, Pixi.js, xterm.js &amp; node-pty</a>.
       Run an office of agents while you sleep.
     </div>

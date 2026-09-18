@@ -171,9 +171,9 @@ test('no unbundled webfont rides in with the Arabic locale', () => {
 
 // --- coverage and shape: what makes a PARTIAL translation safe -------------
 
-test('English is still the default, and still not auto-detected', () => {
+test('Simplified Chinese is the default, and still not auto-detected', () => {
   const code = strip(read('src/renderer/src/i18n/index.ts'));
-  assert.match(code, /return 'en';/, 'the fallback language must stay English');
+  assert.match(code, /return 'zh-CN';/, 'the default language must stay Simplified Chinese');
   assert.match(code, /fallbackLng: 'en'/, 'a missing Arabic key must fall back to English');
   assert.ok(!code.includes('navigator'),
     'adding a locale must not turn on OS auto-detect');

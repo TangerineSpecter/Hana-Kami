@@ -18,7 +18,7 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Codex CLI vs Claude Code — Munder Difflin Blog</title>
+<title>Codex CLI vs Claude Code — Hana-Kami Blog</title>
 <meta name="description" content="Codex CLI and Claude Code compared firsthand: sandbox and approval flags, AGENTS.md vs CLAUDE.md, real pricing, and where each terminal agent wins." />
 <link rel="canonical" href="https://munderdiffl.in/blog/codex-cli-vs-claude-code/" />
 
@@ -27,9 +27,9 @@
 <meta name="theme-color" content="#F5F2E8" />
 
 <!-- Open Graph -->
-<meta property="og:site_name" content="Munder Difflin Blog" />
+<meta property="og:site_name" content="Hana-Kami Blog" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Codex CLI vs Claude Code — Munder Difflin Blog" />
+<meta property="og:title" content="Codex CLI vs Claude Code — Hana-Kami Blog" />
 <meta property="og:description" content="Codex CLI and Claude Code compared firsthand: sandbox and approval flags, AGENTS.md vs CLAUDE.md, real pricing, and where each terminal agent wins." />
 <meta property="og:url" content="https://munderdiffl.in/blog/codex-cli-vs-claude-code/" />
 <meta property="og:image" content="https://munderdiffl.in/blog/assets/media/codex-cli-vs-claude-code/hero.png" />
@@ -48,12 +48,12 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Codex CLI vs Claude Code — Munder Difflin Blog" />
+<meta name="twitter:title" content="Codex CLI vs Claude Code — Hana-Kami Blog" />
 <meta name="twitter:description" content="Codex CLI and Claude Code compared firsthand: sandbox and approval flags, AGENTS.md vs CLAUDE.md, real pricing, and where each terminal agent wins." />
 <meta name="twitter:image" content="https://munderdiffl.in/blog/assets/media/codex-cli-vs-claude-code/hero.png" />
 <meta name="twitter:image:alt" content="Illustration: Codex CLI vs Claude Code" />
 
-<link rel="alternate" type="application/atom+xml" title="Munder Difflin Blog" href="https://munderdiffl.in/blog/feed.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hana-Kami Blog" href="https://munderdiffl.in/blog/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
@@ -71,7 +71,7 @@
   "author": { "@type": "Person", "name": "Chaitanya Giri" },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://munderdiffl.in/blog/codex-cli-vs-claude-code/" },
@@ -101,7 +101,7 @@
     { "@type": "Question", "name": "Is Codex CLI free to use?", "acceptedAnswer": { "@type": "Answer", "text": "There is a real free tier, but it is capped. OpenAI's own Codex pricing page lists a Free plan at $0 a month for quick coding tasks, a Go plan at $8, and a Plus plan at $20 that adds cloud-based runs and the GPT-5.6 model family, checked 10 Sep 2026. Claude Code has no equivalent free tier: it authenticates against a paid Claude subscription or an Anthropic API key." } },
     { "@type": "Question", "name": "Does Codex CLI read AGENTS.md the way Claude Code reads CLAUDE.md?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, but they are separate files, and each CLI's docs describe only its own. Codex CLI's docs list /init as the command that creates an AGENTS.md with instructions for Codex, checked 10 Sep 2026. Claude Code instead reads a project's CLAUDE.md at the start of every session, per Anthropic's own docs checked the same day, and neither doc promises to read the other's file." } },
     { "@type": "Question", "name": "What is the real difference between Codex CLI's sandbox and Claude Code's permission mode?", "acceptedAnswer": { "@type": "Answer", "text": "Codex CLI splits the decision in two: --sandbox (read-only, workspace-write, or danger-full-access) decides what it can touch, and --ask-for-approval (on-request or never) decides when it has to stop and ask, confirmed against codex --help on 10 Sep 2026. Claude Code folds both into one --permission-mode flag with six named modes, confirmed against claude --help the same day. Neither approach is wrong, Codex's is more composable and Claude Code's is a single dial to reason about." } },
-    { "@type": "Question", "name": "Can I run Codex CLI and Claude Code together?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Munder Difflin wraps both as real terminal processes and runs Codex and Claude Code agents side by side on the same office floor, so each can take its own task at the same time. Munder Difflin 0.5.0 (2026-09-08) added GPT-6 Astra to Codex's model picker, and that slug needs Codex 0.153.1 or newer to be accepted when the agent spawns." } },
+    { "@type": "Question", "name": "Can I run Codex CLI and Claude Code together?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Hana-Kami wraps both as real terminal processes and runs Codex and Claude Code agents side by side on the same office floor, so each can take its own task at the same time. Hana-Kami 0.5.0 (2026-09-08) added GPT-6 Astra to Codex's model picker, and that slug needs Codex 0.153.1 or newer to be accepted when the agent spawns." } },
     { "@type": "Question", "name": "Codex CLI vs Claude Code, which one is actually better?", "acceptedAnswer": { "@type": "Answer", "text": "Neither wins outright. Codex CLI is the better pick when you want an open source binary you can audit, a free way in, and separate dials for sandboxing and approval. Claude Code is the better pick when you already pay for Claude and want a single permission mode, CLAUDE.md, and hooks that run around every tool call." } }
     
   ]
@@ -146,8 +146,8 @@
 <body class="theme-press">
 <a class="skip-link" href="#main">Skip to content</a>
 <nav id="nav">
-  <a class="brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+  <a class="brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
   </a>
   <span class="spacer"></span>
   <div class="links">
@@ -212,7 +212,7 @@ running lint before a commit, so a rule you write once holds for every session i
 rereads. If you already pay for Claude, that is a lot of control for no extra setup.</p>
 <p>Weighing Google’s agent as well? Read <a href="/blog/claude-code-vs-antigravity/">Claude Code vs Antigravity</a>.</p>
 <h2 id="can-you-run-codex-cli-and-claude-code-together" tabindex="-1">Can you run Codex CLI and Claude Code together? <a class="anchor" href="#can-you-run-codex-cli-and-claude-code-together" aria-hidden="true">#</a></h2>
-<p>Yes, and running both inside one harness is often more useful than picking a single winner. Munder Difflin wraps CLIs like <code>claude</code> and <code>codex</code> as real processes in their own terminals and runs them side by side on the same office floor, so a Codex agent and a Claude Code agent can each work on their own task at the same time. Munder Difflin 0.5.0 (2026-09-08) added GPT-6 Astra to Codex’s model picker, and that slug needs Codex 0.153.1 or newer to be accepted when the agent spawns; the Codex CLI checked for this piece, <code>codex-cli 0.153.4</code>, clears that bar.</p>
+<p>Yes, and running both inside one harness is often more useful than picking a single winner. Hana-Kami wraps CLIs like <code>claude</code> and <code>codex</code> as real processes in their own terminals and runs them side by side on the same office floor, so a Codex agent and a Claude Code agent can each work on their own task at the same time. Hana-Kami 0.5.0 (2026-09-08) added GPT-6 Astra to Codex’s model picker, and that slug needs Codex 0.153.1 or newer to be accepted when the agent spawns; the Codex CLI checked for this piece, <code>codex-cli 0.153.4</code>, clears that bar.</p>
 <p>For the wider field beyond these two, the <a href="/blog/best-ai-coding-agents/">2026 field guide to AI coding agents</a> covers where in-editor and autonomous agents fit next to CLI ones. For this specific pair, the honest answer holds: reach for Claude Code when you already pay for Claude and want hooks and one permission mode, reach for Codex CLI when you want separate sandbox and approval dials and a free way to start, and don’t feel obligated to pick just one.</p>
 
 
@@ -237,7 +237,7 @@ rereads. If you already pay for Claude, that is a lot of control for no extra se
         
         <div class="qa">
           <p class="q">Can I run Codex CLI and Claude Code together?</p>
-          <p class="a">Yes. Munder Difflin wraps both as real terminal processes and runs Codex and Claude Code agents side by side on the same office floor, so each can take its own task at the same time. Munder Difflin 0.5.0 (2026-09-08) added GPT-6 Astra to Codex&#39;s model picker, and that slug needs Codex 0.153.1 or newer to be accepted when the agent spawns.</p>
+          <p class="a">Yes. Hana-Kami wraps both as real terminal processes and runs Codex and Claude Code agents side by side on the same office floor, so each can take its own task at the same time. Hana-Kami 0.5.0 (2026-09-08) added GPT-6 Astra to Codex&#39;s model picker, and that slug needs Codex 0.153.1 or newer to be accepted when the agent spawns.</p>
         </div>
         
         <div class="qa">
@@ -333,20 +333,20 @@ rereads. If you already pay for Claude, that is a lot of control for no extra se
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
-      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
       </a>
       <div class="foot-links">
         <a href="/blog/">Latest</a>
         <a href="/blog/topics/">Topics</a>
         <a href="/blog/about/">About</a>
         <a href="https://munderdiffl.in/blog/feed.xml">RSS</a>
-        <a href="https://github.com/chaitanyagiri/munder-difflin">GitHub</a>
+        <a href="https://github.com/TangerineSpecter/Hana-Kami">GitHub</a>
         <a href="https://munderdiffl.in">munderdiffl.in ↗</a>
       </div>
     </div>
     <div class="foot-meta">
-      © 2026 Munder Difflin · Local-first · MIT-licensed ·
+      © 2026 Hana-Kami · Local-first · MIT-licensed ·
       Built on <a href="https://munderdiffl.in">Electron, React, Pixi.js, xterm.js &amp; node-pty</a>.
       Run an office of agents while you sleep.
     </div>

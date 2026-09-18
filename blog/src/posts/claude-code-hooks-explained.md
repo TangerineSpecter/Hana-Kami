@@ -23,7 +23,7 @@ faq:
 <div class="callout tldr"><span class="ic">TL;DR</span><p><strong>Claude Code hooks</strong> are
 commands that run at lifecycle points — <code>PreToolUse</code>, <code>PostToolUse</code>,
 <code>Stop</code>, <code>Notification</code>, and more. Each gets a JSON payload on stdin and can
-return JSON to steer Claude. Munder Difflin attaches a tiny <strong>hook shim</strong> via
+return JSON to steer Claude. Hana-Kami attaches a tiny <strong>hook shim</strong> via
 <code>--settings</code> that forwards every event to the harness over a Unix socket — driving live
 avatars from <code>PreToolUse</code>/<code>PostToolUse</code>, and building an <strong>autonomous
 loop</strong> out of the <code>Stop</code> hook.</p></div>
@@ -31,7 +31,7 @@ loop</strong> out of the <code>Stop</code> hook.</p></div>
 Hooks are the most underrated part of Claude Code. They're the official extension point for "do
 something when Claude does something" — and once you understand them, a lot of agent tooling that
 looks like magic turns out to be a well-placed hook. This post walks the lifecycle, then shows exactly
-how Munder Difflin uses hooks to animate a multi-agent office floor and keep agents working
+how Hana-Kami uses hooks to animate a multi-agent office floor and keep agents working
 autonomously.
 
 ## What a hook is
@@ -101,9 +101,9 @@ twice in a row — the loop always has an exit.
 - **UserPromptSubmit** fires when a prompt is submitted — a clean "the agent started working" signal.
 - **SessionStart** fires when a session begins — handy for setup or registration.
 
-## How Munder Difflin uses hooks
+## How Hana-Kami uses hooks
 
-Munder Difflin runs many `claude` agents at once and needs two things from each: a live view of what
+Hana-Kami runs many `claude` agents at once and needs two things from each: a live view of what
 it's doing, and a way to keep it working through a queue. Both come from hooks.
 
 ### A hook shim over a Unix socket
@@ -175,7 +175,7 @@ If you're building with hooks directly, a few lessons that save pain:
 ## FAQ
 
 **Can a hook block a dangerous tool call?** Yes — PreToolUse can return a decision that prevents a tool
-from running, which is useful for guardrails. Munder Difflin leans on its orchestrator and approval
+from running, which is useful for guardrails. Hana-Kami leans on its orchestrator and approval
 queue for that judgment, but the hook-level gate is available.
 
 **Do hooks slow Claude down?** Only as much as your hook command does. A shim that just forwards a
@@ -184,7 +184,7 @@ elsewhere.
 
 ---
 
-Munder Difflin turns Claude Code's hook lifecycle into [a live, autonomous office](https://munderdiffl.in/#how): real-time avatars
+Hana-Kami turns Claude Code's hook lifecycle into [a live, autonomous office](https://munderdiffl.in/#how): real-time avatars
 from tool events and a self-draining work loop from the Stop hook — all without editing your repo.
-[Download Munder Difflin](https://munderdiffl.in/#install) to see hooks driving a hive of agents; it's
+[Download Hana-Kami](https://munderdiffl.in/#install) to see hooks driving a hive of agents; it's
 free and open source.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  <title>Munder Difflin Blog</title>
+  <title>Hana-Kami Blog</title>
   <subtitle>Guides, deep dives, and comparisons on running multi-agent Claude Code: orchestration, agent memory, automation, and the tooling landscape.</subtitle>
   <link href="https://munderdiffl.in/blog/feed.xml" rel="self" />
   <link href="https://munderdiffl.in/blog/" />
@@ -16,12 +16,12 @@
     <summary>Aider vs Claude Code, checked 15 Sep 2026: how each edits code, which models it runs, what it costs, MCP, and Aider&#39;s stalled releases.</summary>
   </entry>
   <entry>
-    <title>Build Your Personal AGI on Your Computer Using Claude Code and Munder Difflin</title>
+    <title>Build Your Personal AGI on Your Computer Using Claude Code and Hana-Kami</title>
     <link href="https://munderdiffl.in/blog/build-your-personal-agi-on-your-computer/" />
     <id>https://munderdiffl.in/blog/build-your-personal-agi-on-your-computer/</id>
     <published>2026-09-15T00:00:00.000Z</published>
     <updated>2026-09-15T00:00:00.000Z</updated><category term="Guides" />
-    <summary>Turn Claude Code into a personal AGI on your own computer: agents with memory, schedules, Gmail, Calendar, voice and Slack, set up in Munder Difflin 0.5.2.</summary>
+    <summary>Turn Claude Code into a personal AGI on your own computer: agents with memory, schedules, Gmail, Calendar, voice and Slack, set up in Hana-Kami 0.5.2.</summary>
   </entry>
   <entry>
     <title>How to Install Gemini CLI, and Who Can Still Use It in 2026</title>
@@ -72,12 +72,12 @@
     <summary>There is no Codex Max plan. What ChatGPT Pro 5x and 20x give you in Codex, how the weekly limit works, and how to stretch it.</summary>
   </entry>
   <entry>
-    <title>How to Connect Slack to Munder Difflin 0.5.2</title>
+    <title>How to Connect Slack to Hana-Kami 0.5.2</title>
     <link href="https://munderdiffl.in/blog/connect-slack-to-munder-difflin/" />
     <id>https://munderdiffl.in/blog/connect-slack-to-munder-difflin/</id>
     <published>2026-09-14T00:00:00.000Z</published>
     <updated>2026-09-14T00:00:00.000Z</updated><category term="Guides" />
-    <summary>Connect Slack to Munder Difflin 0.5.2: create the Slack app, add the bot scopes, pick one of three connection modes, and get answers in the thread.</summary>
+    <summary>Connect Slack to Hana-Kami 0.5.2: create the Slack app, add the bot scopes, pick one of three connection modes, and get answers in the thread.</summary>
   </entry>
   <entry>
     <title>Grok Bot Alternatives: Six Picks, Grouped by What You Want</title>
@@ -93,7 +93,7 @@
     <id>https://munderdiffl.in/blog/herdr-alternatives/</id>
     <published>2026-09-14T00:00:00.000Z</published>
     <updated>2026-09-14T00:00:00.000Z</updated><category term="Comparisons" />
-    <summary>Herdr alternatives checked on 14 Sep 2026: tmux, Munder Difflin, Claude Squad, cmux, Orca, Conductor, Superset and Emdash, and who each fits.</summary>
+    <summary>Herdr alternatives checked on 14 Sep 2026: tmux, Hana-Kami, Claude Squad, cmux, Orca, Conductor, Superset and Emdash, and who each fits.</summary>
   </entry>
   <entry>
     <title>How to Connect Ollama to Claude Code</title>
@@ -189,18 +189,18 @@
     <id>https://munderdiffl.in/blog/how-to-add-an-mcp-server-to-claude-code/</id>
     <published>2026-09-10T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Guides" />
-    <summary>The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin&#39;s Capabilities screen grants an MCP server to one agent at a time.</summary>
+    <summary>The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami&#39;s Capabilities screen grants an MCP server to one agent at a time.</summary>
   </entry>
   <entry>
-    <title>Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6</title>
+    <title>Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6</title>
     <link href="https://munderdiffl.in/blog/launching-munder-difflin-v0-5-2/" />
     <id>https://munderdiffl.in/blog/launching-munder-difflin-v0-5-2/</id>
     <published>2026-09-10T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Story" />
-    <summary>Munder Difflin 0.5.2 is out: how to install it, how to start Pro, what Pro adds, what changed since 0.4.6, and the end of signed Community builds.</summary>
+    <summary>Hana-Kami 0.5.2 is out: how to install it, how to start Pro, what Pro adds, what changed since 0.4.6, and the end of signed Community builds.</summary>
   </entry>
   <entry>
-    <title>Launching Munder Difflin v0.4.6: It Speaks Chinese and Arabic Now</title>
+    <title>Launching Hana-Kami v0.4.6: It Speaks Chinese and Arabic Now</title>
     <link href="https://munderdiffl.in/blog/launching-munder-difflin-v0-4-6/" />
     <id>https://munderdiffl.in/blog/launching-munder-difflin-v0-4-6/</id>
     <published>2026-08-27T00:00:00.000Z</published>
@@ -232,7 +232,7 @@
     <summary>Reddit said our blog was unreadable and AI-sloppy. So one agent redesigned it end to end: a new editorial theme, and 119 hand-drawn hero illustrations rendered as code for exactly $0 in image APIs. This is the making-of.</summary>
   </entry>
   <entry>
-    <title>Launching Munder Difflin v0.4.4: Windows Agents Can Finally Talk</title>
+    <title>Launching Hana-Kami v0.4.4: Windows Agents Can Finally Talk</title>
     <link href="https://munderdiffl.in/blog/launching-munder-difflin-v0-4-4/" />
     <id>https://munderdiffl.in/blog/launching-munder-difflin-v0-4-4/</id>
     <published>2026-08-19T00:00:00.000Z</published>
@@ -245,7 +245,7 @@
     <id>https://munderdiffl.in/blog/number-five-on-product-hunt/</id>
     <published>2026-08-19T00:00:00.000Z</published>
     <updated>2026-08-19T00:00:00.000Z</updated><category term="Story" />
-    <summary>Munder Difflin finished #5 Product of the Day on Product Hunt — ahead of DeepSeek&#39;s harness launch that day. The honest retro: who showed up, what they asked, and the two pieces of feedback we&#39;re already shipping fixes for.</summary>
+    <summary>Hana-Kami finished #5 Product of the Day on Product Hunt — ahead of DeepSeek&#39;s harness launch that day. The honest retro: who showed up, what they asked, and the two pieces of feedback we&#39;re already shipping fixes for.</summary>
   </entry>
   <entry>
     <title>Run a Release Train with Agents</title>
@@ -285,10 +285,10 @@
     <id>https://munderdiffl.in/blog/we-opened-a-discord/</id>
     <published>2026-08-19T00:00:00.000Z</published>
     <updated>2026-08-19T00:00:00.000Z</updated><category term="Story" />
-    <summary>Munder Difflin has a Discord now. Come watch releases land, get help with your floor, and earn the most thematically necessary contributor role in open source.</summary>
+    <summary>Hana-Kami has a Discord now. Come watch releases land, get help with your floor, and earn the most thematically necessary contributor role in open source.</summary>
   </entry>
   <entry>
-    <title>What Reddit Told Us About Munder Difflin</title>
+    <title>What Reddit Told Us About Hana-Kami</title>
     <link href="https://munderdiffl.in/blog/what-reddit-told-us-about-munder-difflin/" />
     <id>https://munderdiffl.in/blog/what-reddit-told-us-about-munder-difflin/</id>
     <published>2026-08-19T00:00:00.000Z</published>
@@ -296,7 +296,7 @@
     <summary>We launched across ten subreddits and then read every single comment. What landed, what got roasted, and what we shipped because of it.</summary>
   </entry>
   <entry>
-    <title>What&#39;s Up With Munder Difflin: Six Weeks, Four Releases, and the Part of the Stack You Actually Own</title>
+    <title>What&#39;s Up With Hana-Kami: Six Weeks, Four Releases, and the Part of the Stack You Actually Own</title>
     <link href="https://munderdiffl.in/blog/whats-up-with-munder-difflin/" />
     <id>https://munderdiffl.in/blog/whats-up-with-munder-difflin/</id>
     <published>2026-08-08T00:00:00.000Z</published>
@@ -309,10 +309,10 @@
     <id>https://munderdiffl.in/blog/why-our-auto-update-never-ran/</id>
     <published>2026-08-08T00:00:00.000Z</published>
     <updated>2026-08-08T00:00:00.000Z</updated><category term="Internals" />
-    <summary>Munder Difflin shipped auto-update in v0.3.4 and it silently never worked in a single packaged build. The cause was one destructuring assignment across the CommonJS/ESM boundary — and a catch block that threw the evidence away. Here&#39;s how we found it, and what v0.3.7 changes.</summary>
+    <summary>Hana-Kami shipped auto-update in v0.3.4 and it silently never worked in a single packaged build. The cause was one destructuring assignment across the CommonJS/ESM boundary — and a catch block that threw the evidence away. Here&#39;s how we found it, and what v0.3.7 changes.</summary>
   </entry>
   <entry>
-    <title>Launching Munder Difflin v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself</title>
+    <title>Launching Hana-Kami v0.3.5: A Michael Who Knows the Floor, a Git Time-Machine, and an App That Updates Itself</title>
     <link href="https://munderdiffl.in/blog/launching-munder-difflin-v0-3-5/" />
     <id>https://munderdiffl.in/blog/launching-munder-difflin-v0-3-5/</id>
     <published>2026-08-06T00:00:00.000Z</published>
@@ -320,12 +320,12 @@
     <summary>The v0.3.4 + v0.3.5 wave: voice orchestration with live floor context and full app control, markdown previews everywhere, commit history and branch compare in the built-in IDE, a six-tab Settings redesign, xAI Grok and Kimi Code engines, auto-update, and a queue that always has an escape hatch.</summary>
   </entry>
   <entry>
-    <title>qm vs Munder Difflin: YC&#39;s Multiplayer Harness or an Office of Your Clones?</title>
+    <title>qm vs Hana-Kami: YC&#39;s Multiplayer Harness or an Office of Your Clones?</title>
     <link href="https://munderdiffl.in/blog/qm-vs-munder-difflin/" />
     <id>https://munderdiffl.in/blog/qm-vs-munder-difflin/</id>
     <published>2026-08-06T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Comparisons" />
-    <summary>An honest September 2026 comparison of YC&#39;s qm and Munder Difflin. qm is a multiplayer agent harness a company deploys for Slack and the web. Munder Difflin runs an office of your clones on your own machine, with Teams to connect them.</summary>
+    <summary>An honest September 2026 comparison of YC&#39;s qm and Hana-Kami. qm is a multiplayer agent harness a company deploys for Slack and the web. Hana-Kami runs an office of your clones on your own machine, with Teams to connect them.</summary>
   </entry>
   <entry>
     <title>The Command Center: Kanban, Fleet and Budgets in One Place</title>
@@ -333,7 +333,7 @@
     <id>https://munderdiffl.in/blog/command-center-guide/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Guides" />
-    <summary>A guide to Munder Difflin&#39;s Command Center in 0.5.2: the kanban with task dependencies, the ask me tab, triggers, memory, live token use against each agent&#39;s budget, and when to watch the board instead of the floor.</summary>
+    <summary>A guide to Hana-Kami&#39;s Command Center in 0.5.2: the kanban with task dependencies, the ask me tab, triggers, memory, live token use against each agent&#39;s budget, and when to watch the board instead of the floor.</summary>
   </entry>
   <entry>
     <title>CrewAI and AutoGen vs a Local Agent Harness: Framework or App?</title>
@@ -365,7 +365,7 @@
     <id>https://munderdiffl.in/blog/how-to-hire-from-the-agent-gallery/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Guides" />
-    <summary>A practical guide to Munder Difflin&#39;s Agent Gallery: pick one of 80 ready made roles, download its manifest, import it with Add agent, review every field, customise identity, workspace, engine and briefing, then spawn it yourself.</summary>
+    <summary>A practical guide to Hana-Kami&#39;s Agent Gallery: pick one of 80 ready made roles, download its manifest, import it with Add agent, review every field, customise identity, workspace, engine and briefing, then spawn it yourself.</summary>
   </entry>
   <entry>
     <title>How to Brief Your Orchestrator (So the Floor Actually Ships)</title>
@@ -373,7 +373,7 @@
     <id>https://munderdiffl.in/blog/how-to-talk-to-your-orchestrator/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Guides" />
-    <summary>A practical guide to briefing Munder Difflin&#39;s GOD orchestrator: state the goal not the steps, set constraints and budgets, name the deliverable, and let Michael staff the floor. With bad-vs-good brief examples, mid-run steering, and Talk mode.</summary>
+    <summary>A practical guide to briefing Hana-Kami&#39;s GOD orchestrator: state the goal not the steps, set constraints and budgets, name the deliverable, and let Michael staff the floor. With bad-vs-good brief examples, mid-run steering, and Talk mode.</summary>
   </entry>
   <entry>
     <title>How to Use the Built-in Monaco IDE</title>
@@ -381,15 +381,15 @@
     <id>https://munderdiffl.in/blog/how-to-use-the-built-in-monaco-ide/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Guides" />
-    <summary>A practical walkthrough of Munder Difflin v0.3.3&#39;s built-in Monaco IDE: the title-bar IDE button, the git CHANGES rail with side-by-side diffs vs HEAD, the file tree, tabs, Cmd/Ctrl+S save — and the agent review workflow it enables.</summary>
+    <summary>A practical walkthrough of Hana-Kami v0.3.3&#39;s built-in Monaco IDE: the title-bar IDE button, the git CHANGES rail with side-by-side diffs vs HEAD, the file tree, tabs, Cmd/Ctrl+S save — and the agent review workflow it enables.</summary>
   </entry>
   <entry>
-    <title>Launching Munder Difflin v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support</title>
+    <title>Launching Hana-Kami v0.3.3: A Built-in Monaco IDE and GitHub Copilot CLI Support</title>
     <link href="https://munderdiffl.in/blog/launching-munder-difflin-v0-3-3/" />
     <id>https://munderdiffl.in/blog/launching-munder-difflin-v0-3-3/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Story" />
-    <summary>Munder Difflin v0.3.3 adds a full Monaco IDE — file tree, editor tabs, save, and side-by-side git diffs of your agents&#39; changes — plus GitHub Copilot CLI as a first-class agent engine, our first community-contributed provider.</summary>
+    <summary>Hana-Kami v0.3.3 adds a full Monaco IDE — file tree, editor tabs, save, and side-by-side git diffs of your agents&#39; changes — plus GitHub Copilot CLI as a first-class agent engine, our first community-contributed provider.</summary>
   </entry>
   <entry>
     <title>Loop Engineering: Designing Agent Loops That Converge</title>
@@ -400,12 +400,12 @@
     <summary>Everyone engineers the prompt; almost nobody engineers the loop around it. Stop conditions, drain loops, retry with backoff, compaction cycles, breaker escalation, budgets, and human gates — the outer-loop mechanics that make an agent converge instead of run away.</summary>
   </entry>
   <entry>
-    <title>Orca vs Munder Difflin: Agent IDE or Agent Office?</title>
+    <title>Orca vs Hana-Kami: Agent IDE or Agent Office?</title>
     <link href="https://munderdiffl.in/blog/orca-vs-munder-difflin/" />
     <id>https://munderdiffl.in/blog/orca-vs-munder-difflin/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Comparisons" />
-    <summary>Orca is a YC-backed Agent IDE for driving coding agents side by side in isolated worktrees. Munder Difflin is an agent office that runs itself. An honest comparison of the two — and when each one is the right pick.</summary>
+    <summary>Orca is a YC-backed Agent IDE for driving coding agents side by side in isolated worktrees. Hana-Kami is an agent office that runs itself. An honest comparison of the two — and when each one is the right pick.</summary>
   </entry>
   <entry>
     <title>Review Agent Work Where It Happens</title>
@@ -413,7 +413,7 @@
     <id>https://munderdiffl.in/blog/review-agent-work-where-it-happens/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Concepts" />
-    <summary>AI agents produce diffs faster than humans can review them, and alt-tabbing to an external editor breaks supervision flow. The case for review-in-place: Munder Difflin&#39;s built-in Monaco IDE puts a CHANGES rail and side-by-side diffs vs HEAD right on the office floor.</summary>
+    <summary>AI agents produce diffs faster than humans can review them, and alt-tabbing to an external editor breaks supervision flow. The case for review-in-place: Hana-Kami&#39;s built-in Monaco IDE puts a CHANGES rail and side-by-side diffs vs HEAD right on the office floor.</summary>
   </entry>
   <entry>
     <title>Run a Mixed-Engine Office: the Right CLI for Every Desk</title>
@@ -421,7 +421,7 @@
     <id>https://munderdiffl.in/blog/run-a-mixed-engine-office/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Guides" />
-    <summary>A practical guide to mixing agent engines on one Munder Difflin floor: Claude Code as orchestrator, Codex for coding bursts, Copilot for dispatched tasks, and OpenCode/Crush/pi.dev for BYOK keys and local models.</summary>
+    <summary>A practical guide to mixing agent engines on one Hana-Kami floor: Claude Code as orchestrator, Codex for coding bursts, Copilot for dispatched tasks, and OpenCode/Crush/pi.dev for BYOK keys and local models.</summary>
   </entry>
   <entry>
     <title>Running Agents in tmux vs an Agent Harness</title>
@@ -437,7 +437,7 @@
     <id>https://munderdiffl.in/blog/voice-as-a-control-plane-for-agent-fleets/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Concepts" />
-    <summary>Voice is a terrible way to write code and a great way to run a fleet. Why low-bandwidth commands over high-bandwidth work is the right split — with Munder Difflin&#39;s Talk mode (echo-back confirmation, spend caps, michael-voice attribution) as the case study.</summary>
+    <summary>Voice is a terrible way to write code and a great way to run a fleet. Why low-bandwidth commands over high-bandwidth work is the right split — with Hana-Kami&#39;s Talk mode (echo-back confirmation, spend caps, michael-voice attribution) as the case study.</summary>
   </entry>
   <entry>
     <title>What Is an Agent Development Environment (ADE)?</title>
@@ -453,38 +453,38 @@
     <id>https://munderdiffl.in/blog/what-is-harness-engineering/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-07-03T00:00:00.000Z</updated><category term="Concepts" />
-    <summary>Harness engineering is the discipline of building everything around the model — PTY plumbing, lifecycle hooks, mailboxes, memory, budgets, human gates, observability — because that&#39;s where agent reliability actually comes from. A definition, and four case studies from inside Munder Difflin.</summary>
+    <summary>Harness engineering is the discipline of building everything around the model — PTY plumbing, lifecycle hooks, mailboxes, memory, budgets, human gates, observability — because that&#39;s where agent reliability actually comes from. A definition, and four case studies from inside Hana-Kami.</summary>
   </entry>
   <entry>
-    <title>Your First Hour With Munder Difflin: Onboarding to a Pro Office</title>
+    <title>Your First Hour With Hana-Kami: Onboarding to a Pro Office</title>
     <link href="https://munderdiffl.in/blog/your-first-hour-with-munder-difflin/" />
     <id>https://munderdiffl.in/blog/your-first-hour-with-munder-difflin/</id>
     <published>2026-07-03T00:00:00.000Z</published>
     <updated>2026-09-14T00:00:00.000Z</updated><category term="Guides" />
-    <summary>Munder Difflin 0.5.2 from download to a working Pro office: install Claude Code, Codex or OpenCode, sign in, go Pro, then automate reviews, Slack and email.</summary>
+    <summary>Hana-Kami 0.5.2 from download to a working Pro office: install Claude Code, Codex or OpenCode, sign in, go Pro, then automate reviews, Slack and email.</summary>
   </entry>
   <entry>
-    <title>Launching Munder Difflin v0.3.2: Talk to Michael, a Realtime Voice Orchestrator</title>
+    <title>Launching Hana-Kami v0.3.2: Talk to Michael, a Realtime Voice Orchestrator</title>
     <link href="https://munderdiffl.in/blog/launching-munder-difflin-v0-3-2/" />
     <id>https://munderdiffl.in/blog/launching-munder-difflin-v0-3-2/</id>
     <published>2026-06-27T00:00:00.000Z</published>
     <updated>2026-06-27T00:00:00.000Z</updated><category term="Story" />
-    <summary>Munder Difflin v0.3.2 adds Realtime Michael — a low-latency voice channel to the GOD orchestrator. Talk to Michael and he listens, answers, and acts: reading the hive and, behind spoken echo-back confirmation, dispatching, spawning, and steering the floor in real time.</summary>
+    <summary>Hana-Kami v0.3.2 adds Realtime Michael — a low-latency voice channel to the GOD orchestrator. Talk to Michael and he listens, answers, and acts: reading the hive and, behind spoken echo-back confirmation, dispatching, spawning, and steering the floor in real time.</summary>
   </entry>
   <entry>
-    <title>Run Munder Difflin Locally on a Mac Mini</title>
+    <title>Run Hana-Kami Locally on a Mac Mini</title>
     <link href="https://munderdiffl.in/blog/run-munder-difflin-on-a-mac-mini/" />
     <id>https://munderdiffl.in/blog/run-munder-difflin-on-a-mac-mini/</id>
     <published>2026-06-22T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Guides" />
-    <summary>Run a whole Munder Difflin office offline on an Apple silicon Mac mini: size the model to your unified memory, install Ollama or LM Studio, and wire OpenCode, Crush, Qwen and Pi to it. Current as of Munder Difflin 0.5.2 and the M6 and M5 Pro Mac mini.</summary>
+    <summary>Run a whole Hana-Kami office offline on an Apple silicon Mac mini: size the model to your unified memory, install Ollama or LM Studio, and wire OpenCode, Crush, Qwen and Pi to it. Current as of Hana-Kami 0.5.2 and the M6 and M5 Pro Mac mini.</summary>
   </entry>
   <entry>
-    <title>Run Munder Difflin on Open Source Models: Fully Local or Through a Provider</title>
+    <title>Run Hana-Kami on Open Source Models: Fully Local or Through a Provider</title>
     <link href="https://munderdiffl.in/blog/run-munder-difflin-on-open-models/" />
     <id>https://munderdiffl.in/blog/run-munder-difflin-on-open-models/</id>
     <published>2026-06-22T00:00:00.000Z</published>
     <updated>2026-09-10T00:00:00.000Z</updated><category term="Guides" />
-    <summary>Munder Difflin can run your whole agent floor on open weight models like gpt-oss, Qwen3, DeepSeek, Llama, GLM and Kimi: fully local with Ollama, LM Studio or vLLM, or through a provider with your own key. The wiring for each engine, current as of 0.5.2.</summary>
+    <summary>Hana-Kami can run your whole agent floor on open weight models like gpt-oss, Qwen3, DeepSeek, Llama, GLM and Kimi: fully local with Ollama, LM Studio or vLLM, or through a provider with your own key. The wiring for each engine, current as of 0.5.2.</summary>
   </entry>
 </feed>

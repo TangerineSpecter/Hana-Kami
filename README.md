@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="./docs/logo.png" alt="Munder Difflin — agent harness to run an office of your clones" width="180">
+<img src="./docs/logo.png" alt="Hana-Kami — agent harness to run an office of your clones" width="180">
 
-# Munder Difflin
+# Hana-Kami
 
 ### Agent harness to run an office of your clones
 
 <p>
   <a href="https://trendshift.io/repositories/46562" target="_blank" rel="noopener noreferrer"><img alt="GitHub Trending — #1 Repository of the Day" src="./docs/badge-github-trending.png" width="250" height="54"></a>
-  <a href="https://www.producthunt.com/products/munder-difflin?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_campaign=badge-munder-difflin" target="_blank" rel="noopener noreferrer"><img alt="Munder Difflin — #5 Product of the Day on Product Hunt" src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1221363&theme=light&period=daily" width="250" height="54"></a>
+  <a href="https://www.producthunt.com/products/hanakami?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_campaign=badge-hanakami" target="_blank" rel="noopener noreferrer"><img alt="Hana-Kami — #5 Product of the Day on Product Hunt" src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1221363&theme=light&period=daily" width="250" height="54"></a>
 </p>
 
-<img src="./docs/media/floor.png" alt="The Munder Difflin office floor: agents at desks working in parallel, with the Command Center and a live agent terminal on the right" width="1240">
+<img src="./docs/media/floor.png" alt="The Hana-Kami office floor: agents at desks working in parallel, with the Command Center and a live agent terminal on the right" width="1240">
 
 **Free, open source and performant** — a multi-agent harness that works with the
 subscriptions you already pay for, on their hourly limits. It turns the terminal coding CLI
@@ -31,7 +31,7 @@ visualized as avatars at work on a shared office floor.
 <p>
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-F4D35E.svg?style=flat-square&labelColor=6E1423"></a>
   <a href="./CHANGELOG.md"><img alt="Version: 0.4.6" src="https://img.shields.io/badge/version-0.4.6-F4D35E.svg?style=flat-square&labelColor=6E1423"></a>
-  <a href="https://github.com/chaitanyagiri/munder-difflin/releases"><img alt="Downloads across all releases" src="https://img.shields.io/github/downloads/chaitanyagiri/munder-difflin/total?style=flat-square&label=downloads&color=F4D35E&labelColor=6E1423"></a>
+  <a href="https://github.com/TangerineSpecter/Hana-Kami/releases"><img alt="Downloads across all releases" src="https://img.shields.io/github/downloads/TangerineSpecter/Hana-Kami/total?style=flat-square&label=downloads&color=F4D35E&labelColor=6E1423"></a>
   <img alt="Status: pre-release" src="https://img.shields.io/badge/status-pre--release-F4F1EA.svg?style=flat-square&labelColor=6E1423">
   <img alt="Platform: macOS | Windows | Linux" src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-F4F1EA.svg?style=flat-square&labelColor=6E1423">
   <a href="./CONTRIBUTING.md"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-F4D35E.svg?style=flat-square&labelColor=6E1423"></a>
@@ -42,13 +42,13 @@ visualized as avatars at work on a shared office floor.
 <br>
 
 <!-- Inline player renders on github.com (raw URL required; relative paths only link). -->
-<video src="https://github.com/chaitanyagiri/munder-difflin/raw/main/docs/media/hero.mp4" controls muted loop playsinline width="820">
-  <a href="https://github.com/chaitanyagiri/munder-difflin/raw/main/docs/media/hero.mp4">▶ Watch the floor — Munder Difflin running a hive of Claude Code agents</a>
+<video src="https://github.com/TangerineSpecter/Hana-Kami/raw/main/docs/media/hero.mp4" controls muted loop playsinline width="820">
+  <a href="https://github.com/TangerineSpecter/Hana-Kami/raw/main/docs/media/hero.mp4">▶ Watch the floor — Hana-Kami running a hive of Claude Code agents</a>
 </video>
 
 <br><br>
 
-**[⬇ Download for macOS, Windows or Linux](https://github.com/chaitanyagiri/munder-difflin/releases/latest)**
+**[⬇ Download for macOS, Windows or Linux](https://github.com/TangerineSpecter/Hana-Kami/releases/latest)**
 
 <sub>macOS builds are signed and notarized. You do not need to build from source to use it.</sub>
 
@@ -58,7 +58,7 @@ visualized as avatars at work on a shared office floor.
 
 > [!NOTE]
 > **The world's best agents. The world's worst paper company.**
-> Munder Difflin takes the terminal-agent CLIs you already run — `claude`, `agy`, `codex`, `grok`,
+> Hana-Kami takes the terminal-agent CLIs you already run — `claude`, `agy`, `codex`, `grok`,
 > `kimi`, `qwen`, `opencode`, `crush`, `pi`, and `copilot` — and turns them
 > into a self-coordinating team: each agent gets long-term memory, a mailbox, and a desk on a 2D
 > office floor — and **your clone** (Michael) routes work between them while you watch. He's the
@@ -104,7 +104,7 @@ Plus **bring your own keys** and **local models** through Ollama, LM Studio or v
 
 ## What it is
 
-Munder Difflin is a desktop app that wraps **real terminal-agent CLIs** as fully-capable agents,
+Hana-Kami is a desktop app that wraps **real terminal-agent CLIs** as fully-capable agents,
 wires them into a **hive mind**, and puts **your clone** in charge — Michael, the one agent *you*
 talk to in order to get things done. Under the hood it runs the **fastest memory layer in the
 world** so every agent remembers what it learns and recalls it instantly.
@@ -164,7 +164,7 @@ escalates the few things that actually need you.
 
 </td>
 <td width="50%">
-  <a href="https://github.com/chaitanyagiri/munder-difflin/raw/main/docs/media/demo/orchestrator.mp4"><img src="./docs/media/demo/orchestrator-poster.jpg" alt="Briefing Michael, the orchestrator agent, from the Command Center" width="100%"></a>
+  <a href="https://github.com/TangerineSpecter/Hana-Kami/raw/main/docs/media/demo/orchestrator.mp4"><img src="./docs/media/demo/orchestrator-poster.jpg" alt="Briefing Michael, the orchestrator agent, from the Command Center" width="100%"></a>
 </td>
 </tr>
 <tr>
@@ -217,7 +217,7 @@ Click any desk to read that terminal live, and type straight back into it.
 
 </td>
 <td width="50%">
-  <a href="https://github.com/chaitanyagiri/munder-difflin/raw/main/docs/media/demo/agents.mp4"><img src="./docs/media/demo/agents-poster.jpg" alt="Agents working in parallel on the office floor" width="100%"></a>
+  <a href="https://github.com/TangerineSpecter/Hana-Kami/raw/main/docs/media/demo/agents.mp4"><img src="./docs/media/demo/agents-poster.jpg" alt="Agents working in parallel on the office floor" width="100%"></a>
 </td>
 </tr>
 <tr>
@@ -230,7 +230,7 @@ than sending you to a docs page.
 
 </td>
 <td width="50%">
-  <a href="https://github.com/chaitanyagiri/munder-difflin/raw/main/docs/media/demo/setup.mp4"><img src="./docs/media/demo/setup-poster.jpg" alt="The first run setup wizard" width="100%"></a>
+  <a href="https://github.com/TangerineSpecter/Hana-Kami/raw/main/docs/media/demo/setup.mp4"><img src="./docs/media/demo/setup-poster.jpg" alt="The first run setup wizard" width="100%"></a>
 </td>
 </tr>
 </table>
@@ -258,10 +258,10 @@ than sending you to a docs page.
 
 **Getting work in and out**
 - **Slack & webhooks** — message a channel or POST a webhook; Michael can spawn an ephemeral worker, reply in-thread, and tear it down.
-- **Shareable hires + Agent Gallery** — import a role from a `munderdifflin://hire` link; import only pre-fills the form, a human still spawns it. Browse roles at the [Agent Gallery](https://munderdiffl.in/hires/).
+- **Shareable hires + Agent Gallery** — import a role from a `hanakami://hire` link; import only pre-fills the form, a human still spawns it. Browse roles at the [Agent Gallery](https://munderdiffl.in/hires/).
 - **BYOK keys + local LLMs** — per-provider keys in a write-only secret broker, plus Ollama / LM Studio / vLLM base URLs. Guides: [open models](https://munderdiffl.in/blog/run-munder-difflin-on-open-models/) · [Mac Mini](https://munderdiffl.in/blog/run-munder-difflin-on-a-mac-mini/).
 - **Updates in one click**: the title-bar badge runs the real update. It downloads the build for your machine, then restarts and installs it, and it reads `latest` once a check confirms you are current. A manual download is the fallback for when the updater cannot fetch the build itself. The first run afterwards opens that release's notes as a designed page rather than a version number.
-- **Your language**: English, Simplified Chinese and Arabic, with right to left layout for Arabic. English is the default and nothing changes until you pick another one in Settings. The app does not read your OS locale. All three app fonts ship inside the bundle, so nothing is fetched at boot.
+- **Your language**: English, Simplified Chinese and Arabic, with right to left layout for Arabic. Simplified Chinese is the default for new installs; saved choices win. The app does not read your OS locale. All three app fonts ship inside the bundle, so nothing is fetched at boot.
 - **Prerequisites** — one Settings page showing which supporting tools (uv, git, Node, MemPalace, each agent CLI) you have, what each is for, and a button that asks Michael to install what is missing.
 
 > [!NOTE]
@@ -287,16 +287,16 @@ than sending you to a docs page.
 > **If you're on 0.3.8, update:** that build's usage-limit guard never released the agents it held,
 > and it has been removed entirely.
 > macOS (signed & notarized), Windows, and Linux builds are on the
-> [releases page](https://github.com/chaitanyagiri/munder-difflin/releases/latest).
+> [releases page](https://github.com/TangerineSpecter/Hana-Kami/releases/latest).
 
-<div align="right">(<a href="#munder-difflin">↑ back to top</a>)</div>
+<div align="right">(<a href="#hanakami">↑ back to top</a>)</div>
 
 ## Getting started
 
 ### Download the app
 
 **Most people want this one.** Signed and notarized macOS builds, plus Windows and Linux, are on
-the [latest release](https://github.com/chaitanyagiri/munder-difflin/releases/latest). Install it,
+the [latest release](https://github.com/TangerineSpecter/Hana-Kami/releases/latest). Install it,
 open it, and the wizard takes you the rest of the way. You do not need Node, a toolchain, or this
 repository.
 
@@ -327,8 +327,8 @@ Everything below is for contributors and for people who want to run an unrelease
 ### Install & run
 
 ```bash
-git clone https://github.com/chaitanyagiri/munder-difflin.git
-cd munder-difflin
+git clone https://github.com/TangerineSpecter/Hana-Kami.git
+cd hanakami
 npm install        # postinstall rebuilds node-pty against Electron's ABI
 npm run dev        # launches the Electron app with hot reload
 ```
@@ -359,7 +359,7 @@ the product rather than the codebase. Also see [`HIVE.md`](./HIVE.md) for the mu
 [`SPEC.md`](./SPEC.md) for the terminal and event plane, and [`DESIGN.md`](./DESIGN.md) for the
 visual system.
 
-<div align="right">(<a href="#munder-difflin">↑ back to top</a>)</div>
+<div align="right">(<a href="#hanakami">↑ back to top</a>)</div>
 
 ## Roadmap
 
@@ -380,7 +380,7 @@ Next up:
 - [ ] **Fuller avatar coverage** — drive the remaining station visits and tool-bubbles entirely from real hook events.
 - [ ] **Durable layout & command history** — extend persistence to agent layout and per-session history.
 
-<div align="right">(<a href="#munder-difflin">↑ back to top</a>)</div>
+<div align="right">(<a href="#hanakami">↑ back to top</a>)</div>
 
 ## Contributing
 
@@ -399,17 +399,17 @@ first areas: wiring real hook events, the add-agent flow, the config drawer, and
 Questions, bugs, or want to show off your office? Join the Discord: **<https://discord.gg/SEDzP5ZPk5>**. Add your Discord handle to a PR and you'll get the `employee of the month` role when it merges.
 
 **Looking for somewhere to start?** The
-[`good first issue`](https://github.com/chaitanyagiri/munder-difflin/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+[`good first issue`](https://github.com/TangerineSpecter/Hana-Kami/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 list is kept stocked with small, self contained work that has a clear finish line.
 
-**Everyone whose code is in Munder Difflin is listed in [`CONTRIBUTORS.md`](./CONTRIBUTORS.md).**
+**Everyone whose code is in Hana-Kami is listed in [`CONTRIBUTORS.md`](./CONTRIBUTORS.md).**
 If that is you, it is yours to point at. The list is generated from the pull requests themselves and
 updates on its own, so you appear without having to ask. It also names the contributions that are in
 `main` but that GitHub shows as closed rather than merged, because that was our mistake to record
 and not theirs to explain.
 
 <a href="./CONTRIBUTORS.md">
-  <img src="https://contrib.rocks/image?repo=chaitanyagiri/munder-difflin" alt="Munder Difflin contributors">
+  <img src="https://contrib.rocks/image?repo=TangerineSpecter/Hana-Kami" alt="Hana-Kami contributors">
 </a>
 
 ## Telemetry
@@ -432,7 +432,7 @@ source — forks compile with no key and send nothing) are documented in
 
 The **source code** is licensed under the **MIT License** — see [`LICENSE`](./LICENSE). The MIT grant
 covers the code only; the bundled pixel art is licensed separately from LimeZu and is carved out in
-[`LICENSE-ASSETS`](./LICENSE-ASSETS). *Munder Difflin* is an affectionate parody and is not affiliated with NBC's *The Office* or
+[`LICENSE-ASSETS`](./LICENSE-ASSETS). *Hana-Kami* is an affectionate parody and is not affiliated with NBC's *The Office* or
 Dunder Mifflin.
 
 ## Acknowledgements
@@ -441,4 +441,4 @@ Dunder Mifflin.
 - [`shahar061/the-office`](https://github.com/shahar061/the-office) for the office tileset/map vendoring.
 - [Pixi.js](https://pixijs.com/) · [xterm.js](https://xtermjs.org/) · [node-pty](https://github.com/microsoft/node-pty) · [electron-vite](https://electron-vite.org/) · [CodeMirror](https://codemirror.net/) for the libraries this is built on.
 - [Remotion](https://www.remotion.dev/) for the landing page's animated "how it works" clips (`landing-remotion/`).
-- *The Office* (US) for Munder Difflin, Inc.
+- *The Office* (US) for Hana-Kami, Inc.

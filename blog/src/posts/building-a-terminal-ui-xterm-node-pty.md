@@ -231,6 +231,6 @@ bytes from the PTY and it handles colors, cursor movement, and the alternate scr
 
 ---
 
-Munder Difflin renders a whole floor of live Claude Code terminals with xterm.js — one persistent,
-pooled terminal per agent, switchable instantly. [Download Munder Difflin](https://munderdiffl.in/#install)
+Hana-Kami renders a whole floor of live Claude Code terminals with xterm.js — one persistent,
+pooled terminal per agent, switchable instantly. [Download Hana-Kami](https://munderdiffl.in/#install)
 to watch many real terminals at once; it's free and open source.

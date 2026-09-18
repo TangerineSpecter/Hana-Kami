@@ -1,11 +1,11 @@
 ---
-title: "Munder Difflin v0.2.4 Feature Walkthrough"
-description: "A comprehensive guide to every change in Munder Difflin v0.2.4 — how the Codex lifecycle-hook bridge achieves full hive parity, what the Schedules tab adds, why tunnelmole replaced localtunnel, and what else shipped."
+title: "Hana-Kami v0.2.4 Feature Walkthrough"
+description: "A comprehensive guide to every change in Hana-Kami v0.2.4 — how the Codex lifecycle-hook bridge achieves full hive parity, what the Schedules tab adds, why tunnelmole replaced localtunnel, and what else shipped."
 date: 2026-06-09
 category: guides
 categoryLabel: Guides
 type: Technical
-primaryKeyword: "munder difflin v0.2.4 features"
+primaryKeyword: "hana-kami v0.2.4 features"
 secondaryKeywords: ["codex lifecycle hook bridge", "antigravity gemini hive", "agy hook bridge", "claude code multi-provider", "schedules tab command center", "codex full hive parity"]
 tags: ["Release", "Multi-Agent", "Claude Code", "Codex", "Guides", "Internals"]
 author:
@@ -74,7 +74,7 @@ This pattern is honest about what the provider can and cannot do. If a CLI doesn
 
 ## Schedules tab
 
-Scheduled missions have been in Munder Difflin since v0.1.6. The scheduler fires recurring missions on a configurable interval — hourly standups, PR reviews, compaction cycles, re-engagement checks for quiet workers. Until v0.2.3, these lived inside an inline section of the Floor tab.
+Scheduled missions have been in Hana-Kami since v0.1.6. The scheduler fires recurring missions on a configurable interval — hourly standups, PR reviews, compaction cycles, re-engagement checks for quiet workers. Until v0.2.3, these lived inside an inline section of the Floor tab.
 
 The move to a **dedicated Schedules tab** in the Command Center is a small surface change with a real day-to-day effect. When you're running a persistent office with multiple recurring missions — and most meaningful setups do — those missions need a place to live that isn't nested inside the agent roster view. The Schedules tab now owns:
 
@@ -119,8 +119,8 @@ The task kanban board (Command Center → Tasks) now has a dismiss button on eac
 
 ## What ships with v0.2.4
 
-Everything from v0.2.0 (observability, circuit breaker, fleet monitoring, persistence), v0.2.1 (queue-aware compaction, inbox-driven heartbeat), v0.2.2 (context gauges, all-human-dispatch-through-god, community fixes), and v0.2.3 (multi-provider foundation, Schedules tab, tunnelmole) is included. The full log is in the [CHANGELOG](https://github.com/chaitanyagiri/munder-difflin/blob/main/CHANGELOG.md).
+Everything from v0.2.0 (observability, circuit breaker, fleet monitoring, persistence), v0.2.1 (queue-aware compaction, inbox-driven heartbeat), v0.2.2 (context gauges, all-human-dispatch-through-god, community fixes), and v0.2.3 (multi-provider foundation, Schedules tab, tunnelmole) is included. The full log is in the [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md).
 
 To use the new providers: install the relevant CLIs (`agy` for Antigravity, `codex` for OpenAI Codex) and put them on your `PATH`. When you add a worker in the Add Agent dialog, select the provider. The hive handles the rest.
 
-Download v0.2.4 from the [releases page](https://github.com/chaitanyagiri/munder-difflin/releases/latest). Munder Difflin is free, open source, and local-first on macOS, Windows, and Linux.
+Download v0.2.4 from the [releases page](https://github.com/TangerineSpecter/Hana-Kami/releases/latest). Hana-Kami is free, open source, and local-first on macOS, Windows, and Linux.

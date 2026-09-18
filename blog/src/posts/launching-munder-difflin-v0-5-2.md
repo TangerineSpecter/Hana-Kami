@@ -1,18 +1,18 @@
 ---
-title: "Munder Difflin 0.5.2: Pro, the Stapler and Everything Since 0.4.6"
-description: "Munder Difflin 0.5.2 is out: how to install it, how to start Pro, what Pro adds, what changed since 0.4.6, and the end of signed Community builds."
+title: "Hana-Kami 0.5.2: Pro, the Stapler and Everything Since 0.4.6"
+description: "Hana-Kami 0.5.2 is out: how to install it, how to start Pro, what Pro adds, what changed since 0.4.6, and the end of signed Community builds."
 date: 2026-09-10
 category: story
 categoryLabel: Story
 type: Non-technical
-primaryKeyword: "munder difflin 0.5.2"
-secondaryKeywords: ["munder difflin pro", "install munder difflin pro", "munder difflin stapler", "munder difflin release notes", "munder difflin community build"]
+primaryKeyword: "hana-kami 0.5.2"
+secondaryKeywords: ["hana-kami pro", "install hana-kami pro", "hana-kami stapler", "hana-kami release notes", "hana-kami community build"]
 tags: ["Story", "Release", "Pro"]
 author:
   name: Chaitanya Giri
   initials: CG
 faq:
-  - q: "Is Munder Difflin 0.5.2 free?"
+  - q: "Is Hana-Kami 0.5.2 free?"
     a: "Yes. The 0.5.2 download runs the classic office for free after you sign in to your harnessMD account, and your work stays on your machine. Pro and Teams are optional paid plans on the same download, and both come with a 14 day trial."
   - q: "Do I need a different download for Pro?"
     a: "No. The free classic office, Pro and Teams all run on the same 0.5.2 download. Buying Pro or entering a licence key switches that machine to Pro."
@@ -24,13 +24,13 @@ faq:
     a: "A Pro plan, and you turn it on from Stapler in the Pro sidebar. On macOS the first screenshot asks for Screen Recording permission. Spoken messages and meeting transcripts need a free Groq API key, which you add under Voice."
 ---
 
-<div class="callout tldr"><span class="ic">TL;DR</span><p><strong>Munder Difflin 0.5.2 is the version to
+<div class="callout tldr"><span class="ic">TL;DR</span><p><strong>Hana-Kami 0.5.2 is the version to
 install today.</strong> One download runs the free classic office, Pro and Teams. Pro adds a sidebar workspace
 and the Stapler, a small helper that floats over your screen. We shipped eight versions between 0.4.6 and 0.5.2,
 in thirteen days. One change to know first: <strong>Community builds are no longer signed or notarized.</strong>
 The build we sign, notarize and maintain is the Pro build.</p></div>
 
-Munder Difflin 0.5.2 came out on 9 September 2026. It is one download for macOS, Windows and Linux that runs the
+Hana-Kami 0.5.2 came out on 9 September 2026. It is one download for macOS, Windows and Linux that runs the
 free classic office, Pro and Teams. This post covers how to install it, how to start Pro, what Pro adds, and what
 happened between 0.4.6 and 0.5.2.
 
@@ -49,16 +49,16 @@ What that means depends on which one you run:
   SmartScreen warning before it runs.
 
 The source on GitHub stays MIT licensed. 0.5.2 itself is a binaries only release: its
-[GitHub release](https://github.com/chaitanyagiri/munder-difflin/releases/tag/v0.5.2) carries the installers, not
+[GitHub release](https://github.com/TangerineSpecter/Hana-Kami/releases/tag/v0.5.2) carries the installers, not
 the 0.5.2 source.
 
-## How do I install Munder Difflin 0.5.2?
+## How do I install Hana-Kami 0.5.2?
 
 Download it from the [download page](https://harnessmd.com/download), pick your system, and install it like any
 other app. You need one supported coding CLI installed and signed in first, such as Claude Code, Codex or
 Antigravity.
 
-1. **macOS**, Apple silicon and Intel in one universal build: open the `.dmg` and drag Munder Difflin into
+1. **macOS**, Apple silicon and Intel in one universal build: open the `.dmg` and drag Hana-Kami into
    Applications.
 2. **Windows** 10 and 11, 64 bit: run the setup `.exe`. A portable `.exe` is on the release too.
 3. **Linux**, x86_64: mark the `.AppImage` as executable, then run it.
@@ -71,10 +71,10 @@ with the output of:
 
 ```bash
 # macOS and Linux
-shasum -a 256 Munder-Difflin-0.5.2-mac-universal.dmg
+shasum -a 256 Hana-Kami-0.5.2-mac-universal.dmg
 
 # Windows (PowerShell)
-Get-FileHash .\Munder-Difflin-0.5.2-win-x64-setup.exe -Algorithm SHA256
+Get-FileHash .\Hana-Kami-0.5.2-win-x64-setup.exe -Algorithm SHA256
 ```
 
 Coming from 0.4.6? If the update badge in the title bar offers 0.5.2, click it and restart. If it does not,
@@ -83,7 +83,7 @@ install 0.5.2 from the download page over your current copy. The
 
 {% img "note-1" %}
 
-## What is Munder Difflin Pro?
+## What is Hana-Kami Pro?
 
 Pro is the professional workspace for one person, on the same download as the free office. In the app's own
 words, your agents run as a company, with an orchestrator, a task board, an inbox and a memory, all on your
@@ -184,30 +184,30 @@ version added along the way.
 0.5.0 brought in pull requests from people outside the company, merged from public main, with fixes across Slack,
 worktrees, hooks, the terminal, the circuit breaker and the sandbox. Thank you:
 
-* [@AmIrRX0](https://github.com/chaitanyagiri/munder-difflin/pull/218)
-* [@LavaDMan](https://github.com/chaitanyagiri/munder-difflin/pull/309)
-* @aaroncoville ([#321](https://github.com/chaitanyagiri/munder-difflin/pull/321), [#337](https://github.com/chaitanyagiri/munder-difflin/pull/337))
-* [@reschandreas](https://github.com/chaitanyagiri/munder-difflin/pull/332)
-* [@savvaskoualis](https://github.com/chaitanyagiri/munder-difflin/pull/335)
-* [@devrahulbanjara](https://github.com/chaitanyagiri/munder-difflin/pull/347)
-* [@HaningZS](https://github.com/chaitanyagiri/munder-difflin/pull/356)
-* @drona23 ([#367](https://github.com/chaitanyagiri/munder-difflin/pull/367), [#368](https://github.com/chaitanyagiri/munder-difflin/pull/368), [#369](https://github.com/chaitanyagiri/munder-difflin/pull/369))
-* [@gpinkham](https://github.com/chaitanyagiri/munder-difflin/pull/384)
-* [@xxiaoxiong](https://github.com/chaitanyagiri/munder-difflin/pull/388)
-* @HsienW ([#390](https://github.com/chaitanyagiri/munder-difflin/pull/390), [#400](https://github.com/chaitanyagiri/munder-difflin/pull/400), [#438](https://github.com/chaitanyagiri/munder-difflin/pull/438))
-* [@wckleinhenz](https://github.com/chaitanyagiri/munder-difflin/pull/396)
-* [@vicenteliu](https://github.com/chaitanyagiri/munder-difflin/pull/406)
-* [@ketan0095](https://github.com/chaitanyagiri/munder-difflin/pull/410)
-* [@skyzhao1223](https://github.com/chaitanyagiri/munder-difflin/pull/412)
-* @Vasilispapg ([#415](https://github.com/chaitanyagiri/munder-difflin/pull/415), [#416](https://github.com/chaitanyagiri/munder-difflin/pull/416))
-* @snehithareddy28 ([#424](https://github.com/chaitanyagiri/munder-difflin/pull/424), [#425](https://github.com/chaitanyagiri/munder-difflin/pull/425), [#426](https://github.com/chaitanyagiri/munder-difflin/pull/426))
-* [@M1chaelTran](https://github.com/chaitanyagiri/munder-difflin/pull/433)
-* [@divijendra](https://github.com/chaitanyagiri/munder-difflin/pull/442)
+* [@AmIrRX0](https://github.com/TangerineSpecter/Hana-Kami/pull/218)
+* [@LavaDMan](https://github.com/TangerineSpecter/Hana-Kami/pull/309)
+* @aaroncoville ([#321](https://github.com/TangerineSpecter/Hana-Kami/pull/321), [#337](https://github.com/TangerineSpecter/Hana-Kami/pull/337))
+* [@reschandreas](https://github.com/TangerineSpecter/Hana-Kami/pull/332)
+* [@savvaskoualis](https://github.com/TangerineSpecter/Hana-Kami/pull/335)
+* [@devrahulbanjara](https://github.com/TangerineSpecter/Hana-Kami/pull/347)
+* [@HaningZS](https://github.com/TangerineSpecter/Hana-Kami/pull/356)
+* @drona23 ([#367](https://github.com/TangerineSpecter/Hana-Kami/pull/367), [#368](https://github.com/TangerineSpecter/Hana-Kami/pull/368), [#369](https://github.com/TangerineSpecter/Hana-Kami/pull/369))
+* [@gpinkham](https://github.com/TangerineSpecter/Hana-Kami/pull/384)
+* [@xxiaoxiong](https://github.com/TangerineSpecter/Hana-Kami/pull/388)
+* @HsienW ([#390](https://github.com/TangerineSpecter/Hana-Kami/pull/390), [#400](https://github.com/TangerineSpecter/Hana-Kami/pull/400), [#438](https://github.com/TangerineSpecter/Hana-Kami/pull/438))
+* [@wckleinhenz](https://github.com/TangerineSpecter/Hana-Kami/pull/396)
+* [@vicenteliu](https://github.com/TangerineSpecter/Hana-Kami/pull/406)
+* [@ketan0095](https://github.com/TangerineSpecter/Hana-Kami/pull/410)
+* [@skyzhao1223](https://github.com/TangerineSpecter/Hana-Kami/pull/412)
+* @Vasilispapg ([#415](https://github.com/TangerineSpecter/Hana-Kami/pull/415), [#416](https://github.com/TangerineSpecter/Hana-Kami/pull/416))
+* @snehithareddy28 ([#424](https://github.com/TangerineSpecter/Hana-Kami/pull/424), [#425](https://github.com/TangerineSpecter/Hana-Kami/pull/425), [#426](https://github.com/TangerineSpecter/Hana-Kami/pull/426))
+* [@M1chaelTran](https://github.com/TangerineSpecter/Hana-Kami/pull/433)
+* [@divijendra](https://github.com/TangerineSpecter/Hana-Kami/pull/442)
 
 ## Get it
 
 * Download 0.5.2: [harnessmd.com/download](https://harnessmd.com/download)
 * Plans and trials: [munderdiffl.in/#pricing](https://munderdiffl.in/#pricing)
-* The release on GitHub, with checksums: [v0.5.2](https://github.com/chaitanyagiri/munder-difflin/releases/tag/v0.5.2)
-* New here? Start with [your first hour with Munder Difflin](/blog/your-first-hour-with-munder-difflin/).
-* The previous release: [Munder Difflin v0.4.6](/blog/launching-munder-difflin-v0-4-6/).
+* The release on GitHub, with checksums: [v0.5.2](https://github.com/TangerineSpecter/Hana-Kami/releases/tag/v0.5.2)
+* New here? Start with [your first hour with Hana-Kami](/blog/your-first-hour-with-munder-difflin/).
+* The previous release: [Hana-Kami v0.4.6](/blog/launching-munder-difflin-v0-4-6/).

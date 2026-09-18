@@ -1,6 +1,6 @@
 ---
 title: "How to Add an MCP Server to Claude Code"
-description: "The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Munder Difflin's Capabilities screen grants an MCP server to one agent at a time."
+description: "The claude mcp add command, its scope flag, editing .mcp.json by hand, and how Hana-Kami's Capabilities screen grants an MCP server to one agent at a time."
 date: 2026-09-10
 category: guides
 categoryLabel: Guides
@@ -17,8 +17,8 @@ faq:
     a: "Local scope, the default, is private to you and only active in the project where you added the server. Project scope writes the entry to a .mcp.json file you commit, so teammates who clone the project get the same server. User scope registers the server once for every project you open, still private to you."
   - q: "How do I add an MCP server that needs an API key?"
     a: "Pass it with the -e flag when you add the server, for example -e API_KEY=xxx. A server that signs in through a browser instead, such as ones that use OAuth, is added with just its URL and authenticated afterward from inside a session with the /mcp command."
-  - q: "Does Munder Difflin let me control which agent gets which MCP server?"
-    a: "Yes. Since Munder Difflin 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and off for another, and servers that can write or hold secrets still need an explicit yes. Each Claude Code agent still picks up the servers you added at user or project scope, the same as any other claude session."
+  - q: "Does Hana-Kami let me control which agent gets which MCP server?"
+    a: "Yes. Since Hana-Kami 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and off for another, and servers that can write or hold secrets still need an explicit yes. Each Claude Code agent still picks up the servers you added at user or project scope, the same as any other claude session."
 ---
 
 <div class="callout tldr"><span class="ic">TL;DR</span><p>Run <code>claude mcp add</code> with a name and the command that starts the server for a local tool, or add the transport flag set to <code>http</code> and a URL for a hosted one. The default scope is local to your project; add the scope flag set to <code>user</code> to use a server everywhere, or to <code>project</code> to share it with teammates through <code>.mcp.json</code>. Confirm the connection with <code>claude mcp list</code>, and edit <code>.mcp.json</code> directly if you would rather write the JSON yourself.</p></div>
@@ -98,9 +98,9 @@ Claude Code reads `.mcp.json` at the start of a session, not while one is runnin
 
 Mostly, with a different entry point. VS Code and the Claude Code desktop app each have their own place to add a server instead of a terminal command, and Claude Code on the web just reads whatever `.mcp.json` is already checked into the repository. The CLI steps above are for a terminal session. The desktop app and the CLI read the same `~/.claude.json` and `.mcp.json` files, although a server in the desktop app's own `claude_desktop_config.json` wins when the names collide (checked 10 Sep 2026, [Claude Code desktop docs](https://code.claude.com/docs/en/desktop)).
 
-## Can Munder Difflin grant an MCP server to just one agent?
+## Can Hana-Kami grant an MCP server to just one agent?
 
-Yes. Since Munder Difflin 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and
+Yes. Since Hana-Kami 0.4.7, the Capabilities screen in the Pro workspace can turn a server on for one agent and
 off for another on the same floor, and servers that can write or hold secrets still need an explicit yes.
 
 That sits on top of Claude Code's own setup, not instead of it. Each Claude Code agent in the office is a real
@@ -108,7 +108,7 @@ That sits on top of Claude Code's own setup, not instead of it. Each Claude Code
 [an earlier post on MCP in a hive](/blog/mcp-and-skills-in-a-hive/) explains. Capabilities is the extra dial for
 keeping a server away from one agent that could otherwise reach it.
 
-None of this needs Munder Difflin: `claude mcp add` is Claude Code's own command and works the same in a bare
+None of this needs Hana-Kami: `claude mcp add` is Claude Code's own command and works the same in a bare
 terminal. A harness earns its place once several agents are running and only one of them should hold a given key.
-[Download Munder Difflin](https://munderdiffl.in/download); the classic office is free, and Capabilities comes with
+[Download Hana-Kami](https://munderdiffl.in/download); the classic office is free, and Capabilities comes with
 [Pro](https://munderdiffl.in/#pricing).

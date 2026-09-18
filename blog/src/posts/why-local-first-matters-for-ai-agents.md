@@ -94,5 +94,5 @@ to get them.
 
 ---
 
-Munder Difflin is local-first by design: the hive, the orchestrator, and MemPalace all run on your
-machine, on macOS, Windows, and Linux. [Download Munder Difflin](/#install) — free and open source.
+Hana-Kami is local-first by design: the hive, the orchestrator, and MemPalace all run on your
+machine, on macOS, Windows, and Linux. [Download Hana-Kami](/#install) — free and open source.

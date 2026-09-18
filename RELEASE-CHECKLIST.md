@@ -1,5 +1,24 @@
 # Release checklist: verifying the updater
 
+## Hana-Kami transition from the original repository
+
+Previously installed clients poll `chaitanyagiri/munder-difflin` for releases.
+This repository publishes to `TangerineSpecter/Hana-Kami`. The old address is a
+separate upstream repository, not a redirect to this one, so a release here
+alone cannot update those clients. Do not claim an automatic upgrade from the
+old app until a transition release has been published in the old repository by
+someone with access and tested on each supported platform. Otherwise tell
+existing users to install Hana-Kami once from the new release page. Their
+existing profile is reused automatically when the new profile has no config.
+
+- [ ] Confirm the new release repository and its assets are publicly readable by
+  the updater, or configure an authenticated distribution channel before release.
+- [ ] Test a real old-version-to-Hana-Kami install with an existing config,
+  command history, encrypted integration secrets and renderer localStorage.
+- [ ] If the old repository's maintainer cooperates, publish and test a signed
+  transition build there so its installed clients can discover the new app.
+- [ ] Test the next Hana-Kami-to-Hana-Kami update from the new release repository.
+
 The auto-updater ships across a version hop, so **the code in a release is only
 exercised by the NEXT release**. A build's own updater is proven by whether the
 build after it lands, not by the build itself. This checklist is how a release

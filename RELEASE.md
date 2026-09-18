@@ -1,5 +1,5 @@
 <!-- RELEASE RUNNER, REQUIRED BEFORE YOU TAG: run RELEASE-CHECKLIST.md. Rehearse the updater on 0.4.6-rc.1 -> 0.4.7-rc.1 prereleases and pass the fault-injection checks BEFORE tagging the real release. This comment is not rendered in the published notes. -->
-# Munder Difflin v0.4.6
+# Hana-Kami v0.4.6
 
 **A local hive of Claude Code, Antigravity, Codex, Gemini, Cursor, Grok & Copilot agents that run themselves.**
 Messaging, routing, and remembering, coordinated by your clone, Michael, who you talk to. Local-first and open source.
@@ -59,7 +59,7 @@ reviewed a pull request or filed the bug that led to one.
 
 <!-- drop -->
 <div class="drop">
-  <p class="eyebrow">Munder Difflin 0.4.6</p>
+  <p class="eyebrow">Hana-Kami 0.4.6</p>
   <h1>Speaks your language. Updates itself.</h1>
   <p class="lede">The interface now runs in Chinese and Arabic, the updater installs a new build end
   to end, and the fonts ship inside the app so a blocked network never leaves you on a blank screen.</p>
@@ -156,7 +156,7 @@ the app.
 
 ## Still new in 0.4.3 — *Michael is the logo*
 
-**The mark is a face now.** Munder Difflin has always been an office you watch people work in,
+**The mark is a face now.** Hana-Kami has always been an office you watch people work in,
 and the icon was a pair of script initials on a gradient. It's Michael — your clone — drawn in
 the app's own pixel art, on the brand yellow, looking straight back at you.
 
@@ -165,7 +165,7 @@ the app's own pixel art, on the brand yellow, looking straight back at you.
   redrawing of another.
 - **The SVG is the source of truth.** The mark is authored as pure vector — every pixel of the
   sprite is a rect, with no fonts, no gradients and no filters — and every raster in `build/`
-  and `docs/` is generated from it by [`tools/make-logo.cjs`](https://github.com/chaitanyagiri/munder-difflin/blob/main/tools/make-logo.cjs).
+  and `docs/` is generated from it by [`tools/make-logo.cjs`](https://github.com/TangerineSpecter/Hana-Kami/blob/main/tools/make-logo.cjs).
   The old icon depended on the Lobster webfont being installed to render correctly.
 - **Icons are native at every size.** A real multi-resolution `.icns` (16→1024, with the macOS
   drop shadow) and a `.ico` carrying six sizes, plus a 32px favicon and a 180px apple-touch-icon,
@@ -182,11 +182,11 @@ the app's own pixel art, on the brand yellow, looking straight back at you.
 
 ## Still new in 0.4.2 — *Anonymous usage stats, done in the open*
 
-Munder Difflin now sends a **small set of anonymous usage events** (app opened, agent spawned,
+Hana-Kami now sends a **small set of anonymous usage events** (app opened, agent spawned,
 feature used) so we can tell whether features are actually used. It is built the way an
 open-source project should build it:
 
-- **[TELEMETRY.md](https://github.com/chaitanyagiri/munder-difflin/blob/main/TELEMETRY.md) is the
+- **[TELEMETRY.md](https://github.com/TangerineSpecter/Hana-Kami/blob/main/TELEMETRY.md) is the
   complete contract.** Every event and property is listed there, and the code enforces that list
   as a hard allowlist — anything not in the table cannot be sent. No prompts, no transcripts, no
   file paths, no repo names, no identifiers. Events are PostHog *anonymous events* (no person
@@ -200,7 +200,7 @@ open-source project should build it:
 
 ## Still new in 0.4.1 — *The app says what the site says*
 
-**Michael is your clone.** The website has been describing Munder Difflin as a clone of you that
+**Michael is your clone.** The website has been describing Hana-Kami as a clone of you that
 works around the clock — the app still called it a "GOD agent." Now they match.
 
 - **Your clone, not the GOD agent.** Michael is described as your clone throughout onboarding,
@@ -250,7 +250,7 @@ works around the clock — the app still called it a "GOD agent." Now they match
 - **0.3.2** — Realtime Michael: a voice channel to the GOD orchestrator.
 - **0.3.1** — three more engines: OpenCode, Crush, and pi.dev.
 
-Full history in the [CHANGELOG](https://github.com/chaitanyagiri/munder-difflin/blob/main/CHANGELOG.md).
+Full history in the [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md).
 
 
 ---
@@ -261,29 +261,29 @@ This release carries community work. All 23 of these landed in v0.4.5:
 
 | | | |
 |---|---|---|
-| [#157](https://github.com/chaitanyagiri/munder-difflin/pull/157) | [@gpechieu](https://github.com/gpechieu) | inherited Claude Code session markers are stripped from an agent's PTY env |
-| [#158](https://github.com/chaitanyagiri/munder-difflin/pull/158) | [@gpechieu](https://github.com/gpechieu) | semantic memory works on Apple Silicon again: embeddings are pinned to CPU on macOS |
-| [#159](https://github.com/chaitanyagiri/munder-difflin/pull/159) | [@gpechieu](https://github.com/gpechieu) | reliable spawn, teardown and floor cards for the workers Michael hires |
-| [#165](https://github.com/chaitanyagiri/munder-difflin/pull/165) | [@rajpreetcodes](https://github.com/rajpreetcodes) | a `~` in the harness home folder resolves, so setup cannot die on ENOENT |
-| [#171](https://github.com/chaitanyagiri/munder-difflin/pull/171) | [@KrushanPatel](https://github.com/KrushanPatel) | CONTRIBUTING.md matches the platforms the app actually supports |
-| [#175](https://github.com/chaitanyagiri/munder-difflin/pull/175) | [@rekcilyssup](https://github.com/rekcilyssup) | a main-process watchdog wakes an idle worker sitting on an undrained inbox |
-| [#176](https://github.com/chaitanyagiri/munder-difflin/pull/176) | [@FenjuFu](https://github.com/FenjuFu) | Gemini CLI joins the engine list |
-| [#177](https://github.com/chaitanyagiri/munder-difflin/pull/177) | [@TTAWDTT](https://github.com/TTAWDTT) | each agent's live context-window occupancy shows in the roster |
-| [#178](https://github.com/chaitanyagiri/munder-difflin/pull/178) | [@gpechieu](https://github.com/gpechieu) | a god-hired worker gets a floor card, and it archives when the worker dies |
-| [#179](https://github.com/chaitanyagiri/munder-difflin/pull/179) | [@kdahal7](https://github.com/kdahal7) | `statAbs` expands `~`, so a path resolves the same way on every platform |
-| [#181](https://github.com/chaitanyagiri/munder-difflin/pull/181) | [@TTAWDTT](https://github.com/TTAWDTT) | webhook dispatch goes through an atomic add, so a stale ledger cannot overwrite it |
-| [#184](https://github.com/chaitanyagiri/munder-difflin/pull/184) | [@TTAWDTT](https://github.com/TTAWDTT) | the per-agent steer queue is capped, which bounds memory on a stalled agent |
-| [#185](https://github.com/chaitanyagiri/munder-difflin/pull/185) | [@hyperstream-pro](https://github.com/hyperstream-pro) | mail to an id with no inbox is bounced and logged instead of dropped |
-| [#186](https://github.com/chaitanyagiri/munder-difflin/pull/186) | [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN) | tests cover the Notifications and Stop idle-detection branches |
-| [#187](https://github.com/chaitanyagiri/munder-difflin/pull/187) | [@hyperstream-pro](https://github.com/hyperstream-pro) | a stale inbox nudge no longer wakes an agent against an inbox that is already empty |
-| [#190](https://github.com/chaitanyagiri/munder-difflin/pull/190) | [@swarnendu19](https://github.com/swarnendu19) | agent names can be edited after spin-up |
-| [#199](https://github.com/chaitanyagiri/munder-difflin/pull/199) | [@amey-op](https://github.com/amey-op) | the Antigravity queue no longer wedges for 30 seconds |
-| [#203](https://github.com/chaitanyagiri/munder-difflin/pull/203) | [@lifelmy](https://github.com/lifelmy) | the Crush config env points at the agent's own directory |
-| [#210](https://github.com/chaitanyagiri/munder-difflin/pull/210) | [@chaitanyagiri](https://github.com/chaitanyagiri) | the art licence claims are true again, Modern Interiors is bought |
-| [#214](https://github.com/chaitanyagiri/munder-difflin/pull/214) | [@pontusm](https://github.com/pontusm) | Windows agent processes quit when the app does |
-| [#219](https://github.com/chaitanyagiri/munder-difflin/pull/219) | [@chaitanyagiri](https://github.com/chaitanyagiri) | engine availability is checked before Michael's engine is committed |
-| [#226](https://github.com/chaitanyagiri/munder-difflin/pull/226) | [@chaitanyagiri](https://github.com/chaitanyagiri) | the floor reports lifetime spend, not spend since the last app restart |
-| [#227](https://github.com/chaitanyagiri/munder-difflin/pull/227) | [@scy73](https://github.com/scy73) | the renderer runs inside Chromium's sandbox |
+| [#157](https://github.com/TangerineSpecter/Hana-Kami/pull/157) | [@gpechieu](https://github.com/gpechieu) | inherited Claude Code session markers are stripped from an agent's PTY env |
+| [#158](https://github.com/TangerineSpecter/Hana-Kami/pull/158) | [@gpechieu](https://github.com/gpechieu) | semantic memory works on Apple Silicon again: embeddings are pinned to CPU on macOS |
+| [#159](https://github.com/TangerineSpecter/Hana-Kami/pull/159) | [@gpechieu](https://github.com/gpechieu) | reliable spawn, teardown and floor cards for the workers Michael hires |
+| [#165](https://github.com/TangerineSpecter/Hana-Kami/pull/165) | [@rajpreetcodes](https://github.com/rajpreetcodes) | a `~` in the harness home folder resolves, so setup cannot die on ENOENT |
+| [#171](https://github.com/TangerineSpecter/Hana-Kami/pull/171) | [@KrushanPatel](https://github.com/KrushanPatel) | CONTRIBUTING.md matches the platforms the app actually supports |
+| [#175](https://github.com/TangerineSpecter/Hana-Kami/pull/175) | [@rekcilyssup](https://github.com/rekcilyssup) | a main-process watchdog wakes an idle worker sitting on an undrained inbox |
+| [#176](https://github.com/TangerineSpecter/Hana-Kami/pull/176) | [@FenjuFu](https://github.com/FenjuFu) | Gemini CLI joins the engine list |
+| [#177](https://github.com/TangerineSpecter/Hana-Kami/pull/177) | [@TTAWDTT](https://github.com/TTAWDTT) | each agent's live context-window occupancy shows in the roster |
+| [#178](https://github.com/TangerineSpecter/Hana-Kami/pull/178) | [@gpechieu](https://github.com/gpechieu) | a god-hired worker gets a floor card, and it archives when the worker dies |
+| [#179](https://github.com/TangerineSpecter/Hana-Kami/pull/179) | [@kdahal7](https://github.com/kdahal7) | `statAbs` expands `~`, so a path resolves the same way on every platform |
+| [#181](https://github.com/TangerineSpecter/Hana-Kami/pull/181) | [@TTAWDTT](https://github.com/TTAWDTT) | webhook dispatch goes through an atomic add, so a stale ledger cannot overwrite it |
+| [#184](https://github.com/TangerineSpecter/Hana-Kami/pull/184) | [@TTAWDTT](https://github.com/TTAWDTT) | the per-agent steer queue is capped, which bounds memory on a stalled agent |
+| [#185](https://github.com/TangerineSpecter/Hana-Kami/pull/185) | [@hyperstream-pro](https://github.com/hyperstream-pro) | mail to an id with no inbox is bounced and logged instead of dropped |
+| [#186](https://github.com/TangerineSpecter/Hana-Kami/pull/186) | [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN) | tests cover the Notifications and Stop idle-detection branches |
+| [#187](https://github.com/TangerineSpecter/Hana-Kami/pull/187) | [@hyperstream-pro](https://github.com/hyperstream-pro) | a stale inbox nudge no longer wakes an agent against an inbox that is already empty |
+| [#190](https://github.com/TangerineSpecter/Hana-Kami/pull/190) | [@swarnendu19](https://github.com/swarnendu19) | agent names can be edited after spin-up |
+| [#199](https://github.com/TangerineSpecter/Hana-Kami/pull/199) | [@amey-op](https://github.com/amey-op) | the Antigravity queue no longer wedges for 30 seconds |
+| [#203](https://github.com/TangerineSpecter/Hana-Kami/pull/203) | [@lifelmy](https://github.com/lifelmy) | the Crush config env points at the agent's own directory |
+| [#210](https://github.com/TangerineSpecter/Hana-Kami/pull/210) | [@chaitanyagiri](https://github.com/chaitanyagiri) | the art licence claims are true again, Modern Interiors is bought |
+| [#214](https://github.com/TangerineSpecter/Hana-Kami/pull/214) | [@pontusm](https://github.com/pontusm) | Windows agent processes quit when the app does |
+| [#219](https://github.com/TangerineSpecter/Hana-Kami/pull/219) | [@chaitanyagiri](https://github.com/chaitanyagiri) | engine availability is checked before Michael's engine is committed |
+| [#226](https://github.com/TangerineSpecter/Hana-Kami/pull/226) | [@chaitanyagiri](https://github.com/chaitanyagiri) | the floor reports lifetime spend, not spend since the last app restart |
+| [#227](https://github.com/TangerineSpecter/Hana-Kami/pull/227) | [@scy73](https://github.com/scy73) | the renderer runs inside Chromium's sandbox |
 
 Four of the fixes above are [@gpechieu](https://github.com/gpechieu)'s and three are
 [@TTAWDTT](https://github.com/TTAWDTT)'s. Thank you, and thank you to everyone who reviewed a
@@ -297,28 +297,28 @@ Apple Silicon and Intel.
 ### 🍎 macOS
 | Build | File |
 |---|---|
-| Universal (Apple Silicon + Intel) | [`Munder-Difflin-0.4.6-mac-universal.dmg`](https://github.com/chaitanyagiri/munder-difflin/releases/latest/download/Munder-Difflin-0.4.6-mac-universal.dmg) |
+| Universal (Apple Silicon + Intel) | [`Hana-Kami-0.4.6-mac-universal.dmg`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-mac-universal.dmg) |
 
 ### 🪟 Windows
 | Build | File |
 |---|---|
-| Installer (x64), *recommended* | [`Munder-Difflin-0.4.6-win-x64-setup.exe`](https://github.com/chaitanyagiri/munder-difflin/releases/latest/download/Munder-Difflin-0.4.6-win-x64-setup.exe) |
-| Portable (x64, no install) | [`Munder-Difflin-0.4.6-win-x64-portable.exe`](https://github.com/chaitanyagiri/munder-difflin/releases/latest/download/Munder-Difflin-0.4.6-win-x64-portable.exe) |
+| Installer (x64), *recommended* | [`Hana-Kami-0.4.6-win-x64-setup.exe`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-win-x64-setup.exe) |
+| Portable (x64, no install) | [`Hana-Kami-0.4.6-win-x64-portable.exe`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-win-x64-portable.exe) |
 
 ### 🐧 Linux
 | Build | File |
 |---|---|
-| AppImage (x86_64) | [`Munder-Difflin-0.4.6-linux-x86_64.AppImage`](https://github.com/chaitanyagiri/munder-difflin/releases/latest/download/Munder-Difflin-0.4.6-linux-x86_64.AppImage) |
+| AppImage (x86_64) | [`Hana-Kami-0.4.6-linux-x86_64.AppImage`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-linux-x86_64.AppImage) |
 
 ### 📦 Source
-[Source code (zip)](https://github.com/chaitanyagiri/munder-difflin/archive/refs/tags/v0.4.6.zip) ·
-[Source code (tar.gz)](https://github.com/chaitanyagiri/munder-difflin/archive/refs/tags/v0.4.6.tar.gz)
+[Source code (zip)](https://github.com/TangerineSpecter/Hana-Kami/archive/refs/tags/v0.4.6.zip) ·
+[Source code (tar.gz)](https://github.com/TangerineSpecter/Hana-Kami/archive/refs/tags/v0.4.6.tar.gz)
 
-> **Verify your download:** [`SHA256SUMS.txt`](https://github.com/chaitanyagiri/munder-difflin/releases/latest/download/SHA256SUMS.txt) — then `shasum -a 256 -c SHA256SUMS.txt` (macOS/Linux) or `Get-FileHash` (Windows).
+> **Verify your download:** [`SHA256SUMS.txt`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/SHA256SUMS.txt) — then `shasum -a 256 -c SHA256SUMS.txt` (macOS/Linux) or `Get-FileHash` (Windows).
 
 > The filenames above carry a version number, so they only resolve while this is the
 > latest release. If a link 404s you are reading an old release page — grab the current
-> build from the [**releases page**](https://github.com/chaitanyagiri/munder-difflin/releases/latest),
+> build from the [**releases page**](https://github.com/TangerineSpecter/Hana-Kami/releases/latest),
 > which is always right.
 
 ---
@@ -333,22 +333,22 @@ Apple Silicon and Intel.
   to the app's stable signature.
 - **Windows** — not code-signed yet; SmartScreen may show "Windows protected your PC" →
   **More info** → **Run anyway**.
-- **Linux** — make the AppImage executable: `chmod +x Munder-Difflin-*.AppImage`, then run it.
+- **Linux** — make the AppImage executable: `chmod +x Hana-Kami-*.AppImage`, then run it.
 
 ---
 
 ## Requirements
 - macOS 12+, Windows 10/11, or a modern Linux desktop
 - [Claude Code](https://claude.com/claude-code) installed and on your `PATH` (and/or the Antigravity `agy` or OpenAI `codex` CLI for those providers)
-- A Claude Code subscription (Munder Difflin drives your existing `claude` CLI — it doesn't replace it)
+- A Claude Code subscription (Hana-Kami drives your existing `claude` CLI — it doesn't replace it)
 - For **Realtime Michael** (voice): your own **OpenAI key with Realtime API access** — without it the **Talk** button stays disabled
 
 ---
 
 ## 🛠 Build from source
 ```bash
-git clone https://github.com/chaitanyagiri/munder-difflin.git
-cd munder-difflin
+git clone https://github.com/TangerineSpecter/Hana-Kami.git
+cd hanakami
 npm install        # rebuilds node-pty for Electron
 npm run dev        # launches the app with hot reload
 ```
@@ -365,15 +365,15 @@ To produce installers yourself: `npm run dist` (current OS), or `dist:mac` / `di
 - **GOD orchestrator + hive** — one agent you talk to routes work to specialists and stays autonomous, escalating only critical items (spend, destructive ops, scope) to you natively, through human-in-the-loop prompts. It can also spawn an ephemeral worker straight from Slack and tear it down safely.
 - **Plugs into your setup** — your subscription, settings, skills, and MCP servers, plus an integrations registry with a write-only secret broker; `/remote-control` reaches the whole floor from your phone.
 
-Full notes in the [CHANGELOG](https://github.com/chaitanyagiri/munder-difflin/blob/main/CHANGELOG.md).
+Full notes in the [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md).
 
 ---
 
 ## Links
 [Website](https://munderdiffl.in/) ·
-[Repo](https://github.com/chaitanyagiri/munder-difflin) ·
-[Issues](https://github.com/chaitanyagiri/munder-difflin/issues) ·
-[Contribute](https://github.com/chaitanyagiri/munder-difflin/blob/main/CONTRIBUTING.md) ·
-[Become a patron](https://razorpay.me/@munderdifflinfund)
+[Repo](https://github.com/TangerineSpecter/Hana-Kami) ·
+[Issues](https://github.com/TangerineSpecter/Hana-Kami/issues) ·
+[Contribute](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CONTRIBUTING.md) ·
+[Become a patron](https://razorpay.me/@hanakamifund)
 
 MIT-licensed. An affectionate parody — not affiliated with NBC's *The Office* or Dunder Mifflin.

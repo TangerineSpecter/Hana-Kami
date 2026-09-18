@@ -18,7 +18,7 @@ export const HeroFallback: React.FC = () => (
       fontFamily: `${FONT.display}, ${press}, monospace`, fontSize: 20, color: C.gold,
       textShadow: `3px 3px 0 ${C.maroonD}`,
     }}>
-      A BUSY DAY AT MUNDER DIFFLIN
+      A BUSY DAY AT HANA-KAMI
     </div>
   </AbsoluteFill>
 );

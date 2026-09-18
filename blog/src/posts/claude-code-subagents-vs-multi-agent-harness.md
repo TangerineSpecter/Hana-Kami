@@ -130,7 +130,7 @@ Reach for a **harness** when:
 That threshold — one agent's task vs. a coordinated team — is the whole decision. If you're hitting it,
 the next read is [how to run multiple Claude Code agents](/blog/how-to-run-multiple-claude-code-agents/),
 and for a concrete head-to-head of two ways to get a team, see
-[Claude Squad vs Munder Difflin](/blog/claude-squad-vs-munder-difflin/).
+[Claude Squad vs Hana-Kami](/blog/claude-squad-vs-munder-difflin/).
 
 ## FAQ
 
@@ -144,7 +144,7 @@ doesn't take anything away.
 
 ---
 
-Munder Difflin is the harness layer: persistent agents, shared memory, direct messaging, and a GOD
+Hana-Kami is the harness layer: persistent agents, shared memory, direct messaging, and a GOD
 orchestrator — wrapped around the Claude Code sessions (and subagents) you already use.
-[Download Munder Difflin](https://munderdiffl.in/#install) to turn helpers into a team; it's free and
+[Download Hana-Kami](https://munderdiffl.in/#install) to turn helpers into a team; it's free and
 open source.

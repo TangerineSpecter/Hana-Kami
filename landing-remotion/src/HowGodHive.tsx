@@ -65,7 +65,7 @@ export const HowGodHive: React.FC = () => {
       <Caption x={1280} y={690} title="The GOD agent runs the floor." from={6} />
 
       <div style={{ position: 'absolute', right: 60, bottom: 50, fontFamily: `${FONT.display}, ${press}, monospace`, fontSize: 16, color: C.gold }}>
-        MUNDER DIFFLIN
+        HANA-KAMI
       </div>
     </AbsoluteFill>
   );

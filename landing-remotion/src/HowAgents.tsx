@@ -78,7 +78,7 @@ export const HowAgents: React.FC = () => {
         sub="Real claude sessions — walking to a station for every tool they run." from={6} />
 
       <div style={{ position: 'absolute', right: 60, bottom: 60, fontFamily: `${FONT.display}, ${press}, monospace`, fontSize: 16, color: C.gold }}>
-        MUNDER DIFFLIN
+        HANA-KAMI
       </div>
     </AbsoluteFill>
   );

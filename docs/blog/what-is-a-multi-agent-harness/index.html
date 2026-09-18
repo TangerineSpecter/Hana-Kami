@@ -18,7 +18,7 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>What Is a Multi-Agent Harness? A Plain English Guide — Munder Difflin Blog</title>
+<title>What Is a Multi-Agent Harness? A Plain English Guide — Hana-Kami Blog</title>
 <meta name="description" content="A multi-agent harness runs several AI coding agents as one team, with roles, messages, shared memory and an orchestrator. What it is, how it differs from a framework, subagents or agent teams, and when you need one." />
 <link rel="canonical" href="https://munderdiffl.in/blog/what-is-a-multi-agent-harness/" />
 
@@ -27,9 +27,9 @@
 <meta name="theme-color" content="#F5F2E8" />
 
 <!-- Open Graph -->
-<meta property="og:site_name" content="Munder Difflin Blog" />
+<meta property="og:site_name" content="Hana-Kami Blog" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="What Is a Multi-Agent Harness? A Plain English Guide — Munder Difflin Blog" />
+<meta property="og:title" content="What Is a Multi-Agent Harness? A Plain English Guide — Hana-Kami Blog" />
 <meta property="og:description" content="A multi-agent harness runs several AI coding agents as one team, with roles, messages, shared memory and an orchestrator. What it is, how it differs from a framework, subagents or agent teams, and when you need one." />
 <meta property="og:url" content="https://munderdiffl.in/blog/what-is-a-multi-agent-harness/" />
 <meta property="og:image" content="https://munderdiffl.in/blog/assets/media/what-is-a-multi-agent-harness/hero.png" />
@@ -46,12 +46,12 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="What Is a Multi-Agent Harness? A Plain English Guide — Munder Difflin Blog" />
+<meta name="twitter:title" content="What Is a Multi-Agent Harness? A Plain English Guide — Hana-Kami Blog" />
 <meta name="twitter:description" content="A multi-agent harness runs several AI coding agents as one team, with roles, messages, shared memory and an orchestrator. What it is, how it differs from a framework, subagents or agent teams, and when you need one." />
 <meta name="twitter:image" content="https://munderdiffl.in/blog/assets/media/what-is-a-multi-agent-harness/hero.png" />
 <meta name="twitter:image:alt" content="Illustration: What Is a Multi-Agent Harness? (Plain-English Guide)" />
 
-<link rel="alternate" type="application/atom+xml" title="Munder Difflin Blog" href="https://munderdiffl.in/blog/feed.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hana-Kami Blog" href="https://munderdiffl.in/blog/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet" />
@@ -69,7 +69,7 @@
   "author": { "@type": "Person", "name": "Chaitanya Giri" },
   "publisher": {
     "@type": "Organization",
-    "name": "Munder Difflin",
+    "name": "Hana-Kami",
     "logo": { "@type": "ImageObject", "url": "https://munderdiffl.in/logo.png" }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://munderdiffl.in/blog/what-is-a-multi-agent-harness/" },
@@ -100,7 +100,7 @@
     { "@type": "Question", "name": "How is a harness different from a framework like LangGraph or CrewAI?", "acceptedAnswer": { "@type": "Answer", "text": "A framework is a library you write a new agent application with. A harness wraps agents you already run, like Claude Code or Codex in a terminal, and adds the coordination around them. You do not rebuild anything." } },
     { "@type": "Question", "name": "Is Claude Code's agent teams feature a multi-agent harness?", "acceptedAnswer": { "@type": "Answer", "text": "It covers part of the idea inside Claude Code. Agent teams are experimental and off by default. A lead session spawns teammates that share a task list and message each other, and a team belongs to that one session. A harness keeps agents working across sessions, remembers between them, and can mix CLIs from different vendors." } },
     { "@type": "Question", "name": "Do I need a multi-agent harness to use Claude Code?", "acceptedAnswer": { "@type": "Answer", "text": "No. One session is plenty for most tasks. A harness starts paying for itself when you run three or more agents at once and keeping them coordinated costs you more time than the work does." } },
-    { "@type": "Question", "name": "Is Munder Difflin a multi-agent harness?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is a free, open source harness that runs twelve terminal coding CLIs, including Claude Code, Codex, Gemini CLI and Copilot, on your own machine, with your clone Michael coordinating them." } }
+    { "@type": "Question", "name": "Is Hana-Kami a multi-agent harness?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is a free, open source harness that runs twelve terminal coding CLIs, including Claude Code, Codex, Gemini CLI and Copilot, on your own machine, with your clone Michael coordinating them." } }
     
   ]
 }
@@ -144,8 +144,8 @@
 <body class="theme-press">
 <a class="skip-link" href="#main">Skip to content</a>
 <nav id="nav">
-  <a class="brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+  <a class="brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+    <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
   </a>
   <span class="spacer"></span>
   <div class="links">
@@ -207,7 +207,7 @@ result, repeat. A harness wraps many of those loops and adds:</p>
 <li><strong>Roles.</strong> A researcher, a builder and a reviewer, instead of five generalists stepping on each other.</li>
 <li><strong>Messaging.</strong> Agents hand findings to each other directly, not through you.</li>
 <li><strong>Shared memory.</strong> What one agent learned on Monday is still there for another agent on Thursday.</li>
-<li><strong>Orchestration.</strong> One coordinator turns your request into tasks and assigns them. In Munder Difflin that
+<li><strong>Orchestration.</strong> One coordinator turns your request into tasks and assigns them. In Hana-Kami that
 coordinator is Michael, a clone of you that you talk to in plain language.</li>
 <li><strong>Visibility.</strong> A way to see what the whole team is doing without tailing five terminals.</li>
 </ul>
@@ -239,7 +239,7 @@ different vendors on the same team.</p>
 </ul>
 <p>If none of that sounds familiar, one session is fine, and you can stop reading here with a clear conscience.</p>
 <h2 id="what-does-a-harness-look-like-in-practice" tabindex="-1">What does a harness look like in practice? <a class="anchor" href="#what-does-a-harness-look-like-in-practice" aria-hidden="true">#</a></h2>
-<p>Here is how <a href="https://munderdiffl.in/">Munder Difflin</a> does it. Every agent is a real terminal CLI running
+<p>Here is how <a href="https://munderdiffl.in/">Hana-Kami</a> does it. Every agent is a real terminal CLI running
 on your machine, and twelve are supported: Claude Code, Codex, Gemini CLI, Antigravity, Grok, Kimi Code,
 Qwen, OpenCode, Crush, Pi, Copilot and Cursor. Each agent gets a desk on a 2D office floor, a mailbox and
 long term memory. Michael, your clone, takes your request, breaks it into tasks, hires workers and routes
@@ -256,7 +256,7 @@ forgetting.</li>
 <li><a href="/blog/best-claude-code-multi-agent-tools/">The best tools to run multiple Claude Code agents</a>, compared.</li>
 </ul>
 <hr>
-<p>Munder Difflin is free and open source under the MIT license. <a href="https://munderdiffl.in/">Download it</a> for
+<p>Hana-Kami is free and open source under the MIT license. <a href="https://munderdiffl.in/">Download it</a> for
 macOS, Windows or Linux and watch a coordinated team work an office floor.</p>
 
 
@@ -285,7 +285,7 @@ macOS, Windows or Linux and watch a coordinated team work an office floor.</p>
         </div>
         
         <div class="qa">
-          <p class="q">Is Munder Difflin a multi-agent harness?</p>
+          <p class="q">Is Hana-Kami a multi-agent harness?</p>
           <p class="a">Yes. It is a free, open source harness that runs twelve terminal coding CLIs, including Claude Code, Codex, Gemini CLI and Copilot, on your own machine, with your clone Michael coordinating them.</p>
         </div>
         
@@ -377,20 +377,20 @@ macOS, Windows or Linux and watch a coordinated team work an office floor.</p>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
-      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Munder Difflin home">
-        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Munder Difflin, Inc. — Multi-Agent Harness" />
+      <a class="foot-brand brand" href="https://munderdiffl.in" aria-label="Hana-Kami home">
+        <img class="brand-logo" src="https://munderdiffl.in/logo.png" width="1318" height="840" alt="Hana-Kami, Inc. — Multi-Agent Harness" />
       </a>
       <div class="foot-links">
         <a href="/blog/">Latest</a>
         <a href="/blog/topics/">Topics</a>
         <a href="/blog/about/">About</a>
         <a href="https://munderdiffl.in/blog/feed.xml">RSS</a>
-        <a href="https://github.com/chaitanyagiri/munder-difflin">GitHub</a>
+        <a href="https://github.com/TangerineSpecter/Hana-Kami">GitHub</a>
         <a href="https://munderdiffl.in">munderdiffl.in ↗</a>
       </div>
     </div>
     <div class="foot-meta">
-      © 2026 Munder Difflin · Local-first · MIT-licensed ·
+      © 2026 Hana-Kami · Local-first · MIT-licensed ·
       Built on <a href="https://munderdiffl.in">Electron, React, Pixi.js, xterm.js &amp; node-pty</a>.
       Run an office of agents while you sleep.
     </div>

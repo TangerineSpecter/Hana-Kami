@@ -1,28 +1,28 @@
 ---
-title: "Launching Munder Difflin v0.2.0"
-description: "Munder Difflin v0.2.0 is here: a Command Center overhaul, per-agent token budgets, live OpenTelemetry observability, a circuit breaker, durable SQLite persistence, and a big round of community fixes."
+title: "Launching Hana-Kami v0.2.0"
+description: "Hana-Kami v0.2.0 is here: a Command Center overhaul, per-agent token budgets, live OpenTelemetry observability, a circuit breaker, durable SQLite persistence, and a big round of community fixes."
 date: 2026-06-07
 category: story
 categoryLabel: Story
 type: Non-technical
-primaryKeyword: "munder difflin v0.2.0"
-secondaryKeywords: ["munder difflin release", "munder difflin changelog", "multi-agent harness observability", "agent token budgets"]
+primaryKeyword: "hana-kami v0.2.0"
+secondaryKeywords: ["hana-kami release", "hana-kami changelog", "multi-agent harness observability", "agent token budgets"]
 tags: ["Story", "Release", "Multi-Agent", "Claude Code", "Open Source"]
 author:
   name: Chaitanya Giri
   initials: CG
 faq:
-  - q: "What's new in Munder Difflin v0.2.0?"
+  - q: "What's new in Hana-Kami v0.2.0?"
     a: "v0.2.0 is the observability and control release. The headline changes are a redesigned Command Center, per-agent token budgets with live fleet monitoring, a built-in OpenTelemetry collector with per-model cost and a per-agent tool-span waterfall, a circuit breaker (a steer → constrain → stop ladder plus a cost/runaway guard) backed by a scheduler heartbeat, human-in-the-loop gating with mid-run steering and graceful stop, and durable SQLite persistence with a cost ledger. It also lands a long list of community-driven UX and cross-platform fixes."
   - q: "Do I have to reconfigure anything to upgrade to v0.2.0?"
     a: "No. v0.2.0 introduces durable SQLite persistence and a configurable hive/memory home folder, but existing installs migrate in place — your agents, memory, board, tasks, and schedules carry forward. After a harness restart you can also one-click 'Restore team' to bring back the last session's workers."
   - q: "How does the circuit breaker keep agents from running away?"
     a: "The breaker watches each agent through a steer → constrain → stop ladder and a cost/runaway guard, fed by hook signals (like repeated identical tool calls) and a scheduler heartbeat that knows when an agent has gone quiet. When an agent loops, storms errors, or blows its token budget, the breaker steers it first, constrains it next, and stops it as a last resort — and the avatar shows a 'looping' state so you can see it happen."
-  - q: "Is Munder Difflin still free and open source?"
-    a: "Yes. Munder Difflin is MIT-licensed, local-first, and runs on macOS, Windows, and Linux. v0.2.0 is a community release in the most literal sense — most of the work in this version came from external contributors, credited in full below and in the CHANGELOG."
+  - q: "Is Hana-Kami still free and open source?"
+    a: "Yes. Hana-Kami is MIT-licensed, local-first, and runs on macOS, Windows, and Linux. v0.2.0 is a community release in the most literal sense — most of the work in this version came from external contributors, credited in full below and in the CHANGELOG."
 ---
 
-<div class="callout tldr"><span class="ic">TL;DR</span><p><strong>Munder Difflin v0.2.0</strong> is the
+<div class="callout tldr"><span class="ic">TL;DR</span><p><strong>Hana-Kami v0.2.0</strong> is the
 <em>observability and control</em> release. You get a redesigned <strong>Command Center</strong>,
 <strong>per-agent token budgets</strong> with live fleet monitoring, a built-in <strong>OpenTelemetry</strong>
 collector with per-model cost and a per-agent tool-span waterfall, a <strong>circuit breaker</strong>
@@ -31,7 +31,7 @@ gating with mid-run steer and graceful stop, and <strong>durable SQLite persiste
 On top of that: a memory-condensing MemoryReflector, a configurable hive/memory home, one-click team restore,
 and a stack of community fixes. Most of this release was built by the community — thank-yous in full below.</p></div>
 
-When we shipped the first public versions of Munder Difflin, the pitch was simple: stop being the human
+When we shipped the first public versions of Hana-Kami, the pitch was simple: stop being the human
 message bus for your Claude Code agents and let them run as a coordinated [hive](/#what) instead. That part
 worked. What we heard back, over and over, was the next problem: once the agents are running as a team,
 *you can't see them, and you can't stop them*. A floor of avatars is lovely until one of them quietly burns
@@ -43,7 +43,7 @@ issues and sending pull requests. We'll credit every one of them by name at the 
 
 > **A note on what's in here.** Everything described below shipped in the v0.2.0 milestone (48 commits since
 > v0.1.9). Where a change closed a specific issue or merged a specific PR, we've credited the contributor and
-> the issue/PR number — the same credits appear in the [CHANGELOG](https://github.com/chaitanyagiri/munder-difflin/blob/main/CHANGELOG.md).
+> the issue/PR number — the same credits appear in the [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md).
 
 ## The Command Center, rebuilt
 
@@ -153,17 +153,17 @@ and pull requests turned into features. Thank you, sincerely, to everyone below.
 - **@wild-gobatz** — agents showing idle until clicked (#3).
 
 And, as ever, maintained by **@chaitanyagiri**. If you want the full, line-by-line list with every credit, the
-[CHANGELOG](https://github.com/chaitanyagiri/munder-difflin/blob/main/CHANGELOG.md) has it.
+[CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md) has it.
 
 ## Get v0.2.0
 
-Munder Difflin is free, open source (MIT), and local-first on macOS, Windows, and Linux. If you've already got
+Hana-Kami is free, open source (MIT), and local-first on macOS, Windows, and Linux. If you've already got
 it, upgrading is in-place — your hive, memory, and schedules carry forward, and you can one-click **Restore team**
-after the restart. If you're new, the fastest way to feel the difference is to [download Munder Difflin](/#install)
+after the restart. If you're new, the fastest way to feel the difference is to [download Hana-Kami](/#install)
 and run a few agents until you want to *watch* them — which, as of v0.2.0, you finally can.
 
 ---
 
 This release exists because people filed issues, sent PRs, and told us what hurt. If v0.2.0 fixed something you
-reported: thank you. If it didn't fix something you're hitting, [open an issue](https://github.com/chaitanyagiri/munder-difflin) —
+reported: thank you. If it didn't fix something you're hitting, [open an issue](https://github.com/TangerineSpecter/Hana-Kami) —
 the next release is built the same way this one was.

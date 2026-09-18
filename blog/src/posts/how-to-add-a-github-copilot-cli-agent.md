@@ -6,13 +6,13 @@ category: guides
 categoryLabel: Guides
 type: Technical
 primaryKeyword: "github copilot cli agent"
-secondaryKeywords: ["add github copilot cli agent", "copilot cli multi-agent", "copilot -p print mode", "github copilot cli munder difflin", "copilot cli model picker"]
+secondaryKeywords: ["add github copilot cli agent", "copilot cli multi-agent", "copilot -p print mode", "github copilot cli hana-kami", "copilot cli model picker"]
 tags: ["Guides", "GitHub Copilot", "CLI Agents", "Multi-Agent", "Engines"]
 author:
   name: Chaitanya Giri
   initials: CG
 faq:
-  - q: "Do I need a new API key to run a GitHub Copilot CLI agent in Munder Difflin?"
+  - q: "Do I need a new API key to run a GitHub Copilot CLI agent in Hana-Kami?"
     a: "No. The Copilot engine authenticates through your existing GitHub Copilot login — the same auth the copilot CLI uses in a plain terminal. There is no BYOK key to paste into Settings for this engine; if you can run copilot in your shell, you can hire it on the floor."
   - q: "What models can a Copilot CLI agent use?"
     a: "The Add Agent flow includes a model picker for the Copilot engine with three options: Claude Sonnet 4.5 (the default), GPT-5.4, and auto, which lets Copilot choose. Your selection is passed to the CLI via the --model flag on every turn."
@@ -23,18 +23,18 @@ faq:
   - q: "Does a Copilot agent keep context between turns if print mode exits every time?"
     a: "Yes, best-effort. The engine uses Copilot CLI's --resume flag to reattach the previous session on the next turn, so follow-up prompts land in the same conversation rather than starting cold. It is session continuity, not a persistent process."
   - q: "Who built the Copilot engine?"
-    a: "It's the first community-contributed provider in Munder Difflin — PR #101 by @anxkhn, shipped in v0.3.3. The engine registers Copilot as a provider preset alongside Claude Code, Codex, Antigravity, OpenCode, Crush, and pi.dev, and comes with a self-contained registry test asserting the command shape."
+    a: "It's the first community-contributed provider in Hana-Kami — PR #101 by @anxkhn, shipped in v0.3.3. The engine registers Copilot as a provider preset alongside Claude Code, Codex, Antigravity, OpenCode, Crush, and pi.dev, and comes with a self-contained registry test asserting the command shape."
 ---
 
-<div class="callout tldr"><span class="ic">TL;DR</span><p>As of <strong>v0.3.3</strong>, GitHub Copilot CLI is a first-class agent engine in Munder Difflin — the project's <strong>first community-contributed provider</strong> (PR #101 by @anxkhn). Install <code>@github/copilot</code> (or let the harness's missing-CLI installer do it), hit <strong>Add Agent</strong>, pick the Copilot engine, choose a model (<strong>Claude Sonnet 4.5 default, GPT-5.4, or auto</strong>), and it authenticates with your <strong>existing Copilot login — no new keys</strong>. One honest caveat: Copilot runs in <strong>print mode</strong> (<code>copilot -p</code>), which exits per turn, so its workers can't drain inbox mail — routed mail <strong>bounces to the orchestrator</strong> instead of dropping. Use Copilot workers for <strong>dispatched, self-contained tasks</strong>.</p></div>
+<div class="callout tldr"><span class="ic">TL;DR</span><p>As of <strong>v0.3.3</strong>, GitHub Copilot CLI is a first-class agent engine in Hana-Kami — the project's <strong>first community-contributed provider</strong> (PR #101 by @anxkhn). Install <code>@github/copilot</code> (or let the harness's missing-CLI installer do it), hit <strong>Add Agent</strong>, pick the Copilot engine, choose a model (<strong>Claude Sonnet 4.5 default, GPT-5.4, or auto</strong>), and it authenticates with your <strong>existing Copilot login — no new keys</strong>. One honest caveat: Copilot runs in <strong>print mode</strong> (<code>copilot -p</code>), which exits per turn, so its workers can't drain inbox mail — routed mail <strong>bounces to the orchestrator</strong> instead of dropping. Use Copilot workers for <strong>dispatched, self-contained tasks</strong>.</p></div>
 
-If you already pay for GitHub Copilot, you have an agent engine sitting in your subscription that most people only ever use as autocomplete. Copilot CLI is the terminal version — a real coding agent you run with `copilot` — and since [v0.3.3](/blog/launching-munder-difflin-v0-3-3/), Munder Difflin can hire it onto the floor next to your Claude Code, Codex, and OpenCode workers.
+If you already pay for GitHub Copilot, you have an agent engine sitting in your subscription that most people only ever use as autocomplete. Copilot CLI is the terminal version — a real coding agent you run with `copilot` — and since [v0.3.3](/blog/launching-munder-difflin-v0-3-3/), Hana-Kami can hire it onto the floor next to your Claude Code, Codex, and OpenCode workers.
 
 This guide walks the whole path: install, hire, model choice, what auto-mode changes, and the one behavioral caveat you should understand before you assign work.
 
 ## Step 0: have the floor running
 
-You need Munder Difflin itself first — if you don't, [the install guide](/blog/how-to-install-and-use-munder-difflin/) covers it in a few minutes. Everything below assumes you're looking at the office floor with Michael seated in his office.
+You need Hana-Kami itself first — if you don't, [the install guide](/blog/how-to-install-and-use-munder-difflin/) covers it in a few minutes. Everything below assumes you're looking at the office floor with Michael seated in his office.
 
 ## Step 1: install Copilot CLI (or don't — the harness will offer)
 
@@ -46,7 +46,7 @@ npm install -g @github/copilot
 
 Then log in once with your GitHub account if you haven't (`copilot` walks you through it on first run). That's the entire auth story: **the engine uses your existing GitHub Copilot login, no new keys**, nothing to paste into Settings → AI Engines.
 
-You can also skip this step entirely. Munder Difflin has a self-healing installer for missing engine CLIs: if you pick Copilot in Add Agent and the `copilot` binary isn't on your `PATH`, the harness offers the official `npm install -g @github/copilot`, runs it in the terminal, then auto restarts-and-continues into the freshly installed binary. No dead end, no manual retry.
+You can also skip this step entirely. Hana-Kami has a self-healing installer for missing engine CLIs: if you pick Copilot in Add Agent and the `copilot` binary isn't on your `PATH`, the harness offers the official `npm install -g @github/copilot`, runs it in the terminal, then auto restarts-and-continues into the freshly installed binary. No dead end, no manual retry.
 
 {% img "note-1" %}
 
@@ -106,4 +106,4 @@ That's a seventh engine on your floor, powered by a subscription you already hav
 
 ## Try it
 
-Grab the latest build from [the releases page](https://github.com/chaitanyagiri/munder-difflin/releases/latest) — and if the Copilot engine saves you a hire, a [star on GitHub](https://github.com/chaitanyagiri/munder-difflin) is how community contributions like PR #101 keep coming.
+Grab the latest build from [the releases page](https://github.com/TangerineSpecter/Hana-Kami/releases/latest) — and if the Copilot engine saves you a hire, a [star on GitHub](https://github.com/TangerineSpecter/Hana-Kami) is how community contributions like PR #101 keep coming.
