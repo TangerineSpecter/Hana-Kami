@@ -1,13 +1,13 @@
 /**
  * i18n bootstrap — react-i18next with inline JSON resources.
  *
- * English is the default language (and the fallback for any missing key).
+ * Simplified Chinese is the default language for a fresh install (and English
+ * remains the fallback for any missing key).
  * The user's choice is persisted in localStorage (`cth.language`). With nothing
- * saved the app starts in English, ALWAYS — it deliberately does not read
+ * saved the app starts in Simplified Chinese, ALWAYS — it deliberately does not read
  * navigator.language. Auto-detect would change the UI out from under every
- * existing user on a non-English machine, who never asked for a translation and
- * may not want a partial one. Nothing moves until someone picks a language in
- * Settings.
+ * existing user who has already picked a language. Existing choices always win;
+ * only a fresh install with no saved preference gets the Chinese default.
  *
  * Adding a language: drop a `locales/<code>.json` with the exact same key
  * tree as `en.json`, register it in `resources` and `supportedLngs`, and add
@@ -89,13 +89,13 @@ export function setGodName(name: string | undefined | null): void {
   i18n.emit('languageChanged', i18n.language);
 }
 
-/** The saved choice, or English. Never the OS locale — see the note above. */
+/** The saved choice, or Simplified Chinese. Never the OS locale — see the note above. */
 function detectLanguage(): string {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved && SUPPORTED.includes(saved as LanguageCode)) return saved;
-  } catch { /* localStorage unavailable — English it is */ }
-  return 'en';
+  } catch { /* localStorage unavailable — Simplified Chinese it is */ }
+  return 'zh-CN';
 }
 
 /** Switch language now and persist the choice for next launch. */
