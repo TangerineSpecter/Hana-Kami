@@ -9,6 +9,7 @@ import { TiledMapRenderer } from './TiledMapRenderer';
 import { Camera } from './Camera';
 import { Character, paintCup } from './Character';
 import { DeskScreen } from './DeskScreen';
+import { installExecutiveDesk } from './ExecutiveDesk';
 import { MessageEnvelope, type MessageAct } from './MessageEnvelope';
 import { hexToNumber, DEFAULT_CHARACTER } from './cast';
 import { getFeilenFrames } from './feilenFrames';
@@ -319,6 +320,7 @@ export function OfficeFloor() {
       app.stage.addChild(world);
 
       const mapRenderer = new TiledMapRenderer(resolveThemeMap(theme), tilesetTextures);
+      if (theme.id === 'office') installExecutiveDesk(mapRenderer);
       world.addChild(mapRenderer.getContainer());
       const charLayer = mapRenderer.getCharacterContainer();
       const tileCount = mapRenderer.getContainer().children.reduce(
