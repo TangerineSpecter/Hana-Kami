@@ -1,38 +1,30 @@
-# Security Policy
+# 安全政策
 
-## Scope
+## 适用范围
 
-Hana-Kami is a **local-first desktop app**. It spawns local processes in PTYs and
-reads/writes files under directories you register. It opens **no network listeners
-beyond a local Unix domain socket** used for the in-app hook server, and has no auth or
-remote surface by design.
+Hana-Kami 是一款**本地优先的桌面应用**。它会在 PTY 中启动本地进程，并读写你注册目录下的文件。除用于应用内 Hook 服务器的**本地 Unix 域套接字**外，它不会监听网络端口；按照设计，它没有认证或远程访问面。
 
-## Supported versions
+## 支持的版本
 
-This is an early prototype. Security fixes target the `main` branch only.
+这是一个早期原型。安全修复仅针对 `main` 分支。
 
-| Version | Supported |
+| 版本 | 是否支持 |
 |---|---|
 | `main` | ✅ |
 | older tags | ❌ |
 
-## Reporting a vulnerability
+## 报告漏洞
 
-Please **do not** open a public issue for security problems.
+请**不要**为安全问题创建公开 Issue。
 
-- Use GitHub's **private vulnerability reporting**: the *Security → Report a
-  vulnerability* tab on https://github.com/TangerineSpecter/Hana-Kami, **or**
-- Email **girichaitanya11@gmail.com** with a description, reproduction steps, and
-  impact.
+- 使用 GitHub 的**私密漏洞报告**：访问 https://github.com/TangerineSpecter/Hana-Kami 的 *Security → Report a
+  vulnerability* 标签页；**或者**
+- 将漏洞描述、复现步骤和影响发送至 **girichaitanya11@gmail.com**。
 
-You can expect an acknowledgement within a few days. Once a fix is available we'll
-credit you (unless you prefer to stay anonymous).
+我们通常会在几天内确认收到报告。修复完成后会注明你的贡献（除非你希望保持匿名）。
 
-## Notes for reviewers
+## 给审阅者的说明
 
-- Renderer ↔ main IPC goes through a typed `contextBridge` (`window.cth`); the renderer
-  has no direct Node access (`nodeIntegration: false`, `contextIsolation: true`).
-- All `fs:*` / `git:*` IPC calls are sandboxed and path-validated in the main process,
-  rooted at an agent's working directory.
-- The hive commits to a local git repo from a **single committer** (the main process);
-  agents only write plain files.
+- Renderer ↔ main 的 IPC 通过带类型的 `contextBridge`（`window.cth`）传递；Renderer 无法直接访问 Node（`nodeIntegration: false`、`contextIsolation: true`）。
+- 所有 `fs:*` / `git:*` IPC 调用都在主进程中进行沙箱隔离和路径校验，并以 Agent 的工作目录为根目录。
+- Hive 由**单一提交者**（主进程）提交到本地 git 仓库；Agent 只写入普通文件。

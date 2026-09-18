@@ -1,379 +1,261 @@
-<!-- RELEASE RUNNER, REQUIRED BEFORE YOU TAG: run RELEASE-CHECKLIST.md. Rehearse the updater on 0.4.6-rc.1 -> 0.4.7-rc.1 prereleases and pass the fault-injection checks BEFORE tagging the real release. This comment is not rendered in the published notes. -->
+<!-- 发布流程：打标签前必须运行 RELEASE-CHECKLIST.md。在 0.4.6-rc.1 -> 0.4.7-rc.1 预发布版本上演练更新器，并在给正式版本打标签前通过故障注入检查。本注释不会显示在已发布的说明中。 -->
 # Hana-Kami v0.4.6
 
-**A local hive of Claude Code, Antigravity, Codex, Gemini, Cursor, Grok & Copilot agents that run themselves.**
-Messaging, routing, and remembering, coordinated by your clone, Michael, who you talk to. Local-first and open source.
+**由 Claude Code、Antigravity、Codex、Gemini、Cursor、Grok 和 Copilot Agent 组成的本地蜂巢，可自行运行。**
+消息、路由和记忆由你的克隆体 Michael 协调，你只需要和他沟通。本地优先且开源。
 
-### → [**munderdiffl.in**](https://munderdiffl.in/) · see it in action, then grab a build below
+### → [**munderdiffl.in**](https://munderdiffl.in/) · 查看实际运行效果，然后在下方获取构建
 
 ---
 
-## What's new in 0.4.6
+## 0.4.6 新内容
 
-**The release that speaks your language and updates itself.** The interface now runs in Chinese and
-Arabic, the auto-updater downloads and installs a new build end to end, fonts ship inside the app so
-a blocked network never leaves you on a blank window, and the way agent engines are launched is
-hardened. Plus the Settings rework, an IME fix for CJK typing, and 16 community pull requests.
+**会说你的语言并能自行更新的版本。**界面现在支持中文和阿拉伯语，自动更新器可以端到端下载并安装新构建，字体随应用提供，因此网络受阻时也不会留下空白窗口；Agent 引擎的启动方式也更加安全。此外还包括设置重做、CJK 输入法修复，以及 16 个社区 Pull Request。
 
-- **The interface speaks Chinese and Arabic.** Pick zh-CN or Arabic in Settings — every string is
-  translated, with nothing falling back to English, and the terminals read right to left. Some
-  screens still need their padding and icons mirrored, and that is the next piece of work.
-- **Updates install themselves.** The badge advances check to available to downloading to downloaded
-  on its own, and the button at the end restarts into the new version. This is the release that
-  proves that path end to end.
-- **Fonts ship inside the app.** No Google Fonts fetch on launch, so the app opens at the same speed
-  on any network, including one where Google is blocked. The release drop's fonts are bundled too,
-  and it can no longer white-screen while a stylesheet loads.
-- **Engine command launching is hardened.** The name of the CLI an agent launches is validated
-  before it is ever resolved against your PATH, so nothing but a plain command name or an absolute
-  path reaches a shell.
-- **IME typing no longer sends early.** Pressing Enter to choose a Chinese or Japanese candidate
-  picks the word instead of firing the message with half-typed text.
-- **Settings has one Save button.** The Connections tab stops repeating itself; REST API, MCP,
-  Slack and webhooks each keep their place.
-- **The app counts messages you send, not what they say.** A single `message_sent` event closes the
-  activation funnel: a count and nothing else, no text, no length, no content of any kind.
-  [`TELEMETRY.md`](TELEMETRY.md) lists it like every other event and the same opt-out applies.
-- **The ASK ME card renders markdown.** Questions with emphasis, bullets, `code`, tables and links
-  now render instead of showing their raw asterisks.
+- **界面会说中文和阿拉伯语。**在设置中选择 zh-CN 或 Arabic——所有字符串都已翻译，不会回退到英语，终端支持从右到左。部分页面仍需要镜像内边距和图标，这是下一步工作。
+- **更新会自动安装。**徽章会自动从 check 进入 available、downloading 和 downloaded，最后的按钮会重启进入新版本。本版本完整验证了这条路径。
+- **字体随应用提供。**启动时不再请求 Google Fonts，因此任何网络环境下应用都能以同样速度打开，包括 Google 受阻的网络。发布页面的字体也已打包，加载样式表时不再出现白屏。
+- **引擎命令启动更安全。**Agent 启动的 CLI 名称会在根据 PATH 解析之前校验，因此 Shell 只会收到普通命令名或绝对路径。
+- **输入法输入不再提前发送。**按 Enter 选择中文或日文候选词时会选中该词，而不是把半截文字当成消息发送。
+- **设置只有一个保存按钮。**连接页不再重复显示内容；REST API、MCP、Slack 和 Webhook 各自保留在原位置。
+- **应用统计你发送的消息，而不是消息内容。**单个 `message_sent` 事件闭合激活漏斗：只统计数量，不发送文本、长度或任何内容。[`TELEMETRY.md`](TELEMETRY.md) 与其他事件一样列出它，并适用相同的退出方式。
+- **ASK ME 卡片支持渲染 Markdown。**带强调、列表、`code`、表格和链接的问题现在会正常渲染，而不是显示原始星号。
 
-### A note on Pro
+### 关于 Pro 的说明
 
-v0.5.0 launches with a Pro version alongside the community version. Community stays free, stays
-open, and keeps getting updates. Pro ships with new features and integrations, with more posted
-throughout the year, and it stays ahead of Community, for power users who want the full potential
-of coding agents and agent harnesses. The Pro roadmap also includes a mobile app. The first 100 people on the
-Founders' Wall get a month of Pro free, then 50% off the annual plan.
+v0.5.0 将在社区版之外推出 Pro 版本。社区版保持免费、开源并持续获得更新。Pro 会提供新功能和集成，全年还会陆续发布更多内容，并始终领先于社区版，面向希望充分发挥编码 Agent 和 Agent 工作台能力的高级用户。Pro 路线图还包括移动应用。Founders' Wall 上的前 100 人可免费获得一个月 Pro，之后年度计划可享受 50% 折扣。
 
-### Thanks
+### 致谢
 
-16 community pull requests from 13 contributors landed in this release, one of them (#213)
-re-implemented rather than merged. Thank you to [@aaroncoville](https://github.com/aaroncoville), [@abo123v-glitch](https://github.com/abo123v-glitch),
-[@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN), [@djbiz](https://github.com/djbiz),
-[@gpechieu](https://github.com/gpechieu), [@HsienW](https://github.com/HsienW),
-[@HundredBillion](https://github.com/HundredBillion), [@jhinzzz](https://github.com/jhinzzz),
-[@L422Y](https://github.com/L422Y), [@LavaDMan](https://github.com/LavaDMan),
-[@raifemre](https://github.com/raifemre), [@savvaskoualis](https://github.com/savvaskoualis) and
-[@Schopenhauer-loves-Hegel](https://github.com/Schopenhauer-loves-Hegel), and to everyone who
-reviewed a pull request or filed the bug that led to one.
+本版本收录了 13 位贡献者提交的 16 个社区 Pull Request，其中 #213 是重新实现而不是直接合并。感谢 [@aaroncoville](https://github.com/aaroncoville)、[@abo123v-glitch](https://github.com/abo123v-glitch)、[@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN)、[@djbiz](https://github.com/djbiz)、[@gpechieu](https://github.com/gpechieu)、[@HsienW](https://github.com/HsienW)、[@HundredBillion](https://github.com/HundredBillion)、[@jhinzzz](https://github.com/jhinzzz)、[@L422Y](https://github.com/L422Y)、[@LavaDMan](https://github.com/LavaDMan)、[@raifemre](https://github.com/raifemre)、[@savvaskoualis](https://github.com/savvaskoualis)、[@Schopenhauer-loves-Hegel](https://github.com/Schopenhauer-loves-Hegel)，也感谢每一位审阅 Pull Request 或提交相关 Bug 的人。
 
 <!-- drop -->
 <div class="drop">
   <p class="eyebrow">Hana-Kami 0.4.6</p>
-  <h1>Speaks your language. Updates itself.</h1>
-  <p class="lede">The interface now runs in Chinese and Arabic, the updater installs a new build end
-  to end, and the fonts ship inside the app so a blocked network never leaves you on a blank screen.</p>
+  <h1>会说你的语言。会自行更新。</h1>
+  <p class="lede">界面现在支持中文和阿拉伯语，更新器可以端到端安装新构建，字体随应用提供，因此网络受阻时也不会留下空白屏幕。</p>
   <ul class="features">
     <li>
-      <h2>Chinese and Arabic</h2>
-      <p>Pick a language in Settings. Every string is translated and the terminals read right to
-      left. Some screens still need their padding and icons mirrored, and that is the next piece of
-      work.</p>
+      <h2>中文和阿拉伯语</h2>
+      <p>在设置中选择语言。所有字符串都已翻译，终端支持从右到左。部分页面仍需要镜像内边距和图标，这是下一步工作。</p>
     </li>
     <li>
-      <h2>Updates install themselves</h2>
-      <p>The badge moves from check to available to downloading to downloaded on its own, and the
-      button at the end restarts you into the new version. This is the release that proves that path.</p>
+      <h2>更新会自动安装</h2>
+      <p>徽章会自动从 check 进入 available、downloading 和 downloaded，最后的按钮会重启进入新版本。本版本验证了这条路径。</p>
     </li>
     <li>
-      <h2>Fonts ship inside the app</h2>
-      <p>No Google Fonts fetch on launch, so the app opens at the same speed on any network,
-      including one where Google is blocked, and this page can no longer white-screen while a
-      stylesheet loads.</p>
+      <h2>字体随应用提供</h2>
+      <p>启动时不再请求 Google Fonts，因此任何网络环境下应用都能以同样速度打开，包括 Google 受阻的网络；样式表加载时本页面也不再白屏。</p>
     </li>
     <li>
-      <h2>Hardened command launching</h2>
-      <p>The name of the CLI an agent launches is validated before it is ever resolved against your
-      PATH.</p>
+      <h2>更安全的命令启动</h2>
+      <p>Agent 启动的 CLI 名称会在根据 PATH 解析之前完成校验。</p>
     </li>
     <li>
-      <h2>One Save button</h2>
-      <p>The Connections tab stops repeating itself. REST API, MCP, Slack and webhooks each keep
-      their place.</p>
+      <h2>一个保存按钮</h2>
+      <p>连接页不再重复显示内容。REST API、MCP、Slack 和 Webhook 各自保留在原位置。</p>
     </li>
   </ul>
 </div>
 <!-- /drop -->
 
-## Still new in 0.4.5
+## 0.4.5 新内容
 
-**The release that fixes the things you trusted and were quietly wrong.** Cost reporting was off
-by more than half after a restart, semantic memory never worked on Apple Silicon, and agents
-could not talk to each other reliably. All three are fixed. Plus weekday scheduling, clickable
-paths everywhere, one editor instead of two, and 23 community pull requests.
+**修复那些你信任、却悄悄出错的功能。**重启后成本统计偏差超过一半，Apple Silicon 上语义记忆从未工作，Agent 之间也无法可靠沟通。这三项都已修复。此外还包括工作日调度、所有路径可点击、用一个编辑器取代两个编辑器，以及 23 个社区 Pull Request。
 
-- **Costs are reported right.** The telemetry counter reset on every app restart while the
-  session id stayed the same, so the floor under reported spend by a wide margin. It is now folded
-  from the ledger, with a separate session figure kept alongside.
-- **Semantic memory works on Apple Silicon.** CoreML overflowed the quantized embedding graph,
-  every vector came back NaN, and chroma rejected every upsert. Embeddings are pinned to CPU
-  on macOS.
-- **Agents talk to each other reliably.** An inbox wake watchdog, no more stale nudges, mail to
-  a missing inbox is bounced and logged instead of dropped, a capped steer queue, atomic
-  webhook dispatch, and PROTOCOL.md refreshes on boot.
-- **Workers are reliable to hire.** Spawn, teardown, floor cards, and engine availability are
-  all checked before a hire is committed.
-- **The renderer runs inside Chromium's sandbox.**
-- **Windows agents quit when the app does.**
-- **Restart to update no longer gets stuck** when a running agent makes the app refuse to quit.
-- **Triggers run on weekdays at a time of day,** not just on an interval, and they are DST safe.
-- **Focus mode** survives a restart and you can edit an agent from inside it.
-- **Every path in terminal output is clickable.** Markdown previews, source opens in the editor,
-  images and unknown types reveal in Finder or Explorer.
-- **One editor.** The fullscreen file overlay is gone, everything opens in the IDE, and the git
-  rail is collapsed by default.
-- **Updating is one click.** The title-bar badge downloads the build for your machine and tells
-  you how to install it, it says `latest` once a check confirms you are current, and the first
-  run after an update opens that release's page.
-- **Settings opens with a card** carrying your version, your plan, and a way back to these notes.
-- **Terminals follow the window theme,** Gemini CLI and Cursor Agent join the engine list, and
-  Michael hires on his own terms with editable agent names.
+- **成本统计正确了。**应用重启时遥测计数器会重置，但会话 ID 保持不变，因此办公区大幅低估支出。现在从账本汇总成本，并保留单独的会话数据。
+- **Apple Silicon 上的语义记忆可用。**CoreML 让量化嵌入图溢出，所有向量都变成 NaN，chroma 拒绝每次 upsert。macOS 上的嵌入现在固定使用 CPU。
+- **Agent 可以可靠互相沟通。**加入收件箱唤醒看门狗，移除过期提醒，将发往不存在收件箱的邮件改为退回并记录而不是丢弃，限制 steer 队列，原子化 Webhook 调度，并在启动时刷新 PROTOCOL.md。
+- **Worker 招募可靠。**提交招募前会检查启动、销毁、办公区卡片和引擎可用性。
+- **Renderer 在 Chromium 沙箱中运行。**
+- **Windows Agent 会随应用退出。**
+- **更新重启不再卡住**，即使运行中的 Agent 让应用拒绝退出。
+- **触发器按工作日和每日时间运行，**不再只有固定间隔，并且兼容 DST。
+- **专注模式**可以跨重启保留，也可以在其中编辑 Agent。
+- **终端输出中的每个路径都可点击。**Markdown 预览、源码会在编辑器中打开，图片和未知类型会在 Finder 或 Explorer 中显示。
+- **一个编辑器。**全屏文件覆盖层已移除，所有内容都在 IDE 中打开，git 轨道默认折叠。
+- **一键更新。**标题栏徽章会为你的机器下载构建并说明安装方式；检查确认已是最新版本后显示 `latest`，更新后的首次启动会打开该版本的发布页面。
+- **设置打开时显示卡片**，包含你的版本、计划以及返回这些说明的入口。
+- **终端跟随窗口主题。**Gemini CLI 和 Cursor Agent 加入引擎列表，Michael 可以自主招募，并支持编辑 Agent 名称。
 
-## Still new in 0.4.4 · *Windows joins the floor*
+## 0.4.4 新内容 · *Windows 加入办公区*
 
-**If you use Windows, 0.4.4 is the release that made the app work.** Agents could never message
-each other there. They started, looked completely healthy, and quietly ignored one another
-forever. It also fixed the first five minutes: setup could not be finished, and on a brand new
-install the parts that carry messages between agents never started until you quit and reopened
-the app.
+**如果你使用 Windows，0.4.4 是让应用真正工作的版本。**Agent 之前无法在那里互发消息：它们能启动，看起来完全正常，却永远悄悄忽略彼此。该版本也修复了首次使用的前五分钟：设置无法完成，新安装中负责传递 Agent 消息的部分必须在退出并重新打开应用后才会启动。
 
-- **Windows agents talk to each other.** The hive protocol reaches an agent as a multi-line
-  command-line argument, and `cmd.exe` cut it at the first newline, taking the block that names
-  `inbox/` and `outbox/` with it. Spawns now hand the real interpreter an argument array.
-- **Setup finishes.** Accepting the suggested folder used to fail outright, and the folder box
-  was empty even though the text above promised a suggestion.
-- **A fresh install works immediately.** Messages between agents, live status on the cards, and
-  Restart & Continue all stayed dead until you restarted the app, and nothing said so.
-- **Skills and Prerequisites.** Every skill your agents can use, 227 more to browse and install,
-  and one page in Settings that says which supporting tools you have and which you do not.
-- **Release drops.** A release can carry its own designed page instead of a version number in
-  the corner. You are reading one.
-- **Dark mode rebuilt.** The one-pixel borders that draw every control measured under 2:1
-  against their background, so the whole app read as flat grey shapes. Re-tuned and measured
-  rather than picked by eye.
+- **Windows Agent 可以互相沟通。**蜂巢协议以多行命令行参数传给 Agent，而 `cmd.exe` 会在第一个换行处截断，并带走包含 `inbox/` 和 `outbox/` 名称的内容。现在启动时会把参数数组交给真正的解释器。
+- **设置流程可以完成。**过去接受建议目录会直接失败，目录输入框也是空的，尽管上方文字承诺会提供建议。
+- **全新安装立即可用。**Agent 间消息、卡片实时状态和“重启并继续”过去都要重启应用后才会工作，而且没有任何提示。
+- **技能与前置条件。**展示 Agent 可以使用的全部技能、可浏览和安装的另外 227 项技能，以及设置中用于说明支持工具是否存在的页面。
+- **发布页面。**发布版本可以携带自己的设计化页面，而不是只在角落显示版本号。你正在阅读的就是其中一个。
+- **暗色模式重做。**绘制控件的单像素边框与背景对比度低于 2:1，整个应用看起来像扁平的灰色形状。现在已重新调校并测量，而不是凭肉眼选择。
 
 ---
 
-## Still new in 0.4.3 — *Michael is the logo*
+## 0.4.3 新内容 — *Michael 就是 Logo*
 
-**The mark is a face now.** Hana-Kami has always been an office you watch people work in,
-and the icon was a pair of script initials on a gradient. It's Michael — your clone — drawn in
-the app's own pixel art, on the brand yellow, looking straight back at you.
+**这个标志现在是一张脸。**Hana-Kami 一直是一个让你观察大家工作的事务所，而图标过去只是渐变背景上的一对手写字母。现在它是 Michael——你的克隆体——用应用自己的像素艺术画在品牌黄背景上，正看着你。
 
-- **One mark, everywhere.** The dock icon on macOS, Windows and Linux, the site favicon and
-  header, the in-app toolbar, and the README all render the same portrait. No variant is a
-  redrawing of another.
-- **The SVG is the source of truth.** The mark is authored as pure vector — every pixel of the
-  sprite is a rect, with no fonts, no gradients and no filters — and every raster in `build/`
-  and `docs/` is generated from it by [`tools/make-logo.cjs`](https://github.com/TangerineSpecter/Hana-Kami/blob/main/tools/make-logo.cjs).
-  The old icon depended on the Lobster webfont being installed to render correctly.
-- **Icons are native at every size.** A real multi-resolution `.icns` (16→1024, with the macOS
-  drop shadow) and a `.ico` carrying six sizes, plus a 32px favicon and a 180px apple-touch-icon,
-  so nothing is a downscale of a 512px image any more.
-- **Brighter call-to-action buttons.** The download button took its fill from the same token as
-  accent *text*, which has to stay dark enough to read on a white page — so on the light theme
-  it came out brown. Fills now have their own token and start at what used to be the hover colour.
+- **一个标志，到处一致。**macOS、Windows 和 Linux 的 Dock 图标、网站 favicon 和页眉、应用内工具栏以及 README 都使用同一张头像。没有任何变体是从另一个变体重新绘制的。
+- **SVG 是唯一真源。**标志以纯矢量形式编写——精灵图每个像素都是 rect，没有字体、渐变或滤镜——而 `build/` 和 `docs/` 中的每个栅格图都由 [`tools/make-logo.cjs`](https://github.com/TangerineSpecter/Hana-Kami/blob/main/tools/make-logo.cjs) 从它生成。旧图标依赖安装 Lobster Webfont 才能正确渲染。
+- **图标在每个尺寸下都是原生尺寸。**真正的多分辨率 `.icns`（16→1024，带 macOS 阴影）、包含六种尺寸的 `.ico`，以及 32px favicon 和 180px apple-touch-icon，因此不再有任何图标是从 512px 图像缩小得到的。
+- **更明亮的行动按钮。**下载按钮曾使用与强调*文字*相同的填充 token，而强调文字必须在白色页面上保持足够深的颜色，因此浅色主题中的按钮呈棕色。现在填充使用独立 token，并从过去的悬停颜色开始。
 
 > [!NOTE]
-> **Appearance only.** No functional change in this release: the update carries the new icon into
-> your dock, and nothing else moves.
+> **仅外观变化。**本版本没有功能变化：更新会把新图标带到你的 Dock，其他内容都不会改变。
 
 ---
 
-## Still new in 0.4.2 — *Anonymous usage stats, done in the open*
+## 0.4.2 新内容 — *公开透明的匿名使用统计*
 
-Hana-Kami now sends a **small set of anonymous usage events** (app opened, agent spawned,
-feature used) so we can tell whether features are actually used. It is built the way an
-open-source project should build it:
+Hana-Kami 现在会发送**少量匿名使用事件**（应用打开、Agent 启动、功能使用），用于了解功能是否真正被使用。它按照开源项目应有的方式构建：
 
-- **[TELEMETRY.md](https://github.com/TangerineSpecter/Hana-Kami/blob/main/TELEMETRY.md) is the
-  complete contract.** Every event and property is listed there, and the code enforces that list
-  as a hard allowlist — anything not in the table cannot be sent. No prompts, no transcripts, no
-  file paths, no repo names, no identifiers. Events are PostHog *anonymous events* (no person
-  profile, no identity), keyed by a random UUID you can delete.
-- **Opt-out, three ways.** Uncheck it during onboarding, flip **Settings → General → Anonymous
-  usage stats**, or set the standard `DO_NOT_TRACK` env var.
-- **Forks send nothing.** The analytics key is injected only in release CI — building from
-  source produces a build where the analytics module is a complete no-op.
+- **[TELEMETRY.md](https://github.com/TangerineSpecter/Hana-Kami/blob/main/TELEMETRY.md) 是完整协议。**每个事件和属性都列在那里，代码将该列表作为严格白名单执行——表格之外的内容无法发送。不发送提示词、转录、文件路径、仓库名称或标识符。事件是 PostHog 的*匿名事件*（没有个人资料，也没有身份信息），使用可删除的随机 UUID 标识。
+- **三种退出方式。**在引导过程中取消勾选，关闭**设置 → 通用 → 匿名使用统计**，或设置标准的 `DO_NOT_TRACK` 环境变量。
+- **Fork 不发送任何内容。**分析密钥只在发布 CI 中注入——从源码构建会得到一个 analytics 模块完全空操作的构建。
 
 ---
 
-## Still new in 0.4.1 — *The app says what the site says*
+## 0.4.1 新内容 — *应用和网站使用同样的说法*
 
-**Michael is your clone.** The website has been describing Hana-Kami as a clone of you that
-works around the clock — the app still called it a "GOD agent." Now they match.
+**Michael 是你的克隆体。**网站一直把 Hana-Kami 描述成一个全天候工作的你的克隆体，而应用仍称它为“GOD Agent”。现在两边一致了。
 
-- **Your clone, not the GOD agent.** Michael is described as your clone throughout onboarding,
-  and his card on the floor carries a **BOSS** tag — he's the boss of the agents, you're still
-  the boss of him.
-- **Onboarding was rewritten.** It opens on what you actually get ("a clone of you, working
-  24/7") instead of a feature list, and the engine card no longer advertises three engines when
-  ten ship — Claude Code, Codex, Grok, Kimi, Antigravity, Qwen, OpenCode, Crush, pi and Copilot
-  are all named.
+- **你的克隆体，而不是 GOD Agent。**引导流程始终将 Michael 描述为你的克隆体，办公区卡片带有 **BOSS** 标签——他是 Agent 们的老板，而你仍然是他的老板。
+- **引导流程重写。**开头介绍你真正得到的东西（“一个全天候工作的你的克隆体”），而不是罗列功能；引擎卡也不再在有十个引擎时只宣传三个——Claude Code、Codex、Grok、Kimi、Antigravity、Qwen、OpenCode、Crush、pi 和 Copilot 都会显示。
 
 > [!NOTE]
-> **This release changes wording only.** The `god` agent id, the hive folder layout, and message
-> routing are untouched, so existing hives, memory, and running agents carry over exactly as they
-> are. Nothing to migrate.
+> **本版本只改变文案。**`god` Agent ID、蜂巢目录结构和消息路由均未改变，因此现有蜂巢、记忆和运行中的 Agent 都会原样保留。不需要迁移。
 
 ---
 
 > [!NOTE]
-> **Auto-update carries you here from v0.3.7 or later.** If you are still on v0.3.5 or v0.3.6,
-> those builds shipped the broken updater and need one manual install — grab the download below,
-> once.
+> **从 v0.3.7 或更高版本可以通过自动更新到达这里。**如果你仍在使用 v0.3.5 或 v0.3.6，这些版本携带了损坏的更新器，需要手动安装一次——从下方获取下载文件即可。
 
 ---
 
-## Previously
+## 此前版本
 
-- **0.4.0** — *the brand grew up*: one yellow "MD" mark across the dock icon, in-app logo, site
-  favicon, and munderdiffl.in; the landing page rebuilt around real screenshots and a live
-  pixel-floor sim; pricing reframed around **Private Cloud** and **Private Network**.
-- **0.3.9** — Settings → General answers "am I up to date?" directly, and removes 0.3.8's
-  usage-limit guard that never released held agents.
-- **0.3.8** — memory condensation works for the first time; a Triggers hub; one compaction
-  schedule instead of two; a readable commit history.
-- **0.3.7** — auto-update actually runs: a CommonJS/ESM import bug meant the native updater never
-  fired in any packaged build since v0.3.4, and the failure was swallowed by a `catch`.
-- **0.3.6** — *a machine with nothing on it can run agents*: Node and npm install themselves
-  (verified against the official `SHASUMS256.txt`), hooks stopped dying with exit 127, `~/dev/foo`
-  paths resolve, and the office floor rebuilds itself after losing its GPU context.
-- **0.3.5** — a **send now** escape hatch for a paused message queue, and a compact Command
-  Center header.
-- **0.3.4** — talk mode that knows the floor, markdown previews, the IDE git time-machine
-  (history + branch compare), redesigned Settings, xAI Grok and Kimi Code, and a single
-  delivery gate for every automatic writer. Community work by
-  [@gts-47](https://github.com/gts-47) and [@qschmick](https://github.com/qschmick).
-- **0.3.3** — the built-in Monaco IDE, and GitHub Copilot CLI as the first community-contributed
-  engine ([@anxkhn](https://github.com/anxkhn)).
-- **0.3.2** — Realtime Michael: a voice channel to the GOD orchestrator.
-- **0.3.1** — three more engines: OpenCode, Crush, and pi.dev.
+- **0.4.0** — *品牌成熟了*：Dock 图标、应用内 Logo、网站 favicon 和 munderdiffl.in 统一使用黄色 “MD” 标志；着陆页围绕真实截图和实时像素办公区模拟重建；定价围绕 **Private Cloud** 和 **Private Network** 重新设计。
+- **0.3.9** — 设置 → 通用直接回答“我是否是最新版本？”，并移除 0.3.8 中从未释放所持 Agent 的使用额度保护。
+- **0.3.8** — 记忆压缩首次可用；新增触发器中心；将两个压缩计划合并为一个；提交历史变得可读。
+- **0.3.7** — 自动更新真正运行：CommonJS/ESM import Bug 导致自 v0.3.4 起所有打包构建中的原生更新器都未触发，且失败被 `catch` 吞掉。
+- **0.3.6** — *空机器也能运行 Agent*：Node 和 npm 自动安装（已对照官方 `SHASUMS256.txt` 验证）；Hook 不再以退出码 127 崩溃；`~`/dev/foo` 路径可以解析；办公区在丢失 GPU 上下文后会自行重建。
+- **0.3.5** — 为暂停的消息队列提供**立即发送**出口，以及紧凑的指挥中心页眉。
+- **0.3.4** — 了解办公区状态的 Talk 模式、Markdown 预览、IDE git 时间机器（历史 + 分支比较）、重做的设置、xAI Grok 和 Kimi Code，以及所有自动写入器统一的交付门禁。感谢社区贡献者 [@gts-47](https://github.com/gts-47) 和 [@qschmick](https://github.com/qschmick)。
+- **0.3.3** — 内置 Monaco IDE，以及首个社区贡献引擎 GitHub Copilot CLI（[@anxkhn](https://github.com/anxkhn)）。
+- **0.3.2** — Realtime Michael：连接 GOD 编排 Agent 的语音通道。
+- **0.3.1** — 新增三个引擎：OpenCode、Crush 和 pi.dev。
 
-Full history in the [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md).
+完整历史见 [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md)。
 
 
 ---
 
-## Thanks
+## 致谢
 
-This release carries community work. All 23 of these landed in v0.4.5:
+本版本包含社区贡献。以下 23 项全部在 v0.4.5 中落地：
 
 | | | |
 |---|---|---|
-| [#157](https://github.com/TangerineSpecter/Hana-Kami/pull/157) | [@gpechieu](https://github.com/gpechieu) | inherited Claude Code session markers are stripped from an agent's PTY env |
-| [#158](https://github.com/TangerineSpecter/Hana-Kami/pull/158) | [@gpechieu](https://github.com/gpechieu) | semantic memory works on Apple Silicon again: embeddings are pinned to CPU on macOS |
-| [#159](https://github.com/TangerineSpecter/Hana-Kami/pull/159) | [@gpechieu](https://github.com/gpechieu) | reliable spawn, teardown and floor cards for the workers Michael hires |
-| [#165](https://github.com/TangerineSpecter/Hana-Kami/pull/165) | [@rajpreetcodes](https://github.com/rajpreetcodes) | a `~` in the harness home folder resolves, so setup cannot die on ENOENT |
-| [#171](https://github.com/TangerineSpecter/Hana-Kami/pull/171) | [@KrushanPatel](https://github.com/KrushanPatel) | CONTRIBUTING.md matches the platforms the app actually supports |
-| [#175](https://github.com/TangerineSpecter/Hana-Kami/pull/175) | [@rekcilyssup](https://github.com/rekcilyssup) | a main-process watchdog wakes an idle worker sitting on an undrained inbox |
-| [#176](https://github.com/TangerineSpecter/Hana-Kami/pull/176) | [@FenjuFu](https://github.com/FenjuFu) | Gemini CLI joins the engine list |
-| [#177](https://github.com/TangerineSpecter/Hana-Kami/pull/177) | [@TTAWDTT](https://github.com/TTAWDTT) | each agent's live context-window occupancy shows in the roster |
-| [#178](https://github.com/TangerineSpecter/Hana-Kami/pull/178) | [@gpechieu](https://github.com/gpechieu) | a god-hired worker gets a floor card, and it archives when the worker dies |
-| [#179](https://github.com/TangerineSpecter/Hana-Kami/pull/179) | [@kdahal7](https://github.com/kdahal7) | `statAbs` expands `~`, so a path resolves the same way on every platform |
-| [#181](https://github.com/TangerineSpecter/Hana-Kami/pull/181) | [@TTAWDTT](https://github.com/TTAWDTT) | webhook dispatch goes through an atomic add, so a stale ledger cannot overwrite it |
-| [#184](https://github.com/TangerineSpecter/Hana-Kami/pull/184) | [@TTAWDTT](https://github.com/TTAWDTT) | the per-agent steer queue is capped, which bounds memory on a stalled agent |
-| [#185](https://github.com/TangerineSpecter/Hana-Kami/pull/185) | [@hyperstream-pro](https://github.com/hyperstream-pro) | mail to an id with no inbox is bounced and logged instead of dropped |
-| [#186](https://github.com/TangerineSpecter/Hana-Kami/pull/186) | [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN) | tests cover the Notifications and Stop idle-detection branches |
-| [#187](https://github.com/TangerineSpecter/Hana-Kami/pull/187) | [@hyperstream-pro](https://github.com/hyperstream-pro) | a stale inbox nudge no longer wakes an agent against an inbox that is already empty |
-| [#190](https://github.com/TangerineSpecter/Hana-Kami/pull/190) | [@swarnendu19](https://github.com/swarnendu19) | agent names can be edited after spin-up |
-| [#199](https://github.com/TangerineSpecter/Hana-Kami/pull/199) | [@amey-op](https://github.com/amey-op) | the Antigravity queue no longer wedges for 30 seconds |
-| [#203](https://github.com/TangerineSpecter/Hana-Kami/pull/203) | [@lifelmy](https://github.com/lifelmy) | the Crush config env points at the agent's own directory |
-| [#210](https://github.com/TangerineSpecter/Hana-Kami/pull/210) | [@chaitanyagiri](https://github.com/chaitanyagiri) | the art licence claims are true again, Modern Interiors is bought |
-| [#214](https://github.com/TangerineSpecter/Hana-Kami/pull/214) | [@pontusm](https://github.com/pontusm) | Windows agent processes quit when the app does |
-| [#219](https://github.com/TangerineSpecter/Hana-Kami/pull/219) | [@chaitanyagiri](https://github.com/chaitanyagiri) | engine availability is checked before Michael's engine is committed |
-| [#226](https://github.com/TangerineSpecter/Hana-Kami/pull/226) | [@chaitanyagiri](https://github.com/chaitanyagiri) | the floor reports lifetime spend, not spend since the last app restart |
-| [#227](https://github.com/TangerineSpecter/Hana-Kami/pull/227) | [@scy73](https://github.com/scy73) | the renderer runs inside Chromium's sandbox |
+| [#157](https://github.com/TangerineSpecter/Hana-Kami/pull/157) | [@gpechieu](https://github.com/gpechieu) | 清理 Agent PTY 环境中继承的 Claude Code 会话标记 |
+| [#158](https://github.com/TangerineSpecter/Hana-Kami/pull/158) | [@gpechieu](https://github.com/gpechieu) | Apple Silicon 上的语义记忆恢复可用：macOS 上的嵌入固定使用 CPU |
+| [#159](https://github.com/TangerineSpecter/Hana-Kami/pull/159) | [@gpechieu](https://github.com/gpechieu) | Michael 招募的 Worker 可以可靠启动、销毁并显示办公区卡片 |
+| [#165](https://github.com/TangerineSpecter/Hana-Kami/pull/165) | [@rajpreetcodes](https://github.com/rajpreetcodes) | 工作台主目录中的 `~` 可以解析，设置不会因 ENOENT 失败 |
+| [#171](https://github.com/TangerineSpecter/Hana-Kami/pull/171) | [@KrushanPatel](https://github.com/KrushanPatel) | CONTRIBUTING.md 与应用实际支持的平台一致 |
+| [#175](https://github.com/TangerineSpecter/Hana-Kami/pull/175) | [@rekcilyssup](https://github.com/rekcilyssup) | 主进程看门狗会唤醒卡在未清空收件箱上的空闲 Worker |
+| [#176](https://github.com/TangerineSpecter/Hana-Kami/pull/176) | [@FenjuFu](https://github.com/FenjuFu) | Gemini CLI 加入引擎列表 |
+| [#177](https://github.com/TangerineSpecter/Hana-Kami/pull/177) | [@TTAWDTT](https://github.com/TTAWDTT) | 每个 Agent 的实时上下文窗口占用显示在列表中 |
+| [#178](https://github.com/TangerineSpecter/Hana-Kami/pull/178) | [@gpechieu](https://github.com/gpechieu) | GOD 招募的 Worker 获得办公区卡片，并在 Worker 退出时归档 |
+| [#179](https://github.com/TangerineSpecter/Hana-Kami/pull/179) | [@kdahal7](https://github.com/kdahal7) | `statAbs` 展开 `~`，使路径在所有平台上的解析方式一致 |
+| [#181](https://github.com/TangerineSpecter/Hana-Kami/pull/181) | [@TTAWDTT](https://github.com/TTAWDTT) | Webhook 调度通过原子添加，过期账本不会覆盖它 |
+| [#184](https://github.com/TangerineSpecter/Hana-Kami/pull/184) | [@TTAWDTT](https://github.com/TTAWDTT) | 限制每个 Agent 的 steer 队列，约束卡住 Agent 的内存占用 |
+| [#185](https://github.com/TangerineSpecter/Hana-Kami/pull/185) | [@hyperstream-pro](https://github.com/hyperstream-pro) | 发往没有收件箱的 ID 的邮件会退回并记录，而不是丢弃 |
+| [#186](https://github.com/TangerineSpecter/Hana-Kami/pull/186) | [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN) | 测试覆盖 Notifications 和 Stop 的空闲检测分支 |
+| [#187](https://github.com/TangerineSpecter/Hana-Kami/pull/187) | [@hyperstream-pro](https://github.com/hyperstream-pro) | 过期的收件箱提醒不会再唤醒已经清空收件箱的 Agent |
+| [#190](https://github.com/TangerineSpecter/Hana-Kami/pull/190) | [@swarnendu19](https://github.com/swarnendu19) | Agent 启动后可以编辑名称 |
+| [#199](https://github.com/TangerineSpecter/Hana-Kami/pull/199) | [@amey-op](https://github.com/amey-op) | Antigravity 队列不再卡住 30 秒 |
+| [#203](https://github.com/TangerineSpecter/Hana-Kami/pull/203) | [@lifelmy](https://github.com/lifelmy) | Crush 配置环境变量指向 Agent 自己的目录 |
+| [#210](https://github.com/TangerineSpecter/Hana-Kami/pull/210) | [@chaitanyagiri](https://github.com/chaitanyagiri) | 素材许可声明重新属实，Modern Interiors 已购买 |
+| [#214](https://github.com/TangerineSpecter/Hana-Kami/pull/214) | [@pontusm](https://github.com/pontusm) | Windows Agent 进程会随应用退出 |
+| [#219](https://github.com/TangerineSpecter/Hana-Kami/pull/219) | [@chaitanyagiri](https://github.com/chaitanyagiri) | 在提交 Michael 的引擎前检查引擎可用性 |
+| [#226](https://github.com/TangerineSpecter/Hana-Kami/pull/226) | [@chaitanyagiri](https://github.com/chaitanyagiri) | 办公区报告生命周期支出，而不是上次应用重启后的支出 |
+| [#227](https://github.com/TangerineSpecter/Hana-Kami/pull/227) | [@scy73](https://github.com/scy73) | Renderer 在 Chromium 沙箱中运行 |
 
-Four of the fixes above are [@gpechieu](https://github.com/gpechieu)'s and three are
-[@TTAWDTT](https://github.com/TTAWDTT)'s. Thank you, and thank you to everyone who reviewed a
-pull request or filed the bug that led to one.
+以上修复中有四项来自 [@gpechieu](https://github.com/gpechieu)，三项来自 [@TTAWDTT](https://github.com/TTAWDTT)。感谢你们，也感谢每一位审阅 Pull Request 或提交相关 Bug 的人。
 
-## ⤓ Downloads
+## ⤓ 下载
 
-Latest builds for every platform. The macOS build is **universal**, one DMG that runs on both
-Apple Silicon and Intel.
+每个平台的最新构建。macOS 构建是**通用版**，一个 DMG 同时支持 Apple Silicon 和 Intel。
 
 ### 🍎 macOS
-| Build | File |
+| 构建 | 文件 |
 |---|---|
 | Universal (Apple Silicon + Intel) | [`Hana-Kami-0.4.6-mac-universal.dmg`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-mac-universal.dmg) |
 
 ### 🪟 Windows
-| Build | File |
+| 构建 | 文件 |
 |---|---|
 | Installer (x64), *recommended* | [`Hana-Kami-0.4.6-win-x64-setup.exe`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-win-x64-setup.exe) |
 | Portable (x64, no install) | [`Hana-Kami-0.4.6-win-x64-portable.exe`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-win-x64-portable.exe) |
 
 ### 🐧 Linux
-| Build | File |
+| 构建 | 文件 |
 |---|---|
 | AppImage (x86_64) | [`Hana-Kami-0.4.6-linux-x86_64.AppImage`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/Hana-Kami-0.4.6-linux-x86_64.AppImage) |
 
-### 📦 Source
-[Source code (zip)](https://github.com/TangerineSpecter/Hana-Kami/archive/refs/tags/v0.4.6.zip) ·
-[Source code (tar.gz)](https://github.com/TangerineSpecter/Hana-Kami/archive/refs/tags/v0.4.6.tar.gz)
+### 📦 源码
+[源码（zip）](https://github.com/TangerineSpecter/Hana-Kami/archive/refs/tags/v0.4.6.zip) ·
+[源码（tar.gz）](https://github.com/TangerineSpecter/Hana-Kami/archive/refs/tags/v0.4.6.tar.gz)
 
-> **Verify your download:** [`SHA256SUMS.txt`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/SHA256SUMS.txt) — then `shasum -a 256 -c SHA256SUMS.txt` (macOS/Linux) or `Get-FileHash` (Windows).
+> **验证下载文件：**[`SHA256SUMS.txt`](https://github.com/TangerineSpecter/Hana-Kami/releases/latest/download/SHA256SUMS.txt)——然后运行 `shasum -a 256 -c SHA256SUMS.txt`（macOS/Linux）或 `Get-File-Hash`（Windows）。
 
-> The filenames above carry a version number, so they only resolve while this is the
-> latest release. If a link 404s you are reading an old release page — grab the current
-> build from the [**releases page**](https://github.com/TangerineSpecter/Hana-Kami/releases/latest),
-> which is always right.
+> 上面的文件名带有版本号，因此只有在这里是最新发布版本时才会有效。如果链接返回 404，说明你正在阅读旧发布页面——请从[**发布页面**](https://github.com/TangerineSpecter/Hana-Kami/releases/latest)获取当前构建，那里始终是正确的。
 
 ---
 
-## First launch
+## 首次启动
 
-- **macOS** — the build is **signed with a Developer ID** (hardened runtime). If macOS
-  still shows an "unidentified developer" warning on first open, right-click the app →
-  **Open** → **Open** once. After that, the first time agents touch a folder you'll get a
-  single macOS privacy prompt for Documents/Desktop/Downloads — allow it once and the
-  grant sticks (it covers the `claude` agents the app spawns), because the grant is bound
-  to the app's stable signature.
-- **Windows** — not code-signed yet; SmartScreen may show "Windows protected your PC" →
-  **More info** → **Run anyway**.
-- **Linux** — make the AppImage executable: `chmod +x Hana-Kami-*.AppImage`, then run it.
+- **macOS**——构建使用 **Developer ID 签名**（强化运行时）。如果 macOS 首次打开时仍显示“无法验证开发者”，请右键点击应用 → **打开** → 再次点击**打开**。之后 Agent 首次访问文件夹时，macOS 会针对 Documents/Desktop/Downloads 显示一次隐私提示；允许一次即可永久生效（覆盖应用启动的 `claude` Agent），因为授权绑定到应用的稳定签名。
+- **Windows**——目前尚未进行代码签名；SmartScreen 可能显示“Windows 已保护你的电脑”→ **更多信息** → **仍要运行**。
+- **Linux**——先让 AppImage 可执行：`chmod +x Hana-Kami-*.AppImage`，然后运行它。
 
 ---
 
-## Requirements
-- macOS 12+, Windows 10/11, or a modern Linux desktop
-- [Claude Code](https://claude.com/claude-code) installed and on your `PATH` (and/or the Antigravity `agy` or OpenAI `codex` CLI for those providers)
-- A Claude Code subscription (Hana-Kami drives your existing `claude` CLI — it doesn't replace it)
-- For **Realtime Michael** (voice): your own **OpenAI key with Realtime API access** — without it the **Talk** button stays disabled
+## 系统要求
+- macOS 12+、Windows 10/11 或现代 Linux 桌面
+- 已安装并位于 `PATH` 中的 [Claude Code](https://claude.com/claude-code)（以及相应提供商的 Antigravity `agy` 或 OpenAI `codex` CLI）
+- Claude Code 订阅（Hana-Kami 驱动你已有的 `claude` CLI，不会替代它）
+- **Realtime Michael**（语音）需要你自己的**拥有 Realtime API 权限的 OpenAI 密钥**——没有它，**Talk** 按钮会保持禁用
 
 ---
 
-## 🛠 Build from source
+## 🛠 从源码构建
 ```bash
 git clone https://github.com/TangerineSpecter/Hana-Kami.git
 cd hanakami
 npm install        # rebuilds node-pty for Electron
 npm run dev        # launches the app with hot reload
 ```
-Node 18+ and a C/C++ toolchain are required (Xcode CLT on macOS, Build Tools on Windows).
-To produce installers yourself: `npm run dist` (current OS), or `dist:mac` / `dist:win` / `dist:linux`.
+需要 Node 18+ 和 C/C++ 工具链（macOS 使用 Xcode CLT，Windows 使用 Build Tools）。如需自行生成安装程序，可运行 `npm run dist`（当前操作系统），或 `dist:mac` / `dist:win` / `dist:linux`。
 
 ---
 
-## What's inside
-- **The simulation** — every agent is a real `claude` (or `agy` / `codex` / local-provider) pseudo-terminal, visualized as an avatar on a watchable office floor (`node-pty` · `xterm.js` · Pixi.js).
-- **Talk to Michael** — a realtime **voice channel to the GOD orchestrator** that reads the hive and acts behind spoken echo-back confirmation, BYOK and main-only.
-- **Selectable engines + per-hire capabilities** — each hire (and Michael himself) runs on a pluggable engine, with its own consented skills + MCP catalog.
-- **MemPalace** — a markdown-first, semantic memory layer the whole office shares; cross-session recall in ~12ms.
-- **GOD orchestrator + hive** — one agent you talk to routes work to specialists and stays autonomous, escalating only critical items (spend, destructive ops, scope) to you natively, through human-in-the-loop prompts. It can also spawn an ephemeral worker straight from Slack and tear it down safely.
-- **Plugs into your setup** — your subscription, settings, skills, and MCP servers, plus an integrations registry with a write-only secret broker; `/remote-control` reaches the whole floor from your phone.
+## 内容一览
+- **模拟办公区**——每个 Agent 都是真实的 `claude`（或 `agy` / `codex` / local-provider）伪终端，在可观察的办公区中以头像呈现（`node-pty` · `xterm.js` · Pixi.js）。
+- **与 Michael 沟通**——连接 **GOD 编排 Agent 的实时语音通道**，读取蜂巢并在语音回声确认后执行，支持 BYOK 且只在主进程运行。
+- **可选引擎 + 招募级能力**——每个招募角色（包括 Michael 自身）都运行在可插拔引擎上，拥有经过同意的技能和 MCP 目录。
+- **MemPalace**——全办公区共享的 Markdown 优先语义记忆层；跨会话召回约 12ms。
+- **GOD 编排 Agent + 蜂巢**——你只需与一个 Agent 沟通，它会把工作路由给专家并保持自主，仅通过人工介入提示把关键事项（花费、破坏性操作、范围）升级给你。它还可以直接从 Slack 启动临时 Worker，并安全销毁。
+- **接入你的环境**——使用你的订阅、设置、技能和 MCP 服务器，并提供带只写密钥代理的集成目录；通过手机上的 `/remote-control` 触达整个办公区。
 
-Full notes in the [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md).
+完整说明见 [CHANGELOG](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CHANGELOG.md)。
 
 ---
 
-## Links
-[Website](https://munderdiffl.in/) ·
-[Repo](https://github.com/TangerineSpecter/Hana-Kami) ·
+## 链接
+[网站](https://munderdiffl.in/) ·
+[仓库](https://github.com/TangerineSpecter/Hana-Kami) ·
 [Issues](https://github.com/TangerineSpecter/Hana-Kami/issues) ·
-[Contribute](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CONTRIBUTING.md) ·
-[Become a patron](https://razorpay.me/@hanakamifund)
+[参与贡献](https://github.com/TangerineSpecter/Hana-Kami/blob/main/CONTRIBUTING.md) ·
+[成为赞助者](https://razorpay.me/@hanakamifund)
 
-MIT-licensed. An affectionate parody — not affiliated with NBC's *The Office* or Dunder Mifflin.
+采用 MIT 许可证。这是一部善意戏仿作品，与 NBC 的 *The Office* 或 Dunder Mifflin 无关联。

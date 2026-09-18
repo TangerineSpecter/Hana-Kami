@@ -1,1259 +1,561 @@
-# Changelog
+# 更新日志
 
-All notable changes to this project are documented here. The format is based on
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to
+本项目的所有重要变更都记录在这里。格式基于
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/)，本项目遵循
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-### Added
+### 新增
 
-- **Tasks show their id.** The one thing people actually refer to a card by — `bmt-12` — was not
-  displayed anywhere: not on the kanban card, which printed only the title and the assignee, and not
-  in the detail view behind it. It now leads the card above the title, and leads the detail view's
-  fact row, in mono in the same muted ink as the assignee. Every id shows, including the synthetic
-  `t-xxxx` fallbacks a card gets when it arrives without one.
-- **Fable 5.1, GPT-6 Astra, and Gemini 3.7 Flash in the model pickers.** Claude Code gets
-  `claude-fable-5-1`, Codex gets `gpt-6-astra`, and Antigravity gets Gemini 3.7 Flash at all three
-  reasoning levels; Cursor gets its own build of the two it carries. Every id was read out of the
-  CLI that will be invoked with it — `codex-rs/models-manager/models.json`, `agy models`,
-  `cursor-agent models`, and the installed `claude` binary — rather than guessed from a name.
-  **GPT-6 Astra needs Codex 0.153.1 or newer.** The slug landed in that release, so an older
-  `codex` on your machine will reject it when the agent spawns; update Codex first. The catalog's
-  version bounds cover the app, not the CLI it launches, so this is a prerequisite rather than
-  something the picker can hide for you.
-- **A new model no longer needs a release.** The pickers now read
-  [`docs/model-catalog.json`](docs/model-catalog.json) on `main`, fetched at runtime and cached for
-  six hours, so adding a model is one line in one file on GitHub rather than a build. The check runs
-  at startup, not on a timer: an installed copy picks a new model up the next time it launches with
-  a cached copy older than six hours, and an app left open does not change under you.
-  The catalog compiled into the build stays the floor: it is what renders offline, on first
-  launch, and whenever the remote copy is missing, unreadable, or announces a schema this build does
-  not know. A provider present in the remote copy replaces that provider's list; a provider it does
-  not mention keeps the built-in one, so a bad edit costs a list rather than a picker. The payload is
-  data and never markup, and a model id is length-capped and stripped of control characters before it
-  can reach a `--model` flag on a spawn command line. Same mechanism as the Settings hero card.
+- **任务现在显示任务 ID。**用户实际用来称呼卡片的标识——`bmt-12`——之前完全没有显示：看板卡片只显示标题和负责人，后面的详情视图也没有。现在它会显示在卡片标题上方，也会显示在详情视图的事实行中，使用与负责人相同的低调墨色等宽字体。每个 ID 都会显示，包括卡片没有 ID 时生成的 `t-xxxx` 合成后备值。
+- **模型选择器新增 Fable 5.1、GPT-6 Astra 和 Gemini 3.7 Flash。**Claude Code 使用 `claude-fable-5-1`，Codex 使用 `gpt-6-astra`，Antigravity 在三个推理级别中都提供 Gemini 3.7 Flash；Cursor 使用它所携带的两个模型的独立构建版本。每个 ID 都直接读取自实际要调用的 CLI——`codex-rs/models-manager/models.json`、`agy models`、`cursor-agent models` 和已安装的 `claude` 二进制，而不是根据名称猜测。
+  **GPT-6 Astra 需要 Codex 0.153.1 或更高版本。**该 slug 在这个版本中才加入，因此机器上的旧版 `codex` 会在 Agent 启动时拒绝它；请先更新 Codex。目录中的版本范围针对应用本身，而不是它要启动的 CLI，因此这是前置条件，选择器无法替你隐藏这个问题。
+- **新增模型不再需要发布新版本。**模型选择器现在会读取
+  [`docs/model-catalog.json`](docs/model-catalog.json) 的 `main` 分支，在运行时获取并缓存
+  六小时，因此在 GitHub 上添加模型只需修改一个文件中的一行，而不需要构建。检查在启动时运行，而不是定时运行：安装后的应用会在下一次启动、且缓存副本已超过六小时时获取新模型；已经打开的应用不会在使用过程中自行改变。
+  构建时编译进去的目录仍然是最低保障：离线、首次启动，以及远程副本缺失、无法读取或声明了本构建不认识的 schema 时，都使用它。远程副本中存在的提供商会替换该提供商的列表；远程副本没有提到的提供商则保留内置列表，因此错误编辑最多损失一个列表，而不会损坏整个选择器。载荷始终是数据而不是标记；模型 ID 在到达启动命令行的 `--model` 参数前会限制长度并移除控制字符。设置页主卡片也使用相同机制。
 
 ## [0.4.6] — 2026-08-27
 
-**The release that speaks your language and updates itself.** The interface runs in Chinese and
-Arabic, the auto-updater downloads and installs a new build end to end, fonts ship inside the app so
-a blocked network never leaves you on a blank window, and the way agent engines are launched is
-hardened.
+**这是一个会说你的语言、也会自我更新的版本。**界面支持中文和阿拉伯语，自动更新器可以端到端下载并安装新构建，字体随应用一起发布，因此网络受限时也不会只显示空白窗口；Agent 引擎的启动方式也经过加固。
 
-### Added
+### 新增
 
-- **The interface speaks Chinese and Arabic.** Every string is translated (nothing falls back to
-  English) and the terminals read right to left under Arabic. The physical-direction sweep — padding
-  and icons that still mirror the wrong way on some screens — is tracked as the next piece of work.
-- **`message_sent` telemetry.** A single anonymous event closes the activation funnel by counting
-  the messages a person sends to an agent — a count and nothing else: no text, no length, no content
-  of any kind. Counted at the submit, never per keystroke, and suppressed by every existing opt-out.
-  [`TELEMETRY.md`](TELEMETRY.md) lists it like every other event.
-- **The ASK ME card renders markdown.** Questions arrived with their asterisks and backticks on
-  screen, because the card printed the raw text. It now renders the same way the file preview does:
-  emphasis, bullets, `code`, tables, and links that open in the browser instead of navigating the
-  app. The task detail's Q&A trail renders too, answers included. A single newline is still a line
-  break, so a question written as plain text looks exactly as it did before. Raw HTML is still shown
-  as text rather than parsed, which is what keeps agent-written markdown safe to display.
-- **Agents are told to format what they ask you.** The orchestrator prompt and `PROTOCOL.md` now
-  ask for a bold lead line, backticks around paths and commands, and bullets whenever a question has
-  more than one option.
+- **界面支持中文和阿拉伯语。**所有字符串都已翻译（不会回退到英文），终端在阿拉伯语环境下从右向左显示。物理方向检查——部分屏幕上的 padding 和图标仍然沿用了错误的镜像方向——已记录为下一项工作。
+- **`message_sent` 遥测。**通过统计用户发送给 Agent 的消息数量，一个匿名事件补齐了激活漏斗；只记录数量，不记录任何其他内容：没有文本、长度或任何形式的消息内容。只在提交时计数，从不按击键计数，并受现有所有退出设置抑制。[`TELEMETRY.md`](TELEMETRY.md) 与其他事件一样列出了它。
+- **ASK ME 卡片现在渲染 Markdown。**此前卡片直接打印原始文本，问题会带着星号和反引号出现在屏幕上。现在它与文件预览使用同样的渲染方式：强调、列表、`code`、表格，以及在浏览器打开而不是跳转应用的链接。任务详情中的问答轨迹也会渲染，答案同样包含在内。单个换行仍然表示换行，因此纯文本问题的视觉效果与以前完全一致。原始 HTML 仍以文本显示而不会被解析，这保证了 Agent 编写的 Markdown 可以安全展示。
+- **系统会要求 Agent 格式化它们向你提出的问题。**编排器提示词和 `PROTOCOL.md` 现在要求使用加粗的引导行、用反引号包裹路径和命令，并在问题有多个选项时使用列表。
 
-### Fixed
+### 修复
 
-- **The auto-updater installs a new build end to end.** The title-bar badge advances from check to
-  available to downloading to downloaded on its own, and the action at the end restarts into the new
-  version. This is the release that proves that path — a build's own updater is only exercised by the
-  next release.
-- **Fonts ship inside the app.** The renderer and the release drop no longer fetch Google Fonts at
-  launch, so the app opens at the same speed on any network, including one where Google is blocked.
-  The release drop can no longer white-screen while a stylesheet loads: its fonts are bundled, its
-  content-security policy denies a remote stylesheet outright, and a loader covers the frame until it
-  paints.
-- **Settings has one Save button.** The Connections tab stops repeating itself; the REST API, MCP,
-  Slack and webhook sections each keep their place.
-- **IME typing no longer sends early.** Pressing Enter to choose a Chinese or Japanese candidate
-  picks the word instead of firing the message with half-typed text.
+- **自动更新器现在可以端到端安装新构建。**标题栏徽章会自行从检查中变为可用、下载中、已下载，最后的操作会重启进入新版本。本次发布验证了这条路径——构建自己的更新器只能由下一个版本来验证。
+- **字体随应用一起发布。**Renderer 和发布包启动时不再请求 Google Fonts，因此在任何网络环境下都能以同样速度打开，包括 Google 被阻断的网络。发布包也不会再因为样式表加载而白屏：字体已经打包，内容安全策略直接拒绝远程样式表，并由加载器覆盖窗口直到页面绘制完成。
+- **Settings 现在只有一个保存按钮。**Connections 标签页不再重复自身；REST API、MCP、Slack 和 webhook 分区各自保持原位。
+- **IME 输入不再过早发送。**按 Enter 选择中文或日文候选词时，会选中该词，而不是带着半截文字直接发送消息。
 
-### Security
+### 安全
 
-- **Engine command launching is hardened.** The name of the CLI an agent launches is validated
-  before it is resolved against your PATH, so only a plain command name or an absolute path reaches a
-  shell.
+- **引擎命令启动已加固。**Agent 要启动的 CLI 名称会在根据 PATH 解析之前进行校验，因此只有普通命令名或绝对路径可以到达 shell。
 
-### Thanks
+### 致谢
 
-16 community pull requests from 13 contributors landed in this release, one of them (#213)
-re-implemented rather than merged:
+本次发布合并了来自 13 位贡献者的 16 个社区 Pull Request，其中 #213 是重新实现而不是直接合并：
 
-- [#156](https://github.com/TangerineSpecter/Hana-Kami/pull/156) [@gpechieu](https://github.com/gpechieu): the roster empty-write guard stays armed after a refused write
-- [#205](https://github.com/TangerineSpecter/Hana-Kami/pull/205) [@Schopenhauer-loves-Hegel](https://github.com/Schopenhauer-loves-Hegel): the react-i18next multilingual UI foundation, shipping the Chinese translation
-- [#213](https://github.com/TangerineSpecter/Hana-Kami/pull/213) [@abo123v-glitch](https://github.com/abo123v-glitch): the Arabic/RTL terminal rendering recipe (re-implemented into this release)
-- [#225](https://github.com/TangerineSpecter/Hana-Kami/pull/225) [@jhinzzz](https://github.com/jhinzzz): Codex hive sessions are visible to usage scanners
-- [#242](https://github.com/TangerineSpecter/Hana-Kami/pull/242) [@raifemre](https://github.com/raifemre): the localStorage roster fallback is scoped to the hive that wrote it
-- [#243](https://github.com/TangerineSpecter/Hana-Kami/pull/243) [@L422Y](https://github.com/L422Y): the ASK ME question renders as markdown
-- [#248](https://github.com/TangerineSpecter/Hana-Kami/pull/248) [@djbiz](https://github.com/djbiz): a floor rebuild that cannot get a WebGL context retries instead of failing
-- [#270](https://github.com/TangerineSpecter/Hana-Kami/pull/270) [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN): /compact is not enqueued for an undeliverable agent
-- [#271](https://github.com/TangerineSpecter/Hana-Kami/pull/271) [@HsienW](https://github.com/HsienW): a typed hook-event payload contract
-- [#282](https://github.com/TangerineSpecter/Hana-Kami/pull/282) [@savvaskoualis](https://github.com/savvaskoualis): a renamed god identity no longer reverts to "Michael"
-- [#284](https://github.com/TangerineSpecter/Hana-Kami/pull/284) [@HundredBillion](https://github.com/HundredBillion): the Settings save button moves into the modal footer
-- [#286](https://github.com/TangerineSpecter/Hana-Kami/pull/286) [@HundredBillion](https://github.com/HundredBillion): every config write is announced so Settings stops going stale
-- [#310](https://github.com/TangerineSpecter/Hana-Kami/pull/310) [@LavaDMan](https://github.com/LavaDMan): the hive-hook-node test no longer races its own stdin write
-- [#317](https://github.com/TangerineSpecter/Hana-Kami/pull/317) [@aaroncoville](https://github.com/aaroncoville): usage resets when a PTY exits
-- [#323](https://github.com/TangerineSpecter/Hana-Kami/pull/323) [@aaroncoville](https://github.com/aaroncoville): the WebGL context is released when a terminal's renderer tears down
-- [#339](https://github.com/TangerineSpecter/Hana-Kami/pull/339) [@aaroncoville](https://github.com/aaroncoville): the model catalog is brought up to date
+- [#156](https://github.com/TangerineSpecter/Hana-Kami/pull/156) [@gpechieu](https://github.com/gpechieu)：被拒绝的写入之后，roster 空写入保护仍保持启用
+- [#205](https://github.com/TangerineSpecter/Hana-Kami/pull/205) [@Schopenhauer-loves-Hegel](https://github.com/Schopenhauer-loves-Hegel)：react-i18next 多语言 UI 基础，并发布中文翻译
+- [#213](https://github.com/TangerineSpecter/Hana-Kami/pull/213) [@abo123v-glitch](https://github.com/abo123v-glitch)：阿拉伯语/RTL 终端渲染方案（本版本重新实现）
+- [#225](https://github.com/TangerineSpecter/Hana-Kami/pull/225) [@jhinzzz](https://github.com/jhinzzz)：使用扫描器可以发现 Codex hive 会话
+- [#242](https://github.com/TangerineSpecter/Hana-Kami/pull/242) [@raifemre](https://github.com/raifemre)：localStorage roster 后备值限定在写入它的 hive 中
+- [#243](https://github.com/TangerineSpecter/Hana-Kami/pull/243) [@L422Y](https://github.com/L422Y)：ASK ME 问题渲染为 Markdown
+- [#248](https://github.com/TangerineSpecter/Hana-Kami/pull/248) [@djbiz](https://github.com/djbiz)：无法获取 WebGL 上下文的工作区重建会重试，而不是直接失败
+- [#270](https://github.com/TangerineSpecter/Hana-Kami/pull/270) [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN)：无法投递给 Agent 时不会把 /compact 放入队列
+- [#271](https://github.com/TangerineSpecter/Hana-Kami/pull/271) [@HsienW](https://github.com/HsienW)：类型化的 Hook 事件载荷契约
+- [#282](https://github.com/TangerineSpecter/Hana-Kami/pull/282) [@savvaskoualis](https://github.com/savvaskoualis)：重命名 GOD 身份后不再回退为 “Michael”
+- [#284](https://github.com/TangerineSpecter/Hana-Kami/pull/284) [@HundredBillion](https://github.com/HundredBillion)：Settings 保存按钮移动到模态框页脚
+- [#286](https://github.com/TangerineSpecter/Hana-Kami/pull/286) [@HundredBillion](https://github.com/HundredBillion)：每次配置写入都会发出通知，Settings 不再显示旧状态
+- [#310](https://github.com/TangerineSpecter/Hana-Kami/pull/310) [@LavaDMan](https://github.com/LavaDMan)：hive-hook-node 测试不再与自身 stdin 写入竞争
+- [#317](https://github.com/TangerineSpecter/Hana-Kami/pull/317) [@aaroncoville](https://github.com/aaroncoville)：PTY 退出时会重置用量
+- [#323](https://github.com/TangerineSpecter/Hana-Kami/pull/323) [@aaroncoville](https://github.com/aaroncoville)：终端 Renderer 销毁时释放 WebGL 上下文
+- [#339](https://github.com/TangerineSpecter/Hana-Kami/pull/339) [@aaroncoville](https://github.com/aaroncoville)：更新模型目录
 
 ## [0.4.5] — 2026-08-22
 
-**The release that fixes the things you trusted and were quietly wrong.** Cost reporting was off
-by more than half after a restart, semantic memory never worked on Apple Silicon, and agents
-could not talk to each other reliably. All three are fixed, alongside weekday scheduling,
-clickable paths in terminal output, one editor instead of two, and 23 community pull requests.
+**这是一个修复“你以为可靠、实际上悄悄出错”的版本。**重启后成本报告偏差超过一半，语义记忆在 Apple Silicon 上始终无法工作，Agent 之间也无法可靠通信。这三项都已修复，同时加入工作日调度、终端输出中的可点击路径、统一编辑器，以及 23 个社区 Pull Request。
 
-### Added
+### 新增
 
-- **Weekday scheduling for triggers.** A trigger can run at a time of day on chosen weekdays
-  rather than only on a fixed interval, and the schedule is DST safe.
-- **Every path in terminal output is clickable.** Markdown opens the preview, source and config
-  open in the IDE, and images, archives and anything we cannot honestly render are revealed in
-  Finder or Explorer instead of being opened. A path token is never handed to the OS "open with
-  default app" call, so a printed `installer.dmg` cannot become an execution.
-- **Manual updates download on click,** with install steps for the platform you are on. The
-  title-bar badge is always the manual path, auto-update stays in Settings, and the badge says
-  `latest` once a check confirms you are current.
-- **The first run after an update shows that release's page.**
-- **A hero card at the top of Settings** with your version, your plan, and a way back to the
-  release notes.
-- **A 1:1 hold** that tells Michael to leave an agent alone.
-- **Editable agent names,** and Michael can choose a worker's avatar and accent when he hires.
-- **Gemini CLI and Cursor Agent** join the engine list.
-- **Edit an agent from inside focus mode,** next to its name.
+- **触发器支持按工作日调度。**触发器可以在指定工作日的某个时间运行，而不只是按固定间隔运行，并且调度对夏令时安全。
+- **终端输出中的每个路径都可点击。**Markdown 打开预览，源文件和配置在 IDE 中打开；图片、压缩包以及我们无法诚实渲染的内容会在 Finder 或 Explorer 中显示，而不是直接打开。路径令牌绝不会交给操作系统的“使用默认应用打开”调用，因此输出中的 `installer.dmg` 不会被变成可执行操作。
+- **手动更新点击后下载，**并根据当前平台显示安装步骤。标题栏徽章始终走手动更新路径，自动更新保留在 Settings 中；检查确认已经是最新版本后，徽章显示 `latest`。
+- **更新后的首次启动会显示该版本的页面。**
+- **Settings 顶部新增主卡片，**显示你的版本、方案以及返回发布说明的入口。
+- **1:1 暂停功能**，告诉 Michael 暂时不要干预某个 Agent。
+- **Agent 名称可编辑，**Michael 招募 Worker 时可以选择其头像和强调色。
+- **Gemini CLI 和 Cursor Agent** 加入引擎列表。
+- **可以在专注模式中直接编辑 Agent，**入口就在它的名称旁边。
 
-### Added
+### 新增
 
-- **`update_applied` telemetry.** The app now reports, once, on the first start after its own
-  version changes: `update_applied { from_version, to_version }`. Auto-update health was the one
-  thing we had no way to see — a release is delivered in place, and the only evidence we had was
-  installs that happened to show events on two versions. `from_version` is `unknown` for an
-  install that predates the event, so the first release carrying it is measurable rather than
-  silent for a cycle. Both values are version strings; nothing new about you is collected, the
-  same opt-outs apply, and [`TELEMETRY.md`](TELEMETRY.md) lists it like every other event.
-  A `via` property says whether the app's own updater installed it (`auto`), something else moved
-  the version (`manual`), or there was no update log to read (`unknown`) — read from the update
-  log the app already keeps, so it works for installs updating from a version released before
-  this one. A restart the user asked for that then quietly installed nothing counts as `manual`,
-  not `auto`, because the log names which build started next.
+- **`update_applied` 遥测。**应用现在会在自身版本变化后的第一次启动时报告一次：`update_applied { from_version, to_version }`。此前我们唯一无法观察的是自动更新健康状况——版本会原地交付，而唯一证据是恰好在两个版本中都显示事件的安装。事件引入之前的安装，`from_version` 为 `unknown`，因此携带此功能的第一个版本可以被测量，而不会静默一个周期。两个值都是版本字符串；不会收集任何关于你的新信息，继续使用相同的退出设置，且 [`TELEMETRY.md`](TELEMETRY.md) 与其他事件一样列出了它。`via` 属性说明版本是由应用自己的更新器安装（`auto`）、其他方式移动（`manual`），还是没有可读取的更新日志（`unknown`）——它读取应用已经保存的更新日志，因此从早于本版本的版本更新上来也能工作。用户要求重启但随后没有实际安装任何内容时，计为 `manual` 而不是 `auto`，因为日志会标明接下来启动的是哪个构建。
 
-### Fixed
+### 修复
 
-- **Cost is reported over the app's lifetime, not since the last restart.** The telemetry counter
-  reset on every launch while the session id stayed the same, so the floor under reported spend
-  by 59 percent. It is now folded from the ledger, with a separate session figure alongside it.
-- **Semantic memory works on Apple Silicon.** CoreML overflowed the quantized embedding graph,
-  every vector came back NaN, and chroma rejected every upsert. Embeddings are pinned to CPU
-  on macOS.
-- **Agent-to-agent messaging is reliable.** A main-process watchdog wakes an idle worker sitting
-  on an undrained inbox, stale nudges no longer fire at an inbox that has since been drained,
-  mail to an id with no inbox is bounced and logged rather than dropped, the per-agent steer
-  queue is capped, webhook dispatch is atomic, and `PROTOCOL.md` refreshes on boot.
-- **Restart to update no longer sticks** when a running agent makes the app refuse to quit.
-- **Focus mode survives a restart,** the close button no longer drops you to the sidebar, and the
-  focused terminal refits when the roster changes.
-- **Terminals follow the window theme.** Running TUIs are told when the theme flips, OSC colour
-  queries are answered, and Crush and OpenCode are handed the theme at spawn.
-- **A partial ANSI escape carries across pty chunks** instead of printing as garbage.
-- **Windows agent processes quit when the app does.**
-- **Buttons in a squeezed row no longer paint over their neighbours,** and the sidebar header
-  drops its button labels before it drops the agent's name.
+- **成本按应用整个生命周期报告，而不是只从上次重启开始。**遥测计数器每次启动都会重置，但会话 ID 保持不变，因此报告的支出下限少了 59%。现在成本从账本汇总，同时旁边保留独立的会话数值。
+- **语义记忆在 Apple Silicon 上恢复工作。**CoreML 使量化嵌入图溢出，每个向量都返回 NaN，chroma 拒绝所有 upsert。macOS 上的嵌入现在固定使用 CPU。
+- **Agent 间消息传递可靠。**主进程 watchdog 会唤醒停留在未清空收件箱上的空闲 Worker；过期的唤醒不再触发已经清空的收件箱；发往没有收件箱的 ID 的邮件会退回并记录日志，而不是丢弃；每 Agent 的 steer 队列有上限；webhook 分发是原子的；启动时会刷新 `PROTOCOL.md`。
+- **更新重启不再卡住**，即使运行中的 Agent 使应用拒绝退出。
+- **专注模式可以跨重启保留，**关闭按钮不再把你带回侧边栏，roster 变化时专注终端也会重新适配。
+- **终端跟随窗口主题。**运行中的 TUI 会收到主题切换通知，会响应 OSC 颜色查询，Crush 和 OpenCode 启动时也会接收主题。
+- **部分 ANSI 转义序列会跨越 pty 分块保留，**而不是被打印成乱码。
+- **Windows Agent 进程会在应用退出时一同退出。**
+- **拥挤行中的按钮不再覆盖相邻按钮，**侧边栏标题会先隐藏按钮文字，然后才隐藏 Agent 名称。
 
-### Changed
+### 变更
 
-- **One editor.** The fullscreen file overlay is gone. Markdown, source and images all open in
-  the IDE, whose git rail is now collapsed by default and carries a git mark.
-- **The renderer runs inside Chromium's sandbox.**
+- **统一编辑器。**全屏文件覆盖层已移除。Markdown、源文件和图片都在 IDE 中打开；IDE 的 git 栏现在默认折叠，并带有 git 标记。
+- **Renderer 运行在 Chromium 沙箱中。**
 
-### Thanks
+### 致谢
 
-All 23 of these community pull requests landed in this release:
+这 23 个社区 Pull Request 全部进入了本次发布：
 
-- [#157](https://github.com/TangerineSpecter/Hana-Kami/pull/157) [@gpechieu](https://github.com/gpechieu): inherited Claude Code session markers are stripped from an agent's PTY env
-- [#158](https://github.com/TangerineSpecter/Hana-Kami/pull/158) [@gpechieu](https://github.com/gpechieu): semantic memory works on Apple Silicon again: embeddings are pinned to CPU on macOS
-- [#159](https://github.com/TangerineSpecter/Hana-Kami/pull/159) [@gpechieu](https://github.com/gpechieu): reliable spawn, teardown and floor cards for the workers Michael hires
-- [#165](https://github.com/TangerineSpecter/Hana-Kami/pull/165) [@rajpreetcodes](https://github.com/rajpreetcodes): a `~` in the harness home folder resolves, so setup cannot die on ENOENT
-- [#171](https://github.com/TangerineSpecter/Hana-Kami/pull/171) [@KrushanPatel](https://github.com/KrushanPatel): CONTRIBUTING.md matches the platforms the app actually supports
-- [#175](https://github.com/TangerineSpecter/Hana-Kami/pull/175) [@rekcilyssup](https://github.com/rekcilyssup): a main-process watchdog wakes an idle worker sitting on an undrained inbox
-- [#176](https://github.com/TangerineSpecter/Hana-Kami/pull/176) [@FenjuFu](https://github.com/FenjuFu): Gemini CLI joins the engine list
-- [#177](https://github.com/TangerineSpecter/Hana-Kami/pull/177) [@TTAWDTT](https://github.com/TTAWDTT): each agent's live context-window occupancy shows in the roster
-- [#178](https://github.com/TangerineSpecter/Hana-Kami/pull/178) [@gpechieu](https://github.com/gpechieu): a god-hired worker gets a floor card, and it archives when the worker dies
-- [#179](https://github.com/TangerineSpecter/Hana-Kami/pull/179) [@kdahal7](https://github.com/kdahal7): `statAbs` expands `~`, so a path resolves the same way on every platform
-- [#181](https://github.com/TangerineSpecter/Hana-Kami/pull/181) [@TTAWDTT](https://github.com/TTAWDTT): webhook dispatch goes through an atomic add, so a stale ledger cannot overwrite it
-- [#184](https://github.com/TangerineSpecter/Hana-Kami/pull/184) [@TTAWDTT](https://github.com/TTAWDTT): the per-agent steer queue is capped, which bounds memory on a stalled agent
-- [#185](https://github.com/TangerineSpecter/Hana-Kami/pull/185) [@hyperstream-pro](https://github.com/hyperstream-pro): mail to an id with no inbox is bounced and logged instead of dropped
-- [#186](https://github.com/TangerineSpecter/Hana-Kami/pull/186) [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN): tests cover the Notifications and Stop idle-detection branches
-- [#187](https://github.com/TangerineSpecter/Hana-Kami/pull/187) [@hyperstream-pro](https://github.com/hyperstream-pro): a stale inbox nudge no longer wakes an agent against an inbox that is already empty
-- [#190](https://github.com/TangerineSpecter/Hana-Kami/pull/190) [@swarnendu19](https://github.com/swarnendu19): agent names can be edited after spin-up
-- [#199](https://github.com/TangerineSpecter/Hana-Kami/pull/199) [@amey-op](https://github.com/amey-op): the Antigravity queue no longer wedges for 30 seconds
-- [#203](https://github.com/TangerineSpecter/Hana-Kami/pull/203) [@lifelmy](https://github.com/lifelmy): the Crush config env points at the agent's own directory
-- [#210](https://github.com/TangerineSpecter/Hana-Kami/pull/210) [@chaitanyagiri](https://github.com/chaitanyagiri): the art licence claims are true again, Modern Interiors is bought
-- [#214](https://github.com/TangerineSpecter/Hana-Kami/pull/214) [@pontusm](https://github.com/pontusm): Windows agent processes quit when the app does
-- [#219](https://github.com/TangerineSpecter/Hana-Kami/pull/219) [@chaitanyagiri](https://github.com/chaitanyagiri): engine availability is checked before Michael's engine is committed
-- [#226](https://github.com/TangerineSpecter/Hana-Kami/pull/226) [@chaitanyagiri](https://github.com/chaitanyagiri): the floor reports lifetime spend, not spend since the last app restart
-- [#227](https://github.com/TangerineSpecter/Hana-Kami/pull/227) [@scy73](https://github.com/scy73): the renderer runs inside Chromium's sandbox
+- [#157](https://github.com/TangerineSpecter/Hana-Kami/pull/157) [@gpechieu](https://github.com/gpechieu)：剥离继承到 Agent PTY 环境中的 Claude Code 会话标记
+- [#158](https://github.com/TangerineSpecter/Hana-Kami/pull/158) [@gpechieu](https://github.com/gpechieu)：Apple Silicon 上的语义记忆恢复工作，macOS 嵌入固定使用 CPU
+- [#159](https://github.com/TangerineSpecter/Hana-Kami/pull/159) [@gpechieu](https://github.com/gpechieu)：Michael 招募的 Worker 具备可靠启动、清理和工作区卡片
+- [#165](https://github.com/TangerineSpecter/Hana-Kami/pull/165) [@rajpreetcodes](https://github.com/rajpreetcodes)：Harness home 中的 `~` 可以展开，设置不会因 ENOENT 失败
+- [#171](https://github.com/TangerineSpecter/Hana-Kami/pull/171) [@KrushanPatel](https://github.com/KrushanPatel)：CONTRIBUTING.md 与应用实际支持的平台一致
+- [#175](https://github.com/TangerineSpecter/Hana-Kami/pull/175) [@rekcilyssup](https://github.com/rekcilyssup)：主进程 watchdog 会唤醒停留在未清空收件箱上的空闲 Worker
+- [#176](https://github.com/TangerineSpecter/Hana-Kami/pull/176) [@FenjuFu](https://github.com/FenjuFu)：Gemini CLI 加入引擎列表
+- [#177](https://github.com/TangerineSpecter/Hana-Kami/pull/177) [@TTAWDTT](https://github.com/TTAWDTT)：roster 显示每个 Agent 实时上下文窗口占用
+- [#178](https://github.com/TangerineSpecter/Hana-Kami/pull/178) [@gpechieu](https://github.com/gpechieu)：GOD 招募的 Worker 获得工作区卡片，并在 Worker 死亡时归档
+- [#179](https://github.com/TangerineSpecter/Hana-Kami/pull/179) [@kdahal7](https://github.com/kdahal7)：`statAbs` 展开 `~`，路径在所有平台上以相同方式解析
+- [#181](https://github.com/TangerineSpecter/Hana-Kami/pull/181) [@TTAWDTT](https://github.com/TTAWDTT)：Webhook 分发通过原子添加进行，旧账本不会覆盖它
+- [#184](https://github.com/TangerineSpecter/Hana-Kami/pull/184) [@TTAWDTT](https://github.com/TTAWDTT)：每 Agent 的 steer 队列有上限，阻塞时内存有界
+- [#185](https://github.com/TangerineSpecter/Hana-Kami/pull/185) [@hyperstream-pro](https://github.com/hyperstream-pro)：发往没有收件箱的 ID 的邮件会退回并记录，而不是丢弃
+- [#186](https://github.com/TangerineSpecter/Hana-Kami/pull/186) [@BUGHUNTER-SACHIN](https://github.com/BUGHUNTER-SACHIN)：测试覆盖 Notifications 和 Stop 空闲检测分支
+- [#187](https://github.com/TangerineSpecter/Hana-Kami/pull/187) [@hyperstream-pro](https://github.com/hyperstream-pro)：过期的收件箱唤醒不会再针对已为空的收件箱唤醒 Agent
+- [#190](https://github.com/TangerineSpecter/Hana-Kami/pull/190) [@swarnendu19](https://github.com/swarnendu19)：Agent 启动后可以编辑名称
+- [#199](https://github.com/TangerineSpecter/Hana-Kami/pull/199) [@amey-op](https://github.com/amey-op)：Antigravity 队列不再卡住 30 秒
+- [#203](https://github.com/TangerineSpecter/Hana-Kami/pull/203) [@lifelmy](https://github.com/lifelmy)：Crush 配置环境变量指向 Agent 自己的目录
+- [#210](https://github.com/TangerineSpecter/Hana-Kami/pull/210) [@chaitanyagiri](https://github.com/chaitanyagiri)：艺术授权声明再次真实有效，Modern Interiors 已购买
+- [#214](https://github.com/TangerineSpecter/Hana-Kami/pull/214) [@pontusm](https://github.com/pontusm)：Windows Agent 进程会随应用退出
+- [#219](https://github.com/TangerineSpecter/Hana-Kami/pull/219) [@chaitanyagiri](https://github.com/chaitanyagiri)：提交 Michael 的引擎前先检查引擎可用性
+- [#226](https://github.com/TangerineSpecter/Hana-Kami/pull/226) [@chaitanyagiri](https://github.com/chaitanyagiri)：工作区报告整个生命周期的支出，而不是上次重启后的支出
+- [#227](https://github.com/TangerineSpecter/Hana-Kami/pull/227) [@scy73](https://github.com/scy73)：Renderer 运行在 Chromium 沙箱中
 
 ## [0.4.4] — 2026-08-18
 
-**Windows agents can finally talk to each other** — and the first run stops silently failing.
-Two bugs made the core product not work on the platform that accounts for roughly half of all
-downloads, and a third meant a brand-new install never started the services that carry messages
-between agents. Alongside them: a rebuilt dark mode, a Skills browser, a Prerequisites page, and
-release notes that can carry their own designed page.
+**Windows Agent 终于可以互相通信**，首次运行也不再静默失败。两个 Bug 让核心产品在约占全部下载量一半的平台上无法工作，第三个 Bug 则导致全新安装从未启动负责 Agent 间消息传递的服务。同时还带来了重做的深色模式、技能浏览器、前置条件页面，以及可以承载自定义设计页面的发布说明。
 
-### Fixed
+### 修复
 
-- **Agent-to-agent messaging on Windows.** The hive protocol reaches an agent as a multi-line
-  command-line argument. A `.cmd` cannot go to `CreateProcess`, so any non-`.exe` target ran via
-  `cmd.exe /d /s /c "…"`, and cmd.exe cuts an argument at its first newline — taking the block
-  that names `inbox/` and `outbox/` with it. Agents booted, rendered, looked healthy, and had no
-  idea they could message anyone. Prompt-carrying spawns now decode the npm shim and launch its
-  real interpreter with an argv array; anything undecodable falls back to the previous behaviour.
-- **Windows OpenCode specifically.** `opencode-ai`'s bin is a compiled binary, so npm writes an
-  interpreter-less shim that the first fix did not model — it returned null for every Windows
-  OpenCode install and fell back to the truncating path. Direct-executable shims are now handled,
-  and the previously silent fallback logs the target it could not decode.
-- **A fresh install never started its hive services.** `bootstrapHiveServices()` early-returns
-  while `harnessHome` is null, which is exactly the state a first run boots in; onboarding then
-  set the home without re-bootstrapping. The message router, hook server, telemetry collector and
-  mission scheduler stayed dead for the whole session — mail never moved and agents never
-  reported. Now bootstrapped on the `null → set` transition.
-- **The setup wizard could not be finished.** `~/HarnessAgents` persisted with a literal `~` and
-  died on `ENOENT: mkdir`; the folder field also never pre-filled, because it read
-  `window.process.env.HOME`, which is always undefined under `contextIsolation`. An empty folder
-  now fails at step one instead of after step four, and the panel no longer overflows a short
-  screen.
-- **"Restart & Continue" had nothing to resume.** The live session id is now recorded from a
-  second source, so continuing works even when a hook never lands.
-- **Dark mode was unreadable in a specific way.** `ink-300` measured 1.73–2.09:1 against every
-  surface, and it is the structural token — 187 uses, 93 as 1px borders — so every control's edge
-  was invisible and the UI read as flat grey. Now 3.4–4.0:1, on a softer ground with warm
-  off-white text. The selected Command Center tab measured 1.55–1.87:1 (near-white on a light
-  accent); a new `--cth-on-accent` token takes it to 7.0–8.5:1.
-- **OpenCode ran a model you might not own.** It preselected a BYOK slug and silently fell back
-  when the key was absent, while every surface kept reporting the model it had asked for.
-- Terminal copy strips the CLI's quote rail and agent terminals run in UTF-8; dictation pastes
-  what was just said; task-ledger mutations are atomic; a frozen context reading no longer
-  re-fires `/compact` hourly; one odd message id no longer silences an agent's wake nudge; the
-  cost ledger stays out of the hive's git history; a root cwd no longer resolves to the projects
-  directory; the office floor stops rendering when nobody is looking at it.
-- Agent selection is visible on every card including Michael's — it used to be drawn in each
-  agent's own accent and was invisible on the one card that was always framed.
+- **Windows 上的 Agent 间消息传递。**hive 协议以多行命令行参数传给 Agent。`.cmd` 不能直接交给 `CreateProcess`，因此任何非 `.exe` 目标都会通过 `cmd.exe /d /s /c "…"` 运行，而 cmd.exe 会在第一个换行处截断参数，把包含 `inbox/` 和 `outbox/` 名称的内容一起截掉。Agent 能启动、渲染，看起来很健康，却不知道自己可以给别人发消息。现在携带提示词的启动会解析 npm shim，并通过 argv 数组启动真实解释器；无法解析的内容回退到之前的行为。
+- **专门修复 Windows OpenCode。**`opencode-ai` 的 bin 是编译后的二进制，因此 npm 写入的是没有解释器的 shim，第一版修复没有覆盖它——所有 Windows OpenCode 安装都会返回 null，再回退到会截断参数的路径。现在可以处理直接可执行的 shim；此前静默的回退也会记录无法解析的目标。
+- **全新安装从未启动 hive 服务。**`harnessHome` 为 null 时，`bootstrapHiveServices()` 会提前返回，而首次启动恰好处于这种状态；引导流程随后设置 home，却没有重新启动服务。消息路由器、Hook 服务器、遥测收集器和任务调度器整个会话都保持停止——邮件不会移动，Agent 也不会报告。现在会在 `null → set` 转换时启动。
+- **设置向导无法完成。**`~/HarnessAgents` 会以字面量 `~` 持久化，并在 `ENOENT: mkdir` 处失败；文件夹字段也不会预填，因为它读取了 `window.process.env.HOME`，而在 `contextIsolation` 下该值始终未定义。空文件夹现在在第一步就失败，而不是到第四步才失败；面板也不再溢出短屏幕。
+- **“Restart & Continue”没有可恢复的内容。**现在会从第二个来源记录实时会话 ID，因此即使没有 Hook 到达，也可以继续。
+- **深色模式存在特定的不可读问题。**`ink-300` 相对每个表面的对比度只有 1.73–2.09:1，而它是结构令牌——使用了 187 次，其中 93 次用于 1px 边框——所以所有控件边缘都不可见，UI 看起来是一片扁平灰色。现在对比度为 3.4–4.0:1，背景更柔和，并使用温暖的灰白文字。选中的 Command Center 标签对比度为 1.55–1.87:1（浅色强调色上的近白文字）；新增 `--cth-on-accent` 令牌后提升到 7.0–8.5:1。
+- **OpenCode 运行了你可能没有权限使用的模型。**它预选了 BYOK slug，在没有密钥时静默回退，而所有界面仍然报告它原本请求的模型。
+- 终端复制会去掉 CLI 的引号轨道，Agent 终端使用 UTF-8；听写会粘贴刚刚说出的内容；任务账本变更是原子的；冻结的上下文读取不再每小时重新触发 `/compact`；异常消息 ID 不再让 Agent 的唤醒提示静默；成本账本不进入 hive 的 git 历史；根 cwd 不再解析到 projects 目录；无人查看时工作区不再持续渲染。
+- 每张卡片（包括 Michael 的卡片）都能看到 Agent 选中状态——以前它使用每个 Agent 自己的强调色绘制，在始终带边框的那张卡片上看不见。
 
-### Added
+### 新增
 
-- **Skills** — installed skills across Claude Code, OpenCode and Codex with scope precedence,
-  plus a browsable catalog of 227 with search, category and publisher filters, install and
-  uninstall. Installs are bounded and containment-checked; uninstall refuses anything that is not
-  a `SKILL.md` folder inside a managed root.
-- **Prerequisites** (Settings) — live status for uv, git, Node, MemPalace and every agent engine,
-  with real paths, platform-correct install commands, and a button that asks Michael to fill the
-  gaps.
-- **Release drops** — a release body can carry an authored HTML page, rendered in a sandboxed
-  iframe (`sandbox=""` + `default-src 'none'`) as a centered modal.
-- **Settings hero card** — version, plan, sponsor and a way to reopen the release notes, with its
-  contents fetched from `docs/hero.json` so they can change without a build.
-- IDE image preview (PNG/SVG/markdown embeds), agent-named title, real shortcut hints.
-- The update notification says what changed, and asks for a star at most once ever.
-- Grok 4.6 in the model picker.
-- Dictation setup guidance behind an info mark on the voice button, including that Groq is free.
-- `pause` and `halt` explain what they do on hover.
-- Fullscreen gained `open` (terminal at the agent's cwd) and `✕` (end + archive), and its roster
-  cards now show model, project and a context gauge.
+- **Skills**——支持 Claude Code、OpenCode 和 Codex 的已安装技能及作用域优先级，并提供可浏览的 227 项目录，支持搜索、分类和发布者筛选、安装和卸载。安装有边界并检查路径包含关系；卸载会拒绝任何不属于受管理根目录内 `SKILL.md` 文件夹的内容。
+- **Prerequisites（Settings）**——实时显示 uv、git、Node、MemPalace 和每个 Agent 引擎的状态，提供真实路径、适配平台的安装命令，以及请求 Michael 补齐缺失项的按钮。
+- **发布包页面**——发布正文可以携带作者编写的 HTML 页面，在沙箱 iframe（`sandbox=""` + `default-src 'none'`）中以居中模态框渲染。
+- **Settings 主卡片**——显示版本、方案、赞助方和重新打开发布说明的入口；内容从 `docs/hero.json` 获取，因此无需构建就可以修改。
+- IDE 图片预览（PNG/SVG/Markdown 嵌入）、以 Agent 命名的标题、真实快捷键提示。
+- 更新通知会说明发生了什么，并且一生最多请求一次 Star。
+- 模型选择器新增 Grok 4.6。
+- 语音按钮的信息标记后提供听写设置指引，包括说明 Groq 免费。
+- 悬停 `pause` 和 `halt` 时会解释它们的作用。
+- 全屏模式新增 `open`（在 Agent cwd 打开终端）和 `✕`（结束并归档）；roster 卡片现在显示模型、项目和上下文仪表。
 
-### Changed
+### 变更
 
-- One card size for every agent; Michael is distinguished by surface, not by a heavier border.
-- Command Center tabs wrap when docked and scroll in fullscreen; the `commands` tab was removed.
-- Prerequisites moved out of the Command Center into Settings — it is machine-wide state, not
-  something about the agent whose terminal you are reading.
+- 所有 Agent 使用同一种卡片尺寸；Michael 通过表面区分，而不是使用更粗的边框。
+- Command Center 标签在停靠时换行、全屏时滚动；`commands` 标签已移除。
+- Prerequisites 从 Command Center 移到 Settings——它是整台机器的状态，而不是当前正在读取终端的 Agent 的状态。
 
-### Thanks
+### 致谢
 
-Community fixes in this release: [@gts-47](https://github.com/gts-47) (#129, #130,
+本次发布的社区修复来自 [@gts-47](https://github.com/gts-47)（#129、#130、
 #131, #132, #133, #134, #143, #144) and [@baziyer](https://github.com/baziyer) (#142).
 
 ## [0.4.3] — 2026-08-13
 
-**A new brand mark: Michael's portrait replaces the "MD" tile.**
-The logo is now the character the product is about, drawn in the app's own pixel art on the brand
-yellow. It is authored as pure vector (`docs/logo.svg`) and every raster is generated from that
-one source by `tools/make-logo.cjs`, so the site, the app and all three platform icons can no
-longer drift apart. Appearance only — no functional change.
+**新的品牌标记：Michael 头像取代“MD”方块。**
+现在的 Logo 就是产品所围绕的角色，使用应用自己的像素艺术绘制在品牌黄色背景上。它以纯矢量（`docs/logo.svg`）作为源文件，并由 `tools/make-logo.cjs` 从这一份源生成所有栅格资源，因此网站、应用和三个平台的图标不再互相偏离。只有外观变化——没有功能变化。
 
-### Changed
-- **Logo replaced everywhere** — `build/icon.{svg,png,ico,icns}`, `docs/logo.svg`,
-  `docs/logo.png`, `docs/logo-light.png`, the site header and favicon, the in-app toolbar and
-  window icon, and the README header.
-- **App icons are natively multi-resolution** — `.icns` spans 16→1024 with the macOS drop shadow;
-  `.ico` carries 16/32/48/64/128/256. Previously both were built around a single 1024px raster.
-- **Site CTA buttons are brighter by default.** `.btn.primary` drew its fill from `--accent`,
-  which also colours accent *text* and so must stay dark enough to read on a white page — the
-  light theme's `#E5A00D` made the download button read brown. Fills now use dedicated
-  `--accent-fill` / `--accent-fill-hover` tokens, starting at the old hover colour.
-- **The Product Hunt thumbnail** (`docs/media/ph-thumbnail-240.gif`) sits on the brand yellow
-  instead of a pale tint, matching the new mark.
+### 变更
+- **Logo 已在所有位置替换**——`build/icon.{svg,png,ico,icns}`、`docs/logo.svg`、`docs/logo.png`、`docs/logo-light.png`、网站页眉和 favicon、应用内工具栏和窗口图标，以及 README 页眉。
+- **应用图标原生支持多分辨率**——`.icns` 在 16→1024 之间包含 macOS 投影；`.ico` 包含 16/32/48/64/128/256。此前两者都围绕单张 1024px 栅格图构建。
+- **网站 CTA 按钮默认更亮。**`.btn.primary` 从 `--accent` 读取填充色，而该颜色同时用于强调色**文字**，所以必须足够深才能在白色页面上阅读——浅色主题的 `#E5A00D` 让下载按钮看起来像棕色。现在填充使用独立的 `--accent-fill` / `--accent-fill-hover` 令牌，初始值采用旧的悬停颜色。
+- **Product Hunt 缩略图**（`docs/media/ph-thumbnail-240.gif`）现在放在品牌黄色上，而不是浅色着色背景上，与新的标记一致。
 
-### Added
-- `tools/make-logo.cjs` — generates the SVG plus every PNG, the `.ico` and the `.icns` from the
-  sprite in `src/renderer/src/scene/office/portraitArt.ts`. No external image tooling.
-- `docs/favicon-32.png` and `docs/apple-touch-icon.png` — native-size icons, so browsers stop
-  downsampling a 512px portrait.
+### 新增
+- `tools/make-logo.cjs`——从 `src/renderer/src/scene/office/portraitArt.ts` 中的精灵生成 SVG、所有 PNG、`.ico` 和 `.icns`。不依赖外部图像工具。
+- `docs/favicon-32.png` 和 `docs/apple-touch-icon.png`——原生尺寸图标，浏览器不再对 512px 头像进行过度缩小。
 
-### Fixed
-- `docs/llms.txt` advertised 0.4.1 two releases after the fact. `tools/check-release-links.cjs`
-  now checks it, so it cannot silently drift again.
-- README version badge and status note had been stuck at 0.4.0 since two releases ago.
+### 修复
+- `docs/llms.txt` 在两个版本之后仍宣传 0.4.1。`tools/check-release-links.cjs` 现在会检查它，因此不会再次静默漂移。
+- README 版本徽章和状态说明从两个版本前开始一直停留在 0.4.0。
 
 ## [0.4.2] — 2026-08-13
 
-**Anonymous usage stats — documented, opt-out, and off in forks.**
-The project previously had zero insight into whether anyone launches the app or which features
-get used. This release adds a minimal, anonymous product-analytics layer (PostHog), governed by
-a public contract: [TELEMETRY.md](TELEMETRY.md) lists every event and property, and the code
-enforces that list as a hard allowlist.
+**匿名使用统计——公开记录、可退出，且在 Fork 中关闭。**
+此前项目完全不知道是否有人启动应用，或哪些功能被使用。本版本加入了最小化的匿名产品分析层（PostHog），由公开契约约束：[`TELEMETRY.md`](TELEMETRY.md) 列出每个事件和属性，代码将该列表强制为严格允许列表。
 
-### Added
-- **Anonymous usage events** (`src/main/analytics.ts`): `first_run`, `app_launched`,
-  `agent_spawned` (engine name only), `feature_used` (fixed enum, once per session), and
-  `session_ended` (coarse duration bucket). Common properties are app version, OS, and CPU
-  arch — nothing else. No prompts, transcripts, file paths, repo names, or identifiers of any
-  kind; events are PostHog *anonymous events* (`$process_person_profile: false`), keyed by a
-  random install UUID that lives in the app's user-data dir.
-- **Consent surfaces**: a "Share anonymous usage stats" toggle on the final onboarding step and
-  in Settings → General (`telemetryEnabled`, default on = opt-out). The standard `DO_NOT_TRACK`
-  env var is respected unconditionally.
-- **[TELEMETRY.md](TELEMETRY.md)** — the complete public contract, linked from the README.
+### 新增
+- **匿名使用事件**（`src/main/analytics.ts`）：`first_run`、`app_launched`、`agent_spawned`（仅引擎名称）、`feature_used`（固定枚举，每会话一次）和 `session_ended`（粗粒度时长分桶）。公共属性为应用版本、操作系统和 CPU 架构——除此之外没有其他内容。没有提示词、转录、文件路径、仓库名称或任何类型的标识符；事件是 PostHog **匿名事件**（`$process_person_profile: false`），使用保存在应用用户数据目录中的随机安装 UUID 作为键。
+- **同意界面**：首次引导最后一步以及 Settings → General 中的“共享匿名使用统计”开关（`telemetryEnabled`，默认开启 = 可退出）。无条件遵守标准 `DO_NOT_TRACK` 环境变量。
+- **[`TELEMETRY.md`](TELEMETRY.md)**——完整的公开契约，README 中已提供链接。
 
-### Note
-The PostHog key is injected only in release CI (`POSTHOG_KEY` secret). **Building from source or
-forking the repo produces a build with no key, and the entire analytics module is a no-op** — a
-fork never sends events anywhere.
+### 说明
+PostHog key 只在发布 CI 中注入（`POSTHOG_KEY` secret）。**从源代码构建或 Fork 仓库会生成不含 key 的构建，整个分析模块都是空操作**——Fork 永远不会向任何地方发送事件。
 
 ## [0.4.1] — 2026-08-13
 
-**The app says what the site says.**
-munderdiffl.in describes Hana-Kami as a clone of you that works around the clock; the app
-still called it a "GOD agent." This release closes that gap. Wording only — no behaviour changes.
+**应用与网站使用同一套说法。**
+munderdiffl.in 将 Hana-Kami 描述为一个全天候工作的你的克隆；应用仍然称它为“GOD Agent”。本版本填补了这一差距。只改文字——没有行为变化。
 
-### Changed
-- **Michael is your clone.** Onboarding refers to him as your clone throughout, and his card on
-  the floor now carries a **BOSS** tag instead of **GOD** — he's the boss of the agents, you're
-  still the boss of him.
-- **Onboarding leads with the product, not the feature list.** The first screen opens on "a clone
-  of you, working 24/7"; step 2 is "your clone's engine."
-- **The engine card names all ten engines.** It had advertised three (Claude Code, Antigravity,
-  Codex) since before seven more shipped — Grok, Kimi, Qwen, OpenCode, Crush, pi and Copilot are
-  now named too.
-- **Site copy fixes.** A misspelled "requrired" in the hero, `cli` → `CLI`, a pricing FAQ that
-  named plans ("Basic"/"Pro") the pricing table doesn't sell, and an interactive demo card that
-  claimed a clone ran on Cursor — which is not one of the supported engines.
-- **README back in sync.** It listed nine engines (Qwen was missing in four places) and still
-  reported v0.3.8.
+### 变更
+- **Michael 是你的克隆。**引导流程全程称他为你的克隆，工作区中的卡片现在显示 **BOSS** 标签而不是 **GOD**——他是 Agent 的老板，而你仍然是他的老板。
+- **引导流程先讲产品，而不是功能列表。**第一屏以“一个全天候工作的你的克隆”开场；第 2 步是“你的克隆使用的引擎”。
+- **引擎卡片列出全部十个引擎。**此前只宣传 Claude Code、Antigravity、Codex 三个；随着 Grok、Kimi、Qwen、OpenCode、Crush、pi 和 Copilot 加入，现在也全部命名。
+- **修复网站文案。**修正 hero 中拼写错误的 “requrired”、`cli` → `CLI`、提到价格表中不存在的 “Basic”/“Pro” 方案的 FAQ，以及声称克隆运行在 Cursor 上的交互演示卡片——Cursor 并不是受支持的引擎。
+- **README 与现状重新同步。**它列出九个引擎（四处遗漏 Qwen），并且仍然报告 v0.3.8。
 
-### Note
-The `god` agent id, the hive folder layout, and message routing are **unchanged**. Existing hives,
-memory, and running agents carry over as-is; there is nothing to migrate.
+### 说明
+`god` Agent ID、hive 文件夹布局和消息路由**保持不变**。现有 hive、记忆和运行中的 Agent 都可以原样继续使用；无需迁移。
 
 ## [0.4.0] — 2026-08-12
 
-**The brand grew up — and the landing page with it.**
-Hana-Kami now looks like one product everywhere: a yellow "MD" mark, matching app icons on
-every platform, and a rebuilt munderdiffl.in that shows the real app instead of describing it.
+**品牌成熟了，落地页也随之成熟。**
+Hana-Kami 现在在各处都像同一个产品：黄色“MD”标记、所有平台一致的应用图标，以及重建的 munderdiffl.in，展示真实应用而不是只描述它。
 
-### Added
-- **Real app screenshots on the landing page.** The Add Agent dialog, the memory panel, and
-  Settings → Autonomy & Budgets — captured from the actual app, not mockups.
-- **A live demo video in the hero.** The old static home-screen shot is now a looping screen
-  recording of the office floor with a live agent terminal.
-- **Clone-to-clone chat and encrypted-wire visuals** with request-a-demo contact points for the
-  Teams features.
+### 新增
+- **落地页展示真实应用截图。**Add Agent 对话框、记忆面板和 Settings → Autonomy & Budgets 都来自真实应用，而不是 Mockup。
+- **Hero 中加入实时演示视频。**旧的静态主屏截图现在替换为工作区和实时 Agent 终端的循环屏幕录制。
+- **克隆之间的聊天和加密连线视觉效果**，并为 Teams 功能提供申请演示的联系入口。
 
-### Changed
-- **New app icon.** The dock/taskbar icon is now the yellow "MD" tile on every platform
-  (macOS .icns with proper margins and shadow, Windows .ico, Linux .png), matching the in-app
-  logo and the site favicon.
-- **Landing page defaults to bright (light) mode.** Dark stays one click away and remembered.
-- **Landing accent is yellow again** — bright amber in light mode, gold in dark — applied across
-  buttons, diagrams, the Pokédex-style floor sim, and the pricing cards.
-- **Pricing reframed around the two services** — Private Cloud (a dedicated sandbox VM per clone)
-  and Private Network (E2E-encrypted clone-to-clone wire) — with a team-size slider.
-- **Social previews refreshed.** New Open Graph card and copy that match the current product.
+### 变更
+- **新的应用图标。**所有平台的 Dock/任务栏图标现在都是黄色“MD”方块（macOS `.icns` 带正确边距和投影，Windows `.ico`，Linux `.png`），与应用内 Logo 和网站 favicon 一致。
+- **落地页默认使用明亮（浅色）模式。**深色模式仍可一键切换，并会记住选择。
+- **落地页再次使用黄色强调色**——浅色模式使用明亮琥珀色，深色模式使用金色，应用于按钮、图表、图鉴风格工作区模拟和价格卡片。
+- **围绕两项服务重新设计价格**——Private Cloud（每个克隆一个独立沙箱 VM）和 Private Network（端到端加密的克隆间连线），并加入团队规模滑块。
+- **刷新社交预览。**新的 Open Graph 卡片和文案与当前产品一致。
 
 ## [0.3.9] — 2026-08-11
 
-**Ask the app whether it's up to date.**
-Settings → General now names the running version, says whether it is the latest, and offers one
-button that states what it does. Shipped now because 0.3.8 needs to reach people who already
-installed it.
+**直接询问应用是否为最新版本。**
+Settings → General 现在显示正在运行的版本、说明是否为最新，并提供一个清楚写明作用的按钮。之所以现在发布，是因为需要让已经安装 0.3.8 的用户收到更新。
 
-### Added
-- **Check for updates, in Settings.** A block at the top of **Settings → General** that always
-  answers "am I on the latest?": the version you're on, whether a newer one exists, and a single
-  button — **Check for updates** → **Download v0.4.0** → **Restart to update** — plus the verbatim
-  error when a check fails. It shares the status stream, the reducer and the state machine with the
-  toolbar chip, so the two can never disagree about what is installed; only the wording differs,
-  because a chip that must stay quiet when everything is fine is no use to someone who opened
-  Settings to ask.
+### 新增
+- **在 Settings 中检查更新。**在 **Settings → General** 顶部提供一个区块，始终回答“我是不是最新版本？”：显示当前版本、是否存在更新，以及一个按钮——**检查更新** → **下载 v0.4.0** → **重启以更新**——检查失败时还会显示原始错误。它与工具栏标签共享状态流、reducer 和状态机，因此两处不可能对已安装版本产生分歧；只有文案不同，因为一切正常时必须保持安静的标签，对打开 Settings 主动询问的人没有帮助。
 
-### Changed
-- **Fullscreen roster avatars are larger.** They were rendered at 1× — an 18-pixel figure — and the
-  tile width was free to grow past that, so a wider roster just padded the same small sprite.
-  Portrait size now moves in half-sprite steps and the art is drawn at the tile's width.
+### 变更
+- **全屏 roster 头像更大。**以前以 1× 渲染——只有 18 像素高——而地砖宽度可以继续增长，所以 roster 变宽时只是给同一个小精灵增加留白。现在头像尺寸以半精灵为步长变化，绘制宽度跟随地砖宽度。
 
-### Removed
-- **The usage-limit hold, entirely.** Shipped in the first v0.3.8 tag; it did not release. Agents
-  held behind a limit stayed held — the stated reset never arrived, and the manual **resume now**
-  button returned them to the held state instead of draining their queue. Delivery behaves as it
-  did in 0.3.7. `rateLimit.ts`, `limitGate.ts`, `useLimitWatch.ts`, the banner, the Settings
-  section, the config keys and their IPC are all gone, along with the compaction gate that had been
-  layered on top of them.
+### 移除
+- **彻底移除用量限制暂停。**它随第一个 v0.3.8 标签发布，但没有真正发布。被限制暂停的 Agent 会一直暂停——声明的重置从未到来，手动 **立即恢复** 按钮也会把它们送回暂停状态，而不是清空队列。现在投递行为恢复为 0.3.7 的方式。`rateLimit.ts`、`limitGate.ts`、`useLimitWatch.ts`、横幅、Settings 分区、配置键及其 IPC 全部移除，叠加在它们之上的压缩门控也一并移除。
 
 ## [0.3.8] — 2026-08-11
 
-**Memory condensation works for the first time.**
-The harness had been reading Claude Code transcripts from a directory that has not existed for
-months, so the summarizer never had anything to summarize — and nothing errored, because an absent
-directory reads as "no transcripts yet". That is the headline fix. Behind it, a run of things that
-had been quietly costing tokens or hiding in plain sight: compaction firing on two schedules at
-once, a commit history that rendered no commit messages, and buttons whose labels were invisible in
-dark mode.
+**记忆压缩首次真正工作。**
+Harness 一直从一个已经数月不存在的目录读取 Claude Code 转录，因此摘要器始终没有可摘要的内容——而且没有报错，因为不存在的目录会被当成“暂时没有转录”。这是本版本的核心修复。除此之外，还修复了一系列悄悄消耗 token 或隐藏在表面之下的问题：压缩同时按两个调度触发、提交历史不显示提交消息，以及深色模式下按钮文字不可见。
 
-### Added
-- **Triggers hub.** Schedules, inbound webhooks, context rules and peer messaging now share one
-  home in Settings, with a history of what fired and what it did.
-- **Collapsible panels.** The IDE's git rail folds away to give the file tree its height back, and
-  the fullscreen roster folds for a full-width terminal. Both remember the choice.
-- **The OpenAI key can be set where voice is explained.** Settings → Voice now carries the field
-  itself, names the model it pays for (`gpt-realtime-2.1`), and the disabled Talk button links
-  straight to it.
+### 新增
+- **触发器中心。**调度、入站 webhook、上下文规则和 Agent 间消息现在在 Settings 中共享一个入口，并记录触发了什么以及执行了什么。
+- **可折叠面板。**IDE 的 git 栏可以折叠，为文件树恢复高度；全屏 roster 也可以折叠，以获得全宽终端。两者都会记住选择。
+- **可以在语音说明处设置 OpenAI key。**Settings → Voice 现在直接提供字段，标明它付费使用的模型（`gpt-realtime-2.1`），禁用的 Talk 按钮也会直接链接到此处。
 
-### Fixed
-- **Claude Code transcripts were read from a directory that has not existed for months.**
-  `projectDir()` built the pre-2026 project key — leading slash dropped — while Claude Code dashes
-  every non-alphanumeric character. Nothing errored, because every caller reads an absent directory
-  as "no transcripts yet", so memory condensation had never once succeeded: a long run of
-  `condense-abort`s and zero successes, each failed attempt still writing a full backup first. The
-  offline usage reconciler and cross-cwd session-resume read and wrote the same wrong path. Found
-  and diagnosed by [@gts-47](https://github.com/gts-47).
-- **Compaction ran on two schedules at once.** The hourly ops standup carried an `autoCompact`
-  flag that the context trigger was supposed to have replaced, so a default install requested
-  compaction on both cadences — and turning the trigger off left the standup compacting anyway.
-  There is now one control, and its off-switch is honest.
-- **Duplicate `/compact` messages piled up in the queue** and fired together, each answering
-  "nothing to compact" after the first had done the work. One pending compaction per agent is now
-  enforced in the message store, where no caller can route around it.
-- **The commit history is legible.** It rendered through a library that positions rows at a fixed
-  64px regardless of the spacing it draws the graph at (rows overlapped), reserves 500px for the
-  graph regardless of available width (text was squeezed into the remainder and wrapped), and
-  never displayed the commit subject at all. It is now drawn directly and fits any panel width.
-- **Disabled buttons were unreadable, and icons vanished on dark buttons.** Disabled fills swapped
-  to a mid surface while the label kept its inverted colour — roughly 1.4:1 in dark mode. Icons
-  were painted in the same token as a primary button's fill, so the arrow on **Send** was
-  invisible whenever it was enabled.
-- **Two scrollers that never scrolled** — the IDE's changed-file list and the per-commit file list.
-  `overflow: auto` inside a capped column sizes to its content without `flex: 1`, so it overflowed
-  the cap rather than reaching its own scroll threshold.
-- **Codex hooks stopped timing out after 1s.** Codex reads `timeout` as seconds and normalises it
-  with `.max(1)`, so the `timeout: 0` sentinel copied from Claude's config meant *one second*, not
-  "no timeout" — every Codex worker logged a failed SessionStart hook.
-- **Every download link on the release page 404'd.** They carried a version-pinned filename that
-  stopped resolving four releases ago; mac downloads fell from ~118 to single digits. The release
-  gate now refuses to ship links that don't resolve.
-- **A tooltip clipped by the agent dock**, and the missing-key notice that overflowed the agent
-  card.
+### 修复
+- **Claude Code 转录从一个数月不存在的目录读取。**`projectDir()` 构建的是 2026 年之前的项目键——丢掉了开头的斜杠——而 Claude Code 会将每个非字母数字字符都转换为短横线。没有任何报错，因为所有调用方都把不存在的目录读取为“暂时没有转录”，所以记忆压缩从未成功：连续产生大量 `condense-abort`，成功次数为 0，每次失败尝试仍会先写入完整备份。离线用量对账和跨 cwd 会话恢复也读写了同一个错误路径。由 [@gts-47](https://github.com/gts-47) 发现并诊断。
+- **压缩同时按两个调度运行。**每小时运维例会带有本应被上下文触发器替换的 `autoCompact` 标记，因此默认安装会按两种节奏请求压缩——关闭触发器后例会仍然会压缩。现在只有一个控制项，关闭开关也如实生效。
+- **重复的 `/compact` 消息堆积在队列中**并一起触发；第一个完成工作后，后续每个都回答“没有需要压缩的内容”。现在消息存储强制每个 Agent 只能有一个待处理压缩，任何调用方都无法绕过。
+- **提交历史现在清晰可读。**此前通过一个无论图形间距如何都把行固定放在 64px 的库渲染（行会重叠），无论可用宽度如何都为图形保留 500px（文字被挤进剩余空间并换行），并且完全不显示提交主题。现在直接绘制，并适配任意面板宽度。
+- **禁用按钮难以阅读，深色按钮上的图标也消失。**禁用填充换成中间表面色，但标签仍保留反色，在深色模式下约为 1.4:1。图标使用了与主按钮填充相同的令牌，因此启用时 **Send** 上的箭头也不可见。
+- **两个不会滚动的滚动区域**——IDE 的变更文件列表和每次提交的文件列表。受限列中的 `overflow: auto` 没有 `flex: 1` 时会按内容大小布局，于是溢出上限，而不是达到自身滚动阈值。
+- **Codex Hook 不再在 1 秒后超时。**Codex 将 `timeout` 读取为秒，并用 `.max(1)` 归一化，因此从 Claude 配置复制来的 `timeout: 0` 哨兵代表的是*一秒*而不是“无超时”——每个 Codex Worker 都记录失败的 SessionStart Hook。
+- **发布页上的每个下载链接都返回 404。**它们使用了四个版本前就不再解析的固定版本文件名；macOS 下载量从约 118 降到个位数。发布门现在拒绝发布无法解析的链接。
+- **修复 Agent Dock 裁切 Tooltip**以及溢出 Agent 卡片的缺少 key 提示。
 
-### Changed
-- Scheduled auto-compact is held while any provider is rate-limited: `/compact` is a model call,
-  and sending it into a capped CLI spends a rejected attempt *and* parks a `/compact` ahead of
-  your real backlog.
+### 变更
+- 任意提供商触发速率限制时，定时自动压缩会暂停：`/compact` 本身是一次模型调用，将它发给受限 CLI 会浪费一次被拒绝的尝试，并把 `/compact` 插到真实积压任务之前。
 
 ## [0.3.7] — 2026-08-08
 
-**Auto-update, fixed.**
-It never ran. Not once, in any packaged build, since it shipped in v0.3.4 — and the app had no
-way to tell you so.
+**自动更新已修复。**
+它从未真正运行过。自 v0.3.4 发布以来，在任何打包构建中都没有运行过一次，而应用也没有办法告诉你这一点。
 
-### Fixed
-- **The native updater actually runs.** `electron-updater` is CommonJS and exposes `autoUpdater`
-  through a lazy `Object.defineProperty` getter, which Node's `cjs-module-lexer` cannot see. So
-  `await import('electron-updater')` produced a namespace with no `autoUpdater` export — only
-  `.default.autoUpdater` — and destructuring it yielded `undefined`. The first line of setup threw
-  `TypeError: Cannot set properties of undefined (setting 'autoDownload')` into a `catch` that
-  silently latched notify-only mode for the whole session. Every packaged build from v0.3.4 to
-  v0.3.6 could therefore only ever offer "open the releases page". Invisible in development,
-  because the whole path sits behind `app.isPackaged`.
-- **Updater failures are no longer swallowed.** Every error is emitted to the renderer *and*
-  appended to `updater.log` in the app's data folder. The old `catch` discarded the message, which
-  is precisely why the bug above survived three releases.
-- **A single blip no longer disables updates for the session.** The notify-only downgrade is
-  per-check now, not a permanent latch, and a re-check can never clobber an already-staged update.
+### 修复
+- **原生更新器现在真正运行。**`electron-updater` 是 CommonJS，通过惰性的 `Object.defineProperty` getter 暴露 `autoUpdater`，Node 的 `cjs-module-lexer` 无法看到它。因此 `await import('electron-updater')` 得到的命名空间没有 `autoUpdater` 导出，只有 `.default.autoUpdater`；解构后得到 `undefined`。初始化第一行抛出 `TypeError: Cannot set properties of undefined (setting 'autoDownload')`，进入了一个静默将整个会话锁定为仅通知模式的 `catch`。所以 v0.3.4 到 v0.3.6 的每个打包构建实际上只能提供“打开发布页”。开发环境看不到这个问题，因为整条路径都位于 `app.isPackaged` 之后。
+- **更新器失败不再被吞掉。**每个错误都会发给 Renderer，**并且**追加写入应用数据目录中的 `updater.log`。旧的 `catch` 丢弃了消息，这正是上面的 Bug 能存活三个版本的原因。
+- **一次短暂故障不再禁用整个会话的更新。**现在仅对当前检查降级为仅通知模式，而不是永久锁定；重新检查也不会覆盖已经准备好的更新。
 
-### Added
-- **The toolbar version is an update control.** Next to the logo it shows `checking…`,
-  `vX.Y.Z ready to install` (click to download), live download progress, and **restart to update**
-  (click to apply). With nothing pending, a click runs a manual check — the app previously only
-  checked 30 seconds after launch and then every six hours, with no way to ask.
-- **`update-available` and `download-progress` are surfaced**, so a multi-minute download is
-  visible instead of looking like nothing happened. New `update:download` and `update:current` IPC:
-  one-click download, and a reloaded window pulls the current state instead of waiting for the next
-  tick.
-- **9 tests** over the update state model (`src/shared/updateState.ts`), covering the rule that bit
-  here — a re-check must never wipe a staged "restart to update" — and that the underlying error
-  reaches the UI.
+### 新增
+- **工具栏版本号现在是更新控件。**Logo 旁会显示 `checking…`、`vX.Y.Z ready to install`（点击下载）、实时下载进度以及 **restart to update**（点击应用）。没有待处理更新时，点击会执行手动检查——此前应用只在启动 30 秒后、之后每六小时检查一次，无法主动询问。
+- **`update-available` 和 `download-progress` 会显示出来，**多分钟下载不再看起来像什么都没发生。新增 `update:download` 和 `update:current` IPC：一键下载，重新加载的窗口直接获取当前状态，而不是等待下一次定时 tick。
+- **围绕更新状态模型新增 9 个测试**（`src/shared/updateState.ts`），覆盖了本次踩中的规则——重新检查绝不能清除已准备好的“重启以更新”状态——并验证底层错误可以到达 UI。
 
-### Changed
-- **Website, README and release notes trimmed.** The landing page drops the demo-video section and
-  dark mode; the README's 48-row feature table becomes a scannable grouped list; `RELEASE.md` leads
-  with the current release instead of stacking every prior one in full.
+### 变更
+- **精简网站、README 和发布说明。**落地页移除演示视频分区和深色模式；README 的 48 行功能表变为可快速浏览的分组列表；`RELEASE.md` 以当前版本开头，而不是把所有历史版本完整堆叠。
 
-> **Upgrading from v0.3.5 or v0.3.6?** Those builds carry the broken updater and cannot fetch this
-> fix themselves — install v0.3.7 manually once. From v0.3.7 onward, updates arrive on their own.
+> **从 v0.3.5 或 v0.3.6 升级？**这些构建包含损坏的更新器，无法自行获取本修复——请手动安装一次 v0.3.7。从 v0.3.7 开始，更新会自行到达。
 
 ## [0.3.6] — 2026-08-08
 
-**A machine with nothing installed on it can now run agents.**
-Every fix in this release is about the same failure: the app assumed the user's machine
-already had things on it — a shell to expand `~`, a `node` on PATH, an npm to install
-with — and when it didn't, agents died with a bare exit code and no explanation. Plus a
-long-standing office bug where the floor went blank and never came back.
+**一台什么都没安装的机器现在也能运行 Agent。**
+本版本的所有修复都围绕同一个失败原因：应用假设用户机器上已经有可以展开 `~` 的 shell、PATH 中的 `node`、以及可用来安装的 npm；当这些不存在时，Agent 只留下一个退出码就死掉，没有任何解释。此外还修复了一个长期存在的工作区 Bug：画布变空后再也不会回来。
 
-### Fixed
-- **`~/dev/foo` no longer fails with "cwd does not exist".** Only a shell expands `~`;
-  Node treats it as a literal directory, so a typed `~/…` path failed every existence
-  check and the agent never spawned. `~` is now expanded once at ingestion, so the
-  registry only ever stores an absolute cwd — which also repairs existing `~` entries
-  that had been reading as "not absolute" forever.
-- **Hooks stopped silently dying with exit 127.** Agent CLIs run hooks through `sh -c`
-  with a bare `PATH=/usr/bin:/bin:/usr/sbin:/sbin` — nvm's node isn't there, so every
-  hook payload was lost: no live status, no Stop→inbox drain, no session ids. Every hook
-  shim now runs under the Node the app already bundles.
-- **`node` is on every agent's PATH.** An MCP server declared as `node ./server.js`, a
-  provider CLI that shells out, a `.cjs` an agent wrote itself — all died with 127 on a
-  machine with no system node. The bundled runtime is now *appended* to the agent's PATH,
-  never prepended, so anyone with their own node keeps their own version.
-- **The office floor comes back after losing its GPU context.** Chromium caps live WebGL
-  contexts and silently evicts the oldest — always the office, since it starts first,
-  once enough agent terminals are open. Pixi reported nothing, so the floor simply went
-  blank until you restarted the app. It now detects the loss and rebuilds the scene.
-- **God no longer messages agents that no longer exist.** A live roster of the floor is
-  pushed into the orchestrator's context on session start and on every prompt, instead of
-  relying on it to re-read `fleet.json` — which is why it went stale across restarts.
+### 修复
+- **`~/dev/foo` 不再失败并提示“cwd 不存在”。**只有 shell 会展开 `~`；Node 将它视为字面目录，因此手动输入的 `~/…` 路径每次存在性检查都会失败，Agent 也不会启动。现在在接收时只展开一次 `~`，roster 始终保存绝对 cwd；此前一直被识别为“不是绝对路径”的现有 `~` 条目也随之修复。
+- **Hook 不再静默以退出码 127 死掉。**Agent CLI 通过 `sh -c` 运行 Hook，使用的裸 PATH 为 `PATH=/usr/bin:/bin:/usr/sbin:/sbin`，其中没有 nvm 的 node，因此所有 Hook 载荷都丢失：没有实时状态、没有 Stop→inbox 排空、也没有会话 ID。现在每个 Hook shim 都使用应用已经捆绑的 Node 运行。
+- **每个 Agent 的 PATH 都包含 `node`。**声明为 `node ./server.js` 的 MCP 服务器、需要启动子进程的提供商 CLI、以及 Agent 自己写的 `.cjs`，在没有系统 node 的机器上都会以 127 退出。现在把捆绑运行时**追加**到 Agent 的 PATH，而不是置于最前，因此已有自己的 Node 的用户仍保留自己的版本。
+- **失去 GPU 上下文后工作区会恢复。**Chromium 限制活动 WebGL 上下文数量，并静默驱逐最旧的上下文——工作区总是最先启动，所以打开足够多 Agent 终端后它会被驱逐。Pixi 没有报告任何内容，于是工作区变空，只能重启应用。现在可以检测丢失并重建场景。
+- **GOD 不再给已经不存在的 Agent 发消息。**会话开始和每次提示词时，都会将工作区的实时 roster 放入编排器上下文，而不是依赖它重新读取 `fleet.json`，因此重启后也不会过期。
 
-### Added
-- **Node and npm install themselves when they're missing.** Selecting an engine on a
-  machine with no Node used to print `npm install -g …` and run it anyway, so the user
-  watched `npm: command not found` scroll past. The app now fetches the latest Node LTS
-  straight from nodejs.org, verifies it against the official `SHASUMS256.txt` before
-  anything executes, installs it visibly in that agent's terminal, and then installs the
-  CLI. If you already have Node 20 or newer, it is left completely alone.
-- **An honest dead end instead of a doomed command.** When no installer can succeed, the
-  banner names the missing piece and runs nothing at all.
+### 新增
+- **缺少 Node 和 npm 时可以自动安装。**过去在没有 Node 的机器上选择引擎只会打印 `npm install -g …` 并直接运行，用户只能看着 `npm: command not found` 滚过屏幕。现在应用直接从 nodejs.org 获取最新 Node LTS，在执行任何内容前根据官方 `SHASUMS256.txt` 校验，然后在该 Agent 的终端中可见地安装 Node，再安装 CLI。如果已有 Node 20 或更高版本，则完全不触碰。
+- **诚实的终点，而不是注定失败的命令。**没有任何安装器可以成功时，横幅会指出缺少的内容，并且完全不运行命令。
 
 ## [0.3.5] — 2026-08-06
 
-**The queue always has an escape hatch, and the app updates itself for the first time.**
-A fast-follow to 0.3.4: one real workflow fix, a sidebar polish pass, and the first
-release your installed app can pick up on its own — 0.3.4 installs get the
-"v0.3.5 downloaded — Restart to update" toast instead of a trip to the website.
+**队列始终有退出通道，应用也首次可以自我更新。**
+这是 0.3.4 的快速后续版本：修复一个真实工作流问题，打磨侧边栏，并成为安装后的应用可以自行获取的第一个版本——0.3.4 安装会收到“v0.3.5 已下载——重启以更新”的 Toast，不再需要访问网站。
 
-### Fixed
-- **Queued messages are never stuck again.** Pausing floor-wide auto-delivery (the
-  Command Center switch) used to hold every queued message with no explanation and no
-  manual override. Each queued row now grows a **send now** link while the floor is
-  paused: it moves that message to the front and bypasses *only* the pause gate —
-  idle/draft/picker safety and delivery acknowledgement all still apply, so it types in
-  the moment the terminal is genuinely free ("sending when free…" until then). The
-  composer also says why nothing is moving: "held — delivery paused floor-wide", with
-  the full story (and where to resume) on hover.
+### 修复
+- **排队消息不再卡住。**暂停全工作区自动投递（Command Center 开关）过去会在没有解释或手动覆盖的情况下拦住所有排队消息。现在工作区暂停时，每个排队行会出现 **立即发送** 链接：它将该消息移到队首，只绕过暂停门控；空闲/草稿/选择器安全检查和投递确认仍然生效，因此终端真正空闲的瞬间才会输入（此前显示“空闲后发送……”）。编辑器也会说明为什么没有动作：“已暂停——整个工作区的投递已暂停”，悬停时提供完整说明和恢复位置。
 
-### Changed
-- **Compact Command Center header.** At sidebar width the old header wrapped its
-  display-font title onto three lines, stacked "runs the floor" word-per-line, and let
-  the two wide toolbar buttons crush everything else. Now: single-line **COMMAND
-  CENTER** title + "Michael runs the floor" subtitle (both ellipsize), and the floor
-  delivery toggle compressed to ▶ `auto` / ⏸ `paused` with the full explanation in its
-  tooltip. The queue header's "clear all" no longer wraps either.
+### 变更
+- **紧凑的 Command Center 标题。**在侧边栏宽度下，旧标题会将展示字体标题折成三行，把“runs the floor”逐词堆叠，并让两个宽工具栏按钮挤压其他内容。现在使用单行 **COMMAND CENTER** 标题 + “Michael runs the floor”副标题（两者都会省略），工作区投递开关压缩为 ▶ `auto` / ⏸ `paused`，完整解释放在 Tooltip 中。队列标题中的“全部清除”也不再换行。
 
-### Notes
-- **First auto-updated release.** 0.3.4 introduced the updater; 0.3.5 is the first
-  version it delivers. Running 0.3.4 apps download this in the background and prompt
-  "Restart to update" (never restarting on their own). 0.3.3 and older have no updater —
-  grab this one from [munderdiffl.in](https://munderdiffl.in) and you're on the train.
+### 说明
+- **第一个自动更新版本。**0.3.4 引入更新器；0.3.5 是它交付的第一个版本。运行中的 0.3.4 应用会在后台下载，并提示“重启以更新”（绝不会自行重启）。0.3.3 及更早版本没有更新器——请从 [munderdiffl.in](https://munderdiffl.in) 获取本版本即可加入更新流程。
 
 ## [0.3.4] — 2026-08-06
 
-**The queue you can trust, a Michael who actually knows the floor, and an IDE that shows
-you everything.** A community release: the headline terminal/queue/roster reliability wave
-is by [@gts-47](https://github.com/gts-47) (Vyapak Goyal), with major fixes by
-[@qschmick](https://github.com/qschmick) ([#110](https://github.com/TangerineSpecter/Hana-Kami/pull/110),
-[#111](https://github.com/TangerineSpecter/Hana-Kami/pull/111),
-[#112](https://github.com/TangerineSpecter/Hana-Kami/pull/112),
-[#114](https://github.com/TangerineSpecter/Hana-Kami/pull/114)). Plus four new
-first-party features — **voice Michael with live floor context + full app control**,
-**markdown previews** (IDE and ⌘-click in any terminal), **git history / branch compare /
-safe checkout** in the IDE, and a **redesigned six-tab Settings** — alongside **xAI Grok
-and Kimi Code as first-class engines**, **auto-update from GitHub releases**, a
-**professional type + color recalibration with full-app dark mode**, and a **scheduled
-auto-compact switch (default off)**.
+**值得信赖的队列、真正了解工作区的 Michael，以及功能完整的 IDE。**本版本集中提升终端、队列和 roster 的可靠性，并加入语音 Michael、Markdown 预览、Git 历史、六标签 Settings、Grok、Kimi Code、GitHub 自动更新、深色模式和可选的定时自动压缩。
 
-### Added (v0.3.4 feature wave)
-- **Talk mode grows up: live context + full control.** Michael's voice session now opens
-  with a compact per-agent floor snapshot (status, engine, context fill, breaker, inbox,
-  in-flight tasks) and receives silent "(Floor update: …)" notes as things change mid-call
-  — most "what's happening" questions need zero look-ups. New read tools: `get_floor_state`
-  (precise live-floor JSON) and `get_app_info` (app version + release notes — "what's new
-  in this version?" finally has an answer). New voice verbs behind the same safety spine:
-  **resume** (the missing undo for pause/halt), auto-delivery pause/resume, tool gating,
-  delete task, archive/unarchive, **clear an agent's context** (queued through every
-  delivery gate; allowed on god behind confirm), **create schedules**, and **change
-  settings** from a strict main-side allowlist (secrets and dangerous keys refused
-  outright; behavior-changing keys echo old→new and require the distinct confirm word).
-  Model bumped to gpt-realtime-2.1.
-- **Markdown previews everywhere agents write them.** Markdown files in the IDE get a
-  **code | split | preview** switch with live re-render as you type; **⌘-click any `.md`
-  path an agent prints in its terminal** to open a rendered preview instantly (edit toggle
-  + "open in IDE" escalation included). Rendering is safe by construction for untrusted
-  agent output — no raw-HTML pipeline exists, links never navigate the app, and remote
-  images stay blocked.
-- **Git time-machine in the IDE.** The left rail becomes **CHANGES · HISTORY · COMPARE**:
-  a clickable commit graph (topologically ordered, all worktree branches, paginated) where
-  picking a commit lists its files and opens per-file Monaco diffs; branch compare with
-  ahead/behind counts and PR-style or literal modes; and **guarded checkout** — jump to
-  any commit or branch, refused automatically when the tree is dirty or an agent is
-  actively working in it. The slim git status panel also returns as a per-agent sidebar tab.
-- **Settings, redesigned into six tabs** — General · Agents & Models · Autonomy & Budgets ·
-  Connections · Voice · Memory & Knowledge. The default agent model, autonomy mode,
-  keep-Mac-awake, explain-things-simply, and the full circuit breaker (hard-stop included)
-  all get real controls for the first time; dead display-only rows are gone; Danger Zone
-  became a red row in General. Plus config truth fixes: Knowledge Graph genuinely defaults
-  off, and the Free Flow toggle no longer shows OFF while the feature is on.
+### 新增
+- **Talk 模式升级。**Michael 的语音会话可以读取实时工作区上下文，并通过安全确认执行恢复、暂停投递、工具门控、删除任务、归档、清理上下文、创建调度和修改设置等操作。模型升级为 gpt-realtime-2.1。
+- **全局 Markdown 预览。**IDE 中的 Markdown 支持 code、split、preview 三种视图；在任意终端中按住 ⌘ 点击 Agent 输出的 .md 路径即可打开安全预览。
+- **IDE Git 时间机器。**提供 CHANGES、HISTORY、COMPARE 侧栏、提交图、逐文件 Monaco 差异、分支比较和受保护的 checkout；工作区和 Git 访问全部通过主进程 IPC。
+- **六标签 Settings。**新增 General、Agents & Models、Autonomy & Budgets、Connections、Voice、Memory & Knowledge；模型、自治模式、保持 Mac 唤醒、简单解释和完整熔断器都有真实控制项。
+- **自动更新。**打包版本启动时及之后约每 6 小时检查 GitHub Releases，在后台下载并通过 Toast 请求用户重启；应用不会自行重启。
+- **新增 xAI Grok 和 Kimi Code 引擎。**两者都可作为 Worker，Grok 也可作为编排器；Hook、恢复会话和自动批准均接入现有协议。
+- **定时自动压缩开关。**默认关闭，改为独立的可配置维护任务，并按提供商使用各自的压缩命令。
+- **全屏 Agent roster。**左侧栏按仓库分组显示 Agent，支持恢复团队、拖动排序、暂停、停止和 steer；同时增加 typing / “你的草稿”徽章。
+- **队列与终端可靠性。**自动写入统一经过一个投递门控，保留草稿和选择器安全检查，修复 WebGL、PTY、上下文恢复、进程回收、Shell 输出隔离和消息唤醒问题。
 
-### Added
-- **Auto-update.** Packaged builds check GitHub releases on boot and every ~6 hours, download the new
-  version in the background, and show a small "restart to update" toast — installation is always your
-  click; the app never restarts on its own. Installs that can't self-update (the Windows portable exe)
-  get a notify-only toast linking the release page. Settings → General → **Auto-update** turns the
-  whole thing off. (Auto-update starts working for users **on 0.3.4+**; 0.3.3 and earlier have no
-  updater — grab this release from the site once more.)
-- **xAI Grok, a first-class agent engine** (`grok`) — worker *and* orchestrator-eligible. Grok's
-  lifecycle events are Claude-compatible but camelCase on the wire; an AGENT_ID-scoped hook adapter
-  (`installGrokHooks`) normalizes them into the hive's contract, so live status, guarded inbox
-  delivery, and operator gates all work. `grok [PROMPT]` takes the protocol positionally and
-  `--resume` continues a session. *(gts-47)*
-- **Kimi Code engine** (`kimi`) — spawn Kimi workers with `--auto` autonomy and the K3/K2.7 model
-  aliases. No hook bridge yet, so routed mail bounces to the god rather than silently dropping. *(gts-47)*
-- **Scheduled auto-compact switch — default OFF.** The dedicated compact-maintenance schedule (v0.3.2)
-  now ships disabled: scheduled `/compact` is opt-in. Flip it in Settings → General → **Scheduled
-  auto-compact** or the Schedules tab (which keeps its interval picker and its warning when off).
-  Existing installs keep whatever state they already chose. Scheduled compaction is now also
-  **provider-aware** — each engine gets its own compact command instead of Claude's only. *(founder decision + gts-47)*
-- **Fullscreen agent roster rail.** The horizontal tab bar ran out of room past a handful of agents and hid the operator controls; it's replaced by a left rail — `+ agent` pinned at the top, god agents ungrouped above everything, workers bucketed under repository headers, restore-team and its dismiss chips pinned at the bottom. An isolated agent's cwd is its own git worktree, so a new `mainRepoRoot` helper follows a linked worktree back to its main checkout (cached per cwd) and groups key on the absolute repo root, so two checkouts with the same name stay separate. Notes render on the row (one line per bullet) instead of behind a hover popover, the note editor becomes a textarea so Enter makes a new bullet instead of dropping every bullet but the first, pause/halt/steer come back in fullscreen, god agents render the full Command Center, and drag-to-reorder carries over (confined to an agent's own repository group). The destructive kill button is gone.
-- **`typing` badge — see why a queue is held.** A message queue held by your own unsent text on an agent's prompt used to look identical to an idle agent with nothing to do. Agent cards and the fullscreen roster now show a **"your draft"** badge whenever you have unsubmitted text on that agent's prompt. It's derived at render from the same check the delivery gate uses, so the badge can never disagree with the reason nothing is being delivered.
-- **[`docs/message-queue.md`](./docs/message-queue.md)** — the delivery contract: who may type into an agent's terminal, when, and what automation is never allowed to do to your text.
-- **Remote Control sessions are named after the agent** ([#81](https://github.com/TangerineSpecter/Hana-Kami/pull/81)). claude.ai / the mobile app now shows "Michael", "Jim", … instead of `<hostname>-<random>`, so a floor full of RC sessions is finally tellable-apart. *(gts-47)*
-- **Roster shared between dev and a packaged build.** The roster (agents + notes + queues + selection) mirrors to a file beside the hive (`src/main/roster.ts`), so the dev build and the installed app see the same team; localStorage remains the per-origin fallback. Restore-team also runs **in parallel**, fires **on open**, and each restorable agent gets its own ✕ dismiss. *(gts-47)*
-- **Fable 5 + Sonnet 5** in the Claude model picker (Fable 5 is the new default model). The two "default" entries — the harness's configured default vs the CLI's own — are now labeled distinctly in every picker, and every Claude option names a real model. *(gts-47)*
-- **New test suites** — queue delivery, terminal automation + recovery, roster persistence, provider config/automation, codex remote, agent env, and PID release (`npm run test:focused` + `test/proc-kill.test.cjs`). *(gts-47, qschmick)*
+### 变更
+- 自动化不会再清除或关闭用户拥有的内容；草稿和选择器保护时间更长，终端缩放会同步缩放编辑器和 roster。
+- 同一提供商内切换模型会尽力恢复会话；Codex 使用 codex resume 和独立 CODEX_HOME；团队恢复并行执行。
 
-### Changed
-- **One gate for every automatic writer.** The queue kept breaking because two loops each decided for themselves when it was safe to type into a terminal. The inbox-wake nudge now enqueues like scheduled `/compact` already did, so a single drain loop owns every "is this terminal free?" decision — idle, off cooldown, past boot grace, delivery not paused, no user draft in the way.
-- **Automation never destroys or closes what you own.** A draft block lasts half an hour rather than a minute, a picker block half an hour rather than three minutes, and when either expires delivery simply types *after* whatever is on the line (the two fuse into one prompt). Wiping the line first, and sending Escape at an open picker, are both gone — deleting text is worse than garbling one prompt, and we can't verify that Escape closed anything. Both keys remain on the composer's own button, where you asked for them.
-- **Terminal zoom scales the whole pane.** Cmd +/- moved out of `PtyTerminalView` into a shared subscribable module, so it now scales the message composer and the roster along with the terminal instead of leaving them pinned at sizes tuned for a 14" display.
-- **Changing an agent's model within the same provider resumes its session** instead of starting fresh (best-effort — an agent with no recorded session still gets its model changed). The Command Center picker is now **cross-provider** (switch an agent between engines from one dropdown).
-- **Codex resume actually resumes.** Codex has no `--resume` flag — it resumes via the `codex resume` subcommand — and its rollout transcript + sqlite index live together in a per-agent `CODEX_HOME`. Respawns now use the subcommand, and resuming by a pasted session id points `CODEX_HOME` at the agent home whose state DB actually indexes that session (a stray rollout copy without an index can't be opened). Codex workers also get **Codex Remote**: the app-server daemon is started under the agent's isolated home so the thread shows up in ChatGPT mobile. *(gts-47)*
-- **Restore team runs in parallel** and the login-shell capture is memoised, so rebuilding a roster no longer serialises one shell probe per agent. Agents are added in roster order rather than completion order.
+### 修复
+- 修复空白终端、队列静默停止投递、幽灵草稿、打开的模型选择器、模型变更丢失、重复仓库查询、进程未退出和熔断器误报。
+- 修复 Shell PATH 捕获污染、全屏层级、终端重绘、自动化过期处理，以及 Windows/Unix 下的进程组回收。
 
-### Fixed
-- **Blank terminal pane where typing does nothing.** Three causes, which is why every single-cause fix only half-worked. (a) WebGL is now a lease taken on attach and released on detach — a browser allows only ~16 live contexts and silently discards the oldest past that cap, so restoring a team blew the cap and Chromium killed a background terminal's renderer while its pty, buffer and subscription stayed healthy. (b) `requestInitialPtyRedraw` latches only once the redraw actually succeeds, instead of burning the terminal's one chance on a failed fire-and-forget IPC. (c) The needs-repaint marker is cleared only after the refresh returns, so a throw no longer discards the last record that the terminal needed repainting.
-- **Message queue silently stopped delivering to an agent.** (a) Only a *bare* command opens a picker — `/model` prompts you to choose, `/model sonnet` applies the argument and returns to the prompt; first-token matching latched the block on both and the submitting Enter couldn't clear it. (b) The picker block now expires like the draft block does, so a picker closed in a way we can't observe no longer wedges the queue for the rest of the session. (c) `lineBuf` moved onto the pool entry and is reset everywhere `inputDirty` is — as a closure variable it survived a draft clear, so the next keystroke recomputed the block from text that had just been deleted.
-- **Phantom drafts blocked delivery against text that didn't exist.** `inputDirty` is inferred by counting keystrokes, and a TUI that swallows keys for its own UI leaves it set while the prompt is visibly empty. The prompt is now read from xterm's rendered buffer (cursor row, prompt chrome stripped) — deliberately one-directional: the screen can only *clear* a phantom draft, never invent one, because being wrong the other way would type over something you really wrote.
-- **A queued message could be typed into an open picker and acked as delivered.** Clearing the input line no longer clears the picker latch — Ctrl-U kills the input line, it does not close a menu — so automation is no longer told the prompt is free while a picker still owns it.
-- **A model or command change died on reload.** `updateAgent` now persists when a durable field changes (volatile run-state fields — status, action, progress, context counters — still skip the write, so a burst of terminal output doesn't rewrite storage).
-- **The roster stopped spawning `git rev-parse` on every chunk of terminal output** — failed and in-flight repo lookups are cached, so an agent outside a repo is looked up once.
-- **Killed processes actually die** ([#110](https://github.com/TangerineSpecter/Hana-Kami/pull/110)). Every explicit kill was a bare node-pty `proc.kill()` — one SIGHUP to the direct child only, so a TUI that traps SIGHUP lived on and its children (MCP servers, helper daemons) reparented to PID 1 and kept running for the machine's uptime. Every kill path now routes through `ensureKilled`: a grace signal, then SIGKILL of the whole process group (POSIX) / `taskkill /T /F` (Windows). *(qschmick)*
-- **Circuit-breaker false-positive storm on idle/compacting agents** ([#109](https://github.com/TangerineSpecter/Hana-Kami/issues/109) → [#112](https://github.com/TangerineSpecter/Hana-Kami/pull/112)). Compaction and inbox-ack token bursts no longer read as looping. *(qschmick)*
-- **Shell-capture fencing.** The interactive login shell used for PATH/`which` capture runs the user's rc files, which are free to print (zsh's "Restored session: …" plugin chatter was being prepended to every agent's PATH). Capture output is now fenced between markers, with a multi-line sanity check before a PATH is trusted. *(gts-47)*
-- **Fullscreen surfaces notes and modals** (they stacked under the overlay); **an un-echoed keystroke no longer reads as an empty prompt**; **expired automation blocks are acted on** instead of typed through. *(gts-47)*
-
-### Performance
-- **~350× faster warm usage reads** — an incremental per-file transcript cache replaces re-reading every transcript on each poll ([#111](https://github.com/TangerineSpecter/Hana-Kami/pull/111)). *(qschmick)*
-- **Spawns stopped freezing the app.** Command resolution is memoized (with on-disk revalidation) and the login-shell PATH is captured once per session — each interactive-shell launch cost ~1s of blocked main thread, paid twice per spawn, ×N on a team restore ([#114](https://github.com/TangerineSpecter/Hana-Kami/pull/114) + gts-47's equivalent, merged). *(qschmick + gts-47)*
+### 性能
+- 增加增量转录缓存，使热路径用量读取大幅加速；命令解析和登录 Shell PATH 捕获按会话缓存，恢复团队不再冻结应用。
 
 ## [0.3.3] — 2026-07-03
 
-**An IDE on the floor, and a seventh engine.** Two headliners: a **built-in Monaco IDE** — the
-VS Code editor engine in a full-window overlay, with a git CHANGES rail, side-by-side diffs vs
-HEAD, a file tree, editor tabs, and Cmd/Ctrl+S save — and **GitHub Copilot CLI** as a first-class
-agent engine, the project's **first community-contributed provider**
-([PR #101](https://github.com/TangerineSpecter/Hana-Kami/pull/101) by
-[@anxkhn](https://github.com/anxkhn)).
+**工作区中的 IDE，以及第七个引擎。**加入内置 Monaco IDE、Git 变更栏、HEAD 差异、文件树、编辑器标签和 Cmd/Ctrl+S 保存；GitHub Copilot CLI 作为首个社区贡献的 Agent 引擎加入。
 
-### Added
-- **Built-in Monaco IDE panel.** A title-bar **IDE** button toggles a full-window IDE overlay
-  (matching the existing fullscreen-overlay pattern — the office floor, terminals, and voice UX are
-  untouched). Left rail: a **git CHANGES list** (click a file → read-only **side-by-side diff vs
-  HEAD**) plus the reused workspace **file tree** (click → edit). Right: **editor tabs** with
-  dirty-state dots, save, and close; **Cmd/Ctrl+S** saves the active tab. The workspace root
-  snapshots from the selected/god/first agent cwd. Monaco is **fully self-hosted** —
-  electron-vite-safe bootstrap with bundled `?worker` imports and `loader.config({ monaco })`, no
-  CDN — themed to the harness's light palette, and **all fs/git access goes through main-process
-  IPC** (`git:diff` + preload bridge; the renderer holds no fs/git access)
-  (`src/renderer/src/ide/*`, `src/main/git.ts`).
-- **GitHub Copilot CLI agent engine** (`copilot`, npm `@github/copilot`) — community-contributed.
-  Registered as a provider preset driven in Copilot's documented non-interactive **print mode**:
-  `copilot -p "<prompt>" -s --allow-all-tools --no-ask-user [--model <id>]`, with the auto-approval
-  flags **gated by the floor auto-mode toggle** like every other engine. Includes a
-  **`COPILOT_MODELS` picker** (Claude Sonnet 4.5 default · GPT-5.4 · auto), `--resume` session
-  continuity (best-effort), voice-hire (`spawn`) support, binary inference for pasted commands, and
-  the official `npm install -g @github/copilot` offered by the missing-CLI installer. Non-hiveAware
-  by design: print mode exits per turn and exposes no hook bridge, so `canReceiveInbox` is `false`
-  and routed mail bounces to the GOD orchestrator instead of silently dropping
-  (`src/shared/agentProvider.ts`, PR #101 — thanks [@anxkhn](https://github.com/anxkhn)).
-- **Agent-provider registry test.** A self-contained, framework-free test
-  (`node test/agent-provider.test.cjs`) transpiles the shared registry and asserts provider
-  selection, the copilot command shape, model/resume passthrough, and codex non-regression.
+### 新增
+- **内置 Monaco IDE 面板。**IDE 通过标题栏按钮打开全屏覆盖层，左侧提供 Git 变更和工作区文件树，右侧提供带脏状态的编辑器标签。Monaco 完全自托管，文件系统和 Git 都通过主进程 IPC。
+- **GitHub Copilot CLI 引擎。**新增 copilot 提供商、模型选择、会话恢复、语音招募和缺失 CLI 安装支持，并遵循楼层自动模式开关。
 
-### Fixed
-- **IDE: no silent loss of edits typed during an in-flight save.** Keystrokes entered while a save
-  was still writing can no longer be dropped when the save completes.
+### 修复
+- 修复保存进行中输入的编辑内容被静默丢失的问题。
 
 ## [0.3.2] — 2026-06-27
 
-**Talk to Michael.** The headline is **Realtime Michael** — a low-latency **voice channel to the
-GOD orchestrator**, running alongside the async terminal floor. Press **Talk**, and Michael listens,
-answers, and *acts* in real time: he reads the hive (tasks, board, memory, agents, activity) and —
-behind spoken **echo-back confirmation** for anything destructive — creates and assigns work,
-dispatches agents, spawns and kills workers, and steers the floor, all attributed to a distinct
-**michael-voice** actor that pings the GOD terminal. He greets you on connect, **speaks task
-completions the moment they land** ("respond when done"), and runs under a live cost meter with a
-hard spend cap and an idle auto-disconnect. It's **bring-your-own OpenAI key**: the key is decrypted
-**main-only**, minted into short-lived ephemeral session tokens, and never reaches the renderer. Plus
-**Slack hardening** (proactive posting off by default; no sends without an explicit thread), a
-dedicated **auto-compact** maintenance schedule decoupled from missions, and **per-agent environment
-metadata**.
+**与 Michael 对话。**新增 Realtime Michael：低延迟语音频道可以读取任务、看板、记忆、Agent 和活动，并在语音回声确认后创建任务、分派工作、启动/终止 Worker 和控制工作区。
 
-> **Live verification note.** The realtime voice loop is **human-verified end-to-end** on a real
-> OpenAI key — connect → mic → Michael answers via the read tools, and the full destructive action
-> path (spoken echo-back confirm → spawn / kill / dispatch → the worker appears on the floor →
-> completion spoken back) was exercised live. It requires **your own OpenAI key with Realtime API
-> access**; without one the **Talk** button stays visibly disabled with a "needs OpenAI key" cue.
-
-### Added
-- **Realtime Michael — talk to the GOD orchestrator by voice.** A new low-latency realtime channel
-  (OpenAI Realtime API over WebRTC) sits next to the async terminal. A **Talk** toggle (on Michael's
-  card and in any fullscreen terminal) opens a mic session with EC/NS/AGC, semantic-VAD turn-taking +
-  barge-in, and a device picker for both microphone and speaker. Michael runs his own persona and
-  answers in a natural voice, with an `Off → Connecting → Listening → Responding → Working` state
-  machine surfaced live on his card (`src/renderer/src/realtime/*`, `src/main/realtime.ts`,
-  `RealtimeMichaelToggle.tsx`).
-- **BYOK ephemeral-token mint.** The voice session authenticates with a **short-lived ephemeral
-  client secret** minted main-side from your stored OpenAI key — the real key is decrypted main-only
-  and never crosses IPC. The renderer's CSP allows the WebRTC SDP exchange to reach `api.openai.com`
-  while keeping everything else locked down (`src/main/realtime.ts`, renderer `index.html` CSP).
-- **Voice action set with tiered echo-back confirmation.** Michael can *do* things by voice — read
-  tools (tasks / board / memory / agents / activity / cost) plus the full action set: create and
-  assign tasks, dispatch agents, pause / steer / halt, spawn / hire, kill, and edit schedules. Every
-  **destructive** verb is gated behind a spoken **echo-back confirmation** (a distinct confirm token,
-  never a bare "yes"), with hard refusals for killing the GOD agent or targeting all agents at once
-  (`src/renderer/src/realtime/actions.ts`, `src/main/realtimeActions.ts`).
-- **"Respond when done" completion loop.** Voice-dispatched work reports back on its own: a
-  main-process completion watcher detects when a dispatched task finishes (card → done or a done
-  reply in the inbox) and **proactively pushes the event into the live session so Michael speaks it
-  unprompted**, while a `CompletionToast` shows it on screen. If the session is closed, completions
-  queue to a desktop notification and a "completions since last session" warm-start; a `wait_for`
-  tool covers the block-until-done case (`src/main/realtimeCompletionWatcher.ts`,
-  `CompletionToast.tsx`).
-- **michael-voice as a distinct actor.** Actions taken by voice are attributed to a separate
-  **michael-voice** identity in messages, the board, and the activity log, and notify the GOD PTY —
-  so a voice-driven dispatch is auditable and never silently impersonates a worker.
-- **Cost guard + idle auto-disconnect for voice sessions.** A live session cost HUD by the Talk
-  toggle, a configurable **spend cap** that auto-disconnects when hit, and a configurable **idle
-  auto-disconnect** (default 3 min, 30 s–10 min or Off) so a forgotten-open mic can't run up a bill
-  (`src/renderer/src/realtime/cost*`, **Settings → AI Engines**).
-- **Greeting on connect.** When a session goes live, Michael opens with a warm, rotating greeting
-  ("Hi, what's up?", "Hey, how's it going?", …) instead of waiting in silence — best-effort and
-  guarded so a not-yet-ready data channel never blocks a successful connect.
-- **Conversational read-layer.** The voice read tools were reworked to actually answer hive
-  questions: `get_memory` no longer dead-ends, and new agent/board tools plus an expanded persona let
-  Michael talk through roster, tasks, and floor state naturally.
-- **Voice read-layer over hive messages (read/brief-only).** Realtime Michael can now read message
-  *content*, not just metadata: a `get_messages` tool returns a **full message by id, one mailbox, or
-  the latest across the floor** to brief the operator. **All redaction is main-side** —
-  `voiceMessages()` runs every `subject`/`body` through `redactSecrets()` before the result leaves
-  the main process, so the renderer/voice layer only ever receives already-redacted bodies (no
-  provider / Slack / GitHub / AWS / Google key, JWT, PEM private-key block, or `Bearer` token can
-  leak) and holds **zero** redaction policy. Read-only: it adds no write/mutate path — voice writes
-  still go through the separate confirm-gated action spine (`src/main/hive.ts` `voiceMessages` +
-  `redactSecrets`, `src/renderer/src/realtime/{tools.ts,VOICE-MESSAGE-ACCESS.md}`,
-  `test/voice-messages.test.cjs`).
-- **Talk reachable from any fullscreen terminal.** The Talk toggle is no longer Michael-only chrome —
-  it's reachable in any fullscreen terminal view (the toggle is global/session state, so it's correct
-  everywhere), while the per-session cost HUD stays Michael-only (`FullscreenTerminal.tsx`).
-- **OpenAI Realtime key — documented and gated.** **Settings → AI Engines** now documents the
-  **OpenAI Realtime key** as its own requirement (the same OpenAI provider key, distinct from your
-  Anthropic key; main mints a short-lived token from it per session). The Talk button shows a live
-  enabled/disabled status and an inline **"needs OpenAI key"** cue when none is set, so connecting
-  never lands on a silently-dead button (`RealtimeMichaelToggle.tsx`, `SettingsModal.tsx`,
-  `AiEnginesSettings.tsx`).
-- **Dedicated auto-compact maintenance schedule.** Auto-compaction is now a **persistent,
-  configurable maintenance mission** of its own, decoupled from the standup mission it used to ride
-  on (so editing standups can't silently drop it). It reappears disabled rather than vanishing, with
-  a mandatory warning and a configurable interval in the **Schedules** tab, plus a migration
-  (`src/main/schedules*`, `SchedulesTab`).
-- **Per-agent environment metadata + cwd guard.** Each agent now carries queryable environment
-  metadata with a working-directory validity guard, and a new agent-env query tool (`src/main/hive.ts`).
-
-### Changed
-- **"Voice" is now "Talk".** The voice feature is renamed **Talk** throughout, with a redesigned
-  navigation: the GOD card pops with a dedicated **Talk** line, and the worker nav cards are
-  compacted to make room (`src/renderer/src/components/*`).
-- **Robust voice task-matching (findCard).** Resolving a task by voice is now tolerant of
-  hyphens/punctuation, phrasing, and truncation: both the spoken phrase and the stored title are
-  normalized, candidates are **scored** (exact / prefix / token-coverage / substring), and close
-  matches trigger a spoken **"which one?"** disambiguation instead of silently mutating the wrong card
-  (`src/main/realtimeActions.ts`, `test/realtime-findcard.test.cjs`).
-
-### Fixed
-- **Fullscreen agent modal now opens above the fullscreen view.** The Add-Agent modal launched from
-  the in-fullscreen "+ agent" button rendered *behind* the fullscreen terminal (z-index 100 vs 250)
-  and was non-interactive. It's lifted to the dialog tier (300) so it's on top and clickable, and the
-  fullscreen Esc handler now closes the modal first instead of exiting fullscreen underneath it
-  (`AddAgentModal.tsx`, `FullscreenTerminal.tsx`).
-- **Voice `get_memory` no longer dead-ends.** The conversational read tools were fixed so memory
-  lookups return usable answers instead of stalling the turn.
-
-### Security
-- **BYOK voice secret invariant.** The real OpenAI key is encrypted at rest and decrypted
-  **main-only**; the renderer only ever sees a **short-lived ephemeral client secret** minted per
-  session. The key never crosses IPC and is never logged. The voice read-layer reports **tokens, not
-  dollars** (de-monetized chrome), and every destructive voice action is held behind spoken echo-back
-  confirmation with hard refusals for killing the GOD agent or targeting all agents at once.
-- **Slack: proactive posting off by default + explicit-thread guard.** App/voice Slack sends are now
-  **off by default** behind a config flag + Settings toggle, and a request with no explicit
-  channel+thread is **refused** rather than guessed — closing an unattended-broadcast path
-  (`src/main/slack.ts`, Settings).
+### 新增
+- **实时语音 Michael。**使用自有 OpenAI key，主进程解密并生成短期会话 token，Renderer 永远拿不到真实 key；提供成本上限、空闲自动断开和完成播报。
+- **语音只读消息层。**get_messages 可以读取经过主进程脱敏的完整消息、单个收件箱或工作区最新消息，不增加写入路径。
+- **独立自动压缩维护调度。**从例会任务中拆出可持久化、可配置的维护任务，并增加每 Agent 环境元数据和 cwd 守卫。
+- **语音安全控制。**破坏性操作需要口头回声确认；Slack 主动发帖默认关闭，没有明确频道和线程时拒绝发送。
 
 ## [0.3.1] — 2026-06-22
 
-Three more coding CLIs join the floor — **OpenCode**, **Crush**, and **pi.dev** — each usable as a
-worker *and* as Michael, with **bring-your-own keys + local LLMs**. Plus two reliability fixes: the
-sleep-frozen message router and Codex workers' filesystem permissions.
+**OpenCode、Crush 和 pi.dev 加入工作区。**三个引擎都可以作为 Worker 或 Michael，支持自带 API key 和本地 LLM；同时修复睡眠后消息路由冻结及 Codex Worker 文件权限问题。
 
-> **Live verification note.** The three engines are wired end-to-end and selectable as god, and
-> their architecture (preset + bridge + payload contract) was reviewed line-by-line. Their bridges'
-> *runtime* behavior needs real model calls, so the following are **on-device checks pending BYOK
-> keys / a local LLM** (not runtime-proven here):
-> 1. each bridge's **turn-end signal** actually fires — OpenCode `session.idle`, pi `agent_end`,
->    Crush's proxy-synthesized `Stop` — flipping the agent to *idle*;
-> 2. **OpenCode local-LLM** happy path: pick `local/<id>` with a base-URL set and confirm a turn
->    completes (the injected config now registers the *selected* model id);
-> 3. **Crush** routes through the proxy on an OpenAI-wire model (the default god is now
->    `openai/gpt-4o`) and Crush honors the partial `base_url` override;
-> 4. the **auto-mode gate** holds (no `permission:allow` / `--yolo` when the floor toggle is off).
->
-> Crucially, mail delivery does **not** depend on those signals: a new **provider-agnostic
-> PTY-quiescence idle fallback** flips any silent-but-pinned-`working` agent to idle, so the
-> provider-agnostic idle inbox-wake nudge drains a god even if a bridge's turn-end signal never
-> fires. That backstop is the safety net under shipping all three as `canReceiveInbox:true`.
+### 新增
+- **三个可选引擎。**OpenCode 使用 native plugin，Crush 使用代理，pi.dev 使用内置扩展；三者都接入状态更新和回合结束后的收件箱排空。
+- **BYOK 与本地 LLM 配置。**Settings → AI Engines 支持提供商 key、local base URL 和默认模型，并由加密 secret broker 以只写方式管理。
+- **提供商无关的空闲后备。**PTY 一段时间无输出时，工作区会将仍处于 working 的 Agent 恢复为空闲，保证收件箱唤醒可以继续投递。
 
-### Added
-- **Three new selectable engines: OpenCode · Crush · pi.dev.** Each lands as a declarative
-  `AgentProviderPreset` and appears automatically in the Add-Agent picker (worker) and the god
-  engine picker (orchestrator). Each gets a **bridge** for live status + turn-end inbox-drain:
-
-  | Engine | Identity | Bridge | Notes |
-  |---|---|---|---|
-  | **OpenCode** | `opencode` (anomalyco/opencode, TS) | **native plugin** (`session.idle`) | bundled per-agent plugin; no traffic interception; auto-approve via gated `OPENCODE_CONFIG_CONTENT` |
-  | **Crush** | `crush` (charmbracelet, Go) | **proxy** (qwen-tier) | per-agent `CRUSH_GLOBAL_CONFIG` routes traffic through the loopback sidecar (Crush has no base-URL env) |
-  | **pi.dev** | `pi` (earendil-works) | **hooks** (bundled extension) | `pi.on(event)` → HIVE_SOCK; extension auto-approves tools only when the floor is in auto mode |
-
-- **BYOK + local-LLM config UI (Settings → AI Engines).** A new per-provider config surface: API
-  keys for the backend model-providers (Anthropic / OpenAI / Google / OpenRouter / Groq) stored
-  **write-only** in the encrypted secret broker (never read back to the renderer; materialized
-  main-only at spawn), plus per-engine **local base-URL** + default-model fields
-  (`HarnessConfig.providerBaseUrls` / `providerDefaultModels`). Pi/OpenCode/Crush/Qwen pick up the
-  keys + endpoints at spawn; auto-mode stays gated behind the floor toggle, and each engine runs
-  unsandboxed in auto mode (surfaced as a caveat).
-- **Provider-agnostic idle backstop (PTY-quiescence fallback).** A floor-wide check flips any agent
-  pinned `working` with no terminal output for a short window back to *idle* — so the idle
-  inbox-wake nudge can always drain a non-Claude god even if its bridge's turn-end signal (Stop /
-  `session.idle` / `agent_end`) never fires. This is the safety net under shipping all three engines
-  as god-eligible (`canReceiveInbox:true`) while their bridges await on-device verification
-  (`src/renderer/src/hooks/useHive.ts`).
-
-### Fixed
-- **Codex hive workers get full filesystem + auto-approval from spawn (parity with Claude).** A Codex-engine agent in auto mode launched with `-a never -s workspace-write`, whose sandbox scopes writes to the PTY cwd (the user's project). But a hive worker must also write to its agent folder at `<harnessHome>/hive/agents/<id>/` (move `inbox/` → `.done/`, append `memory.md`, drop outbox JSON, write deliverables) — a **different path tree from cwd**, which `workspace-write` blocked. So a freshly spawned Codex worker couldn't complete HIVE PROTOCOL housekeeping and reported "it does not have permissions … grant write permission to the agent folder." Codex's auto-mode flag is now `--dangerously-bypass-approvals-and-sandbox` — the documented equivalent of Claude's `bypassPermissions` / Antigravity's `--dangerously-skip-permissions` (skip all approval prompts **and** drop the OS sandbox), so a Codex worker has the same filesystem access and auto-approval as a Claude worker from the get-go (`src/shared/agentProvider.ts`; reference/copy updated in `src/shared/codexCommands.ts`, `OnboardingWizard.tsx`, `renderer/store/config.ts`). Claude/agy/antigravity behavior is unchanged.
-- **Re-arm the hive message router on wake (god→worker delivery survives sleep).** The outbox→inbox router is a `setInterval` (`hive.routeOnce` every ~1.5s) that, like the always-on beats, freezes during true macOS system sleep. `onSystemResume()` already re-armed the mission scheduler, the fleet/breaker beats, and keep-awake on `powerMonitor` `resume`/`unlock-screen` — but it never re-armed the router. So after a long sleep (e.g. laptop closed overnight) the scheduler→god path recovered while **every agent's outbox silently stopped draining**: god→worker, worker↔worker, and broadcast mail piled up undelivered, and no `message` event was logged. The resume handler now re-arms the router (clear-then-set, idempotent) **and** immediately drains the accumulated backlog instead of waiting for the first post-wake tick; the renderer's idle inbox-wake nudge then wakes each parked recipient once its mail lands (`src/main/index.ts`). Verified by `scripts/verify-keepalive-catchup.mjs` (now also reproduces the pre-fix backlog stall and proves the re-arm + flush).
-- **Open-source model quick-picks + local-setup guides in Add-Agent.** Hiring a worker on a local-capable CLI engine (OpenCode/Crush/pi.dev) now shows curated **OSS-model quick-picks** — a **Local** bucket (Mac-runnable Ollama tags: gpt-oss 20B/120B, Qwen3 30B-A3B/Coder, DeepSeek-R1 32B, Mistral Small, GLM-4.7-Flash, Llama 3.3 70B) and a **third-party OSS provider** bucket (BYOK: gpt-oss/Llama via Groq, DeepSeek-V4-Flash, GLM-4.6, Kimi K2.6, Qwen3-Coder via OpenRouter). Picking one fills the engine-correct slug (OpenCode `local/<tag>`, Crush/pi `ollama/<tag>`; provider slugs identical across engines) and rebuilds the command. Slugs are transcribed from a verified catalog — bleeding-edge frontier models are intentionally left out of code defaults. The Add-Agent help line and **Settings → AI Engines** local-setup area now hyperlink two how-to guides (run on open models · set up on a Mac Mini) (`src/shared/ossModels.ts`, `AddAgentModal.tsx`, `AiEnginesSettings.tsx`).
-- **Crush no longer dies with `Unknown command` on spawn (the hive protocol now reaches it).** A Crush worker was launched as `crush --model <m> --yolo "You are …(the whole hive protocol)"` — the protocol passed as a positional arg. But bare `crush` is an interactive Bubble Tea TUI on a Cobra root command, which reads the first positional as a **subcommand**, so it aborted with `unknown command "You are…"`; the protocol never reached the model, the worker never learned it was a hive agent, and the PTY died. Crush has no `--prompt` flag and `crush run` is one-shot, so the protocol is now **typed into the TUI** instead: a new preset capability `seedDelivery:'type-into-tui'` makes the spawn drop the positional (`crush [--model m] [--yolo]`) and hand the protocol back as a `seedPrompt`, which the renderer types in as the worker's first turn after a boot-grace — through the **same per-pty write-chain as the inbox-wake nudge**, so the seed and a nudge can never jam onto one line. Covers fresh Crush spawns, restores, and Crush-as-Michael (`src/shared/agentProvider.ts`, `src/main/hive.ts`, `src/main/index.ts`, `src/preload/index.ts`, `src/renderer/src/hooks/useHive.ts`, `AddAgentModal.tsx`, `AgentStrip.tsx`, `store.ts`).
-- **Auto restart-and-continue after a first-time engine-CLI install (no dead-end).** When an agent's engine binary (OpenCode/Crush/pi.dev/Codex/…) wasn't installed, the missing-CLI short-circuit ran the provider's installer in the PTY, then printed *"click restart & continue to launch the agent"* — but no such button exists for a not-yet-started agent, so the PTY just sat at `process exited (code 0)` and the agent dead-ended. Now, on a **clean install exit**, the PTY-exit handler auto restart-and-continues: it re-runs the *same* spawn into the *same* pty/window (carrying a `noAutoInstall` flag) so the freshly-installed CLI launches with no user click, and the renderer re-arms that terminal in place (clears the "process exited" line, re-enables input) via a new `pty:relaunch` signal. Provider-agnostic (every engine's installer path) and idempotent by construction — `noAutoInstall` guarantees the installer can never fire twice, and providers with no bundled installer (manual-hint-only) are never armed for relaunch. The install banner copy is now honest ("Installed — launching the agent…") (`src/main/index.ts`, `src/main/pty.ts`, `src/preload/index.ts`, `src/renderer/src/components/terminalPool.ts`).
+### 修复
+- Codex Worker 在自动模式下获得完整文件系统权限和自动批准；系统睡眠恢复时会重新启用 hive 路由并立即排空积压邮件。
+- OpenCode、Crush、pi.dev 的本地模型快速选择、TUI 协议注入和首次安装后的自动重启继续流程均已修复。
 
 ## [0.3.0] — 2026-06-21
 
-A platform release: the floor stops being Claude-shaped. **Selectable agent engines** make
-every hire — and Michael himself — a pluggable engine (Claude Code / Antigravity / Codex /
-local providers), each with its own **per-hire skills + MCP catalog** behind a consent UI. A
-new **integrations registry + loopback secret broker** turns "connect a service" into a
-write-only, registry-driven Settings flow. Michael can now **spawn an ephemeral worker straight
-from Slack** — reply, then tear it down safely with worktree GC and token caps — surfaced in a
-new **Workers tab**. Plus **temporal date-range skills** and a **worker capability catalog**, a
-**Provider / Hive picker** in onboarding and add-agent, the **Agent Gallery** (the rebranded
-Hiring Fair) with **six off-the-shelf hires**, feature-aware onboarding, and wake-reliability
-hardening. Everything from v0.2.8 and earlier is included.
+**平台化版本：工作区不再只围绕 Claude。**可选 Agent 引擎、每次招募的技能和 MCP 目录、集成注册表与回环 secret broker、Slack 临时 Worker、时间范围技能、Provider / Hive 选择器、Agent Gallery 和可靠性加固全部加入。
 
-### Added
-- **Selectable agent engines + per-hire capabilities.** A new engine abstraction (`agentProvider` + an `mcpCatalog`, mirrored across a 3-file config) makes the runtime behind each agent *pluggable* — Claude Code, Antigravity, Codex, or a **local provider** (a claw/qwen backend proxy bridge with default-MCP merge). Each hire carries its own **manifest** of allowed skills + MCP servers (a default-deny allowlist over the catalog), with **bundled skills** shipped via Electron `extraResources` (`resources/skills` → `<resources>/skills`) and a **consent UI** that surfaces every skill/MCP a hire wants before it can use it — untrusted hire input is reviewed, never auto-granted.
-- **Swappable Michael (god) engine.** The orchestrator is no longer hard-wired to one CLI: `useHive` gains an engine-spawn path, Onboarding gains an **engine picker** for Michael, and a **change-engine flow** lets you re-home the god orchestrator onto a different engine without rebuilding the floor.
-- **Integrations registry + loopback secret broker.** A declarative **integrations registry** (`src/shared/integrations.ts`) plus a **loopback secret broker** (`src/main/integrationBroker.ts`): secrets are **write-only** (set once, never read back into the renderer) and reached only through the broker over loopback. A **registry-driven Settings UI** (`IntegrationsRegistry`) renders each integration's config form from the spec — conformed to registry spec v1 — and a first wave of **declarative templates** (the canonical schema + initial YC-style templates) ships in the registry. The `integrations:*` surface is exposed to the renderer through a dedicated preload bridge.
-- **God-triggered ephemeral Slack worker loop.** Michael can now **spawn an isolated worker directly in response to a Slack request** — the worker does the work, posts its reply back into the thread, and is then **torn down safely**. Lifecycle hardening adds **worktree garbage collection**, **token-cap wiring** per spawned worker, and a **teardown-safety gate** that refuses to auto-discard a worker's *unintegrated* work. The `pty:spawn` IPC handler was refactored into a reusable `spawnAgentCore` that underpins worker spawning, and a new **Workers tab** surfaces live ephemeral workers in the UI.
-- **Temporal date-range skills + worker capability catalog.** A family of date-range skills (`today` / `yesterday` / `thisWeek` / `lastWeek` / `thisMonth` / `thisQuarter` / `thisYear` / `lastMonth` / `lastQuarter` / `lastYear` / `last7Days` / `last30Days` … plus an arbitrary-range `temporal` resolver backed by `temporal/when.mjs`) resolve a named window to concrete ISO dates without hand-math. A **worker capability catalog** lets each spawned worker read exactly which skills and brokered integrations it has and how to call them.
-- **Provider / Hive picker UI.** A new `HivePicker` component plus a `ProviderLogo` set (real provider logos) appear in **onboarding** and the **add-agent** flow, so choosing the engine/provider for a hire is a first-class, visual step instead of a free-text command.
-- **Agent Gallery + six off-the-shelf hires.** The community gallery is rebranded from *The Hiring Fair* to the **Agent Gallery**, and ships **six ready-made, off-the-shelf hires** you can browse, review, and spawn.
-- **Feature-aware onboarding + a permissions & reliability step.** First-run onboarding now adapts to the features you have available and adds an explicit permissions & reliability step.
-- **Visible engine-CLI installer.** When the engine binary for a chosen provider is missing, the installer now runs **visibly** instead of failing silently, so a first-time setup self-heals.
+### 新增
+- 引入可插拔 AgentProvider、每次招募的技能/MCP manifest、默认拒绝的允许列表和 Electron extraResources 中的内置技能。
+- Michael 可以更换引擎；集成 secret 只写入 broker，不回读 Renderer；Slack 请求可以创建隔离 Worker，完成后安全清理 worktree。
+- 新增时间范围技能、Worker capability catalog、Provider / Hive 选择器、Agent Gallery 和六个现成招募角色；首次引导根据可用能力调整。
 
-### Changed
-- **The Hiring Fair → Agent Gallery.** The gallery is renamed throughout (landing page, in-app links, copy) to *Agent Gallery*; existing hire links and the `/hires/` path continue to work.
-- **Add-Agent config IA rework + Command Center UX fixes.** The Add-Agent modal's configuration is reorganized around the new engine/capability model, with assorted Command Center UX cleanups.
-- **VDE prototype (experimental).** An experimental Virtual Desktop Environment prototype lands behind the scenes, with a Groq chat-completion module (`src/main/groq.ts`) powering its AI assist.
+### 变更
+- Hiring Fair 更名为 Agent Gallery；Add-Agent 配置围绕引擎和能力模型重新组织；加入实验性的 VDE 原型。
 
-### Fixed
-- **Orchestrator delegates opportunistically to existing agents.** Michael now checks the live roster (active agents in `registry.json` + their state in `fleet.json`) before spawning, and prefers routing a task to an existing agent that already fits — above all when the request names one ("ask Pam…", "have Jim…") — instead of reflexively creating a new agent; he only spawns a fresh one when no existing agent is a sensible fit, and says that he checked. Encoded in both the floor orchestrator prompt and the Slack autonomous-request protocol (`src/main/hive.ts`, `src/main/index.ts`).
-- **Auto-revive wedged terminals on wake.** A terminal that wedged while the machine slept is now detected and auto-revived when the machine wakes, instead of sitting dead until manually restarted.
-- **Catch up missed schedules on wake (power keep-alive hardening).** Scheduled missions whose fire time elapsed while the machine was asleep are now caught up on wake rather than silently skipped (verified by `scripts/verify-keepalive-catchup.mjs`).
-- **Worker stale-done guard.** A worker is now released only on a `done` authored *after* it was spawned, so a stale `done` from a prior life can no longer prematurely release or tear down a live worker.
-- **Floor: "add agent" button stays on one line.** The add-agent button no longer wraps as the roster fills.
-- **Voice button disabled with a tooltip when the Groq key is missing**, instead of failing on click.
-
-### Security
-- **Confined the `integrations:test` probe path.** The connectivity-test path for integrations is now constrained so it can't be turned into a secret-exfiltration or SSRF primitive — a brokered, bounded probe rather than an arbitrary outbound request driven by registry/secret input.
+### 安全
+- 招募 manifest 视为不可信输入：禁止自动启动，CLI 标志采用默认拒绝允许列表，模型 ID 限制字符集，所有网络获取使用 HTTPS、超时、大小上限和逐跳 SSRF 校验。
 
 ## [0.2.8] — 2026-06-15
 
-A feature release: **shareable hires** — package a role-configured agent as a portable
-manifest, share it as a file or host it in a gallery, and import it into any office with one
-click. Plus **The Hiring Fair**, a community gallery of ready-made roles, and a hardened,
-untrusted-input import pipeline.
+**可靠性与安全版本。**修复浏览器导航、安全协议、代理配置、语音和 Slack 相关问题，并继续完善 Provider / Hive 选择器和本地引擎支持。
 
-### Added
-- **Shareable hires (#70, #71).** A portable `hanakami/hire@1` JSON manifest describing a role-configured agent — name, sprite, provider, model, command flags, goal, capability tags, token budget. Two import paths, one pipeline: a `hanakami://hire?src=<https-manifest-url>` deep link (fetched and validated in the main process, queued, then pulled by the renderer on mount) and an *import hire…* button in the Add-Agent modal that reads a local manifest file. Either way the manifest only **pre-fills** the Add-Agent modal behind an "imported" banner; spawning stays an explicit human click — import never auto-spawns. Protocol registration ships for all three platforms (macOS `open-url`, Windows/Linux single-instance lock + cold-start argv forwarding), and packaged builds register the scheme via `electron-builder.yml`.
-- **The Hiring Fair — community gallery** at [munderdiffl.in/hires](https://munderdiffl.in/hires/) (`docs/hires/`, static, no build step, served by the existing GitHub Pages setup). Seed roles drawn from the cast (Pam writes docs, Dwight enforces QA, Jim reviews PRs, Creed audits security, Angela audits the office's own token spend, Stanley does the migrations nobody wants), each with a Claude Code / Antigravity / Codex provider toggle (per-provider variants generated from one base manifest), function filters matching the landing page, and a client-side validator identical to the app's alongside a JSON schema (`docs/hires/spec/`). Model suggestions are data-driven (`docs/hires/models.json`), so new models are a one-line update.
+### 新增
+- 新增可分享的 hanakami/hire@1 招募 manifest、Agent Gallery、OSS 模型快速选择和本地设置指南。
+- 支持多窗口工作区、文件和图片附件、跨重启恢复 Agent 会话、拖拽文件到终端，以及可选的电视节目办公主题。
 
-### Security
-- **A hire manifest is untrusted input — defense in depth.** No auto-spawn and no executable field: `provider: "custom"` is rejected and the binary always comes from the user's local provider preset. Embedded CLI flags are gated by a **default-deny allowlist** (`SAFE_FLAG_NAMES`) — only known-harmless flags pass, nothing system-prompt/settings-related — replacing an earlier denylist that drifted as each CLI added flags. `model` is constrained to a safe charset (`MODEL_RE`), and a command-line quoter neutralizes `cmd.exe` metacharacters (`& | ^ < > ( ) % !`) on **every** spawn path — closing a Windows command-injection class (PoC `"model":"x&calc"`). The manifest fetch is https-only, manual-redirect with per-hop re-validation (kills redirect SSRF into `127.0.0.1` / `169.254.169.254`, including an IPv6-bracket bypass), streamed with a 64 KB byte cap (no trusting `content-length`), a 10s timeout, and ≤5 hops. The dependency-free validator (`src/shared/hire.ts`) is shared by the main process, the renderer, the gallery (`docs/hires/validator.js`), and the JSON schema, so all four stay in sync.
+### 修复
+- 修复 Slack 去重、终端缩放、恢复会话、WebGL 生命周期、OpenCode/Crush 安装、工作区唤醒、调度补偿、Worker stale-done 和语音按钮状态。
+- 将 integrations:test 限制为有边界的 broker 探测，避免被利用为 secret 外泄或 SSRF 原语。
 
 ## [0.2.7] — 2026-06-13
 
-A feature release: talk to your agents with your voice, an opt-in enterprise Knowledge
-Graph, multi-window "floors", a richer message composer with file/image attachments, the
-groundwork for TV-show office themes, and a redesigned landing page — plus composer and
-fullscreen polish.
+**工作区控制与展示增强。**加入 Free Flow 语音听写、Knowledge Graph、多个隔离楼层、富消息编辑器、跨重启恢复和电视主题基础设施。
 
-### Added
-- **Free Flow voice dictation → message queue (now on by default).** Hold Option to talk; your speech is transcribed by Groq Whisper (`whisper-large-v3-turbo`) straight into the message composer. Gated on a Groq API key, which is encrypted at rest.
-- **Enterprise Knowledge Graph v1 (now on by default).** A multimodal store of your own documents / policies / business context, with a CLI agents can query for ranked passages and full documents — so company-specific facts come from your data instead of guesses.
-- **Multi-window "floors" (now on by default).** Open isolated office windows, each with its own set of agents and per-PTY routing.
-- **Rich message composer — file & image attachments.** Attach files/images (via a "files" button or paste-to-attach), shown as removable chips above a taller, resizable input; you can send with attachments alone.
-- **Restore agent sessions across restart, with Restart & Continue (#78).** Agents reattach their prior Claude conversation after an app restart: Michael resumes his session (the orientation prompt is skipped on a genuine resume), and a restored worker re-enters its *existing* worktree instead of re-isolating, so uncommitted work isn't lost. The recorded session transcript is seeded into the target cwd before `--resume` attaches (and `--resume` is only used when the transcript is actually present, so there are no broken resumes against a missing id), and the pooled terminal soft-resets in place — staying live and typeable across a model change or respawn, redrawn at its real fit-derived grid. A per-agent **Restart & Continue** button respawns the session on the same model with resume to redraw a garbled terminal, and Add Agent gains a "resume session" field that reattaches by session id (auto-filling the folder, falling back to a fresh session if the id isn't found).
-- **Drag a file onto a terminal to inject its path (#79).** Dropping a file (an image, etc.) onto an agent's terminal now writes its absolute, shell-escaped path into the session — so Claude Code detects the image path in the prompt and attaches it — instead of Electron navigating to the dropped `file://` URL. Backed by `webUtils.getPathForFile` exposed from preload (Electron 32 removed `File.path`); only file drags are intercepted, so text/selection drags still fall through to xterm.
-- **TV-show office themes — infrastructure (behind a flag, off by default).** A theme abstraction (`ThemeConfig` + registry/loader), a Settings theme picker with a destructive switch-flow, and the first themed map (Brooklyn-99 precinct). Ships dark via the `tvShowOffices` flag while the remaining maps land.
-- **Live GitHub star count** next to the Star buttons on the landing page.
+### 新增
+- 支持 Option 语音听写、企业知识图谱、独立楼层、文件/图片附件、Restart & Continue、终端拖拽路径、GitHub Star 数量和电视主题。
 
-### Changed
-- **Composer redesign.** A full-width input above a single tidy control bar (Delegate · Attach · voice · Send) — no dead space from a stacked side column.
-- **Landing page redesign.** Bento layout for the #features and #why sections with new SVG illustrations; the #claude section refreshed for v0.2.7.
-
-### Fixed
-- **Fullscreen tab bar no longer clipped.** The fullscreen terminal's tab bar is un-clipped.
-- **Slack double-ack (#).** A single Slack message delivered as both `app_mention` and `message.*` is now de-duplicated by `channel:ts`, so it's handled exactly once.
+### 变更
+- 重做消息编辑器和落地页 Bento 布局，修复全屏标签裁切与 Slack 重复确认。
 
 ## [0.2.6] — 2026-06-10
 
-A polish + reliability patch: the agent terminal renders correctly the moment it opens,
-`npm run dev` no longer crashes on a missing sidecar, a Windows ConPTY crash is guarded,
-the wall clock becomes a clickable closing-time control, the ASK ME board reads in the
-memory font, and the Slack file download is host-pinned.
+**细节与可靠性补丁。**终端打开即正确渲染，dev 不再因 Slack sidecar 缺失崩溃，Windows ConPTY 受保护，墙上时钟可点击，ASK ME 使用记忆字体，Slack 文件下载固定在官方域名。
 
-### Added
-- **The office clock is interactive (#64).** The clock on the wall reads the real time, and clicking it opens the closing-time (graceful shutdown) flow.
+### 新增
+- 墙上时钟读取真实时间，点击后进入优雅关闭流程。
 
-### Fixed
-- **Terminal no longer renders oversized/clipped when an agent boots.** xterm used to fit before its container had a real size and cached the character-cell metrics from before the web font (VT323) loaded, so the welcome banner overflowed and was clipped until you manually resized. The view now waits for a real size, re-measures and re-rasters the WebGL glyph atlas after the font loads, and lets the `ResizeObserver` drive the first fit — so it fits immediately on boot.
-- **`npm run dev` no longer crashes on the missing Slack-trigger sidecar (#67).** The `.cjs` sidecar copy now runs as a vite `writeBundle` plugin, so both `dev` and `build` emit `out/main/slack-trigger.cjs` from one place. (v0.2.5 fixed only the packaged-build path, so a fresh clone's `npm run dev` still died at boot.)
-- **Windows: node-pty ConPTY `AttachConsole` crash guarded (#65).** Companion to the Antigravity provider work — the main process no longer crashes when ConPTY fails to attach a console.
-- **ASK ME reads in the memory font (#63).** The ASK ME board now uses VT323 instead of the chunky Pixelify Sans, matching the rest of the memory surfaces.
-
-### Security
-- **`downloadSlackFile()` host-pinned to Slack.** The Slack bot token is now only ever sent to `slack.com` / `*.slack.com` hosts — a defense-in-depth guard before the `Authorization: Bearer` header is attached (the URL is already Slack-issued + HMAC-verified, so this hardens against a future redirect/parsing change).
+### 修复
+- 修复终端初始尺寸、Slack sidecar、Windows AttachConsole 和 ASK ME 字体问题；downloadSlackFile() 只允许向 Slack 域名发送 token。
 
 ## [0.2.5] — 2026-06-10
 
-A reliability + reach patch: a Windows-terminal regression fix, an agent-lifecycle
-cleanup that ends the breaker inbox-flood, Slack requests that actually reply with
-substance, a delegate toggle, six new tutorials/blogs, and an enriched landing diagram.
+**可靠性与触达版本。**修复 Windows 终端回归和 Agent 生命周期，Slack 可以返回实质性答复，加入委派开关、六篇教程和更丰富的落地页图示。
 
-### Added
-- **Delegate-to-agents toggle.** A toggle switch above the Send button in the god orchestrator's composer prepends a delegation instruction so a request fans out to available agents (and is handled one-by-one if none are free). God-only, default off.
-- **AUTONOMOUS REQUEST PROTOCOL for Slack-origin requests.** Inbound Slack requests now run fully autonomously: god routes the request to the most-relevant agent, that agent does the work and **posts its substantive result back into the Slack thread itself**, then reports to god. It pauses only for high-severity actions (pushing to main, spawning infrastructure/paid services, deleting files it didn't create), and any decision it needs is asked as a numbered-options reply in the thread and correlated back by `thread_ts`.
-- **Six new tutorials & blog posts** — webhook setup, the full Slack setup, deploying an automated PR-reviewer agent, deploying a blog-writer agent, why CLI agents are so powerful (and how the hive cuts token use), and why a mixed-capability swarm beats a clone army.
-- **Enriched "how it works" landing diagram** — Slack / Webhook / Schedule triggers feeding the orchestrator, plus a band showing each agent in its own isolated local git worktree.
+### 新增
+- 新增委派给 Agent 的开关、Slack 自主请求协议、Webhook/Slack/PR 审查/博客写作教程，以及展示独立 worktree 的落地页图示。
 
-### Fixed
-- **Windows agent terminals no longer die on Program-Files installs (#55).** `cmd.exe` is now invoked with a properly double-quoted command line (`/d /s /c`), so a Claude/node path containing a space (e.g. `C:\Program Files\…`) launches instead of splitting on the space.
-- **Orphaned-agent lifecycle cluster (#56/#57/#58).** A stale agent entry with no live terminal no longer (a) re-writes a frozen cost-ledger row every ~30s, (b) trips the circuit breaker into an unclearable inbox-flood to the orchestrator, or (c) lingers un-archived — a startup migration archives no-PTY entries and the breaker now skips assistant/orphaned shells.
-- **Slack replies are real answers, not empty confirmations.** Worker agents post the actual outcome into the thread; the orchestrator's auto-summary is now a fallback that never posts a bare "✅" with no content and skips threads already answered directly.
-
-### Removed
-- **Reverted the unfinished compact-protocol feature** — it was only half-wired (main-side committed, renderer-side unfinished) and broke the web typecheck. It will return fully wired in a later release.
+### 修复
+- 修复 Program Files 路径、孤儿 Agent、Slack 空确认和未完成 compact-protocol；回退未完成的紧凑协议功能。
 
 ## [0.2.4] — 2026-06-09
 
-A multi-provider patch: Codex graduates to **full hive parity** via a native
-lifecycle-hook bridge, the god orchestrator opens to its terminal by default, and a
-handful of resilience fixes land.
+**多提供商补丁。**Codex 通过原生生命周期 Hook bridge 达到完整 hive parity，GOD 默认打开 Terminal，Slack/Webhook 入口和心跳可靠性得到加强。
 
-### Added
-- **Codex lifecycle-hook bridge — full hive parity.** Codex now joins the hive as a first-class, hive-aware provider: a native lifecycle-hook bridge maps Codex's events into the existing hook pipeline (live status + inbox-drain + outbox routing), and agy/codex dispatch is unified behind one path. Verified running hive-aware in bypass-permissions mode. (#47, #54)
-- **Codex hook discovery via `config.toml [hooks]`.** The bridge registers through Codex's `config.toml [hooks]` surface rather than a bare `hooks.json`, matching how Codex actually discovers lifecycle hooks.
+### 新增
+- Codex 接入 config.toml [hooks]，成为完整 hive-aware 提供商；统一 agy/codex 分发路径。
 
-### Changed
-- **God orchestrator opens to the Terminal sidebar by default.** Selecting the god agent no longer reopens a stale "ASK ME" tab — a leftover command-center tab request is cleared on select, so the panel mounts to its terminal default. The ASK ME tab is still one click away.
-- **Landing + blog refreshed for multi-provider.** The landing page now presents Claude Code, Antigravity (Gemini), and OpenAI Codex as equal first-class providers (with a one-line mobile-friendly badge), and a grand v0.2.4 launch post + technical walkthrough replace the v0.2.3 posts.
+### 变更
+- GOD 默认打开 Terminal 标签；落地页和博客将 Claude Code、Antigravity 和 Codex 作为同等提供商展示。
 
-### Fixed
-- **Slack/webhook tunnel no longer crashes at load.** `tunnelmole` is ESM-only; a static `import` in the CommonJS-bundled Electron main process threw `ERR_REQUIRE_ESM`. It's now loaded via a dynamic `import()` inside `openTunnel()`, so the public ingress actually starts.
-- **Heartbeat re-engages the god on an unread actionable inbox** — not only when the floor is quiet — so worker/human mail is drained promptly.
-- **Slack done-summary stops retrying on terminal errors.** A permanently-failing post (e.g. the bot token missing `chat:write` → `missing_scope`) is now recorded and logged once instead of retrying every 5s and flooding the console; transient errors still retry.
+### 修复
+- 修复 tunnelmole ESM 加载、未读收件箱心跳，以及 Slack 完成摘要在永久错误时无限重试。
 
 ## [0.2.3] — 2026-06-09
 
-A multi-provider release: the floor is no longer Claude-only. Antigravity (Gemini)
-and Codex agents become first-class hive participants, schedules get their own tab,
-and the Slack / webhook ingress is moved off the flaky public tunnel.
+**多提供商版本。**Antigravity（Gemini）和 Codex 成为一等 hive 参与者，调度拥有独立标签，Slack/Webhook 入口迁移到更稳定的 tunnelmole。
 
-### Added
-- **First-class Antigravity (Gemini / `agy`) provider.** A worker can now run the Antigravity CLI as a full hive participant. Because `agy` has no Claude-style `--append-system-prompt`/`--settings` hooks, the hive identity + protocol ride in as the session's initial prompt, and a native `agy-hook` bridge normalizes Antigravity's lifecycle events into the existing hook pipeline so a Gemini worker gets the same live status + inbox-drain as Claude — on the subscription, no API key. (#54)
-- **Schedules tab.** Recurring auto-dispatched missions (and the adaptive heartbeat) get their own Command-Center tab instead of an inline section. (#50)
-- **Terminal work-order handoff for hookless providers.** A provider with no inbox-drain path now receives hive mail as a `WORK ORDER FROM HIVE` typed into its terminal, falling back to a god-bounce only if the renderer is unavailable. (#53)
+### 新增
+- 新增 agy 提供商、Schedules 标签和无 Hook 提供商的终端工作单交接。
 
-### Fixed
-- **Codex agents now follow the hive protocol and message back.** Codex spawned without the hive protocol or any hook, so it never read its inbox or wrote its outbox. Codex is now a non-hive-aware-but-inbox-capable provider: the protocol is injected as its initial (positional) prompt, its outbox is drained provider-agnostically by the router, and inbox mail reaches it via the renderer's idle inbox-wake nudge. Codex and Antigravity coexist in the provider union. (#47, #54)
-- **Slack + webhook public URL no longer silently breaks.** The ingress used `localtunnel`/loca.lt, which now serves a browser interstitial that fails Slack's `url_verification` POST and breaks saved webhook URLs. Both `slack.ts` and `webhook.ts` now use **tunnelmole** (MIT, POSTs pass straight through), and a failed tunnel surfaces a real error instead of a silent "started" with no URL.
+### 修复
+- Codex 遵循 hive protocol 并通过 Renderer 唤醒收件箱；修复 public URL 的 localtunnel 浏览器中间页问题。
 
 ## [0.2.2] — 2026-06-07
 
-A community polish release — almost entirely the work of @Gulum: a live context-window
-gauge on every agent card, sharper terminals, correct Windows metering, and dispatch that
-always routes through the god.
+**社区打磨版本。**主要由 @Gulum 完成：Agent 卡片实时上下文窗口、更加清晰的终端、正确的 Windows 用量计量，以及所有人工分发都经过 GOD。
 
-### Added
-- **Live context-window gauge on each agent card.** A Claude Code statusLine pushes the session's exact token count and real context-window size after every response, so each agent card shows a precise live fuel gauge drawn from Claude Code itself instead of a transcript estimate. The gauge also zeroes the instant you send `/clear`, rather than briefly showing the previous session's full bar until the next response. (Thanks @Gulum — #12, closes #11.)
-- **Per-session terminal theme toggle + Unicode 11 emoji widths.** Each terminal session can now switch its Claude theme independently, and emoji column widths follow Unicode 11 so wide glyphs stop nudging the cursor out of alignment. (The WebGL renderer, copy/paste, and `minimumContrastRatio` from v0.2.0 are kept as-is.) (Thanks @Gulum — #26.)
-- **All human dispatch flows through the god.** Every Command Center dispatch now mails the god (`Task from the human`) instead of writing straight into a worker's inbox; the worker dropdown becomes a **suggested owner** (Michael still decides), so nothing skips the orchestrator. (Thanks @Gulum — #45, fixes #44.)
-- **Dedicated context-window row on the monitor tab.** The Floor monitor's cumulative budget bar was being misread as a per-agent context gauge; a separate `ctx` context-window row now sits alongside it, so the live context window and the cumulative budget aren't confused. (Thanks @Gulum — #46.)
+### 新增
+- 新增上下文窗口仪表、每会话终端主题开关、Unicode 11 Emoji 宽度、GOD 分发和独立 ctx 行。
 
-### Fixed
-- **Windows usage meter no longer reads 0/0.** The transcript reconciler built the per-project directory name with the POSIX rule, but Claude Code on Windows encodes *every* non-alphanumeric character (including the drive colon), so the meter never found the transcript and always read 0 tokens / $0.00. (Thanks @Gulum — #34, fixes #10.)
-- **Send-only assistant mail no longer black-holes.** Direct mail to the send-only prep assistant landed in an inbox nothing reads; the router now bounces it to the god (subject prefixed `[bounced …]`) instead of dropping it. (Thanks @Gulum — #33, fixes #32.)
-- **Boot banner no longer stacks in scrollback.** `tryFit()` fired `resizePty` on every fit even when the dimensions were unchanged; redundant resizes are now skipped, so the boot banner stops re-stacking in the terminal history. (Thanks @Gulum — #8.)
-- **Visible text-select cursor on the cream theme.** The hovering I-beam (an OS cursor that CSS color hints can't touch, drawn white by several Windows schemes) is now an inked I-beam with a halo, so it stays visible over the light terminal. (Thanks @Gulum — #39.)
+### 修复
+- 修复 Windows 用量计量、send-only 助手邮件黑洞、启动横幅重复和浅色终端文本光标不可见。
 
-### Acknowledgements
-This release is almost entirely the work of @Gulum — thank you. Maintained by @chaitanyagiri.
+### 致谢
+本版本几乎全部由 @Gulum 完成；由 @chaitanyagiri 维护。
 
 ## [0.2.1] — 2026-06-07
 
-A small follow-up to v0.2.0 that makes the scheduler considerate of agents that are mid-task.
+### 变更
+- 定时自动压缩改为按 Agent 排队，只在 Agent 空闲时投递，并为每个 Agent 去重；Heartbeat 改为写入 Michael 收件箱，由空闲唤醒逻辑投递。
 
-### Changed
-- **Scheduled auto-compaction is queued, not forced.** The hourly ops-standup's terminal compaction is now enqueued per agent and delivered only when that agent is idle (deduped — at most one `/compact` pending at a time), so it compacts *between* steps instead of jamming a working terminal mid-step. The standup prompt now asks each agent to summarise its current task and next step, then resume from the same point after compacting.
-- **Heartbeat is inbox-driven.** The floor heartbeat (`reengageGod`) no longer types directly into Michael's terminal; it drops its digest in his inbox, which the busy-aware inbox-wake delivers once he's idle.
-
-### Docs
-- Expanded the README roadmap (chat integrations, pluggable agent CLIs, realtime Michael).
+### 文档
+- 扩展 README 路线图，加入聊天集成、可插拔 Agent CLI 和实时 Michael。
 
 ## [0.2.0] — 2026-06-07
 
-The observability and control release. v0.2.0 makes the fleet visible and keeps it in check — and it's a community release in the most literal sense: most of the work below came from external contributors. Huge thanks to everyone credited.
+**可观测与控制版本。**工作区现在可见且可控，包含大量社区贡献。
 
-### Added
-- **Command Center overhaul.** Michael's control surface was reworked into the place you actually run the floor from — the roster, dispatch, schedules, memory, and activity views now carry the new live signals (token budgets, telemetry, breaker state) without becoming a wall of numbers.
-- **Per-agent token budgets + live fleet monitoring.** Every agent carries a token budget, and the floor monitors consumption live so a single agent can't quietly run the bill up.
-- **Live OTel telemetry collector + per-model cost.** A built-in OpenTelemetry collector and a `UsageProvider` seam feed real usage in, with per-model cost attribution (interim transcript-backed stub behind the seam to start).
-- **Fleet grid + per-agent tool-span waterfall.** A live grid of the whole fleet, plus a per-agent tool-span waterfall that shows what an agent spent its turn doing — which tool calls ran, in what order, for how long.
-- **Agent-card context-window gauge.** The agent card's progress bar is repurposed into a context-window gauge so you can see at a glance how close each agent is to filling its context. (Thanks @Gulum — #12.)
-- **Circuit breaker.** A steer → constrain → stop ladder plus a cost/runaway guard, fed by hook signals (repeated identical tool calls), an `onApiError` seam for error-storm trips, and budget config.
-- **Scheduler heartbeat.** A heartbeat beat tracks each agent's last output (quiet/idle signals), enforces circuit-breaker policy, and adds spawn guardrails; the SCHEDULES view shows the heartbeat row plus last-fired / next-fired times. (Thanks @albozes — #2.)
-- **Human-in-the-loop, mid-run.** A HITL gate, mid-run steer, and graceful stop all delivered through hook returns — approve, redirect, or cleanly halt an agent mid-turn instead of yanking it.
-- **Durable SQLite persistence (Phase A).** A SQLite durable store persists window bounds and history, alongside a persisted `session_id` and a durable cost ledger (`cost-ledger.jsonl`) so cost and provenance survive restarts.
-- **MemoryReflector — memory condensation.** The janitor's missing condense half: a reflector that condenses memory instead of only mining it, keeping the semantic store lean.
-- **Configurable hive/memory home folder.** Point the hive and memory home at a folder of your choosing, with a safe move that relocates existing data.
-- **One-click "Restore team."** After a harness restart, a single click brings back the last session's workers — no more re-adding agents one by one. (Thanks @Gulum — #16.)
-- **Delete scheduled missions.** Scheduled missions now have a delete button. (Thanks @Gulum — #9.)
-- **New avatar states.** A compacting state (on `PreCompact`) and a looping state (when the breaker engages) so the floor reflects what the control layer is doing.
+### 新增
+- 重做 Command Center，加入 token 预算、实时 fleet 监控、OTel 遥测、按 Agent 成本、工具调用瀑布图、上下文仪表和 circuit breaker。
+- 新增 Scheduler heartbeat、HITL、SQLite 持久化、MemoryReflector、可配置 hive/memory home、一键 Restore team、删除调度任务和 compacting/looping 头像状态。
 
-### Fixed
-- **Terminal contrast + HiDPI legibility.** A `minimumContrastRatio` floor and a tuned light palette (including dual fg/bg-legible green/yellow) keep text legible on coloured backgrounds across both the new and legacy terminal views.
-- **Crisp, readable floor text.** A HiDPI canvas, bold bubbles, and a walk-flicker fix sharpen office-floor text; thought-cloud text now stays 1:1 when the window shrinks. (Thanks @Gulum — #20.)
-- **Terminal no longer jumps to the top of history on first scroll**, and the viewport dead zone is gone (re-sync routed through xterm, not the DOM). (Thanks @Gulum — #8.)
-- **Windows: keep the hive running behind the lock screen.** The hive no longer freezes when Windows locks — keep-awake plus no throttling. (Thanks @Gulum — #18.)
-- **Live agent statuses** and **composer-draft fixes** for the message-queue composer. (Thanks @Gulum — #7, #27, #28.)
-- **Palace writer-lock serialization** and **Windows named-pipe + mempalace detection** so the hook server and semantic memory work on Windows. (Thanks @Xileck.)
-- **Per-PTY input serialization** so the boot sequence can't jam mid-spawn; restored `+x` on the `node-pty` spawn-helper so agents can spawn.
-- **GOD orchestration tabs** are now scrollable; the title-bar settings button is a clear gear chip.
-- **Global `defaultModel` wins over role tier** (an explicit per-agent pick still wins); cost-ledger row is fully snake_case for a 1:1 SQLite migration (#4).
-
-### Acknowledgements
-Reported / requested by the community: @JLAD75 (Windows hive router / `hooks.sock` — #1), @billrehm (Windows GOD-spawn error 193 — #22), @darrensheffield (uv-not-installed assumption — #30; macOS Gatekeeper — #29), @pdurlej (first-class Codex CLI provider request — #21), @wild-gobatz (agents showing idle until clicked — #3). Maintained by @chaitanyagiri.
+### 修复
+- 修复终端对比度、HiDPI、Windows 锁屏、实时状态、composer 草稿、Palace writer lock、Windows named pipe、PTY 输入序列化、GOD 标签滚动和默认模型优先级。
 
 ## [0.1.9] — 2026-06-06
 
-### Added
-- **Hourly ops standup.** A built-in scheduled mission (enabled by default) where the GOD orchestrator reviews every agent — who's doing what, whether tasks are on track, and whether agents are still running — and **compacts each terminal's context** on the same hourly cadence to keep agents lean. Toggle it in the Command Center; a one-time migration seeds it into existing installs (and won't re-add it once deleted).
+### 新增
+- 新增默认开启的每小时运维例会，GOD 检查所有 Agent 并按小时压缩上下文；一次性迁移会为已有安装补入任务。
 
-### Fixed
-- **Agents exited on their own at a "Bypass Permissions mode" prompt.** Agents spawn with `--permission-mode bypassPermissions`, which on a fresh machine shows a one-time interactive "WARNING: Bypass Permissions mode … 1. No, exit / 2. Yes, I accept" prompt the terminal couldn't answer, so the agent exited code 1 within seconds. The harness now idempotently pre-accepts Claude Code's dangerous-mode warning (`skipDangerousModePermissionPrompt` / `skipAutoPermissionPrompt`) and per-folder trust before each spawn.
-- **Blog cards.** The colored thumbnail tile sat flush against each card's bold border; it's now inset with padding for breathing room (desktop + mobile).
-- **Windows: hook server + semantic memory.** The hook server now binds a named pipe on Windows (where Node IPC isn't a filesystem socket), and `mempalace` is detected via `where` + the standard `.exe` install locations so semantic memory works on Windows. POSIX behavior unchanged. (Thanks @Xileck — #4.)
-- **Palace mining writer-lock collisions.** Mining is now serialized — a single writer at a time with a re-entrancy guard — fixing "palace is held by PID …" failures when multiple agents mined concurrently. (Thanks @Xileck — #5.)
-- **MemPalace index noise.** Each agent's `.gitignore` is ensured before mining so `settings.json`, the cursor file, and raw inbox/outbox message JSON stay out of the semantic index — keeping recall and wake-up focused on real memory.
+### 修复
+- 修复 Bypass Permissions 首次提示导致 Agent 退出、博客卡片边框、Windows Hook/语义记忆、Palace writer lock 和 MemPalace 索引噪音。
 
 ## [0.1.8] — 2026-06-05
 
-### Fixed
-- **Windows agent spawn.** Launching an agent on Windows failed with `cannot create process, error code: 2` (ENOENT) because binary and PATH resolution were Unix-only (`SHELL`/`/bin/zsh`, `-ilc`, `which`, and Unix-only fallback paths). Windows now resolves `claude` via `where`, checks the standard Windows install locations (`%APPDATA%\npm\claude.cmd`, `%LOCALAPPDATA%\Programs\claude`, `%USERPROFILE%\.claude\local`), uses the process `PATH` directly (no login-shell probe), and recognizes Windows-style (`\`) absolute paths. macOS and Linux resolution is unchanged; the Unix fallbacks now also include `~/.volta/bin`.
+### 修复
+- 修复 Windows Agent 启动时的 ENOENT、Windows 安装目录和 PATH 解析，并保留 macOS/Linux 行为；Unix 后备路径增加 ~/.volta/bin。
 
 ## [0.1.7] — 2026-06-04
 
-### Added
-- **Slack → Michael's queue.** A new Slack integration (Settings → Slack) pipes a channel's messages straight into Michael's message queue — paste a message in Slack and it lands in his queue exactly as if you'd typed it. Off by default; every request is verified with your Slack signing secret (HMAC + 5-minute replay guard) before it's accepted, and a localtunnel exposes the local webhook for Slack's Event Subscriptions.
+### 新增
+- 新增 Slack → Michael 队列集成，使用签名密钥验证和重放保护。
 
-### Changed
-- **Approvals are now native.** The in-app approvals queue/panel is removed in favor of native Claude Code human-in-the-loop prompts. A `to:"human"` decision now reaches you through Michael's session and native permission prompts — approvable from your phone via `/remote-control` — and Michael boots straight into running the floor.
+### 变更
+- 审批改为原生 Claude Code 人机协作提示；to:"human" 决策通过 Michael 会话和原生权限提示到达用户。
 
-### Fixed
-- The floating approvals panel could re-queue an item when you approved it (`resolveApproval` re-routed the message back into the queue). Moving to native HITL removes the panel and the bug.
+### 修复
+- 移除旧审批面板重新入队的 Bug。
 
 ## [0.1.6] — 2026-06-04
 
-### Added
-- **Per-agent git worktrees.** A 'Git isolation' toggle in Add Agent auto-provisions a dedicated worktree (`<harnessHome>/worktrees/<agentId>/`) on spawn and tears it down on kill. Agents on the same repo never collide on branches.
-- **Task kanban with dependencies.** A Tasks tab in the Command Center renders a full kanban board (todo / doing / blocked / done). Each task carries an assignee, a `dependsOn[]` list, priority, and description — and persists in `hive/tasks.json` via a new `hive:writeTasks` IPC channel.
-- **Scheduled missions.** A Schedules section in the Floor tab lets you define recurring auto-dispatch missions (label, interval, target agent, body). The main process fires each on a `setInterval`, stamps `lastFiredAt`, and persists the list in config.
-- **Real token & cost telemetry.** The Activity tab reads `~/.claude/projects/` JSONL transcripts — the same files Claude Code writes — and displays actual input/output/cache token counts and estimated USD cost per agent per model. No more proxy tool-call counts.
-- **Global hive text search.** Full-text search across `board.md`, `tasks.json`, and all agent `memory.md` files, available in the Memory tab alongside MemPalace semantic search.
-- **Threaded chat.** A Messages tab in each agent's sidebar renders every hive message grouped by conversation with full reply chains and an inline reply form.
-- **Memory graph.** A visual graph in the Command Center Memory tab maps agents and their knowledge relationships.
-- **GitHub issue ingestion.** An Issues section in the Floor tab pulls open issues from any registered repo via `gh issue list` and lets you assign them to any agent with one click.
-- **CI status watcher.** A CI Status section in the Activity tab polls `gh run list` for every registered repo and shows live pass/fail/in-progress status for GitHub Actions runs.
-- **Desktop notifications.** Native OS notifications fire when an agent finishes a task or is waiting for your input. Toggle in Settings.
-- **Agent archival.** Closing an agent's tab archives it (memory + history intact) rather than deleting it permanently.
+### 新增
+- 新增每 Agent Git worktree、带依赖的任务看板、定时任务、真实 token/成本遥测、全局 hive 搜索、线程聊天、记忆图、GitHub issue、CI 状态、桌面通知和 Agent 归档。
 
-### Fixed
-- Scheduler now honors `lastFiredAt` on config reload — missions don't double-fire after a save.
-- PTY lifecycle teardown runs on natural process exit as well as explicit kill, so worktrees are cleaned up reliably.
-- Task IDs fall back to a stable UUID when the title is empty; `writeTasks` IPC validates its input.
+### 修复
+- 修复调度重复触发、PTY 生命周期清理、任务 ID 后备和 writeTasks IPC 输入校验。
 
 ## [0.1.5] — 2026-06-04
 
-### Added
-- **Dwight, Michael's prep assistant.** A persistent, visible assistant agent
-  (Sonnet, 1M context) spawns on startup. A global **enrich** toggle routes
-  Michael's queued prompts through Dwight first — he gathers repo context and
-  rewrites the prompt, then forwards it to Michael through the hive; toggle it off
-  and prompts go straight to Michael.
-- **Michael's Command Center.** His sidebar becomes a control surface with
-  Terminal, Floor (agent roster + **per-agent model selector** with safe restart,
-  a dispatch box, and working dirs), Memory (MemPalace search + per-agent memory),
-  and Activity (live log feed + board + usage proxy), plus a copyable Claude
-  command handbook.
-- **Per-agent model selection** — a model picker in **Add Agent**, a shared model
-  list, and a message-queue composer with the enrich toggle.
-- **Getting-started tutorial** on the blog (canonical install + first-run walkthrough),
-  with Blog/tutorial CTAs and a redesigned "How it works" section on the landing page.
+### 新增
+- 新增 Dwight 持久化准备助手、Michael Command Center、每 Agent 模型选择和入门教程。
 
-### Fixed
-- Agents no longer read **"idle" while still working** — a Stop blocked mid-turn now
-  reports `blocked` so the UI keeps the agent in its working state.
-- Long agent thought/tool labels now **word-wrap inside their cards** instead of
-  overflowing the bubble horizontally (Pixi word-wrap with a raw-length cap so a
-  pathological string can't grow a runaway-tall card).
-- Switching agent terminals now lands at the **latest output**, while resizes
-  preserve scroll position; the idle action label no longer echoes the "idle" badge.
+### 修复
+- 修复 Agent 虚假 idle、长标签溢出、终端切换不在最新输出和 idle 标签回显问题。
 
 ## [0.1.4] — 2026-06-04
 
-### Added
-- **Signed macOS builds.** The app now ships with a hardened-runtime Developer ID
-  signature (notarization is attempted in CI and stapled when it succeeds; the build is
-  best-effort, so a notarization hiccup never blocks a release). Because macOS binds a
-  folder-access (TCC) grant to a stable code signature, you're now prompted for
-  Documents/Desktop/Downloads access **once** instead of on every agent action.
-  Usage-description strings explain each prompt. Signing/notarization run in CI only
-  when Apple credentials are present, so contributor builds stay unsigned and green.
-- **Blog at [/blog](https://munderdiffl.in/blog/)** — an Eleventy-generated static blog
-  sharing the landing page's neo-brutalist design system, seeded with the first posts
-  on long-term memory, multi-agent harnesses, and MemPalace, plus tag/topic indexes and
-  an RSS feed.
-- **On-site SEO/AEO metadata** — JSON-LD, `robots.txt`, a root `sitemap.xml`, and richer
-  link-unfurl/meta tags across the site.
+### 新增
+- 发布签名的 macOS 构建和 TCC 访问处理；新增 Blog、SEO/AEO 元数据、JSON-LD、robots.txt、sitemap.xml 和链接预览标签。
 
 ## [0.1.3] — 2026-06-01
 
-### Added
-- **Settings panel** (title-bar gear) with a **Reset & start over** action that wipes
-  Michael's memories, the entire hive (every agent, message, task, and the board), and
-  the semantic-memory palace, then relaunches the app into onboarding.
-- Boot loader ("clocking in") shown while the GOD agent initializes, so returning users
-  no longer see the empty "add agent" screen during startup.
+### 新增
+- Settings 增加 Reset & start over，能够清除 Michael 记忆、整个 hive 和语义记忆宫殿；GOD 初始化时显示启动加载器。
 
-### Fixed
-- Crash dialog on quit caused by sending IPC to an already-destroyed window during
-  teardown; all renderer sends are now destroyed-safe and shutdown steps are best-effort.
-- Michael no longer marches to the door flagged "needs you" right after finishing a turn —
-  idle "waiting for input" notifications now let him linger at his desk instead of
-  escalating as a blocked/needs-action state.
+### 修复
+- 修复退出时向已销毁窗口发送 IPC，以及 Michael 完成任务后立即走向“需要你”的门的问题。
 
-## [Brand & rename]
+## [品牌与重命名]
 
-### Added
-- Brand identity: **Hana-Kami** — logo (`docs/logo.svg`), square mark
-  (`docs/logo-mark.svg`), and hero banner (`docs/banner.svg`).
-- Landing page at `docs/index.html` (GitHub Pages–ready).
-- In-app branding: window title, boot screen, title-bar `MD` badge, and fullscreen
-  header captions.
-- Open-source community files: `SECURITY.md`, `CHANGELOG.md`, issue/PR templates, and a
-  CI workflow.
+### 新增
+- 建立 Hana-Kami 品牌身份：Logo、方形标记、Hero 横幅、GitHub Pages 落地页、应用内品牌，以及 SECURITY.md、CHANGELOG.md、Issue/PR 模板和 CI 工作流。
 
-### Changed
-- Renamed the project from *Claude Terminal Harness* to **Hana-Kami** across the
-  README, docs (`SPEC.md`, `DESIGN.md`, `HIVE.md`), `package.json`, and the app UI.
+### 变更
+- 将项目从 Claude Terminal Harness 重命名为 Hana-Kami，并同步 README、SPEC.md、DESIGN.md、HIVE.md、package.json 和应用 UI。
 
 ## [0.1.0] — 2026
 
-Initial working prototype.
+初始可运行原型。
 
-### Added
-- Electron + React + TypeScript shell (electron-vite).
-- Real terminals via `node-pty`, rendered with xterm.js; multi-agent spawn/write/
-  resize/kill over typed IPC (`window.cth`).
-- Pixi.js office floor: Tiled map, camera, recolored cast, pathfinding, seat assignment,
-  tool bubbles, and message envelopes.
-- The hive: on-disk multi-agent layer (`hive.ts`), hook server + `cth-hook` shim and
-  `Stop`-loop (`hooks.ts`), and a semantic memory layer (`memory.ts`).
-- GOD orchestrator agent, approvals queue, and memory search panel.
-- Sandboxed file browser + CodeMirror editor and a git tab (status, log, branches,
-  commit graph).
-- Onboarding wizard, safe-quit guard, and a tokenized SNES/Animal-Crossing design
-  system.
-
+### 新增
+- Electron + React + TypeScript 壳层、electron-vite、node-pty、xterm.js、类型化 IPC、多 Agent 启动/写入/调整大小/终止。
+- Pixi.js 办公区、Tiled 地图、摄像机、角色换色、寻路、座位分配、工具气泡和消息信封。
+- hive.ts 多 Agent 磁盘层、hooks.ts Hook 服务器和 cth-hook shim、Stop 循环、memory.ts 语义记忆层。
+- GOD 编排器、审批队列、记忆搜索、安全文件浏览器、CodeMirror 编辑器、Git 标签、入门向导、安全退出和 SNES/Animal-Crossing 设计系统。
 [0.1.0]: https://github.com/TangerineSpecter/Hana-Kami/releases/tag/v0.1.0

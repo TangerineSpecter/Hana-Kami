@@ -1,106 +1,51 @@
-# Release checklist: verifying the updater
+# 发布检查清单：验证更新器
 
-## Hana-Kami transition from the original repository
+## 从原始仓库迁移到 Hana-Kami
 
-Previously installed clients poll `chaitanyagiri/munder-difflin` for releases.
-This repository publishes to `TangerineSpecter/Hana-Kami`. The old address is a
-separate upstream repository, not a redirect to this one, so a release here
-alone cannot update those clients. Do not claim an automatic upgrade from the
-old app until a transition release has been published in the old repository by
-someone with access and tested on each supported platform. Otherwise tell
-existing users to install Hana-Kami once from the new release page. Their
-existing profile is reused automatically when the new profile has no config.
+之前安装的客户端会从 `chaitanyagiri/munder-difflin` 获取发布版本。本仓库发布到 `TangerineSpecter/Hana-Kami`。旧地址是独立的上游仓库，并不会重定向到本仓库，因此仅在这里发布版本无法更新旧客户端。在旧仓库由有权限的人发布迁移版本，并在每个受支持的平台上完成测试之前，不要宣称旧应用可以自动升级。否则应告知现有用户从新的发布页面手动安装一次 Hana-Kami。当新配置目录没有配置时，现有用户配置会自动复用。
 
-- [ ] Confirm the new release repository and its assets are publicly readable by
-  the updater, or configure an authenticated distribution channel before release.
-- [ ] Test a real old-version-to-Hana-Kami install with an existing config,
-  command history, encrypted integration secrets and renderer localStorage.
-- [ ] If the old repository's maintainer cooperates, publish and test a signed
-  transition build there so its installed clients can discover the new app.
-- [ ] Test the next Hana-Kami-to-Hana-Kami update from the new release repository.
+- [ ] 确认更新器可以公开读取新发布仓库及其资源，或在发布前配置带认证的分发渠道。
+- [ ] 使用已有配置、命令历史、加密集成密钥和 Renderer localStorage，测试一次真实的旧版本到 Hana-Kami 的安装。
+- [ ] 如果旧仓库维护者愿意配合，在旧仓库发布并测试签名迁移版本，使已安装的客户端能够发现新应用。
+- [ ] 从新发布仓库测试下一次 Hana-Kami 到 Hana-Kami 的更新。
 
-The auto-updater ships across a version hop, so **the code in a release is only
-exercised by the NEXT release**. A build's own updater is proven by whether the
-build after it lands, not by the build itself. This checklist is how a release
-runner confirms it, because the paths that matter most are the ones a clean,
-successful release never touches.
+自动更新器会跨版本运行，因此**某个发布版本中的更新器代码只能由下一个发布版本验证**。一个构建版本自身的更新器，应该通过它发布后能否更新到后续构建来验证，而不是靠该构建本身验证。本清单用于帮助发布执行者完成确认，因为最重要的路径往往是一次干净、成功的发布永远不会触及的路径。
 
-## Before the tag: mechanical gates (run these first)
+## 创建 tag 前：机械门禁（先运行这些检查）
 
-- [ ] **`npm run check:links` passes.** Every download link in `RELEASE.md` and every advertised
-  version in `docs/index.html` / `docs/llms.txt` must match `package.json`. electron-builder bakes
-  the version into each artifact name, so a version left behind here turns the release page's
-  download buttons into 404s the moment the tag ships. This is also enforced in CI on `release/**`,
-  but run it locally before you tag. After publishing, `npm run check:links -- --live` HEADs every
-  URL and requires 200.
-- [ ] **`package.json` version is the real release version** (not an `-rc` string), and `RELEASE.md`,
-  `build/release-notes.md` and `CHANGELOG.md` all name that same version.
+- [ ] **通过 `npm run check:links`。** `RELEASE.md` 中的每个下载链接，以及 `docs/index.html` / `docs/llms.txt` 中宣传的每个版本，都必须与 `package.json` 一致。electron-builder 会把版本写入每个产物名称；这里遗留旧版本会让发布页面的下载按钮在 tag 发布后立即变成 404。CI 也会在 `release/**` 上执行该检查，但创建 tag 前仍要在本地运行。发布后，`npm run check:links -- --live` 会对每个 URL 发送 HEAD 请求并要求返回 200。
+- [ ] **`package.json` 中的版本是真实发布版本**（不是 `-rc` 字符串），并且 `RELEASE.md`、`build/release-notes.md` 和 `CHANGELOG.md` 都使用同一个版本号。
 
-## The proving hop (rehearse on prereleases, before the real release)
+## 验证跳转（正式发布前先用预发布版本演练）
 
-`0.4.6` is delivered by `0.4.5`'s updater, so `0.4.6` arriving proves the OLD
-code worked. Only a hop that STARTS on our new code proves it. So rehearse on
-prereleases first: publish `0.4.6-rc.1`, then a no-op `0.4.7-rc.1`, and drive
-the hop `0.4.6-rc.1` -> `0.4.7-rc.1` on a test machine BEFORE the real `0.4.6`
-exists. Same evidence, earlier, with any failure landing on a throwaway.
+`0.4.6` 由 `0.4.5` 的更新器交付，因此 `0.4.6` 到达只能证明旧代码工作正常。只有从新代码开始的版本跳转才能证明新代码。因此先用预发布版本演练：发布 `0.4.6-rc.1`，再发布一个无功能变化的 `0.4.7-rc.1`，并在真实 `0.4.6` 存在之前，在测试机器上驱动 `0.4.6-rc.1` -> `0.4.7-rc.1`。证据相同但更早获得，失败也只会落在一次性测试版本上。
 
-Why it is safe: a `-rc.1` tag publishes as a GitHub pre-release (release.yml,
-`prerelease: contains(ref_name, '-')`), and electron-updater only offers a
-pre-release to a client whose OWN version is a pre-release (allowPrerelease
-defaults to that, verified in 6.8.9). So a stable `0.4.5` client sees neither
-rc, on the native path or the notify-only fallback. Only a machine already on
-`0.4.6-rc.1` sees `0.4.7-rc.1`.
+这样做是安全的：`-rc.1` tag 会作为 GitHub 预发布版本发布（release.yml 中的 `prerelease: contains(ref_name, '-')`），而 electron-updater 只会向自身版本也是预发布版本的客户端提供预发布版本（`allowPrerelease` 默认如此，已在 6.8.9 中验证）。因此稳定版 `0.4.5` 客户端，无论使用原生路径还是仅通知的回退路径，都看不到任何 rc。只有已经运行 `0.4.6-rc.1` 的机器才能看到 `0.4.7-rc.1`。
 
-Two things to hold: a tester must MANUALLY install `0.4.6-rc.1` first (a `0.4.5`
-machine sees nothing, which is the point); and a machine left on `0.4.7-rc.1`
-stays AHEAD of the real `0.4.6` (`0.4.7-rc.1 > 0.4.6` and we do not allow
-downgrade), so reset rehearsal machines by reinstalling manually afterward. A
-`0.4.6-rc.1` machine that does nothing self-heals to the real `0.4.6` when it
-ships, because a release outranks its own pre-release.
+需要注意两点：测试者必须先手动安装 `0.4.6-rc.1`（`0.4.5` 机器看不到任何版本，这正是目的）；而停留在 `0.4.7-rc.1` 的机器会领先于真实的 `0.4.6`（`0.4.7-rc.1 > 0.4.6`，且我们不允许降级），因此演练后要手动重新安装来重置测试机器。若安装 `0.4.6-rc.1` 的机器没有任何操作，真实 `0.4.6` 发布时会自动恢复到它，因为正式发布版本优先级高于自身的预发布版本。
 
-If the rehearsal passes, the real `0.4.6` is that SAME tree with only
-`package.json`'s version bumped from `0.4.6-rc.1` to `0.4.6` (the build reads
-the version from package.json, not the tag), nothing else. Any CODE change
-between the rehearsal and the release means re-rehearse.
+如果演练通过，真实的 `0.4.6` 必须是同一份代码树，只把 `package.json` 的版本从 `0.4.6-rc.1` 改为 `0.4.6`（构建从 package.json 读取版本，而不是从 tag 读取），除此之外不做任何改动。演练和正式发布之间一旦改动代码，就必须重新演练。
 
-**Release gate (hard): each rc (and the real release) must be a COMPLETE signed,
-notarized, stapled run of the real pipeline, not a `git tag` and not a version bump.** macOS updates
-through Squirrel.Mac, which needs `mac-universal.zip` + its `.blockmap` +
-`latest-mac.yml` (whose `path:` must point at the zip, not the dmg). A release
-missing those silently falls back to manual and proves nothing.
+**发布门禁（硬性要求）：每个 rc（以及正式版本）都必须完整执行真实流水线，并完成签名、公证和 stapling，不能只创建 `git tag` 或只修改版本号。** macOS 通过 Squirrel.Mac 更新，需要 `mac-universal.zip`、对应的 `.blockmap` 和 `latest-mac.yml`（其中 `path:` 必须指向 zip，而不是 dmg）。缺少这些文件的发布会静默回退到手动下载，无法证明任何事情。
 
-## What a clean 0.4.7 proves on its own (the happy path)
+## 一次干净的 0.4.7 自身可以证明什么（正常路径）
 
-Install `0.4.6-rc.1`, publish a complete `0.4.7-rc.1`, then watch that client:
+安装 `0.4.6-rc.1`，发布完整的 `0.4.7-rc.1`，然后观察该客户端：
 
-- [ ] the badge moves check -> available -> downloading -> downloaded on its own
-- [ ] at `downloaded` the badge's primary action is **restart**, not a manual download
-- [ ] clicking it quits, installs `0.4.7-rc.1`, and relaunches into the new version
-- [ ] after relaunch the badge shows the "just updated" state
+- [ ] 徽章自动从 check -> available -> downloading -> downloaded 变化
+- [ ] 在 `downloaded` 状态下，徽章的主要操作是**重启**，而不是手动下载
+- [ ] 点击后应用退出、安装 `0.4.7-rc.1`，并以新版本重新启动
+- [ ] 重新启动后，徽章显示“刚刚更新”状态
 
-## What a clean release CANNOT reach (inject these by hand)
+## 一次干净的发布无法触及什么（需要手动注入）
 
-These only run when a user is already in trouble, so a healthy release never
-exercises them. A skipped check here means they ship unwitnessed.
+这些路径只有用户已经遇到问题时才会运行，因此健康的发布永远不会触发它们。跳过这里的检查，就意味着它们会在无人见证的情况下随版本发布。
 
-- [ ] **Timeout, fallback, and the error-state link (guards `updater.ts` + #325).**
-  Cut the network, then trigger a check. Within ~30s the badge must reach an
-  **error** state, never a permanent `checking` spinner, and offer a working
-  download link (releases page). Restore the network; the next check recovers.
-- [ ] **Restart re-entry (#324).** With an update staged at `downloaded`, click
-  restart twice in quick succession. It must NOT wedge with "The command is
-  disabled and cannot be executed"; a refused or failed quit reports back and
-  the button recovers rather than spinning.
-- [ ] **Success is visible (#326).** On the latest version, click the badge. It
-  must show a positive "you are on the latest version" acknowledgement, not
-  settle silently to a grey chip. (This one needs no real update: verify it on
-  any build.)
+- [ ] **超时、回退和错误状态链接（保护 `updater.ts` + #325）。** 断开网络后触发检查。约 30 秒内徽章必须进入**错误**状态，不能永久停留在 `checking` 加载动画，并提供可用的下载链接（发布页面）。恢复网络后，下一次检查应恢复正常。
+- [ ] **重启重入（#324）。** 在更新处于 `downloaded` 状态时，快速连续点击两次重启。不能卡在“命令已禁用，无法执行”；拒绝退出或退出失败时应反馈错误，按钮应恢复而不是一直转圈。
+- [ ] **成功状态可见（#326）。** 在最新版本上点击徽章，必须显示积极的“当前已是最新版本”确认，而不是静默变成灰色标签。（这项不需要真实更新，在任意构建上验证即可。）
 
-## Tested vs rc-only (keep this split in every report)
+## 已测试与只能在 rc 验证的内容（每份报告都保持这个区分）
 
-- **Verified without a release** (unit tests, typecheck, and dev `update:simulate`):
-  badge state-rendering and click-wiring for every state, and the no-update
-  acknowledgement.
-- **Only a real signed release can exercise**: `downloadUpdate`, `quitAndInstall`,
-  and the Squirrel install itself. Do not let this half borrow the tested half's
-  confidence: report which is which.
+- **无需发布即可验证**（单元测试、类型检查和开发环境 `update:simulate`）：每种状态的徽章渲染和点击连线，以及无更新确认。
+- **只有真实签名发布才能验证**：`downloadUpdate`、`quitAndInstall` 以及 Squirrel 实际安装过程。不要让这一部分借用已测试部分的信心：报告中要明确区分两者。

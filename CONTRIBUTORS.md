@@ -1,25 +1,18 @@
-# Contributors
+# 贡献者
 
-Everyone on this list has code in Hana-Kami. If that is you, this file is yours to point at.
+这份名单中的每个人都为 Hana-Kami 贡献过代码。如果你也在其中，可以把这个文件作为贡献记录分享出去。
 
-It is generated from the pull requests themselves rather than from commit metadata, so nobody is
-dropped because their git email does not happen to match their GitHub account. It is regenerated
-from merged pull requests, so you appear without having to ask.
+名单直接从 Pull Request 生成，而不是从提交元数据生成，因此不会因为 git 邮箱与 GitHub 账号不一致而遗漏任何人。它会根据已合并的 Pull Request 重新生成，所以你无需申请就会出现在名单中。
 
-**52 people** have contributed so far.
+目前共有 **52 人**参与贡献。
 
 <a href="https://github.com/TangerineSpecter/Hana-Kami/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=TangerineSpecter/Hana-Kami" alt="Contributor avatars">
+  <img src="https://contrib.rocks/image?repo=TangerineSpecter/Hana-Kami" alt="贡献者头像">
 </a>
 
-The avatars above come from GitHub's own contributors graph, and that graph is not this list.
-GitHub files each commit under the email address in its author field, so anyone whose git email is
-not attached to their GitHub account is left out of that graph. Nothing warns them and nothing
-warns us. Some addresses can never be attached at all, because they point at a local machine name
-rather than a real domain. The table below is the list to go by. It is built from merged pull
-requests, and a pull request always has a real account behind it.
+上面的头像来自 GitHub 自己的贡献者图表，而该图表并不是这份名单。GitHub 会根据提交作者字段中的邮箱归档提交，因此 git 邮箱未绑定 GitHub 账号的人会被排除在图表之外；GitHub 不会提醒他们，我们也不会收到提醒。有些邮箱甚至永远无法绑定，因为它们指向的是本机名称而不是真实域名。以下表格才是应以之为准的名单。它根据已合并的 Pull Request 生成，而每个 Pull Request 背后都有真实账号。
 
-| Contributor | Contributions | First | Most recent |
+| 贡献者 | 贡献数 | 首次贡献 | 最近贡献 |
 |---|---:|---|---|
 | [@chaitanyagiri](https://github.com/chaitanyagiri) | 51 | 2026-06-10 | 2026-09-06 |
 | [@Gulum](https://github.com/Gulum) | 20 | 2026-06-06 | 2026-06-10 |
@@ -74,20 +67,15 @@ requests, and a pull request always has a real account behind it.
 | [@wckleinhenz](https://github.com/wckleinhenz) | 1 | 2026-09-06 | 2026-09-06 |
 | [@xxiaoxiong](https://github.com/xxiaoxiong) | 1 | 2026-09-06 | 2026-09-06 |
 
-_162 pull requests from 52 people._
+_52 人贡献了 162 个 Pull Request。_
 
-## † Contributions that never got the merged badge
+## † 未获得“已合并”徽章的贡献
 
-17 pull requests below are in main and their authors are contributors, but GitHub
-shows them as closed rather than merged. On release night the pull requests were closed before the
-release branch merged into main, so at the moment they closed, main did not contain their commits
-yet. GitHub records the badge at that instant and will not let it be changed afterwards. It was our
-sequencing mistake and it is not recoverable, so the record lives here instead. The full account is
-in [discussion #353](https://github.com/TangerineSpecter/Hana-Kami/discussions/353).
+下面的 17 个 Pull Request 已经进入 main，作者也属于贡献者，但 GitHub 将它们显示为已关闭而非已合并。发布当晚，这些 Pull Request 在发布分支合并到 main 之前就被关闭了，因此关闭时 main 尚未包含它们的提交。GitHub 会记录当时的徽章状态，之后不允许修改。这是我们安排顺序时的失误，无法恢复，因此在此保留记录。完整说明见 [讨论 #353](https://github.com/TangerineSpecter/Hana-Kami/discussions/353)。
 
-Every commit listed here was checked to be in `main` before it was added.
+这里列出的每个提交，在加入名单前都已确认存在于 `main` 中。
 
-| Pull request | Contributor | In main |
+| Pull Request | 贡献者 | 是否进入 main |
 |---|---|---|
 | [#156](https://github.com/TangerineSpecter/Hana-Kami/pull/156) | [@gpechieu](https://github.com/gpechieu) | [`ed8bc84f`](https://github.com/TangerineSpecter/Hana-Kami/commit/ed8bc84f) |
 | [#168](https://github.com/TangerineSpecter/Hana-Kami/pull/168) | [@Maev4l](https://github.com/Maev4l) | [`9bb060dd`](https://github.com/TangerineSpecter/Hana-Kami/commit/9bb060dd) |
@@ -107,19 +95,14 @@ Every commit listed here was checked to be in `main` before it was added.
 | [#317](https://github.com/TangerineSpecter/Hana-Kami/pull/317) | [@aaroncoville](https://github.com/aaroncoville) | [`2b96d5d0`](https://github.com/TangerineSpecter/Hana-Kami/commit/2b96d5d0) |
 | [#323](https://github.com/TangerineSpecter/Hana-Kami/pull/323) | [@aaroncoville](https://github.com/aaroncoville) | [`e6c936ac`](https://github.com/TangerineSpecter/Hana-Kami/commit/e6c936ac) |
 
-**#168** One of the two commits on the branch is in main.
+**#168** 分支上的两个提交中有一个已进入 main。
 
-**#172** Two of the three commits on the branch are in main. The pull request is still open and the third commit is still to be taken.
+**#172** 分支上的三个提交中有两个已进入 main。Pull Request 仍处于开放状态，第三个提交尚待采纳。
 
-**#213** Arabic and RTL support. The files were carried over byte for byte and committed under a maintainer account, so these commits do not even carry their name.
+**#213** 阿拉伯语和 RTL 支持。这些文件逐字节迁移，并使用维护者账号提交，因此这些提交甚至没有带上作者姓名。
 
 ---
 
-**Not on this list yet?** [`good first issue`](https://github.com/TangerineSpecter/Hana-Kami/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
-is kept stocked with small, self contained work, and [`CONTRIBUTING.md`](./CONTRIBUTING.md) has
-everything else. Help that is not code counts too: a bug report with a clean reproduction is often
-worth more than a patch, it just cannot be counted automatically here.
+**还没有出现在名单中？** [`good first issue`](https://github.com/TangerineSpecter/Hana-Kami/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) 会持续提供小型、独立的任务，其他内容请参阅 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。非代码形式的帮助同样重要：一份可清晰复现的 Bug 报告往往比补丁更有价值，只是无法在这里自动统计。
 
-<sub>Generated by `scripts/generate-contributors.mjs`. Do not edit by hand; your changes will be
-overwritten on the next merge. To credit a contribution that is in main without the merged badge,
-add its pull request number to `.github/contributors-extra.json`.</sub>
+<sub>由 `scripts/generate-contributors.mjs` 生成。请勿手动编辑；下一次合并时你的改动会被覆盖。若要为已进入 main 但没有“已合并”徽章的贡献补充署名，请将其 Pull Request 编号加入 `.github/contributors-extra.json`。</sub>

@@ -1,70 +1,42 @@
-# The Hive — autonomous multi-agent layer
+# 蜂巢——自主多 Agent 协作层
 
-> How Hana-Kami turns a room full of independent `claude`
-> processes into a collaborating, self-coordinating team with persistent memory,
-> a shared blackboard, and a "god" orchestrator that runs the floor.
+> Hana-Kami 如何把一屋子彼此独立的 `claude`
+> 进程变成一支能够协作、自我协调的团队，拥有持久记忆、共享黑板和管理办公区的“GOD”编排 Agent。
 
-This document is the design source of truth for the agent-collaboration layer. It
-sits alongside [`SPEC.md`](./SPEC.md) (terminal/event plane) and
-[`DESIGN.md`](./DESIGN.md) (visual system). Code is the source of truth for what's
-*built*; this is the source of truth for what we're *building toward*.
+本文档是 Agent 协作层的设计真源。它与 [`SPEC.md`](./SPEC.md)（终端/事件平面）和
+[`DESIGN.md`](./DESIGN.md)（视觉系统）并列。代码是已经*构建完成*内容的真源；本文档是我们*计划构建*内容的真源。
 
 ---
 
-## 1. What we're building (and what it's called)
+## 1. 我们正在构建什么（以及它叫什么）
 
-Each spawned agent is a real `claude` CLI process with a filesystem, a system
-prompt, and a hook lifecycle. We layer four classic patterns on top:
+每个启动的 Agent 都是真实的 `claude` CLI 进程，拥有文件系统、系统提示词和 Hook 生命周期。我们在其上叠加四种经典模式：
 
-| Behaviour the user asked for | Pattern (the name) |
+| 用户要求的行为 | 模式（名称） |
 | --- | --- |
-| Per-agent memory file made at spawn, that the agent reads and updates | **Agent long-term memory** (MemGPT/Letta-style self-managed memory) |
-| Writing a requirement into another agent's file | **Stigmergy** — coordinating by modifying a shared environment |
-| A shared plan multiple agents edit | **Blackboard architecture** (Hearsay-II) |
-| "Check after finishing every task" | **Mailbox / actor model** — drain an inbox at a lifecycle point |
-| A "god" agent that runs the floor and clarifies for others | **Orchestrator / supervisor** (LangGraph-supervisor-style) |
+| 启动时创建、由 Agent 读取和更新的每 Agent 记忆文件 | **Agent 长期记忆**（MemGPT/Letta 风格的自管理记忆） |
+| 将要求写入另一个 Agent 的文件 | **迹象协作（Stigmergy）**——通过修改共享环境进行协调 |
+| 多个 Agent 共同编辑的计划 | **黑板架构**（Hearsay-II） |
+| “完成每项任务后检查” | **邮箱 / Actor 模型**——在生命周期节点清空收件箱 |
+| 管理办公区并为其他 Agent 释疑的“GOD”Agent | **编排器 / Supervisor**（LangGraph-supervisor 风格） |
 
-The umbrella term is a **multi-agent system (MAS)** with **autonomous agent
-loops**. The closest academic analogue to this app is Stanford's *Generative
-Agents* (Park et al., 2023): Sims-style avatars in a 2D world with a memory
-stream, retrieval, reflection, and planning.
+总称是带有**自主 Agent 循环**的**多 Agent 系统（MAS）**。与本应用最接近的学术先例是斯坦福的 *Generative Agents*（Park 等，2023）：2D 世界中的 Sims 风格头像，配合记忆流、检索、反思和规划。
 
 ---
 
-## 2. Locked design decisions
+## 2. 已锁定的设计决策
 
-1. **Git as the coordination/audit layer, single committer.** Everything the
-   hive knows is files in one local git repo. To avoid `.git/index.lock`
-   corruption with many concurrent agents, **only the Electron main process
-   commits**. Agents never call git — they write plain files. (Research:
-   GitHub Desktop's commit-queue pattern; lazygit/git-retry backoff.)
-2. **Single-writer-per-file.** Each agent writes only inside its own
-   `agents/<id>/` directory. Cross-agent delivery happens by the **router**
-   (main process) moving messages from a sender's `outbox/` into a recipient's
-   `inbox/`. No file is ever written by two processes.
-3. **God-mode autonomy, native HITL.** A privileged **god agent** (lives in
-   Michael's room) adjudicates cross-agent traffic. Routine requests
-   (clarifications, data asks, plan tweaks) it resolves itself and the system
-   keeps running fully autonomously. **Critical** items (destructive ops, spend,
-   scope changes, unresolvable conflicts) route to the god, who surfaces them to
-   the human natively in his own Claude Code session — there is no separate
-   approval queue. Tool-permission prompts are the HITL gate, and they're
-   approvable remotely from a phone via `/remote-control`.
-4. **Memory: markdown first.** Per-agent `memory.md` + shared blackboard, with a
-   SQLite FTS index when keyword recall isn't enough. A heavyweight vector layer
-   (Letta/Mem0/Zep) is *not* needed at 5–15 agents and is architecturally wrong
-   here (they want to own the agent runtime; our runtime is the `claude` CLI).
-   Optional future upgrade: **MemPalace over MCP** (validate its retrieval first —
-   its public benchmarks are overstated per independent audit).
-5. **Autonomous loop = `Stop` hook.** An agent that finishes drains its inbox via
-   a `Stop` hook that returns `{"decision":"block","reason":…}` to keep it
-   working, guarded by `stop_hook_active` to prevent infinite loops.
+1. **Git 作为协调/审计层，单一提交者。**蜂巢知道的一切都是一个本地 git 仓库中的文件。为避免多个 Agent 并发时造成 `.git/index.lock` 损坏，**只有 Electron 主进程提交**。Agent 永远不调用 git，只写入普通文件。（参考：GitHub Desktop 的提交队列模式；lazygit/git-retry 的退避。）
+2. **每个文件只有一个写入者。**每个 Agent 只写入自己的 `agents/<id>/` 目录。跨 Agent 交付由**路由器**（主进程）将发送者 `outbox/` 中的消息移动到收件人 `inbox/` 完成。任何文件都不会由两个进程写入。
+3. **GOD 模式自主运行，原生 HITL。**拥有特权的 **GOD Agent**（位于 Michael 的房间）裁决跨 Agent 流量。常规请求（澄清、数据请求、计划调整）由它自行处理，系统保持完全自主运行。**关键**事项（破坏性操作、花费、范围变更、无法解决的冲突）会路由给 GOD，由它在自己的 Claude Code 会话中原生呈现给人类——没有独立的审批队列。工具权限提示就是 HITL 门禁，可以通过手机上的 `/remote-control` 远程审批。
+4. **记忆：Markdown 优先。**每 Agent 的 `memory.md` 加共享黑板；关键词召回不足时使用 SQLite FTS 索引。在 5–15 个 Agent 的规模下不需要重量级向量层（Letta/Mem0/Zep），在架构上也不适合这里（它们希望接管 Agent 运行时，而我们的运行时是 `claude` CLI）。未来可选升级：**通过 MCP 使用 MemPalace**（先验证其检索能力——独立审计认为其公开基准被夸大）。
+5. **自主循环 = `Stop` Hook。**Agent 完成任务后，通过返回 `{"decision":"block","reason":…}` 的 `Stop` Hook 清空收件箱并继续工作，同时由 `stop_hook_active` 防止无限循环。
 
 ---
 
-## 3. On-disk layout — the "hive"
+## 3. 磁盘布局——“蜂巢”
 
-Lives under `<harnessHome>/hive/`, a git repo committed only by the main process.
+位于 `<harnessHome>/hive/` 下，是一个只由主进程提交的 git 仓库。
 
 ```
 hive/
@@ -82,19 +54,16 @@ hive/
     cursor.json          # { lastProcessed: <msgid> }  — avoids reprocessing
 ```
 
-Design rules that make this robust:
-- **One JSON file per message**, written via temp-file + atomic `rename` — never
-  a co-edited shared mailbox file (those conflict under git).
-- **Append-only** `log.jsonl`; consumers track their own cursor.
-- `board.md` is the one genuinely co-edited file — it goes through the god agent
-  (single scribe) to avoid conflicts.
+使其稳健的设计规则：
+- **每条消息一个 JSON 文件**，通过临时文件 + 原子 `rename` 写入；绝不使用共同编辑的共享邮箱文件（它们会在 git 中冲突）。
+- **只追加写入** `log.jsonl`；消费者跟踪自己的游标。
+- `board.md` 是唯一真正共同编辑的文件——交给 GOD Agent（单一记录者）处理，以避免冲突。
 
 ---
 
-## 4. Message schema (FIPA-lite)
+## 4. 消息结构（FIPA-lite）
 
-Borrow the one useful idea from FIPA-ACL/KQML — the **speech act** — and drop the
-LISP syntax. Seven semantic fields:
+借用 FIPA-ACL/KQML 中唯一有用的概念——**言语行为（speech act）**——去掉 LISP 语法。包含七个语义字段：
 
 ```jsonc
 {
@@ -113,14 +82,11 @@ LISP syntax. Seven semantic fields:
 }
 ```
 
-Anti-livelock rules: only `request`/`query`/`propose` obligate a reply (pure
-`inform`/`done` are terminal); every reply increments `hops`; past a hop cap the
-god agent escalates instead of letting two agents loop forever; re-seeing a
-processed `id` is a no-op (idempotent via cursor).
+防活锁规则：只有 `request` / `query` / `propose` 要求回复（纯 `inform` / `done` 是终止消息）；每次回复都会增加 `hops`；超过跳数上限后由 GOD Agent 升级处理，而不是让两个 Agent 无限循环；再次看到已处理的 `id` 时不做任何操作（通过游标实现幂等）。
 
 ---
 
-## 5. Control flow
+## 5. 控制流
 
 ```
 agent B mid-task needs something from agent C
@@ -141,77 +107,52 @@ agent C finishes its current turn → Stop hook fires
 agent C keeps working: reads the messages, acts, replies via its own outbox
 ```
 
-The same hook socket drives the avatars: `PreToolUse`/`PostToolUse` payloads move
-an agent to the right station (replacing today's `mockEvents.ts` / PTY-scraping).
+同一个 Hook 套接字也驱动头像：`PreToolUse` / `PostToolUse` 的 payload 会把 Agent 移动到正确工位（替代当前的 `mockEvents.ts` / PTY 抓取）。
 
 ---
 
-## 6. The god agent (orchestrator)
+## 6. GOD Agent（编排器）
 
-A fixed, always-on agent seated at `desk-ceo` (Michael's room), `character:
-michael`, flagged `isGod`. It is an ordinary `claude` process — the *intelligence*
-— while the main process is the *mechanism* (git, sockets, routing). It owns:
+一个固定且始终在线的 Agent，坐在 `desk-ceo`（Michael 的房间），`character:
+michael`，标记为 `isGod`。它是普通的 `claude` 进程——负责*智能*；主进程负责*机制*（git、套接字、路由）。它拥有：
 
-- **Roster & routing** (`registry.json`): who exists, their capabilities, status.
-- **Adjudication**: read each outbound request; resolve routine ones itself
-  (answer clarifications, route to the right specialist with a self-contained
-  task spec), escalate only critical ones. This is "god mode."
-- **Blackboard scribe**: the single writer of `board.md`, so shared plans never
-  conflict.
-- **Task ledger** (`tasks.json`): assign, track, retry, checkpoint.
+- **列表与路由**（`registry.json`）：有哪些 Agent、它们的能力和状态。
+- **裁决**：读取每个出站请求；自行解决常规请求（回答澄清、用自包含的任务规格路由给正确专家），只升级关键请求。这就是“GOD 模式”。
+- **黑板记录者**：`board.md` 的唯一写入者，确保共享计划不会冲突。
+- **任务账本**（`tasks.json`）：分配、跟踪、重试和检查点。
 
-Its escalation policy (what counts as "critical") lives in its system prompt and
-is the primary control surface — tune the prompt, not the code.
+它的升级策略（什么算“关键”）位于系统提示词中，是主要控制面——调提示词，不要改代码。
 
 ---
 
-## 7. Phased plan
+## 7. 分阶段计划
 
-- **Phase 0 — Foundation** ✅: `hive.ts` on-disk layer + spawn injection
-  (identity, protocol, env) + IPC to read hive state. Agents are hive-aware: they
-  read their memory/inbox at task start and send via outbox; the router delivers;
-  everything is committed and visible.
-- **Phase 1 — Autonomy** ✅: `hooks.ts` UDS server + `cth-hook` shim (attached per
-  agent via `--settings`) + `Stop`-loop so agents drain their inbox automatically
-  and keep running (guarded by `stop_hook_active` + cursor); hook events stream to
-  the renderer to drive avatars.
-- **Phase 2 — God mode** ✅: the god agent auto-spawns into Michael's room
-  (`desk-ceo` reserved) and, on a fresh spawn, is started with `/remote-control`
-  (best-effort) plus an orientation prompt so it begins running the floor on its
-  own. The router routes `to:"human"` traffic to the god (the human's proxy);
-  there is no separate approval queue — human-in-the-loop is native to each
-  agent's Claude Code session (permission prompts, approvable remotely from a
-  phone). Idle agents are woken when they hold unread inbox messages.
-- **Phase 3 — Semantic memory** ✅ (CLI integration): `memory.ts` wraps the
-  **MemPalace CLI** (not MCP, by decision). The harness keeps one shared palace
-  under `harnessHome`, points every agent's `MEMPALACE_PALACE_PATH` at it, mines
-  each agent's `memory.md` into its own wing (mtime-gated), and agents recall via
-  `mempalace search` / `wake-up`. Detect-and-degrade: a no-op when `mempalace`
-  isn't installed (markdown memory still works). Default model `minilm` (light,
-  for low-RAM Macs); `embeddinggemma` is the multilingual opt-in. A `MemoryPanel`
-  lets the human search the same palace.
-  - *Still open*: reflection/summarization to bound `memory.md`; needs a live
-    `mempalace` install to validate retrieval end-to-end.
+- **阶段 0——基础** ✅：`hive.ts` 磁盘层 + 启动注入
+  （identity、protocol、env）+ 用于读取蜂巢状态的 IPC。Agent 已了解蜂巢：任务开始时读取自己的记忆/收件箱，通过 outbox 发送；路由器负责投递；一切内容都会被提交并可见。
+- **阶段 1——自主运行** ✅：`hooks.ts` UDS 服务器 + `cth-hook` shim（通过 `--settings` 为每个 Agent 挂载）+ `Stop` 循环，让 Agent 自动清空收件箱并持续运行（由 `stop_hook_active` + 游标保护）；Hook 事件流向 Renderer 以驱动头像。
+- **阶段 2——GOD 模式** ✅：GOD Agent 自动启动在 Michael 的房间（保留 `desk-ceo`），新启动时会尽力带 `/remote-control` 和引导提示词开始管理办公区。路由器将 `to:"human"` 流量路由给 GOD（人类的代理）；没有独立审批队列——人工介入原生存在于每个 Agent 的 Claude Code 会话中（权限提示可通过手机远程审批）。持有未读收件箱消息的空闲 Agent 会被唤醒。
+- **阶段 3——语义记忆** ✅（CLI 集成）：`memory.ts` 封装 **MemPalace CLI**（根据决策，不使用 MCP）。工作台在 `harnessHome` 下维护一个共享宫殿，将每个 Agent 的 `MEMPALACE_PALACE_PATH` 指向它，把每个 Agent 的 `memory.md` 按自己的区域挖掘进去（由 mtime 控制），Agent 通过 `mempalace search` / `wake-up` 召回。检测并降级：未安装 `mempalace` 时为空操作（Markdown 记忆仍可用）。默认模型为 `minilm`（轻量，适合低内存 Mac）；`embeddinggemma` 是多语言可选项。`MemoryPanel` 允许人类搜索同一座宫殿。
+  - *仍待完成*：通过反思/摘要限制 `memory.md` 的增长；需要实际安装 `mempalace` 才能端到端验证检索。
 
 ---
 
-## 8. Key risks & mitigations
+## 8. 主要风险与缓解措施
 
-| Risk | Mitigation |
+| 风险 | 缓解措施 |
 | --- | --- |
-| `index.lock` corruption | Single committer (main process), retry+backoff, stale-lock cleanup |
-| Infinite Stop-hook loop | Guard on `stop_hook_active`; `hops` cap; `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` |
-| Two agents ping-ponging | Only request/query/propose obligate replies; hop cap → god escalates |
-| Reprocessing messages | Per-agent `cursor.json`; processed messages move to `inbox/.done/` |
-| `memory.md` unbounded growth | Phase 3 reflection/summarization |
-| Modifying the user's repo with hooks | Write hooks to `<cwd>/.claude/settings.local.json` (gitignored convention) |
+| `index.lock` 损坏 | 单一提交者（主进程）、重试+退避、清理过期锁 |
+| Stop Hook 无限循环 | 通过 `stop_hook_active` 保护；限制 `hops`；使用 `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` |
+| 两个 Agent 互相乒乓 | 只有 request/query/propose 要求回复；超过跳数上限后由 GOD 升级 |
+| 重复处理消息 | 每个 Agent 使用 `cursor.json`；已处理消息移动到 `inbox/.done/` |
+| `memory.md` 无限制增长 | 阶段 3 的反思/摘要 |
+| Hook 修改用户仓库 | 将 Hook 写入 `<cwd>/.claude/settings.local.json`（遵循 gitignore 约定） |
 
 ---
 
-## 9. References
+## 9. 参考资料
 
-- Anthropic — *Building a multi-agent research system* (lead/subagent, plan-to-memory).
-- LangGraph supervisor (structured routing + handoff registry + checkpoints).
-- FIPA-ACL / KQML (speech acts).
-- Stanford *Generative Agents* (memory stream, reflection, 2D world).
-- Claude Code hooks reference (`Stop`, `PreToolUse`, `UserPromptSubmit`; `stop_hook_active`).
+- Anthropic——*Building a multi-agent research system*（主 Agent/子 Agent、计划到记忆）。
+- LangGraph supervisor（结构化路由 + 交接注册表 + 检查点）。
+- FIPA-ACL / KQML（言语行为）。
+- Stanford *Generative Agents*（记忆流、反思、2D 世界）。
+- Claude Code Hook 参考（`Stop`、`PreToolUse`、`UserPromptSubmit`；`stop_hook_active`）。
