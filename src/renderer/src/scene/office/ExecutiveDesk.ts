@@ -21,7 +21,9 @@ export function installExecutiveDesk(map: TiledMapRenderer): void {
       // extends into the already-walkable floor immediately in front of it.
       const isStoolFoot = layer.label === 'furniture-below'
         && tile.x === x + 16 && tile.y === y + 32;
-      if (isDesk || isStoolFoot) tile.visible = false;
+      const isBossStool = layer.label === 'furniture-below'
+        && tile.x === seat.x * 16 && tile.y === seat.y * 16;
+      if (isDesk || isStoolFoot || isBossStool) tile.visible = false;
     }
   }
 
@@ -36,6 +38,24 @@ export function installExecutiveDesk(map: TiledMapRenderer): void {
   const walnut = 0x765044;
   const lightWood = 0x9a6c50;
   const gold = 0xc9a665;
+
+  // Keep the original compact oval chair footprint at the CEO's seat.
+  // Upholstery and a slim brass rim replace the wooden slats, without a back.
+  rect(19, -4, 3, 4, ink); rect(27, -4, 3, 4, ink);
+  rect(20, -2, 1, 1, gold); rect(28, -2, 1, 1, gold);
+  const cushion = [[21,6],[19,10],[18,12],[18,12],[17,14],[17,14],
+    [17,14],[17,14],[18,12],[18,12],[19,10],[21,6]];
+  cushion.forEach(([left,width],row) => {
+    const y = -15 + row;
+    rect(left,y,width,1,ink);
+    if(row===0 || row===cushion.length-1)return;
+    const [ax,aw]=cushion[row-1], [bx,bw]=cushion[row+1];
+    const l=Math.max(left+1,ax,bx), end=Math.min(left+width-1,ax+aw,bx+bw);
+    if(end>l)rect(l,y,end-l,1,row<3?0xae8670:row>8?0x654149:0x885760);
+    if(row>=3 && row<8 && end>l)rect(l,y,1,1,0xad7780);
+  });
+  rect(20,-5,8,1,gold);
+  rect(23,-11,1,1,0x704650);rect(26,-9,1,1,0x704650);
 
   // Substantial drawer pedestals, with brass feet and handles.
   rect(1, 17, 12, 9, ink);
