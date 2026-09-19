@@ -583,6 +583,27 @@
     "hireProgress": "hire 第 {{current}} / {{total}} 项",
     "skipHire": "跳过 hire"
   },
+  "editAgent": {
+    "title": "编辑智能体",
+    "identity": "身份",
+    "identityHint": "名字 · 角色 · 颜色",
+    "name": "名字",
+    "namePlaceholder": "请输入名字",
+    "character": "角色",
+    "color": "颜色",
+    "engine": "引擎",
+    "engineHint": "提供商 · 模型 · 下次重启生效",
+    "provider": "提供商",
+    "model": "模型",
+    "engineNote": "引擎更改将在下次重启时保存。现在切换正在运行的会话，请前往「命令中心 → 楼层」重启。",
+    "briefing": "任务简报",
+    "briefingHint": "描述 · 目标",
+    "description": "描述",
+    "descriptionPlaceholder": "职责 —— 该智能体是做什么的，而非实时状态",
+    "goal": "目标（可选）",
+    "goalPlaceholder": "每次提示都会注入的长期指令",
+    "save": "保存更改"
+  },
   "onboarding": {
     "titles": {
       "persona": "欢迎来到 花紙社",

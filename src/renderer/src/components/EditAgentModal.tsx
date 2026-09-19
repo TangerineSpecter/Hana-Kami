@@ -1,4 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PixelPanel } from './PixelPanel';
 import { PixelButton } from './PixelButton';
 import { SpritePortrait } from './SpritePortrait';
@@ -30,6 +31,7 @@ export interface EditAgentModalProps {
  * via updateAgent (engine changes apply on the next restart).
  */
 export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
+  const { t: tr } = useTranslation();
   const updateAgent = useStore((s) => s.updateAgent);
   const [config, setConfig] = useState<HarnessConfig | null>(null);
 
@@ -97,18 +99,31 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
       style={{
         position: 'fixed', inset: 0,
         background: 'rgba(26, 19, 32, 0.6)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+        padding: 16, boxSizing: 'border-box', overflow: 'hidden',
         zIndex: 500
       }}
     >
       {/* Same box as Add Agent (940 / 95vw / 86vh). They are the two halves of
           one job — describe an agent — and a tall narrow dialog next to a wide
           one reads as two unrelated screens. */}
-      <div onClick={(e) => e.stopPropagation()} style={{ width: 940, maxWidth: '95vw' }}>
-        <PixelPanel variant="dialog" title="EDIT AGENT" style={{ padding: 16 }} noPadding>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{ width: 940, maxWidth: '95vw', height: '100%', maxHeight: 'calc(100vh - 32px)', display: 'flex' }}
+      >
+        <PixelPanel
+          variant="dialog"
+          title={tr('editAgent.title')}
+          style={{
+            width: '100%', minHeight: 0, maxHeight: '100%',
+            display: 'flex', flexDirection: 'column',
+            boxSizing: 'border-box', overflow: 'hidden'
+          }}
+          noPadding
+        >
           <div style={{
-            display: 'flex', flexDirection: 'column', gap: 14,
-            padding: 16, maxHeight: '86vh', overflowY: 'auto'
+            flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 14,
+            padding: 16, overflowY: 'auto'
           }}>
             {/* Two columns so the extra width is used rather than padded.
                 Identity and Engine are short field lists; Briefing is free
@@ -119,18 +134,18 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
               gap: 16, alignItems: 'start', minHeight: 260
             }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, minWidth: 0 }}>
-            <Section label="Identity" hint="name · character · color">
-              <Row label="Name">
+            <Section label={tr('editAgent.identity')} hint={tr('editAgent.identityHint')}>
+              <Row label={tr('editAgent.name')}>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Stanley"
+                  placeholder={tr('editAgent.namePlaceholder')}
                   style={inputStyle}
                   autoFocus
                 />
               </Row>
 
-              <Row label="Character">
+              <Row label={tr('editAgent.character')}>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {OFFICE_CAST.map((c) => {
                     const active = character === c.name;
@@ -146,25 +161,25 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
                           boxShadow: active
                             ? 'inset 0 0 0 1.5px var(--cth-ink-500)'
                             : 'inset 0 0 0 1px var(--cth-ink-100)',
-                          cursor: 'pointer', border: 'none', width: 52,
+                          cursor: 'pointer', border: 'none', width: 104,
                           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2
                         }}
                       >
                         <div style={{
-                          width: 40, height: 48,
-                          display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+                          width: 96, height: 96,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
                           overflow: 'hidden'
                         }}>
-                          <SpritePortrait character={c.name} scale={1.5} />
+                          <SpritePortrait character={c.name} scale={3.4} portraitSize={c.portrait ? 104 : undefined} />
                         </div>
-                        <span style={{ fontSize: 10, color: 'var(--cth-ink-700)' }}>{c.displayName}</span>
+                        <span style={{ fontSize: 13, lineHeight: '17px', color: 'var(--cth-ink-700)' }}>{c.displayName}</span>
                       </button>
                     );
                   })}
                 </div>
               </Row>
 
-              <Row label="Color">
+              <Row label={tr('editAgent.color')}>
                 <div style={{ display: 'flex', gap: 6 }}>
                   {ACCENTS.map((a) => (
                     <button
@@ -186,8 +201,8 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
               </Row>
             </Section>
 
-            <Section label="Engine" hint="provider · model · next restart">
-              <Row label="Provider">
+            <Section label={tr('editAgent.engine')} hint={tr('editAgent.engineHint')}>
+              <Row label={tr('editAgent.provider')}>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {AGENT_PROVIDER_PRESETS.map((p) => {
                     const active = provider === p.id;
@@ -217,7 +232,7 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
               </Row>
 
               {preset.supportsModel && (
-                <Row label="Model">
+                <Row label={tr('editAgent.model')}>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {(() => {
                       const known = modelsForProvider(provider);
@@ -251,27 +266,27 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
               )}
 
               <span style={{ fontSize: 12, color: 'var(--cth-ink-500)', lineHeight: '16px' }}>
-                Engine changes are saved for the next restart. Use Command Center → Floor to restart a live session onto a new provider/model now.
+                {tr('editAgent.engineNote')}
               </span>
             </Section>
 
               </div>
               <div style={{ minWidth: 0 }}>
-            <Section label="Briefing" hint="description · goal">
-              <Row label="Description">
+            <Section label={tr('editAgent.briefing')} hint={tr('editAgent.briefingHint')}>
+              <Row label={tr('editAgent.description')}>
                 <input
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="what is this agent for"
+                  placeholder={tr('editAgent.descriptionPlaceholder')}
                   style={inputStyle}
                 />
               </Row>
 
-              <Row label="Goal (optional)">
+              <Row label={tr('editAgent.goal')}>
                 <textarea
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
-                  placeholder="long-running directive injected on every prompt"
+                  placeholder={tr('editAgent.goalPlaceholder')}
                   rows={4}
                   style={{ ...inputStyle, fontFamily: 'var(--cth-font-ui)', resize: 'vertical', minHeight: 200 }}
                 />
@@ -280,11 +295,15 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
-              <PixelButton variant="ghost" size="md" onClick={onClose}>cancel</PixelButton>
-              <div style={{ flex: 1 }} />
-              <PixelButton variant="primary" size="md" onClick={save}>save changes</PixelButton>
-            </div>
+          </div>
+          <div style={{
+            display: 'flex', gap: 8, justifyContent: 'flex-end', alignItems: 'center',
+            flexShrink: 0, padding: '12px 16px 16px',
+            background: 'var(--cth-cream-50)', boxShadow: '0 -1px 0 var(--cth-ink-100)'
+          }}>
+            <PixelButton variant="ghost" size="md" onClick={onClose}>{tr('common.cancel')}</PixelButton>
+            <div style={{ flex: 1 }} />
+            <PixelButton variant="primary" size="md" onClick={save}>{tr('editAgent.save')}</PixelButton>
           </div>
         </PixelPanel>
       </div>
