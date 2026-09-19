@@ -778,6 +778,8 @@ export function OfficeFloor() {
 
       let cafeCooldown = 5;
       const updateCafeteria = (dt: number): void => {
+        mapRenderer.setVendingActive([...runtimes.values()].some(rt =>
+          rt.brk?.phase === 'lingering' && cafeSpots[rt.brk.spotIdx].spot === 'vending'));
         // Advance every in-progress break.
         for (const [id, rt] of runtimes) {
           const b = rt.brk;

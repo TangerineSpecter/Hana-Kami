@@ -170,7 +170,10 @@ export function TasksKanban() {
         display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', flexShrink: 0,
         borderBottom: '1px solid var(--cth-ink-300)'
       }}>
-        <span style={{ fontFamily: 'var(--cth-font-display)', fontSize: 9, color: 'var(--cth-ink-500)' }}>
+        <span style={{
+          fontFamily: 'var(--cth-font-ui)', fontSize: 13, lineHeight: '18px',
+          fontWeight: 600, color: 'var(--cth-ink-500)'
+        }}>
           {t('kanban.count', { count: tasks.length })}
         </span>
         <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--cth-ink-300)' }}>
@@ -192,10 +195,11 @@ export function TasksKanban() {
               <div style={{
                 display: 'flex', alignItems: 'center', gap: 6, padding: '5px 8px 4px',
                 background: col.accent, boxShadow: 'inset 0 -1px 0 var(--cth-ink-900)',
-                fontFamily: 'var(--cth-font-display)', fontSize: 9, color: 'var(--cth-ink-900)'
+                fontFamily: 'var(--cth-font-ui)', fontSize: 14, lineHeight: '20px',
+                fontWeight: 600, color: 'var(--cth-ink-900)'
               }}>
                 {t(col.labelKey)}
-                <span style={{ marginLeft: 'auto', fontSize: 11, fontFamily: 'var(--cth-font-ui)' }}>{cards.length}</span>
+                <span style={{ marginLeft: 'auto', fontSize: 13, lineHeight: '18px', fontFamily: 'var(--cth-font-ui)', fontWeight: 600 }}>{cards.length}</span>
               </div>
               <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: 6, display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {cards.length === 0 && (
@@ -351,7 +355,7 @@ export function TaskDetail({ task, all, assigneeName, onMove, onAssign, onClose 
                 fontFamily: 'var(--cth-font-mono)', fontSize: 10, color: 'var(--cth-ink-500)'
               }}>{task.id}</span>
               <span style={{
-                fontFamily: 'var(--cth-font-display)', fontSize: 8, padding: '2px 6px 1px',
+                fontFamily: 'var(--cth-font-ui)', fontSize: 12, lineHeight: '17px', fontWeight: 600, padding: '2px 6px 1px',
                 background: col.accent, color: 'var(--cth-ink-900)', boxShadow: 'inset 0 0 0 1px var(--cth-ink-300)'
               }}>{t(col.labelKey)}</span>
               {assigneeName

@@ -1,4 +1,5 @@
 import { Container, Graphics, Sprite, Texture, Rectangle } from 'pixi.js';
+import { paintVendingMachine } from './warmOfficeArt';
 import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool, paintConferenceTable, paintCafeSet } from './warmOfficeArt';
 
 // Trimmed port of shahar061/the-office (office/engine/TiledMapRenderer.ts):
@@ -77,6 +78,15 @@ export class TiledMapRenderer {
   private zones: Map<string, ZoneRect> = new Map();
   private characterContainer: Container;
   private rootContainer: Container;
+  private vendingArt?: Graphics;
+  private vendingActive = false;
+
+  setVendingActive(active: boolean): void {
+    if (!this.vendingArt || active === this.vendingActive) return;
+    this.vendingActive = active;
+    this.vendingArt.clear();
+    paintVendingMachine(this.vendingArt, active);
+  }
 
   private static readonly WALKABLE_SPAWN_PREFIXES = ['desk-', 'pc-', 'warroom-', 'entrance'];
 
@@ -234,7 +244,14 @@ export class TiledMapRenderer {
           paintRoundStool(art, d.x + 1, d.y + 1.25, (column + (d.y === 17 || d.y === 4 ? 1 : 0)) % 2 === 0);
         });
         if (layerName === 'furniture-below') paintConferenceTable(art, 10, 4);
-        if (layerName === 'furniture-below') paintCafeSet(art, 27, 15);
+        if (layerName === 'furniture-below') paintCafeSet(art, 26, 15);
+        if (layerName === 'furniture-below') {
+          this.vendingArt = new Graphics();
+          this.vendingArt.position.set(30 * 16, 11 * 16);
+          this.vendingArt.eventMode = 'none';
+          paintVendingMachine(this.vendingArt);
+          container.addChild(this.vendingArt);
+        }
       }
       if (layer?.data) {
         for (let y = 0; y < this.height; y++) {
@@ -248,9 +265,11 @@ export class TiledMapRenderer {
             const tileId = raw & TILE_ID_MASK;
 
             if (art) {
+              if ((layerName === 'furniture-below' || layerName === 'furniture-above')
+                && x >= 30 && x <= 32 && y >= 11 && y <= 14) continue;
               // The office's cup rack is drawn dynamically with its cup stock.
-              if (layerName === 'furniture-below' && x === 29 && y === 15 && tileId === 39) continue;
-              if (x >= 27 && x <= 28 && y >= 14 && y <= 16) {
+              if (layerName === 'furniture-below' && x === 28 && y === 15 && tileId === 39) continue;
+              if (x >= 26 && x <= 27 && y >= 14 && y <= 16) {
                 if (layerName === 'floor') { paintOakTile(art, x, y); continue; }
                 if (layerName === 'furniture-below' || layerName === 'furniture-above') continue;
               }

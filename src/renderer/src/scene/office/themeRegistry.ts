@@ -163,8 +163,8 @@ export const OFFICE_THEME: ThemeConfig = {
     ['cafe-stand-vending', 'vending'],
   ],
   coffee: {
-    trayTile: { x: 29, y: 15 },     // the sideboard (counter piece)
-    trayStand: { x: 29, y: 16 },
+    trayTile: { x: 28, y: 15 },     // the sideboard (counter piece)
+    trayStand: { x: 28, y: 16 },
     machineStand: { x: 26, y: 20 }, // below the counter machine
     sinkTile: { x: 28, y: 18 },     // free counter top, right end
     sinkStand: { x: 28, y: 20 },

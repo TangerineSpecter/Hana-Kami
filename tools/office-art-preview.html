@@ -27,7 +27,7 @@ installExecutiveDesk(map);
 map.getContainer().scale.set(3);
 app.stage.addChild(map.getContainer());
 const rack = new Graphics();
-rack.position.set(29*16,15*16);
+rack.position.set(28*16,15*16);
 rack.zIndex=16*16;
 paintMugRack(rack,Number(new URLSearchParams(location.search).get('cups') ?? 4));
 map.getCharacterContainer().addChild(rack);
@@ -44,11 +44,34 @@ document.querySelector('#detail').onclick=()=>{
   map.getContainer().position.set(detail?-144:0,detail?-1584:0);
 };
 document.querySelector('#status').textContent=`已渲染 ${screens.length} 个工作位 · 地图 ${data.width}×${data.height} · 可切换亮屏检查遮挡`;
+if (new URLSearchParams(location.search).has('vending')) {
+  const { Character } = await import('../src/renderer/src/scene/office/Character.ts');
+  const { getFeilenFrames } = await import('../src/renderer/src/scene/office/feilenFrames.ts');
+  const { findPath } = await import('../src/renderer/src/scene/office/pathfinding.ts');
+  const stand = map.getSpawnPoint('cafe-stand-vending');
+  const start = {x:26,y:16};
+  const actor = new Character({agentId:'vending-preview',mapRenderer:map,
+    frames:getFeilenFrames(),seatTile:start,glowColor:0xffffff});
+  actor.show(map.getCharacterContainer());
+  let arrived = false;
+  actor.walkToAndThen(stand,()=>{
+    arrived=true;actor.setIdle();actor.faceDirection('up');map.setVendingActive(true);
+  });
+  for(let i=0;i<600;i++) actor.update(1/60);
+  const route = findPath(map,start,stand);
+  window.vendingCheck = {arrived,stand,frontBlocked:!map.isWalkable(stand.x,stand.y-1),
+    routeClear:!!route && route.every(p=>map.isWalkable(p.x,p.y)),leave:()=>{
+      let left=false;actor.walkToAndThen(start,()=>{left=true;});
+      map.setVendingActive(false);
+      for(let i=0;i<600;i++) actor.update(1/60);
+      return left;
+    }};
+}
 if (new URLSearchParams(location.search).has('cafe')) {
   const { Character } = await import('../src/renderer/src/scene/office/Character.ts');
   const { getFeilenFrames } = await import('../src/renderer/src/scene/office/feilenFrames.ts');
   const { findPath } = await import('../src/renderer/src/scene/office/pathfinding.ts');
-  const exit = {x:26,y:16};
+  const exit = {x:25,y:16};
   const actors = [];
   const results = [];
   for (let i=1;i<=4;i++) {
@@ -62,7 +85,7 @@ if (new URLSearchParams(location.search).has('cafe')) {
     for(let tick=0;tick<600;tick++) actor.update(1/60);
     const route = findPath(map,exit,seat);
     results.push({seat,facing,arrived,seated:actor.isSitting(),
-      avoidsTable:!!route && route.every(p=>!(p.y===15 && (p.x===27 || p.x===28)))});
+      avoidsTable:!!route && route.every(p=>!(p.y===15 && (p.x===26 || p.x===27)))});
     actors.push(actor);
   }
   window.cafeCheck = {results,leave:()=>actors.map(actor=>{

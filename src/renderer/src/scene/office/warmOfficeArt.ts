@@ -5,6 +5,41 @@ import { Graphics } from 'pixi.js';
 export const OAK_FLOOR_GIDS = new Set([783, 784, 799, 800]);
 const ink = 0x40332a;
 
+/** Front-facing drinks machine: display, controls, and an accessible pickup bay. */
+export function paintVendingMachine(g: Graphics, active = false): void {
+  const r = (x: number, y: number, w: number, h: number, c: number) => g.rect(x, y, w, h).fill(c);
+  r(3, 61, 42, 3, 0xb09371);
+  r(2, 1, 44, 61, 0x374448); r(4, 0, 40, 63, 0x374448);
+  r(3, 3, 41, 55, 0x78968d); r(4, 3, 2, 53, 0xb3c6ac);
+  r(43, 4, 2, 53, 0x536e69);
+  r(6, 4, 35, 8, 0x33494b); r(7, 5, 33, 6, 0xe2dfc3);
+  // Drink pictograms on the illuminated sign.
+  for (const x of [12, 22, 32]) {
+    r(x, 6, 4, 4, 0x688f91); r(x, 6, 4, 1, 0xffffff);
+  }
+  r(7, 14, 26, 30, 0x344449); r(8, 15, 24, 28, 0x45616a);
+  r(9, 16, 2, 25, 0x607f85);
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      const x = 12 + col * 7, y = 18 + row * 8;
+      r(x, y, 4, 6, [0xb86e59, 0xd3b566, 0x88b3a8][col]);
+      r(x, y, 4, 1, 0xe6ecdf); r(x + 1, y + 2, 2, 2, 0xf1e9d3);
+    }
+    r(9, 24 + row * 8, 22, 1, 0x91a7a0);
+  }
+  r(35, 15, 6, 27, 0x465557);
+  r(36, 17, 4, 4, active ? 0xc3edac : 0x85b6a5);
+  for (const y of [25, 29, 33]) {
+    r(36, y, 2, 2, active && y === 25 ? 0xf6d287 : 0xb8c2b7);
+    r(39, y, 1, 2, 0x91aaa1);
+  }
+  r(36, 38, 4, 1, 0x202e32);
+  r(8, 47, 32, 11, 0x354448); r(10, 49, 28, 7, 0x26383e);
+  r(10, 48, 28, 2, 0x536d70); r(10, 56, 28, 1, 0xb8c6b6);
+  r(8, 45, 32, 1, active ? 0xc4e8a0 : 0x93b2a2);
+  r(5, 59, 38, 2, 0x52625f);
+}
+
 /** Raised two-tier mug rack; empty slots remain empty as clean cups are taken. */
 export function paintMugRack(g: Graphics, cleanCups: number): void {
   const r = (x: number, y: number, w: number, h: number, c: number) =>

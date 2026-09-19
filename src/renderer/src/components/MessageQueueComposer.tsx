@@ -66,7 +66,9 @@ export function MessageQueueComposer({ agent }: MessageQueueComposerProps) {
 
   // The draft box is the terminal's twin — it should read at the same size the
   // agent's output does, at every zoom level.
-  const composerFontSize = useTerminalFontSize();
+  // Keep the human's input readable even when the terminal is still at its
+  // compact default zoom. Larger terminal zooms continue to carry through.
+  const composerFontSize = Math.max(14, useTerminalFontSize());
   const composerLineHeight = Math.round(composerFontSize * 1.4);
 
   const idle = agent.status === 'idle';

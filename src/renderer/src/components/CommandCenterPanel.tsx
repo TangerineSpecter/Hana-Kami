@@ -1290,7 +1290,10 @@ function Scroll({ children }: { children: React.ReactNode }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: 14 }}>
-      <div style={{ fontFamily: 'var(--cth-font-display)', fontSize: 9, lineHeight: '12px', color: 'var(--cth-ink-500)', marginBottom: 6 }}>{title}</div>
+      <div style={{
+        fontFamily: 'var(--cth-font-ui)', fontSize: 13, lineHeight: '18px',
+        fontWeight: 600, color: 'var(--cth-ink-500)', marginBottom: 6
+      }}>{title}</div>
       {children}
     </div>
   );
