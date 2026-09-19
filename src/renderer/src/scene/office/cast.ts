@@ -15,6 +15,11 @@ import sunnaPortrait from '@/assets/Sunna.png';
 import robinPortrait from '@/assets/Robin.png';
 import furinaPortrait from '@/assets/Furina.png';
 import maomaoPortrait from '@/assets/Maomao.png';
+import kitagawaPortrait from '@/assets/Kitagawa.png';
+import yinyuePortrait from '@/assets/Yinyue.png';
+import yaniNekoPortrait from '@/assets/YaniNeko.png';
+import remPortrait from '@/assets/Rem.png';
+import hoshimiPortrait from '@/assets/Hoshimi.png';
 
 export type OfficeCharacterName =
   | 'michael' | 'jim' | 'pam' | 'dwight' | 'kevin' | 'angela'
@@ -48,11 +53,11 @@ export const OFFICE_CAST: CastMember[] = [
   { name: 'kevin',    displayName: '知更鸟',   portrait: robinPortrait, shirt: '#4a7ab5', blurb: '知更鸟' },
   { name: 'angela',   displayName: '芙芙',     portrait: furinaPortrait, shirt: '#8a86a6', blurb: '芙芙' },
   { name: 'oscar',    displayName: '猫猫',     portrait: maomaoPortrait, shirt: '#7a4b6b', blurb: '猫猫' },
-  { name: 'stanley',  displayName: 'Stanley',  shirt: '#8c5a4b', blurb: 'Sales, crossword' },
-  { name: 'phyllis',  displayName: 'Phyllis',  shirt: '#b08bbf', blurb: 'Sales' },
-  { name: 'andy',     displayName: 'Andy',     shirt: '#6fae6f', blurb: 'Cornell, a cappella' },
-  { name: 'kelly',    displayName: 'Kelly',    shirt: '#d16ba5', blurb: 'Customer service' },
-  { name: 'ryan',     displayName: 'Ryan',     shirt: '#3a3a44', blurb: 'The temp' },
+  { name: 'stanley',  displayName: '喜多川海梦', portrait: kitagawaPortrait, shirt: '#8c5a4b', blurb: '喜多川海梦' },
+  { name: 'phyllis',  displayName: '银月',     portrait: yinyuePortrait, shirt: '#b08bbf', blurb: '银月' },
+  { name: 'andy',     displayName: '尼古喵喵', portrait: yaniNekoPortrait, shirt: '#6fae6f', blurb: '尼古喵喵' },
+  { name: 'kelly',    displayName: '雷姆',     portrait: remPortrait, shirt: '#d16ba5', blurb: '雷姆' },
+  { name: 'ryan',     displayName: '星见雅',   portrait: hoshimiPortrait, shirt: '#3a3a44', blurb: '星见雅' },
   { name: 'toby',     displayName: 'Toby',     shirt: '#9a8c5a', blurb: 'Human resources' },
   { name: 'creed',    displayName: 'Creed',    shirt: '#6b7a4b', blurb: 'Quality assurance' },
   { name: 'meredith', displayName: 'Meredith', shirt: '#b5544a', blurb: 'Supplier relations' },

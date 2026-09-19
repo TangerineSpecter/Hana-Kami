@@ -7,6 +7,8 @@ export interface AgentPortraitProps {
   isGod?: boolean;
   name?: string;
   scale?: number;
+  /** Square display size for replacement portraits in a known-size tile. */
+  portraitSize?: number;
   background?: string;
 }
 
@@ -24,10 +26,18 @@ export function AgentPortrait({
   isGod = false,
   name = '',
   scale = 1,
+  portraitSize,
   background = 'transparent'
 }: AgentPortraitProps) {
   if (!isGod) {
-    return <SpritePortrait character={character} scale={scale} background={background} />;
+    return (
+      <SpritePortrait
+        character={character}
+        scale={scale}
+        portraitSize={portraitSize}
+        background={background}
+      />
+    );
   }
 
   return (

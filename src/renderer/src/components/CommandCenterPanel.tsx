@@ -170,6 +170,7 @@ export function CommandCenterPanel({ agent, fullscreen = false }: { agent: Agent
             isGod={agent.isGod}
             name={agent.name}
             scale={1}
+            portraitSize={32}
           />
         </div>
         {/* Title + subtitle truncate; the control cluster never shrinks. At
@@ -692,7 +693,7 @@ function FloorTab({ seed }: { seed: { text: string; seq: number } }) {
                 boxShadow: 'inset 0 0 0 1px var(--cth-ink-300)',
                 display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden', flexShrink: 0
               }}>
-                <AgentPortrait character={a.character} isGod={a.isGod} name={a.name} scale={1} />
+                <AgentPortrait character={a.character} isGod={a.isGod} name={a.name} scale={1} portraitSize={24} />
               </div>
               <button
                 onClick={() => select(a.id)}
@@ -1035,7 +1036,7 @@ function ArchivedSection() {
             boxShadow: 'inset 0 0 0 1px var(--cth-ink-300)',
             display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden', flexShrink: 0
           }}>
-            <AgentPortrait character={a.character} isGod={a.isGod} name={a.name} scale={1} />
+            <AgentPortrait character={a.character} isGod={a.isGod} name={a.name} scale={1} portraitSize={24} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontFamily: 'var(--cth-font-ui)', fontSize: 12, color: 'var(--cth-ink-700)' }}>{a.name}</div>

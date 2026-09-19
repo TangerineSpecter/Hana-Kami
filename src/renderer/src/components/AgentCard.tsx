@@ -199,7 +199,7 @@ export function AgentCard({
             display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflow: 'hidden',
             flexShrink: 0
           }}>
-            <AgentPortrait character={character} isGod={isGod} name={name} scale={2} />
+            <AgentPortrait character={character} isGod={isGod} name={name} scale={2} portraitSize={60} />
           </div>
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
