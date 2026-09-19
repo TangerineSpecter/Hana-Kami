@@ -246,7 +246,8 @@ export class TiledMapRenderer {
               if (layerName === 'floor' && OAK_FLOOR_GIDS.has(tileId)) {
                 paintOakTile(art, x, y); continue;
               }
-              if (layerName === 'walls' && paintWarmWall(art, tileId, x, y)) continue;
+              if (layerName === 'walls' && paintWarmWall(art, tileId, x, y,
+                this.gidAt('walls', x, y + 1) === 0)) continue;
               const desk = desks.find(d => x >= d.x && x < d.x + 3 && y >= d.y && y <= d.y + 2);
               if (desk && ((layerName === 'furniture-below' && [2, 3, 4, 289, 305].includes(tileId))
                 || (layerName === 'furniture-above' && [18, 19, 20].includes(tileId)))) continue;

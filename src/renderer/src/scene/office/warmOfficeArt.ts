@@ -34,28 +34,34 @@ export function paintOakTile(g: Graphics, tx: number, ty: number): void {
 
 /** Match each existing wall tile's opaque footprint, including narrow side
  * partitions, so no door, floor or silhouette is filled accidentally. */
-export function paintWarmWall(g: Graphics, gid: number, tx: number, ty: number): boolean {
+export function paintWarmWall(g: Graphics, gid: number, tx: number, ty: number, closeBottom = false): boolean {
   const r = (x: number, y: number, w: number, h: number, c: number) =>
     g.rect(tx * 16 + x, ty * 16 + y, w, h).fill(c);
   const face = (x: number, y: number, w: number, h: number) => {
     r(x, y, w, h, 0xeee6d5);
-    r(x, y, w, 1, 0xf5efdf);
+    // Vertical shading only: stacked 16px tiles must read as one tall panel.
+    // A highlight on every tile's top edge creates an unwanted horizontal grid.
     // Panel seams span the stacked face and base tiles every 24 native pixels.
     for (let dx = x; dx < x + w; dx++) {
-      if ((tx * 16 + dx) % 24 === 0) r(dx, y, 1, h, 0xcdbfa7);
-      if ((tx * 16 + dx) % 24 === 1) r(dx, y, 1, h, 0xf7f0df);
+      const panelX = (tx * 16 + dx) % 24;
+      if (panelX === 0) r(dx, y, 1, h, 0xcdbfa7);
+      else if (panelX === 1) r(dx, y, 1, h, 0xf7f0df);
+      else if (panelX > 20) r(dx, y, 1, h, 0xeae1d0);
     }
   };
   switch (gid) {
     case 522: // horizontal cap
-      r(0, 0, 16, 2, ink); face(0, 2, 16, 8);
-      r(0, 10, 16, 2, ink); r(0, 12, 16, 1, 0x76533b); face(0, 13, 16, 3); break;
+      r(0, 0, 16, 1, ink); r(0, 1, 16, 1, 0x795a41); face(0, 2, 16, 8);
+      r(0, 10, 16, 1, 0x795a41); r(0, 11, 16, 2, ink); face(0, 13, 16, 3); break;
     case 554: face(0, 0, 16, 16); break;
-    case 570: face(0, 0, 16, 13); r(0, 13, 16, 1, 0x886548); r(0, 14, 16, 2, ink); break;
+    case 570: face(0, 0, 16, 13); r(0, 13, 16, 1, 0x997653); r(0, 14, 16, 1, 0x674b36); r(0, 15, 16, 1, ink); break;
     case 611: case 643:
       r(2, 0, 12, 16, ink); r(4, 0, 1, 16, 0x87684d);
       r(5, 0, 8, 16, 0xeee6d5); r(5, 0, 1, 16, 0xf9f3e5);
-      if (gid === 611) r(2, 0, 12, 2, ink); break;
+      r(12, 0, 1, 16, 0xd8cbb5);
+      if (gid === 611) { r(2, 0, 12, 1, ink); r(3, 1, 10, 1, 0x795a41); }
+      if (closeBottom) { r(2, 14, 12, 1, 0x795a41); r(2, 15, 12, 1, ink); }
+      break;
     default: return false;
   }
   return true;

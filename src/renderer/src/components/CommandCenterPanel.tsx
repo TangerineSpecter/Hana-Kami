@@ -231,37 +231,15 @@ export function CommandCenterPanel({ agent, fullscreen = false }: { agent: Agent
         </div>
       </div>
 
-      {/* Tab bar — ONE row, tabs at their natural width, scrolling only if the
-          panel is genuinely too narrow for all of them.
-
-          This was an auto-fit grid of equal-width cells, which had a failure mode
-          the equal widths caused: every column is sized to the WIDEST tab, so the
-          track count is set by the longest label rather than by the total width
-          the labels actually need. Adding a 12th tab tipped it over at fullscreen
-          width and dropped `setup` onto a second row with most of the first row's
-          space still unused — the tabs need ~1320px of content and had ~1610px.
-
-          Content-sized tabs fit all twelve on one line with room to spare, and the
-          `.cth-tabbar` rules in global.css (scrollbar-width: none, ::-webkit-
-          scrollbar { height: 0 }) already exist for exactly this: a single row that
-          scrolls with the scrollbar hidden. The grid never scrolled, so those rules
-          have been dead code since it landed.
-
-          Trade-off, deliberate: in the NARROW docked panel the far-right tabs now
-          scroll out of view instead of wrapping to a visible second row. One row
-          that sometimes needs a scroll beats two rows where one is nearly empty —
-          and the grid's own reason for existing (keeping wrapped rows aligned)
-          stops applying the moment there is only ever one row. */}
+      {/* Tab bar — the docked panel keeps a fixed five-column grid so every
+          wrapped row shares the same column boundaries. Focus mode is wide
+          enough for a single content-sized row, which scrolls when needed. */}
       <div className="cth-tabbar" style={{
-        display: 'flex', gap: 4,
-        // Docked in the sidebar the panel is narrow, so tabs WRAP: a second row
-        // costs a few pixels of a tall column, while a horizontal scroll there
-        // would hide half the tabs behind a gesture with no affordance.
-        // In focus mode the panel is wide and vertical space is the scarce
-        // resource, so it stays ONE row and scrolls instead. `.cth-tabbar` in
-        // global.css already hides that scrollbar.
-        flexWrap: fullscreen ? 'nowrap' : 'wrap',
-        overflowX: fullscreen ? 'auto' : 'visible',
+        display: fullscreen ? 'flex' : 'grid',
+        gridTemplateColumns: fullscreen ? undefined : 'repeat(5, minmax(0, 1fr))',
+        gap: 4,
+        flexWrap: fullscreen ? 'nowrap' : undefined,
+        overflowX: fullscreen ? 'auto' : 'hidden',
         padding: '6px 8px', background: 'var(--cth-cream-100)',
         borderBottom: '1px solid var(--cth-ink-700)', flexShrink: 0
       }}>
@@ -271,10 +249,9 @@ export function CommandCenterPanel({ agent, fullscreen = false }: { agent: Agent
             onClick={() => setTab(tabDef.key)}
             style={{
               whiteSpace: 'nowrap',
-              // grow to share any spare width (so the strip still spans the panel
-              // exactly as the old grid did), never shrink below the label (a
-              // squashed tab is unreadable — overflow into the scroll instead).
-              flex: '1 0 auto',
+              width: fullscreen ? 'auto' : '100%',
+              minWidth: fullscreen ? undefined : 0,
+              flex: fullscreen ? '1 0 auto' : undefined,
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
               padding: '4px 8px 3px', border: 'none', cursor: 'pointer',
               background: tab === tabDef.key ? `var(--cth-${agent.accent})` : 'var(--cth-cream-200)',
@@ -289,7 +266,10 @@ export function CommandCenterPanel({ agent, fullscreen = false }: { agent: Agent
               fontFamily: 'var(--cth-font-ui)', fontSize: 13
             }}
           >
-            <Icon name={tabDef.icon} /> {t(tabDef.labelKey)}
+            <Icon name={tabDef.icon} />
+            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {t(tabDef.labelKey)}
+            </span>
           </button>
         ))}
       </div>
