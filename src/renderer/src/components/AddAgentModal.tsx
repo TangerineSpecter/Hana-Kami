@@ -131,7 +131,8 @@ function basename(path: string): string {
 }
 
 function uniqueId(name: string): string {
-  return `${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now().toString(36)}`;
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'agent';
+  return `${slug}-${Date.now().toString(36)}`;
 }
 
 export interface AddAgentModalProps {
@@ -520,6 +521,10 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
         <PixelPanel
           variant="dialog"
           title={tr('addAgent.title')}
+          titleStyle={{
+            fontSize: 'var(--cth-text-display-lg)',
+            lineHeight: 'var(--cth-lh-display-lg)'
+          }}
           style={{ padding: 16 }}
           noPadding
         >
@@ -650,14 +655,14 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
                       }}
                     >
                       <span style={{
-                        fontFamily: 'var(--cth-font-display)', fontSize: 9, lineHeight: '13px',
+                        fontFamily: 'var(--cth-font-display)', fontSize: 11, lineHeight: '16px',
                         color: 'var(--cth-ink-900)', textTransform: 'uppercase',
                         display: 'flex', alignItems: 'baseline', gap: 6
                       }}>
                         <span style={{ color: active ? 'var(--cth-ink-900)' : 'var(--cth-ink-500)' }}>{i + 1}</span>
                         {tr(s.labelKey)}
                       </span>
-                      <span style={{ fontFamily: 'var(--cth-font-ui)', fontSize: 11, color: 'var(--cth-ink-500)' }}>
+                      <span style={{ fontFamily: 'var(--cth-font-ui)', fontSize: 12, lineHeight: '18px', color: 'var(--cth-ink-500)' }}>
                         {tr(s.hintKey)}
                       </span>
                     </button>
@@ -698,13 +703,13 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
                                 : 'inset 0 0 0 1px var(--cth-ink-100)',
                               cursor: 'pointer',
                               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
-                              border: 'none', width: 56
+                              border: 'none', width: 104
                             }}
                           >
-                            <div style={{ width: 44, height: 56, display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
-                              <SpritePortrait character={c.name} scale={2} />
+                            <div style={{ width: 96, height: 96, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                              <SpritePortrait character={c.name} scale={3.4} portraitSize={c.portrait ? 104 : undefined} />
                             </div>
-                            <span style={{ fontSize: 11, color: 'var(--cth-ink-700)' }}>{c.displayName}</span>
+                            <span style={{ fontSize: 13, lineHeight: '17px', color: 'var(--cth-ink-700)' }}>{c.displayName}</span>
                           </button>
                         ))}
                       </div>
@@ -1181,8 +1186,8 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
   return (
     <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <span style={{
-        fontFamily: 'var(--cth-font-display)',
-        fontSize: 8, lineHeight: '12px',
+        fontFamily: 'var(--cth-font-ui)',
+        fontSize: 13, lineHeight: '18px',
         color: 'var(--cth-ink-700)',
         textTransform: 'uppercase'
       }}>{label}</span>

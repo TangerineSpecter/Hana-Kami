@@ -9,6 +9,7 @@ export interface PixelPanelProps {
   accent?: AccentColorName;
   children?: ReactNode;
   style?: CSSProperties;
+  titleStyle?: CSSProperties;
   className?: string;
   noPadding?: boolean;
 }
@@ -35,6 +36,7 @@ export function PixelPanel({
   accent,
   children,
   style,
+  titleStyle,
   className,
   noPadding = false
 }: PixelPanelProps) {
@@ -66,7 +68,8 @@ export function PixelPanel({
             fontFamily: 'var(--cth-font-display)',
             fontSize: 'var(--cth-text-display-md)',
             lineHeight: 'var(--cth-lh-display-md)',
-            boxShadow: 'inset 0 -1px 0 var(--cth-ink-900)'
+            boxShadow: 'inset 0 -1px 0 var(--cth-ink-900)',
+            ...titleStyle
           }}
         >
           {title}

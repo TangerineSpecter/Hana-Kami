@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { PixelPanel } from './PixelPanel';
 import { PixelBadge, StatusKind } from './PixelBadge';
 import { useHasTerminalDraft } from './terminalPool';
-import { SpritePortrait } from './SpritePortrait';
+import { AgentPortrait } from './AgentPortrait';
 import { RealtimeMichaelToggle } from './RealtimeMichaelToggle';
 import { CostHud } from '@/realtime/CostHud';
 import { AccentColorName } from '@/design/tokens';
 import { OfficeCharacterName } from '@/scene/office/cast';
 import { AgentNameEditor } from './AgentNameEditor';
-import feilenAvatar from '@/assets/feilen.png';
 
 export interface AgentCardProps {
   name: string;
@@ -200,23 +199,7 @@ export function AgentCard({
             display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflow: 'hidden',
             flexShrink: 0
           }}>
-            {isGod ? (
-              <img
-                src={feilenAvatar}
-                alt={`${name} avatar`}
-                draggable={false}
-                style={{
-                  width: '100%', height: '100%', objectFit: 'contain', display: 'block',
-                  // Hide the PNG's off-white outer paper while keeping the
-                  // inner square picture frame even on all four sides.
-                  imageRendering: 'pixelated', clipPath: 'inset(7% 5% 5% 5%)',
-                  // Slightly enlarge the framed portrait so it sits closer to
-                  // the card edge instead of reading as a small image inside
-                  // a large tile.
-                  transform: 'scale(1.08)'
-                }}
-              />
-            ) : <SpritePortrait character={character} scale={2} />}
+            <AgentPortrait character={character} isGod={isGod} name={name} scale={2} />
           </div>
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
