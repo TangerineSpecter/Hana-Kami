@@ -1,13 +1,13 @@
 import { Container, Graphics, Sprite } from 'pixi.js';
 import type { TiledMapRenderer } from './TiledMapRenderer';
 import type { MonitorConfig } from './themeRegistry';
-import { paintWorkMonitor, WORK_MONITOR_SCREEN } from './warmOfficeArt';
+import { paintWorkMonitor, paintWorkScreen, WORK_MONITOR_SCREEN } from './warmOfficeArt';
 
 // The office tileset ships every desk PC twice: a dark, switched-off monitor
 // (gids 365/366 + 381/382 — what the map paints) and the SAME monitor with a
 // lit blue desktop (367/368 + 383/384). DeskScreen overlays the lit variant on
 // a desk's monitor block while its agent is seated, plus a tiny screen-life
-// animation (scrolling lines + a blinking cursor) so the PC visibly works when
+// animation (office documents for warm desks, scrolling lines for tile art) so the PC visibly works when
 // its owner does. Hidden, the map's off art shows through — no state to undo.
 
 /** gid of the OFF monitor block's top-left tile, as painted in the office map.
@@ -31,11 +31,14 @@ export class DeskScreen {
   private on = false;
   private t = 0;
   private screen = SCREEN;
+  private warmMonitor = false;
+  private frame = -1;
 
   constructor(mapRenderer: TiledMapRenderer, topLeft: { x: number; y: number }, monitor?: MonitorConfig) {
     const ts = mapRenderer.tileSize;
     const onGids = monitor?.onGids ?? DEFAULT_ON_GIDS;
     if (mapRenderer.usesWarmMonitor(topLeft)) {
+      this.warmMonitor = true;
       const monitorArt = new Graphics();
       paintWorkMonitor(monitorArt, 0, 0, true);
       this.container.addChild(monitorArt);
@@ -65,13 +68,24 @@ export class DeskScreen {
     if (on === this.on) return;
     this.on = on;
     this.container.visible = on;
-    if (!on) { this.anim.clear(); this.t = 0; }
+    if (!on) { this.anim.clear(); this.t = 0; this.frame = -1; }
+    else this.update(0);
   }
 
   update(dt: number): void {
     if (!this.on) return;
     this.t += dt;
     const g = this.anim;
+    if (this.warmMonitor) {
+      // All changes land on 0.2s boundaries; avoid rebuilding static pixels
+      // on every render tick across the office's occupied desks.
+      const frame = Math.floor(this.t * 5);
+      if (frame === this.frame) return;
+      this.frame = frame;
+      g.clear();
+      paintWorkScreen(g, 0, 0, frame / 5);
+      return;
+    }
     const SCREEN = this.screen;
     g.clear();
     // Two faint "output" lines scrolling up the desktop, wrapping around —

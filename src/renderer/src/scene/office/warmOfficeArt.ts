@@ -191,6 +191,35 @@ export function paintDeskAccessories(g: Graphics, tx: number, ty: number): void 
 
 /** Same pixel geometry for the static off monitor and live on-screen overlay. */
 export const WORK_MONITOR_SCREEN = { x: -2, y: 4, w: 20, h: 11 };
+
+/** A tiny word processor and spreadsheet, authored on the native pixel grid. */
+export function paintWorkScreen(g: Graphics, px = 0, py = 0, time = 0): void {
+  const r = (x: number, y: number, w: number, h: number, c: number) =>
+    g.rect(px + WORK_MONITOR_SCREEN.x + x, py + WORK_MONITOR_SCREEN.y + y, w, h).fill(c);
+  r(0, 0, 20, 11, 0xf5f3e8);
+  r(0, 0, 20, 2, 0xa8c5d8);
+  for (const x of [1, 3, 5]) r(x, 0, 1, 1, 0x6c8d9f);
+  r(0, 2, 3, 9, 0xd3dfe0);
+  for (const y of [3, 6, 9]) r(1, y, 1, 1, 0x8ea7b0);
+  // Keep completed paragraphs visible while the next line is typed; pause
+  // on the finished page before beginning the next one (a ten-second loop).
+  const step = Math.min(15, Math.floor((time % 10) / 0.4));
+  const line = Math.min(2, Math.floor(step / 5));
+  for (let row = 0; row <= line; row++) {
+    const width = row < line ? 5 : Math.min(5, step - row * 5 + 1);
+    r(4, 3 + row * 3, width, 1, 0x839ba9);
+    if (row === line && Math.floor(time / 0.6) % 2 === 0)
+      r(4 + width, 3 + row * 3, 1, 1, 0x476879);
+  }
+  r(11, 3, 8, 7, 0xadc3a2);
+  r(12, 3, 2, 1, 0x7f9f76); r(15, 3, 3, 1, 0x7f9f76);
+  // Alternating cell highlight is deliberately slow and never flashes.
+  const selected = Math.floor(time / 2.4) % 4;
+  for (let row = 0; row < 2; row++) for (let col = 0; col < 2; col++)
+    r(12 + col * 3, 5 + row * 3, col === 0 ? 2 : 3, 2,
+      selected === row * 2 + col ? 0xc9dcb9 : 0xf5f3e8);
+}
+
 export function paintWorkMonitor(g: Graphics, px: number, py: number, on: boolean): void {
   const r = (x: number, y: number, w: number, h: number, c: number) =>
     g.rect(px + x, py + y, w, h).fill(c);
@@ -200,8 +229,7 @@ export function paintWorkMonitor(g: Graphics, px: number, py: number, on: boolea
   r(-3, 2, 22, 1, 0x9aa9ab); r(-3, 3, 22, 13, 0x52626a);
   r(-2, 4, 20, 11, on ? 0x254858 : 0x25353f);
   if (on) {
-    r(-2, 4, 20, 2, 0x5d91a1); r(-1, 7, 4, 7, 0x345d6a);
-    r(5, 7, 10, 1, 0x95c6bc); r(5, 10, 7, 1, 0x719eaa);
+    paintWorkScreen(g, px, py);
   } else {
     r(-1, 5, 8, 1, 0x465c67); r(-1, 6, 3, 2, 0x384c58);
   }
