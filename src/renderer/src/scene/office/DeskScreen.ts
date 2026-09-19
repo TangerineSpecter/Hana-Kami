@@ -1,6 +1,7 @@
 import { Container, Graphics, Sprite } from 'pixi.js';
 import type { TiledMapRenderer } from './TiledMapRenderer';
 import type { MonitorConfig } from './themeRegistry';
+import { paintWorkMonitor, WORK_MONITOR_SCREEN } from './warmOfficeArt';
 
 // The office tileset ships every desk PC twice: a dark, switched-off monitor
 // (gids 365/366 + 381/382 — what the map paints) and the SAME monitor with a
@@ -29,11 +30,17 @@ export class DeskScreen {
   private anim = new Graphics();
   private on = false;
   private t = 0;
+  private screen = SCREEN;
 
   constructor(mapRenderer: TiledMapRenderer, topLeft: { x: number; y: number }, monitor?: MonitorConfig) {
     const ts = mapRenderer.tileSize;
     const onGids = monitor?.onGids ?? DEFAULT_ON_GIDS;
-    for (const [gid, dx, dy] of onGids) {
+    if (mapRenderer.usesWarmMonitor(topLeft)) {
+      const monitorArt = new Graphics();
+      paintWorkMonitor(monitorArt, 0, 0, true);
+      this.container.addChild(monitorArt);
+      this.screen = WORK_MONITOR_SCREEN;
+    } else for (const [gid, dx, dy] of onGids) {
       const tex = mapRenderer.textureForGid(gid);
       if (!tex) continue;
       const s = new Sprite(tex);
@@ -65,6 +72,7 @@ export class DeskScreen {
     if (!this.on) return;
     this.t += dt;
     const g = this.anim;
+    const SCREEN = this.screen;
     g.clear();
     // Two faint "output" lines scrolling up the desktop, wrapping around —
     // the eternal build log — plus a cursor blinking in the lower left.

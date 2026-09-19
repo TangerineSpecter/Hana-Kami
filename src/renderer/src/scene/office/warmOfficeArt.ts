@@ -163,27 +163,49 @@ export function paintWarmWall(g: Graphics, gid: number, tx: number, ty: number, 
 export function paintWalnutDesk(g: Graphics, tx: number, ty: number): void {
   const r = (x: number, y: number, w: number, h: number, c: number) =>
     g.rect(tx * 16 + x, ty * 16 + y, w, h).fill(c);
-  // Same 40px silhouette as the original three-tile desk, now with metal legs.
-  r(4, 0, 40, 19, ink);
-  r(4, 19, 5, 3, ink); r(39, 19, 5, 3, ink);
-  r(5, 1, 38, 15, 0x795740);
-  r(5, 2, 38, 1, 0x89654b);
-  r(5, 7, 38, 1, 0x674833); r(5, 13, 38, 1, 0x674833);
-  r(6, 4, 10, 1, 0x805d44); r(31, 10, 10, 1, 0x89654b);
-  r(5, 16, 38, 2, 0xd9ba7c); r(5, 18, 38, 1, 0x9b7b52);
-  // Transparent space under the apron is achieved by only drawing the legs.
-  // The initial silhouette is limited to the top plus the two side frames.
-  r(5, 19, 3, 3, 0x343840); r(40, 19, 3, 3, 0x343840);
-  r(6, 19, 1, 2, 0x87908b); r(41, 19, 1, 2, 0x87908b);
-  // The original monitor remains in its own atlas layer above this desk.
+  // Thin chamfered top, a recessed apron, and metal legs.
+  r(6, 20, 36, 2, 0xb19572);
+  for (const x of [6, 39]) {
+    r(x, 15, 3, 7, 0x394249); r(x + 1, 16, 1, 5, 0x89928c);
+  }
+  r(5, 0, 38, 19, ink); r(4, 2, 40, 15, ink);
+  r(6, 1, 36, 14, 0xa78059); r(5, 3, 38, 11, 0xa78059);
+  r(6, 1, 36, 1, 0xd8b98b);
+  r(7, 5, 32, 1, 0x9b7350); r(9, 12, 30, 1, 0x9b7350);
+  r(7, 3, 11, 1, 0xb58d63); r(34, 9, 7, 1, 0xb58d63);
+  r(5, 15, 38, 2, 0x775239); r(6, 17, 36, 1, 0x543e30);
 }
 
 export function paintDeskAccessories(g: Graphics, tx: number, ty: number): void {
   const r = (x: number, y: number, w: number, h: number, c: number) =>
     g.rect(tx * 16 + x, ty * 16 + y, w, h).fill(c);
-  r(19, 9, 10, 4, 0x494c54); r(20, 9, 8, 3, 0xc9cfd0);
-  for (let y = 9; y < 12; y++) for (let x = 20; x < 28; x += 2) r(x, y, 1, 1, y % 2 ? 0xe7e4d8 : 0x87949c);
-  r(32, 9, 3, 4, 0x474149); r(32, 9, 2, 3, 0xc8c5ba); r(33, 9, 1, 1, 0xf1e9d5);
+  // A desaturated desk mat gives the separate keyboard and mouse clear edges.
+  r(14, 7, 26, 7, 0x687775); r(15, 8, 24, 5, 0x7d8c83);
+  r(16, 8, 15, 5, 0x41494e); r(17, 8, 13, 4, 0xd4d6c9);
+  for (let y = 9; y <= 10; y++) for (let x = 18; x <= 28; x += 2)
+    r(x, y, 1, 1, 0x79868b);
+  r(21, 11, 6, 1, 0x899493);
+  r(34, 8, 4, 5, 0x465257); r(35, 7, 2, 6, 0x465257);
+  r(35, 8, 2, 4, 0xe8e5d6); r(35, 8, 1, 1, 0x7c8b8b);
+}
+
+/** Same pixel geometry for the static off monitor and live on-screen overlay. */
+export const WORK_MONITOR_SCREEN = { x: -2, y: 4, w: 20, h: 11 };
+export function paintWorkMonitor(g: Graphics, px: number, py: number, on: boolean): void {
+  const r = (x: number, y: number, w: number, h: number, c: number) =>
+    g.rect(px + x, py + y, w, h).fill(c);
+  r(6, 16, 4, 5, 0x424d53); r(7, 17, 2, 3, 0xa3afab);
+  r(2, 21, 12, 2, 0x4a5559); r(3, 21, 10, 1, 0xb4bbb2);
+  r(-4, 2, 24, 15, 0x303c43); r(-3, 1, 22, 17, 0x303c43);
+  r(-3, 2, 22, 1, 0x9aa9ab); r(-3, 3, 22, 13, 0x52626a);
+  r(-2, 4, 20, 11, on ? 0x254858 : 0x25353f);
+  if (on) {
+    r(-2, 4, 20, 2, 0x5d91a1); r(-1, 7, 4, 7, 0x345d6a);
+    r(5, 7, 10, 1, 0x95c6bc); r(5, 10, 7, 1, 0x719eaa);
+  } else {
+    r(-1, 5, 8, 1, 0x465c67); r(-1, 6, 3, 2, 0x384c58);
+  }
+  r(16, 16, 1, 1, on ? 0xc4e9aa : 0x7b918c);
 }
 
 export function paintRoundStool(g: Graphics, tx: number, ty: number, blue: boolean): void {

@@ -36,6 +36,19 @@ for(let y=0;y<data.height;y++) for(let x=0;x<data.width;x++) if(map.gidAt('furni
   const screen=new DeskScreen(map,{x,y}); screens.push(screen); map.getCharacterContainer().addChild(screen.container);
 }
 let on=false;
+app.ticker.add(ticker=>screens.forEach(s=>s.update(ticker.deltaMS/1000)));
+if (new URLSearchParams(location.search).has('desk')) {
+  const { Character } = await import('../src/renderer/src/scene/office/Character.ts');
+  const { getFeilenFrames } = await import('../src/renderer/src/scene/office/feilenFrames.ts');
+  const seat = map.getSpawnPoint('pc-1');
+  const actor = new Character({agentId:'desk-preview',mapRenderer:map,frames:getFeilenFrames(),
+    seatTile:seat,spawnTile:{x:5,y:14},seatDirection:'up',glowColor:0xffffff});
+  actor.show(map.getCharacterContainer());
+  actor.walkToAndThen(seat,()=>actor.sitInPlace('up'));
+  for(let i=0;i<600;i++) actor.update(1/60);
+  screens.forEach(s=>s.setOn(true));
+  window.deskCheck=actor.isSitting();
+}
 document.querySelector('#screens').onclick=()=>{on=!on;screens.forEach(s=>s.setOn(on));};
 let detail=false;
 document.querySelector('#detail').onclick=()=>{

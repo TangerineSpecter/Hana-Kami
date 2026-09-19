@@ -1,5 +1,6 @@
 import { Container, Graphics, Sprite, Texture, Rectangle } from 'pixi.js';
 import { paintVendingMachine } from './warmOfficeArt';
+import { paintWorkMonitor } from './warmOfficeArt';
 import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool, paintConferenceTable, paintCafeSet } from './warmOfficeArt';
 
 // Trimmed port of shahar061/the-office (office/engine/TiledMapRenderer.ts):
@@ -110,6 +111,11 @@ export class TiledMapRenderer {
   }
 
   getContainer(): Container { return this.rootContainer; }
+  usesWarmMonitor(p: Point): boolean {
+    return !!this.surfaceStyle?.warmOffice && this.tileSize === 16
+      && this.gidAt('furniture-above', p.x, p.y) === 365
+      && this.gidAt('furniture-below', p.x - 1, p.y + 1) === 2;
+  }
   getCharacterContainer(): Container { return this.characterContainer; }
 
   isWalkable(tx: number, ty: number): boolean {
@@ -282,6 +288,9 @@ export class TiledMapRenderer {
                 && x >= BOARDROOM_ART_BOUNDS.minX && x <= BOARDROOM_ART_BOUNDS.maxX
                 && y >= BOARDROOM_ART_BOUNDS.minY && y <= BOARDROOM_ART_BOUNDS.maxY) continue;
               const desk = desks.find(d => x >= d.x && x < d.x + 3 && y >= d.y && y <= d.y + 2);
+              if (layerName === 'furniture-above' && desks.some(d =>
+                x >= d.x + 1 && x <= d.x + 2 && y >= d.y - 1 && y <= d.y)
+                && [365, 366, 381, 382].includes(tileId)) continue;
               if (desk && ((layerName === 'furniture-below' && [2, 3, 4, 289, 305].includes(tileId))
                 || (layerName === 'furniture-above' && [18, 19, 20].includes(tileId)))) continue;
             }
@@ -334,6 +343,7 @@ export class TiledMapRenderer {
         const accessories = new Graphics();
         accessories.eventMode = 'none';
         desks.forEach(d => paintDeskAccessories(accessories, d.x, d.y));
+        desks.forEach(d => paintWorkMonitor(accessories, (d.x + 1) * 16, (d.y - 1) * 16, false));
         container.addChild(accessories);
       }
       this.rootContainer.addChild(container);
