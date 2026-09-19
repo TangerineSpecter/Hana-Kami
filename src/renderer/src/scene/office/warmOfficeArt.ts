@@ -128,3 +128,94 @@ export function paintRoundStool(g: Graphics, tx: number, ty: number, blue: boole
     else if (y < 8) r(left, y, 1, 1, blue ? 0x7895a7 : 0xc58b68);
   });
 }
+
+/**
+ * Walnut conference table with ten upholstered chairs, drawn at native pixels.
+ * Furniture stays within the original boardroom footprint.
+ */
+export function paintConferenceTable(g: Graphics, tx: number, ty: number): void {
+  const r = (x: number, y: number, w: number, h: number, c: number) =>
+    g.rect(tx * 16 + x, ty * 16 + y, w, h).fill(c);
+  const edge = 0x423331;
+  const fabric = 0x795267;
+  const light = 0xa4798b;
+  const shade = 0x563e52;
+  const steel = 0x55525a;
+
+  const chair = (x: number, y: number, front: boolean) => {
+    // One continuous silhouette connects the back, cushion, arms and feet.
+    r(x + 2, y + 14, 10, 2, 0xb39773);
+    r(x + 2, y + 11, 2, 4, edge);
+    r(x + 10, y + 11, 2, 4, edge);
+    r(x + 3, y + 13, 1, 1, steel);
+    r(x + 10, y + 13, 1, 1, steel);
+    r(x + 1, y + 2, 12, 11, edge);
+    r(x + 2, y, 10, 13, edge);
+    r(x + 2, y + 2, 10, 9, fabric);
+    r(x + 3, y + 1, 8, 1, light);
+    r(x + 3, y + 3, 8, 4, front ? 0x91667d : 0x80596f);
+    r(x + 2, y + 7, 10, 1, shade);
+    r(x + 3, y + 8, 8, 3, front ? 0xa07589 : 0x68495e);
+    r(x + 3, y + 11, 8, 1, shade);
+    r(x, y + 7, 2, 4, edge);
+    r(x + 12, y + 7, 2, 4, edge);
+    r(x, y + 7, 2, 1, steel);
+    r(x + 12, y + 7, 2, 1, steel);
+  };
+  const sideChair = (x: number, y: number, left: boolean) => {
+    const s = (u: number, v: number, w: number, h: number, c: number) =>
+      r(x + (left ? u : 14 - u - w), y + v, w, h, c);
+    s(2, 16, 10, 1, 0xb39773);
+    s(3, 13, 2, 3, edge); s(10, 13, 2, 3, edge);
+    s(1, 1, 4, 13, edge); s(2, 0, 2, 15, edge);
+    s(2, 2, 2, 10, fabric); s(2, 1, 1, 10, light);
+    s(5, 5, 8, 9, edge);
+    s(5, 6, 7, 6, fabric); s(5, 6, 6, 1, light);
+    s(5, 12, 7, 1, shade);
+    s(4, 4, 9, 2, edge); s(5, 4, 7, 1, steel);
+    s(4, 13, 9, 1, edge);
+  };
+
+  for (const x of [17, 33, 49, 65]) chair(x, -16, true);
+  sideChair(-15, 9, true);
+  sideChair(98, 9, false);
+
+  // Subtle ground shadow and recessed legs make this read as a raised table.
+  r(4, 32, 89, 4, 0xb3956c);
+  for (const x of [8, 83]) {
+    r(x, 29, 5, 8, edge);
+    r(x + 1, 30, 2, 6, 0x72513c);
+  }
+  // Chamfered corners with a one-pixel contour, never a nested frame.
+  r(3, 0, 90, 34, edge);
+  r(1, 2, 94, 30, edge);
+  r(0, 4, 96, 26, edge);
+  r(3, 2, 90, 28, 0x956d4c);
+  r(2, 4, 92, 24, 0x956d4c);
+  r(4, 1, 88, 1, 0xcfaa76);
+  r(2, 3, 92, 1, 0xb48b5d);
+  r(2, 5, 1, 22, 0xb48b5d);
+  // Quiet horizontal wood grain with staggered, low-contrast streaks.
+  for (const y of [9, 18, 27]) r(4, y, 88, 1, 0x876144);
+  r(9, 6, 22, 1, 0xa47a53); r(58, 14, 29, 1, 0xa47a53);
+  r(13, 23, 19, 1, 0xa47a53); r(48, 25, 24, 1, 0x8c6546);
+  r(3, 30, 90, 2, 0x684936);
+  r(5, 32, 86, 1, 0x503a2e);
+  // Central cable hatch and a slim closed laptop; papers sit near attendees.
+  r(43, 13, 10, 4, 0x684f3d);
+  r(44, 14, 8, 1, 0xb59066);
+  r(71, 10, 13, 9, 0x604936);
+  r(71, 9, 12, 8, 0x454750);
+  r(72, 10, 10, 5, 0x78818a);
+  r(72, 10, 10, 1, 0xa8afb0);
+  r(76, 12, 2, 1, 0xbec4be);
+  r(70, 17, 14, 1, 0xb6b9b5);
+  for (const [x, y] of [[18, 8], [53, 22]]) {
+    r(x + 1, y + 1, 9, 6, 0x75573e);
+    r(x, y, 8, 6, 0xe8dfc9);
+    r(x + 1, y + 1, 6, 1, 0xf9f1dd);
+    r(x + 2, y + 3, 4, 1, 0xb6b2a4);
+    r(x + 10, y + 1, 1, 5, 0x42535a);
+  }
+  for (const x of [17, 33, 49, 65]) chair(x, 34, false);
+}

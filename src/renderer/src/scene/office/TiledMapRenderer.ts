@@ -1,5 +1,5 @@
 import { Container, Graphics, Sprite, Texture, Rectangle } from 'pixi.js';
-import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool } from './warmOfficeArt';
+import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool, paintConferenceTable } from './warmOfficeArt';
 
 // Trimmed port of shahar061/the-office (office/engine/TiledMapRenderer.ts):
 // renders floor/walls/furniture tile layers and parses collision, spawn-points
@@ -63,6 +63,9 @@ const TILE_LAYERS = ['floor', 'walls', 'furniture-below', 'furniture-above'] as 
 const COLLISION_LAYER = 'collision';
 const SPAWN_POINTS_LAYER = 'spawn-points';
 const ZONES_LAYER = 'zones';
+// The map collision and spawn data stay untouched; only the placeholder art in
+// this rectangle is replaced with the clearer conference-table silhouette.
+const BOARDROOM_ART_BOUNDS = { minX: 10, maxX: 16, minY: 3, maxY: 6 };
 
 export class TiledMapRenderer {
   readonly width: number;
@@ -230,6 +233,7 @@ export class TiledMapRenderer {
           const column = row.findIndex(p => p.x === d.x);
           paintRoundStool(art, d.x + 1, d.y + 1.25, (column + (d.y === 17 || d.y === 4 ? 1 : 0)) % 2 === 0);
         });
+        if (layerName === 'furniture-below') paintConferenceTable(art, 10, 4);
       }
       if (layer?.data) {
         for (let y = 0; y < this.height; y++) {
@@ -248,6 +252,9 @@ export class TiledMapRenderer {
               }
               if (layerName === 'walls' && paintWarmWall(art, tileId, x, y,
                 this.gidAt('walls', x, y + 1) === 0)) continue;
+              if ((layerName === 'furniture-below' || layerName === 'furniture-above')
+                && x >= BOARDROOM_ART_BOUNDS.minX && x <= BOARDROOM_ART_BOUNDS.maxX
+                && y >= BOARDROOM_ART_BOUNDS.minY && y <= BOARDROOM_ART_BOUNDS.maxY) continue;
               const desk = desks.find(d => x >= d.x && x < d.x + 3 && y >= d.y && y <= d.y + 2);
               if (desk && ((layerName === 'furniture-below' && [2, 3, 4, 289, 305].includes(tileId))
                 || (layerName === 'furniture-above' && [18, 19, 20].includes(tileId)))) continue;
