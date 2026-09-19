@@ -237,24 +237,49 @@ export type { CatalogModel, ModelCatalog } from '@shared/modelCatalogPayload';
 const BAKED: ModelCatalog = modelCatalog;
 
 /** The catalog the pickers actually read. Starts as the baked copy and is
- *  replaced, per provider, when the remote copy arrives from main. `let`, not
- *  `const`, is the whole mechanism: everything below reads it through a
- *  function call, so a refresh reaches the next render with no plumbing. */
+ *  refreshed when the remote copy arrives from main. `let`, not `const`, is the
+ *  whole mechanism: everything below reads it through a function call, so a
+ *  refresh reaches the next render with no plumbing. */
 let CATALOG: ModelCatalog = BAKED;
 
 /** Merge a validated remote catalog over the baked one.
  *
- *  Per PROVIDER, not per model: a provider present in the remote copy replaces
- *  that provider's list outright, and a provider the remote copy does not
- *  mention keeps the list this build shipped with. That means docs/model-catalog
- *  .json can carry only the providers being changed, and a provider dropped from
- *  it degrades to the built-in list rather than to an empty picker.
+ *  A remote provider updates matching models and adds new ones, while models
+ *  shipped in the current build remain available. This matters during rollout:
+ *  an installed build can contain a model before the GitHub catalog reaches the
+ *  same revision, and a stale remote response must not hide that model again.
+ *  A provider the remote copy does not mention keeps the list this build shipped
+ *  with.
  *
  *  Returns whether anything actually changed, so the caller can skip a pointless
  *  event on the overwhelmingly common "nothing new" path. */
 export function applyRemoteModelCatalog(remote: ModelCatalog | null): boolean {
+  const mergeModels = (baked: ModelOption[], remoteModels: ModelOption[]): ModelOption[] => {
+    const key = (model: ModelOption) => model.id ?? `label:${model.label}`;
+    const seen = new Set(remoteModels.map(key));
+    return [
+      ...remoteModels,
+      ...baked.filter((model) => {
+        const modelKey = key(model);
+        if (seen.has(modelKey)) return false;
+        seen.add(modelKey);
+        return true;
+      })
+    ];
+  };
+
   const next: ModelCatalog = remote
-    ? { version: BAKED.version, providers: { ...BAKED.providers, ...remote.providers } }
+    ? {
+        version: BAKED.version,
+        providers: Object.fromEntries(
+          Object.entries({ ...BAKED.providers, ...remote.providers }).map(([provider, models]) => [
+            provider,
+            remote.providers[provider] && BAKED.providers[provider]
+              ? mergeModels(BAKED.providers[provider], models)
+              : models
+          ])
+        )
+      }
     : BAKED;
   if (JSON.stringify(next) === JSON.stringify(CATALOG)) return false;
   CATALOG = next;

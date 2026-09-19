@@ -10,6 +10,7 @@ import { Texture } from 'pixi.js';
 import { paintPortrait, sceneFrameBufs, SCENE_W, SCENE_H } from './portraitArt';
 import { getAnyaFrames } from './anyaFrames';
 import { getKleeFrames } from './kleeFrames';
+import { getHutaoFrames } from './hutaoFrames';
 import anyaPortrait from '@/assets/Anya.png';
 import hutaoPortrait from '@/assets/Hutao.png';
 import kleePortrait from '@/assets/Klee.png';
@@ -45,8 +46,7 @@ export interface CastMember {
 export const OFFICE_CAST: CastMember[] = [
   // Preserve saved agents' internal key while using Anya's custom action frames.
   { name: 'michael',  displayName: '阿尼亚',   portrait: anyaPortrait, shirt: '#426b80', blurb: '阿尼亚' },
-  // Keep the internal key as `jim` so the existing action frames continue to
-  // work while the static face is swapped to Hutao.
+  // Preserve saved agents' internal key while using Hutao's custom action frames.
   { name: 'jim',      displayName: '胡桃',     portrait: hutaoPortrait, shirt: '#6fa8dc', blurb: '胡桃' },
   // Preserve saved agents' internal key while using Klee's custom action frames.
   { name: 'pam',      displayName: '可莉',     portrait: kleePortrait, shirt: '#9caf88', blurb: '可莉' },
@@ -98,6 +98,7 @@ function bufToTexture(buf: Uint8ClampedArray): Texture {
 export async function getCastFrames(name: OfficeCharacterName): Promise<Texture[][]> {
   if (name === 'michael') return getAnyaFrames();
   if (name === 'pam') return getKleeFrames();
+  if (name === 'jim') return getHutaoFrames();
   const cached = frameCache.get(name);
   if (cached) return cached;
   const { front, back } = sceneFrameBufs(name);

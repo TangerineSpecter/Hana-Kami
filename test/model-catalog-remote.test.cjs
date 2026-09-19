@@ -22,6 +22,7 @@ const { applyRemoteModelCatalog, modelsForProvider, agentModels } =
   loadTs('src/renderer/src/store/config.ts');
 
 const ok = (providers) => ({ version: CATALOG_SCHEMA_VERSION, providers });
+const bakedRows = (provider) => baked.providers[provider].map(({ id, label }) => ({ id, label }));
 
 /** Every test that changes the live catalog must put it back, or the next file
  *  in the run inherits a catalog that never shipped. */
@@ -148,13 +149,29 @@ test('version bounds survive the parse', () => {
 
 // ─── the overlay ────────────────────────────────────────────────────────────
 
-test('a remote provider replaces that list; the others keep the baked one', () => {
+test('a remote provider updates entries but keeps baked-only models; others keep the baked list', () => {
   const before = modelsForProvider('codex');
   assert.ok(applyRemoteModelCatalog(parseModelCatalog(ok({
     claude: [{ id: 'claude-next-9', label: 'Next 9' }]
   }))));
-  assert.deepEqual(modelsForProvider('claude'), [{ id: 'claude-next-9', label: 'Next 9' }]);
+  assert.deepEqual(modelsForProvider('claude'), [
+    { id: 'claude-next-9', label: 'Next 9' },
+    ...bakedRows('claude')
+  ]);
   assert.deepEqual(modelsForProvider('codex'), before, 'codex was not in the remote copy');
+});
+
+test('a stale remote provider cannot hide a model shipped in the current build', () => {
+  assert.ok(applyRemoteModelCatalog(parseModelCatalog(ok({
+    antigravity: [
+      { label: 'CLI default' },
+      { id: 'Gemini 3.7 Flash (High)', label: 'Gemini 3.7 Flash · High' }
+    ]
+  }))));
+  assert.ok(
+    modelsForProvider('antigravity').some((model) => model.id === 'Gemini 3.8 Flash (High)'),
+    'the baked Gemini 3.8 model remains selectable'
+  );
 });
 
 test('the Claude-only surfaces read the overlay, not a snapshot', () => {
@@ -163,7 +180,10 @@ test('the Claude-only surfaces read the overlay, not a snapshot', () => {
   applyRemoteModelCatalog(parseModelCatalog(ok({
     claude: [{ id: 'claude-next-9', label: 'Next 9' }]
   })));
-  assert.deepEqual(agentModels(), [{ id: 'claude-next-9', label: 'Next 9' }]);
+  assert.deepEqual(agentModels(), [
+    { id: 'claude-next-9', label: 'Next 9' },
+    ...bakedRows('claude')
+  ]);
 });
 
 test('clearing the overlay restores the models the build shipped with', () => {
@@ -190,10 +210,10 @@ test('the version filter still runs over remote entries', () => {
   })));
   // No __APP_VERSION__ define outside a build, so the filter fails open and
   // offers both — the deliberate "never hide every model" behaviour.
-  assert.deepEqual(modelsForProvider('claude').map((m) => m.id), ['always', 'later']);
+  assert.deepEqual(modelsForProvider('claude').map((m) => m.id).slice(0, 2), ['always', 'later']);
   globalThis.__APP_VERSION__ = '0.4.6';
   try {
-    assert.deepEqual(modelsForProvider('claude').map((m) => m.id), ['always']);
+    assert.deepEqual(modelsForProvider('claude').map((m) => m.id).slice(0, 1), ['always']);
   } finally {
     delete globalThis.__APP_VERSION__;
   }
