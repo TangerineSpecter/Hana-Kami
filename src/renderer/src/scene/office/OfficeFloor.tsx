@@ -10,6 +10,7 @@ import { Camera } from './Camera';
 import { Character, paintCup } from './Character';
 import { paintMugRack } from './warmOfficeArt';
 import { paintTaskBoard } from './taskBoardArt';
+import { paintOfficeCalendar } from './wallFixturesArt';
 import { DeskScreen } from './DeskScreen';
 import { installExecutiveDesk } from './ExecutiveDesk';
 import { MessageEnvelope, type MessageAct } from './MessageEnvelope';
@@ -355,19 +356,7 @@ export function OfficeFloor() {
         if (god) st.select(god.id);
         st.requestCommandCenterTab('triggers');
       });
-      // nail + ring binding above a white page with a red month header
-      calG.rect(7, -2, 2, 2).fill(0x4a3b52);                  // nail
-      calG.rect(0, 0, 16, 20).fill(0x4a3b52);                 // frame/shadow
-      calG.rect(1, 1, 14, 18).fill(0xf2ead8);                 // the page
-      calG.rect(1, 1, 14, 4).fill(0xc94f4f);                  // month banner
-      calG.rect(4, 0, 1, 2).fill(0xd8d3c4);                   // binding rings
-      calG.rect(11, 0, 1, 2).fill(0xd8d3c4);
-      for (let r = 0; r < 3; r++) {
-        for (let c = 0; c < 5; c++) {
-          calG.rect(2 + c * 3, 7 + r * 4, 2, 2).fill(0xb8ab90); // day grid
-        }
-      }
-      calG.rect(8, 11, 2, 2).fill(0xc94f4f);                  // today, circled red
+      paintOfficeCalendar(calG);
       charLayer.addChild(calG);
 
       // Build the ordered seat list once: PC desks + named desks first, then

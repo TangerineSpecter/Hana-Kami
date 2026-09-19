@@ -1,6 +1,7 @@
 import { Container, Graphics, Sprite, Texture, Rectangle } from 'pixi.js';
 import { paintVendingMachine } from './warmOfficeArt';
 import { paintWorkMonitor } from './warmOfficeArt';
+import { paintOfficeWindow } from './wallFixturesArt';
 import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool, paintConferenceTable, paintCafeSet } from './warmOfficeArt';
 
 // Trimmed port of shahar061/the-office (office/engine/TiledMapRenderer.ts):
@@ -271,6 +272,10 @@ export class TiledMapRenderer {
             const tileId = raw & TILE_ID_MASK;
 
             if (art) {
+              if (layerName === 'furniture-above') {
+                if (tileId === 327) { paintOfficeWindow(art, x * 16, y * 16); continue; }
+                if ([328, 343, 344].includes(tileId)) continue;
+              }
               if ((layerName === 'furniture-below' || layerName === 'furniture-above')
                 && x >= 30 && x <= 32 && y >= 11 && y <= 14) continue;
               // The office's cup rack is drawn dynamically with its cup stock.

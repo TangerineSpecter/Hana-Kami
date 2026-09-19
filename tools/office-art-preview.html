@@ -8,6 +8,7 @@
 import { Application, Texture, Graphics } from 'pixi.js';
 import { paintMugRack } from '../src/renderer/src/scene/office/warmOfficeArt.ts';
 import { paintTaskBoard } from '../src/renderer/src/scene/office/taskBoardArt.ts';
+import { paintOfficeCalendar } from '../src/renderer/src/scene/office/wallFixturesArt.ts';
 import { TiledMapRenderer, WARM_OAK_OFFICE_SURFACE_STYLE } from '../src/renderer/src/scene/office/TiledMapRenderer.ts';
 import { installExecutiveDesk } from '../src/renderer/src/scene/office/ExecutiveDesk.ts';
 import { DeskScreen } from '../src/renderer/src/scene/office/DeskScreen.ts';
@@ -27,6 +28,8 @@ const map = new TiledMapRenderer(data,textures,WARM_OAK_OFFICE_SURFACE_STYLE);
 installExecutiveDesk(map);
 map.getContainer().scale.set(3);
 app.stage.addChild(map.getContainer());
+const calendar=new Graphics();calendar.position.set(72,21);calendar.zIndex=48;
+paintOfficeCalendar(calendar);map.getCharacterContainer().addChild(calendar);
 const boardDemo = new URLSearchParams(location.search).has('notes');
 for (const [x,kind,color,count] of [[111,'blocked',0xe8a292,3],[145,'todo',0xf0d786,6],[249,'ask',0xcdb4e8,2]]) {
   const board=new Graphics();board.position.set(x,160);board.zIndex=176;
