@@ -9,6 +9,7 @@
 import { Texture } from 'pixi.js';
 import { paintPortrait, sceneFrameBufs, SCENE_W, SCENE_H } from './portraitArt';
 import { getAnyaFrames } from './anyaFrames';
+import { getKleeFrames } from './kleeFrames';
 import anyaPortrait from '@/assets/Anya.png';
 import hutaoPortrait from '@/assets/Hutao.png';
 import kleePortrait from '@/assets/Klee.png';
@@ -47,6 +48,7 @@ export const OFFICE_CAST: CastMember[] = [
   // Keep the internal key as `jim` so the existing action frames continue to
   // work while the static face is swapped to Hutao.
   { name: 'jim',      displayName: '胡桃',     portrait: hutaoPortrait, shirt: '#6fa8dc', blurb: '胡桃' },
+  // Preserve saved agents' internal key while using Klee's custom action frames.
   { name: 'pam',      displayName: '可莉',     portrait: kleePortrait, shirt: '#9caf88', blurb: '可莉' },
   { name: 'dwight',   displayName: '千夏',     portrait: sunnaPortrait, shirt: '#b89b3e', blurb: '千夏' },
   { name: 'kevin',    displayName: '知更鸟',   portrait: robinPortrait, shirt: '#4a7ab5', blurb: '知更鸟' },
@@ -95,6 +97,7 @@ function bufToTexture(buf: Uint8ClampedArray): Texture {
  */
 export async function getCastFrames(name: OfficeCharacterName): Promise<Texture[][]> {
   if (name === 'michael') return getAnyaFrames();
+  if (name === 'pam') return getKleeFrames();
   const cached = frameCache.get(name);
   if (cached) return cached;
   const { front, back } = sceneFrameBufs(name);
