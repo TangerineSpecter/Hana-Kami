@@ -14,6 +14,7 @@ import kleePortrait from '@/assets/Klee.png';
 import sunnaPortrait from '@/assets/Sunna.png';
 import robinPortrait from '@/assets/Robin.png';
 import furinaPortrait from '@/assets/Furina.png';
+import maomaoPortrait from '@/assets/Maomao.png';
 
 export type OfficeCharacterName =
   | 'michael' | 'jim' | 'pam' | 'dwight' | 'kevin' | 'angela'
@@ -46,7 +47,7 @@ export const OFFICE_CAST: CastMember[] = [
   { name: 'dwight',   displayName: '千夏',     portrait: sunnaPortrait, shirt: '#b89b3e', blurb: '千夏' },
   { name: 'kevin',    displayName: '知更鸟',   portrait: robinPortrait, shirt: '#4a7ab5', blurb: '知更鸟' },
   { name: 'angela',   displayName: '芙芙',     portrait: furinaPortrait, shirt: '#8a86a6', blurb: '芙芙' },
-  { name: 'oscar',    displayName: 'Oscar',    shirt: '#7a4b6b', blurb: 'Accountant' },
+  { name: 'oscar',    displayName: '猫猫',     portrait: maomaoPortrait, shirt: '#7a4b6b', blurb: '猫猫' },
   { name: 'stanley',  displayName: 'Stanley',  shirt: '#8c5a4b', blurb: 'Sales, crossword' },
   { name: 'phyllis',  displayName: 'Phyllis',  shirt: '#b08bbf', blurb: 'Sales' },
   { name: 'andy',     displayName: 'Andy',     shirt: '#6fae6f', blurb: 'Cornell, a cappella' },

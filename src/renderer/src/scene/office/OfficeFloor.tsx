@@ -9,6 +9,7 @@ import { TiledMapRenderer, WARM_OAK_OFFICE_SURFACE_STYLE } from './TiledMapRende
 import { Camera } from './Camera';
 import { Character, paintCup } from './Character';
 import { paintMugRack } from './warmOfficeArt';
+import { paintTaskBoard } from './taskBoardArt';
 import { DeskScreen } from './DeskScreen';
 import { installExecutiveDesk } from './ExecutiveDesk';
 import { MessageEnvelope, type MessageAct } from './MessageEnvelope';
@@ -1094,23 +1095,11 @@ export function OfficeFloor() {
         deskNoteG.clear();
       };
 
-      /** One cork board with a colored header at local x `ox`; draws up to 12
+      /** One cork board with a colored header at local x `ox`; draws up to 8
        *  of `notes`, overflow as a corner pile. */
-      const drawCork = (ox: number, header: number, notes: string[]): void => {
-        boardG.rect(ox, -8, 30, 22).fill(0x6e5639);        // frame
-        boardG.rect(ox + 1, -7, 28, 3).fill(header);       // header strip
-        boardG.rect(ox + 1, -4, 28, 17).fill(0xc9b083);    // cork
-        const n = Math.min(notes.length, 12);
-        for (let i = 0; i < n; i++) {
-          const x = ox + 3 + (i % 4) * 7;
-          const y = -2 + Math.floor(i / 4) * 5;
-          boardG.rect(x, y, 5, 4).fill(NOTE_COLORS[notes[i]] ?? 0xf2eddc);
-          boardG.rect(x + 2, y, 1, 1).fill(0x4a3b52);      // pin
-        }
-        if (notes.length > 12) {
-          boardG.rect(ox + 22, 8, 5, 4).fill(0xe8e0c8);
-          boardG.rect(ox + 23, 7, 5, 4).fill(0xf2eddc);
-        }
+      const drawCork = (ox: number, notes: string[]): void => {
+        paintTaskBoard(boardG, ox, ox === 0 ? 'blocked' : 'todo',
+          notes.map(status => NOTE_COLORS[status] ?? 0xf2eddc));
       };
 
       const drawTaskBoard = (tasks: BoardTask[]): void => {
@@ -1143,8 +1132,8 @@ export function OfficeFloor() {
           g.rect(idx * 7, -(idx % 2), 5, 4).fill(NOTE_COLORS.doing);
           g.rect(idx * 7 + 2, -(idx % 2), 1, 1).fill(0x4a3b52);
         }
-        drawCork(0, NOTE_COLORS.blocked, blocked);   // left: what's burning
-        drawCork(34, NOTE_COLORS.todo, todoNotes);   // right: what's queued
+        drawCork(0, blocked);   // left: what's burning
+        drawCork(34, todoNotes);   // right: what's queued
         // The archive table: every finished task adds a green sheet to the
         // pile (visible stack capped at 6 — beyond that it just sits proud).
         boardG.rect(68, 6, 14, 4).fill(0xb08d5e);    // table top
@@ -1200,27 +1189,7 @@ export function OfficeFloor() {
       let askPulse = 0;
       const drawAskBoard = (pulse: number): void => {
         askG.clear();
-        // lilac-framed board with a big "?" identity
-        askG.rect(0, -8, 30, 22).fill(0x5b4a6b);
-        askG.rect(1, -7, 28, 3).fill(0xcdb4e8);
-        askG.rect(1, -4, 28, 17).fill(0xc9b083);
-        if (askCount === 0) {
-          // quiet: a faint "?" watermark
-          askG.rect(13, -1, 4, 2).fill({ color: 0x8a755f, alpha: 0.8 });
-          askG.rect(15, 1, 2, 4).fill({ color: 0x8a755f, alpha: 0.8 });
-          askG.rect(15, 7, 2, 2).fill({ color: 0x8a755f, alpha: 0.8 });
-        } else {
-          const n = Math.min(askCount, 8);
-          for (let i = 0; i < n; i++) {
-            const x = 3 + (i % 4) * 7;
-            const y = -2 + Math.floor(i / 4) * 6;
-            askG.rect(x, y, 5, 4).fill(0xcdb4e8);
-            askG.rect(x + 2, y, 1, 1).fill(0x4a3b52);
-          }
-          // attention pulse around the frame while questions wait
-          const a = 0.35 + 0.3 * Math.sin(pulse * 4);
-          askG.rect(-2, -10, 34, 26).stroke({ color: 0xcdb4e8, width: 2, alpha: a });
-        }
+        paintTaskBoard(askG, 0, 'ask', Array.from({length: askCount}, () => 0xcdb4e8), pulse);
       };
       drawAskBoard(0);
 
