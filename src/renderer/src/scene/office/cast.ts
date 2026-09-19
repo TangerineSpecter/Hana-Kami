@@ -8,6 +8,7 @@
 
 import { Texture } from 'pixi.js';
 import { paintPortrait, sceneFrameBufs, SCENE_W, SCENE_H } from './portraitArt';
+import { getAnyaFrames } from './anyaFrames';
 import anyaPortrait from '@/assets/Anya.png';
 import hutaoPortrait from '@/assets/Hutao.png';
 import kleePortrait from '@/assets/Klee.png';
@@ -41,10 +42,8 @@ export interface CastMember {
 
 /** Selectable roster, in display order. */
 export const OFFICE_CAST: CastMember[] = [
-  // Keep the internal key as `michael` for now: his office action frames and
-  // animation behavior remain unchanged while the static face is swapped to
-  // Anya. This is deliberately a presentation-only rename.
-  { name: 'michael',  displayName: '阿尼亚',   portrait: anyaPortrait, shirt: '#5a6b8c', blurb: '阿尼亚' },
+  // Preserve saved agents' internal key while using Anya's custom action frames.
+  { name: 'michael',  displayName: '阿尼亚',   portrait: anyaPortrait, shirt: '#426b80', blurb: '阿尼亚' },
   // Keep the internal key as `jim` so the existing action frames continue to
   // work while the static face is swapped to Hutao.
   { name: 'jim',      displayName: '胡桃',     portrait: hutaoPortrait, shirt: '#6fa8dc', blurb: '胡桃' },
@@ -95,6 +94,7 @@ function bufToTexture(buf: Uint8ClampedArray): Texture {
  * three walk frames are stand / step-left / step-right.
  */
 export async function getCastFrames(name: OfficeCharacterName): Promise<Texture[][]> {
+  if (name === 'michael') return getAnyaFrames();
   const cached = frameCache.get(name);
   if (cached) return cached;
   const { front, back } = sceneFrameBufs(name);
