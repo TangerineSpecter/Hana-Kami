@@ -8,6 +8,7 @@ import { useStore, type Agent } from '@/store/store';
 import { TiledMapRenderer, WARM_OAK_OFFICE_SURFACE_STYLE } from './TiledMapRenderer';
 import { Camera } from './Camera';
 import { Character, paintCup } from './Character';
+import { paintMugRack } from './warmOfficeArt';
 import { DeskScreen } from './DeskScreen';
 import { installExecutiveDesk } from './ExecutiveDesk';
 import { MessageEnvelope, type MessageAct } from './MessageEnvelope';
@@ -497,6 +498,10 @@ export function OfficeFloor() {
       charLayer.addChild(trayG);
       const drawTray = (): void => {
         trayG.clear();
+        if (theme.id === 'office') {
+          paintMugRack(trayG, cleanCups);
+          return;
+        }
         const slots: Array<[number, number]> = [[2, 10], [9, 10], [2, 15], [9, 15]];
         for (let i = 0; i < cleanCups && i < slots.length; i++) {
           paintCup(trayG, slots[i][0], slots[i][1]);

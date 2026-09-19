@@ -5,6 +5,64 @@ import { Graphics } from 'pixi.js';
 export const OAK_FLOOR_GIDS = new Set([783, 784, 799, 800]);
 const ink = 0x40332a;
 
+/** Raised two-tier mug rack; empty slots remain empty as clean cups are taken. */
+export function paintMugRack(g: Graphics, cleanCups: number): void {
+  const r = (x: number, y: number, w: number, h: number, c: number) =>
+    g.rect(x, y, w, h).fill(c);
+  r(1, -10, 14, 26, ink);
+  r(2, -9, 12, 21, 0x78563e);
+  r(3, -8, 10, 20, 0x98734f);
+  r(1, -10, 14, 2, 0xc39b69);
+  r(1, 1, 14, 2, 0xd2ac77);
+  r(1, 11, 14, 2, 0xd2ac77);
+  r(2, 13, 12, 1, 0x674b37);
+  r(2, 14, 2, 2, ink); r(12, 14, 2, 2, ink);
+  const slots = [[3, -6], [9, -6], [3, 4], [9, 4]];
+  for (let i = 0; i < Math.min(4, Math.max(0, cleanCups)); i++) {
+    const [x, y] = slots[i];
+    r(x, y, 4, 7, 0x4f5557);
+    r(x, y + 1, 4, 5, 0xe7e9df);
+    r(x, y + 1, 1, 4, 0xffffff);
+    r(x + 3, y + 2, 3, 3, 0xf4f0de);
+    r(x + 4, y + 3, 1, 1, 0x78563e); // open handle
+    r(x, y, 4, 1, 0xf9f5e8);
+    r(x + 1, y, 2, 1, 0x525e65); // dark, visibly open cup rim
+    r(x + 1, y + 5, 3, 1, 0x99b5b4);
+  }
+}
+
+/** Four cafe seats: two north and two south of the blocked table row. */
+export function paintCafeSet(g: Graphics, tx: number, tableRow: number): void {
+  const r = (x: number, y: number, w: number, h: number, c: number) =>
+    g.rect(tx * 16 + x, tableRow * 16 + y, w, h).fill(c);
+  for (const x of [0, 16]) {
+    for (const y of [-16, 16]) {
+      // Seats fit their walkable tile; the aisle and cup rack stay clear.
+      r(x + 3, y + 12, 10, 2, 0xbea078);
+      r(x + 3, y + 10, 2, 3, ink); r(x + 11, y + 10, 2, 3, ink);
+      r(x + 2, y + 2, 12, 9, 0x39444b);
+      r(x + 3, y + 3, 10, 7, 0x6f8c91);
+      r(x + 4, y + 3, 8, 1, 0xa4b9b5);
+      r(x + 3, y + 9, 10, 1, 0x526c76);
+      const back = y < 0 ? y : y + 8;
+      r(x + 2, back, 12, 4, 0x39444b);
+      r(x + 3, back + 1, 10, 2, 0x809d9f);
+      r(x + 4, back + 1, 8, 1, 0xb2c6bd);
+    }
+  }
+  // Real tabletop, rather than the old patterned floor tile under the chairs.
+  r(2, 14, 28, 2, 0xb59770);
+  r(3, 11, 3, 4, ink); r(26, 11, 3, 4, ink);
+  r(1, 0, 30, 13, ink); r(0, 2, 32, 9, ink);
+  r(2, 1, 28, 9, 0xb18a59); r(1, 3, 30, 6, 0xb18a59);
+  r(3, 1, 26, 1, 0xe0bf88);
+  r(2, 10, 28, 2, 0x795638);
+  r(4, 5, 24, 1, 0xa27a4e);
+  // Shared tissue box leaves room for the characters' carried coffee cups.
+  r(13, 4, 6, 4, 0x607e78); r(14, 4, 4, 2, 0xa9bdb0);
+  r(15, 2, 3, 3, 0xf4edda);
+}
+
 export function paintOakTile(g: Graphics, tx: number, ty: number): void {
   const shades = [0xdec08f, 0xe1c493, 0xddbd89, 0xdfc18f, 0xe3c695];
   for (let py = 0; py < 16; py++) {

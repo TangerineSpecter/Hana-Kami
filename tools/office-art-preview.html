@@ -5,7 +5,8 @@
 <header>办公室实际渲染 <button id="screens">切换电脑亮屏</button><button id="detail">放大桌椅</button></header>
 <div id="scene"></div><div id="status">加载中</div>
 <script type="module">
-import { Application, Texture } from 'pixi.js';
+import { Application, Texture, Graphics } from 'pixi.js';
+import { paintMugRack } from '../src/renderer/src/scene/office/warmOfficeArt.ts';
 import { TiledMapRenderer, WARM_OAK_OFFICE_SURFACE_STYLE } from '../src/renderer/src/scene/office/TiledMapRenderer.ts';
 import { installExecutiveDesk } from '../src/renderer/src/scene/office/ExecutiveDesk.ts';
 import { DeskScreen } from '../src/renderer/src/scene/office/DeskScreen.ts';
@@ -25,6 +26,11 @@ const map = new TiledMapRenderer(data,textures,WARM_OAK_OFFICE_SURFACE_STYLE);
 installExecutiveDesk(map);
 map.getContainer().scale.set(3);
 app.stage.addChild(map.getContainer());
+const rack = new Graphics();
+rack.position.set(29*16,15*16);
+rack.zIndex=16*16;
+paintMugRack(rack,Number(new URLSearchParams(location.search).get('cups') ?? 4));
+map.getCharacterContainer().addChild(rack);
 const screens=[];
 for(let y=0;y<data.height;y++) for(let x=0;x<data.width;x++) if(map.gidAt('furniture-above',x,y)===365) {
   const screen=new DeskScreen(map,{x,y}); screens.push(screen); map.getCharacterContainer().addChild(screen.container);
@@ -38,4 +44,33 @@ document.querySelector('#detail').onclick=()=>{
   map.getContainer().position.set(detail?-144:0,detail?-1584:0);
 };
 document.querySelector('#status').textContent=`已渲染 ${screens.length} 个工作位 · 地图 ${data.width}×${data.height} · 可切换亮屏检查遮挡`;
+if (new URLSearchParams(location.search).has('cafe')) {
+  const { Character } = await import('../src/renderer/src/scene/office/Character.ts');
+  const { getFeilenFrames } = await import('../src/renderer/src/scene/office/feilenFrames.ts');
+  const { findPath } = await import('../src/renderer/src/scene/office/pathfinding.ts');
+  const exit = {x:26,y:16};
+  const actors = [];
+  const results = [];
+  for (let i=1;i<=4;i++) {
+    const seat = map.getSpawnPoint(`cafe-seat-${i}`);
+    const facing = seat.y === 14 ? 'down' : 'up';
+    const actor = new Character({agentId:`preview-${i}`,mapRenderer:map,
+      frames:getFeilenFrames(),seatTile:seat,spawnTile:exit,glowColor:0xffffff});
+    actor.show(map.getCharacterContainer());
+    let arrived = false;
+    actor.walkToAndThen(seat,()=>{arrived=true;actor.sitInPlace(facing);});
+    for(let tick=0;tick<600;tick++) actor.update(1/60);
+    const route = findPath(map,exit,seat);
+    results.push({seat,facing,arrived,seated:actor.isSitting(),
+      avoidsTable:!!route && route.every(p=>!(p.y===15 && (p.x===27 || p.x===28)))});
+    actors.push(actor);
+  }
+  window.cafeCheck = {results,leave:()=>actors.map(actor=>{
+    let left=false;
+    actor.walkToAndThen(exit,()=>{left=true;});
+    for(let tick=0;tick<600;tick++) actor.update(1/60);
+    return left && !actor.isSitting();
+  })};
+  document.querySelector('#status').textContent=JSON.stringify(results);
+}
 </script>

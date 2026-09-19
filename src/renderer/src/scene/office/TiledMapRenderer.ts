@@ -1,5 +1,5 @@
 import { Container, Graphics, Sprite, Texture, Rectangle } from 'pixi.js';
-import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool, paintConferenceTable } from './warmOfficeArt';
+import { OAK_FLOOR_GIDS, paintOakTile, paintWarmWall, paintWalnutDesk, paintDeskAccessories, paintRoundStool, paintConferenceTable, paintCafeSet } from './warmOfficeArt';
 
 // Trimmed port of shahar061/the-office (office/engine/TiledMapRenderer.ts):
 // renders floor/walls/furniture tile layers and parses collision, spawn-points
@@ -234,6 +234,7 @@ export class TiledMapRenderer {
           paintRoundStool(art, d.x + 1, d.y + 1.25, (column + (d.y === 17 || d.y === 4 ? 1 : 0)) % 2 === 0);
         });
         if (layerName === 'furniture-below') paintConferenceTable(art, 10, 4);
+        if (layerName === 'furniture-below') paintCafeSet(art, 27, 15);
       }
       if (layer?.data) {
         for (let y = 0; y < this.height; y++) {
@@ -247,6 +248,12 @@ export class TiledMapRenderer {
             const tileId = raw & TILE_ID_MASK;
 
             if (art) {
+              // The office's cup rack is drawn dynamically with its cup stock.
+              if (layerName === 'furniture-below' && x === 29 && y === 15 && tileId === 39) continue;
+              if (x >= 27 && x <= 28 && y >= 14 && y <= 16) {
+                if (layerName === 'floor') { paintOakTile(art, x, y); continue; }
+                if (layerName === 'furniture-below' || layerName === 'furniture-above') continue;
+              }
               if (layerName === 'floor' && OAK_FLOOR_GIDS.has(tileId)) {
                 paintOakTile(art, x, y); continue;
               }
