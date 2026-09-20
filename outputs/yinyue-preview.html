@@ -1,0 +1,606 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>银月 · 动作预览</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f8f2df;color:#362a42;font-family:system-ui;padding:32px}main{max-width:1000px;margin:auto}h1{font-size:28px;margin:0 0 8px}p{color:#766581;line-height:1.6}button{padding:8px 18px;background:#fff9ed;border:1px solid #8b7495;color:inherit;cursor:pointer}section{margin-top:26px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#e5e9ef;border:1px solid #b3bdac;text-align:center;padding:14px 6px}.card canvas{display:block;width:128px;height:192px;image-rendering:pixelated;margin:auto}.card small{display:block;color:#74677a;margin-top:8px}.sheet{overflow:auto;background:#eee7d7;border:1px solid #cbbdd0;padding:16px}.sheet canvas{image-rendering:pixelated;display:block}@media(max-width:620px){body{padding:16px}.grid{grid-template-columns:repeat(2,1fr)}}
+.hero{display:flex;gap:32px;align-items:center;justify-content:center;background:#e5e9ef;border:1px solid #bac1ce;padding:24px;flex-wrap:wrap}.hero canvas{image-rendering:pixelated}.hero figure{margin:0;text-align:center}.hero figcaption{margin-top:12px;color:#74677a}.hero .main{width:192px;height:288px}.hero .friend{width:192px;height:288px}.hero .actual{width:32px;height:48px}button:focus-visible{outline:3px solid #b95361;outline-offset:3px}</style><main><h1>银月 · 像素动作预览</h1><p>银白长发 · 毛茸茸尖耳 · 蓝灰眼睛 · 小红腰结<br>32 × 48 像素，直接沿用菲伦的头身比例与五官坐标。第三版设计预览 · 已接入办公室银月角色。</p><button id="pause">暂停动画</button>
+<section><div class="hero"><figure><canvas id="hero" class="main" width="32" height="48"></canvas><figcaption>银月 · 正面站立 × 6</figcaption></figure><figure><canvas id="friend" class="friend" width="32" height="48"></canvas><figcaption>菲伦 · 比例参考 × 6</figcaption></figure><figure><canvas id="actual" class="actual" width="32" height="48"></canvas><figcaption>银月 · 办公室尺寸参考</figcaption></figure></div></section><section><h2>坐姿桌沿遮挡 · 示意预览</h2><p>长发在桌沿处遮住，手和上身仍可出现在桌面上。此处桌子是示意，非楼层截图。</p><div class="grid" id="seats"></div></section>
+<section><h2>四向走路</h2><div class="grid" id="directions"></div></section>
+<section><h2>动作对比 · 正面 / 侧面</h2><div class="grid" id="actions"></div></section>
+<section><h2>动画帧表</h2><p>每行依次为：走路 4 帧、打字 4 帧、阅读 4 帧、待机 4 帧；四行分别为正面、背面、右侧、左侧。</p><div class="sheet"><canvas id="sheet" width="1024" height="384"></canvas></div></section></main>
+<script>var Yinyue = (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // src/renderer/src/scene/office/yinyueArt.ts
+  var yinyueArt_exports = {};
+  __export(yinyueArt_exports, {
+    YINYUE_DESK_HAIRLINE: () => YINYUE_DESK_HAIRLINE,
+    YINYUE_H: () => YINYUE_H,
+    YINYUE_W: () => YINYUE_W,
+    paintYinyue: () => paintYinyue
+  });
+  var YINYUE_W = 32;
+  var YINYUE_H = 48;
+  var YINYUE_DESK_HAIRLINE = 33;
+  var P = {
+    ink: "#4a3d56",
+    hair: "#dcdde9",
+    darkHair: "#abaac5",
+    lightHair: "#fffaf4",
+    skin: "#ffebcf",
+    shade: "#e6bba4",
+    blush: "#e7b0ab",
+    white: "#fff7e9",
+    coat: "#d0d6e2",
+    coatLight: "#f0edf0",
+    coatDark: "#8f91a9",
+    shoe: "#737083",
+    pupil: "#383b55",
+    iris: "#8095b1",
+    irisLight: "#b7d1df",
+    glint: "#fff6e4",
+    mouth: "#876064",
+    cheek: "#f2c5b6",
+    book: "#6f899f",
+    red: "#b85e73",
+    redLight: "#e49aa7",
+    ear: "#e6aeb5"
+  };
+  function paintYinyue(ctx, direction, action, frame = 0, seated = false) {
+    ctx.save();
+    ctx.clearRect(0, 0, YINYUE_W, YINYUE_H);
+    if (direction === "left") {
+      ctx.translate(YINYUE_W, 0);
+      ctx.scale(-1, 1);
+      direction = "right";
+    }
+    const walking = action === "walk";
+    const phase = frame % 4;
+    const step = walking ? [0, 1, 0, -1][phase] : 0;
+    const bob = walking && phase % 2 === 1 ? -1 : 0;
+    const work = action === "type" || action === "read";
+    const rect = (x, y, w, h, color) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+    };
+    const eye = (x, y, blink2) => {
+      if (blink2) {
+        rect(x, y + 2, 1, 1, P.pupil);
+        rect(x + 1, y + 3, 2, 1, P.pupil);
+        rect(x + 3, y + 2, 1, 1, P.pupil);
+        return;
+      }
+      rect(x, y, 4, 1, P.pupil);
+      rect(x, y + 1, 4, 4, P.white);
+      rect(x + 1, y + 1, 3, 2, P.pupil);
+      rect(x + 1, y + 3, 3, 1, P.iris);
+      rect(x + 1, y + 4, 2, 1, P.irisLight);
+      rect(x + 1, y + 1, 1, 1, P.glint);
+    };
+    const ears = (profile = false, back = false) => {
+      const ear = (x, flip) => {
+        ctx.save();
+        ctx.translate(x, 0);
+        if (flip) {
+          ctx.translate(8, 0);
+          ctx.scale(-1, 1);
+        }
+        poly([3, 1, 4, 1, 5, 3, 7, 5, 8, 8, 0, 8, 0, 6, 1, 4, 2, 3, 2, 2], P.ink);
+        poly([3, 3, 4, 3, 6, 6, 7, 8, 1, 8, 1, 6, 2, 5], P.lightHair);
+        if (back) {
+          poly([3, 4, 4, 4, 6, 7, 6, 8, 2, 8, 2, 6], P.hair);
+          rect(5, 7, 2, 1, P.darkHair);
+        } else {
+          poly([3, 4, 5, 6, 5, 7, 2, 7, 2, 6], P.ear);
+          rect(3, 6, 1, 1, P.white);
+        }
+        rect(1, 8, 6, 1, P.hair);
+        rect(2, 7, 1, 1, P.lightHair);
+        ctx.restore();
+      };
+      if (profile) {
+        poly([15, 2, 16, 2, 18, 5, 19, 7, 14, 7, 14, 4], P.darkHair);
+        rect(15, 4, 1, 3, P.hair);
+        ear(17, false);
+      } else {
+        ear(5, false);
+        ear(20, true);
+      }
+    };
+    if (direction === "right") {
+      for (const [x, dy, far] of [[18 - step * 2, 0, 1], [19 + step * 2, -Math.abs(step), 0]]) {
+        rect(x, 35 + dy, 5, 9, P.ink);
+        rect(x + 1, 36 + dy, 3, 6, far ? P.shade : P.skin);
+        rect(x + 1, 41 + dy, 3, 3, P.white);
+        rect(x - 1, 44 + dy, 8, 3, P.ink);
+        rect(x, 44 + dy, 6, 2, P.shoe);
+      }
+      ctx.save();
+      ctx.translate(0, bob);
+      poly([10, 3, 20, 3, 20, 4, 24, 4, 24, 4, 27, 4, 27, 7, 28, 7, 28, 12, 26, 12, 25, 21, 24, 28, 22, 34, 18, 37, 12, 37, 12, 36, 7, 36, 7, 34, 3, 34, 3, 31, 2, 31, 2, 27, 4, 27, 4, 19, 5, 19, 5, 7, 7, 7, 7, 4, 10, 4], P.ink);
+      poly([11, 4, 21, 4, 21, 5, 24, 5, 24, 7, 26, 7, 26, 11, 23, 11, 23, 24, 21, 32, 18, 35, 12, 35, 12, 34, 7, 34, 7, 31, 4, 31, 4, 28, 6, 28, 6, 19, 7, 19, 7, 7, 9, 7, 9, 4, 11, 4], P.hair);
+      rect(11, 4, 10, 1, P.lightHair);
+      rect(8, 6, 2, 5, P.lightHair);
+      poly([8, 18, 10, 18, 10, 25, 8, 25, 8, 31, 6, 31, 6, 27, 8, 27], P.lightHair);
+      poly([12, 22, 14, 22, 14, 29, 12, 29, 12, 35, 10, 35, 10, 30, 12, 30], P.darkHair);
+      ears(true);
+      poly([17, 23, 23, 23, 25, 28, 25, 36, 23, 38, 14, 38, 13, 35, 15, 29], P.ink);
+      poly([18, 25, 22, 25, 23, 29, 23, 36, 15, 36, 16, 30], P.coat);
+      rect(22, 24, 2, 5, P.white);
+      rect(21, 26, 2, 5, P.white);
+      rect(15, 31, 9, 2, P.red);
+      rect(16, 31, 7, 1, P.redLight);
+      rect(16, 33, 2, 4, P.red);
+      poly([19, 11, 26, 11, 26, 15, 27, 16, 27, 19, 26, 21, 24, 22, 20, 22, 18, 20, 17, 16], P.ink);
+      poly([19, 12, 25, 12, 25, 15, 26, 16, 26, 19, 25, 20, 24, 21, 20, 21, 19, 19], P.skin);
+      rect(14, 15, 4, 5, P.ink);
+      rect(15, 16, 3, 3, P.skin);
+      poly([18, 9, 21, 9, 21, 14, 20, 14, 20, 25, 19, 30, 16, 29, 17, 23, 17, 13], P.darkHair);
+      rect(18, 13, 2, 14, P.hair);
+      rect(18, 19, 1, 8, P.lightHair);
+      poly([19, 7, 26, 7, 26, 13, 24, 13, 23, 11, 21, 12, 19, 11], P.hair);
+      rect(22, 7, 1, 4, P.darkHair);
+      if (action === "idle" && phase === 3) {
+        rect(21, 16, 1, 1, P.pupil);
+        rect(22, 17, 2, 1, P.pupil);
+        rect(24, 16, 1, 1, P.pupil);
+      } else {
+        rect(21, 13, 4, 1, P.pupil);
+        rect(21, 14, 4, 4, P.white);
+        rect(22, 14, 2, 2, P.pupil);
+        rect(22, 16, 2, 1, P.iris);
+        rect(22, 17, 2, 1, P.irisLight);
+        rect(22, 14, 1, 1, P.glint);
+      }
+      rect(21, 19, 2, 1, P.cheek);
+      if (action === "type") {
+        rect(19, 28, 4, 5, P.coatLight);
+        rect(22, 30, 6, 3, P.coat);
+        rect(27, 29 + phase % 2, 3, 2, P.skin);
+      } else if (action === "read") {
+        rect(24, 24, 7, 8, P.ink);
+        rect(25, 25, 5, 6, P.book);
+        rect(25, 25, 4, 1, P.white);
+        rect(22, 29, 4, 3, P.coatLight);
+        rect(25, 29 + phase % 2, 3, 2, P.skin);
+      } else {
+        rect(19, 27 - step, 4, 7, P.coatLight);
+        rect(20, 33 - step, 3, 3, P.skin);
+      }
+      ctx.restore();
+      ctx.restore();
+      return;
+    }
+    function poly(points, color) {
+      ctx.fillStyle = color;
+      for (let y = 0; y < YINYUE_H; y++) {
+        const intersections = [];
+        for (let i = 0; i < points.length; i += 2) {
+          const j = (i + 2) % points.length;
+          const x1 = points[i], y1 = points[i + 1], x2 = points[j], y2 = points[j + 1];
+          if (y1 <= y + 0.5 && y2 > y + 0.5 || y2 <= y + 0.5 && y1 > y + 0.5) {
+            intersections.push(x1 + (y + 0.5 - y1) * (x2 - x1) / (y2 - y1));
+          }
+        }
+        intersections.sort((a, b) => a - b);
+        for (let i = 0; i + 1 < intersections.length; i += 2) {
+          const start = Math.ceil(intersections[i] - 0.5);
+          rect(start, y, Math.ceil(intersections[i + 1] - 0.5) - start, 1, color);
+        }
+      }
+    }
+    ;
+    for (const [x, offset] of [[11, step], [18, -step]]) {
+      rect(x, 35 + offset, 4, 8, P.ink);
+      rect(x + 1, 36 + offset, 3, 5, P.skin);
+      rect(x, 41 + offset, 4, 3, P.white);
+      rect(x - 1, 44 + offset, 6, 3 - Math.max(0, offset), P.ink);
+      rect(x, 44 + offset, 4, 2 - Math.max(0, offset), P.shoe);
+    }
+    ctx.save();
+    ctx.translate(0, bob);
+    ctx.save();
+    if (seated && direction === "down") {
+      ctx.beginPath();
+      ctx.rect(0, 0, YINYUE_W, YINYUE_DESK_HAIRLINE);
+      ctx.clip();
+    }
+    poly([11, 3, 21, 3, 21, 4, 25, 4, 25, 4, 27, 4, 27, 7, 29, 7, 29, 21, 30, 21, 30, 27, 31, 27, 31, 32, 29, 32, 29, 35, 25, 35, 25, 37, 21, 37, 21, 36, 11, 36, 11, 37, 7, 37, 7, 35, 3, 35, 3, 31, 1, 31, 1, 27, 3, 27, 3, 20, 4, 20, 4, 7, 6, 7, 6, 4, 8, 4, 8, 4, 11, 4], P.ink);
+    poly([11, 4, 22, 4, 22, 5, 25, 5, 25, 7, 27, 7, 27, 23, 28, 23, 28, 29, 29, 29, 29, 32, 26, 32, 26, 35, 22, 35, 22, 34, 9, 34, 9, 35, 5, 35, 5, 31, 3, 31, 3, 28, 5, 28, 5, 20, 6, 20, 6, 7, 8, 7, 8, 4, 11, 4], P.hair);
+    rect(10, 4, 12, 1, P.lightHair);
+    rect(7, 6, 2, 5, P.lightHair);
+    rect(25, 9, 2, 12, P.darkHair);
+    rect(26, 25, 2, 7, P.lightHair);
+    ctx.restore();
+    ears(false, direction === "up");
+    if (direction === "up") {
+      poly([8, 32, 25, 32, 25, 37, 23, 39, 9, 39, 7, 37], P.ink);
+      rect(9, 33, 14, 4, P.coat);
+      rect(10, 37, 12, 1, P.coatLight);
+      rect(16, 34, 1, 4, P.coatDark);
+      rect(4, 26 - step, 4, 8, P.ink);
+      rect(5, 27 - step, 3, 5, P.coatLight);
+      rect(5, 32 - step, 3, 3, P.skin);
+      rect(25, 26 + step, 4, 8, P.ink);
+      rect(25, 27 + step, 3, 5, P.coat);
+      rect(25, 32 + step, 3, 3, P.skin);
+      poly([8, 24, 25, 24, 25, 30, 23, 30, 23, 33, 20, 33, 20, 35, 17, 35, 17, 33, 14, 33, 14, 35, 11, 35, 11, 32, 8, 32], P.darkHair);
+      poly([9, 24, 24, 24, 24, 29, 22, 29, 22, 32, 19, 32, 19, 33, 17, 33, 17, 31, 14, 31, 14, 33, 12, 33, 12, 30, 9, 30], P.hair);
+      rect(9, 13, 2, 15, P.darkHair);
+      rect(20, 11, 2, 20, P.darkHair);
+      rect(6, 23, 2, 9, P.lightHair);
+      rect(14, 21, 2, 13, P.lightHair);
+      rect(23, 19, 2, 14, P.lightHair);
+      rect(11, 31, 2, 5, P.darkHair);
+      rect(18, 32, 2, 4, P.darkHair);
+      rect(10, 35, 12, 2, P.red);
+      rect(15, 35, 3, 1, P.redLight);
+      if (work) {
+        rect(4, 27 + phase % 2, 3, 3, P.skin);
+        rect(27, 28 - phase % 2, 3, 3, P.skin);
+        if (action === "read") {
+          rect(28, 25, 3, 5, P.book);
+          rect(28, 25, 2, 1, P.white);
+        }
+      }
+      ctx.restore();
+      ctx.restore();
+      return;
+    }
+    poly([11, 23, 22, 23, 24, 26, 25, 35, 22, 38, 10, 38, 7, 35, 8, 27], P.ink);
+    poly([11, 25, 21, 25, 23, 29, 23, 35, 20, 36, 10, 36, 9, 33, 10, 28], P.coat);
+    rect(11, 28, 2, 6, P.coatLight);
+    rect(20, 29, 2, 6, P.coatDark);
+    poly([12, 24, 21, 24, 20, 27, 18, 27, 17, 31, 15, 28, 13, 27], P.white);
+    rect(16, 26, 1, 2, P.coatDark);
+    rect(10, 31, 13, 2, P.red);
+    rect(11, 31, 11, 1, P.redLight);
+    poly([13, 33, 16, 34, 18, 33, 21, 33, 20, 35, 18, 35, 18, 37, 16, 37, 16, 35, 13, 35], P.red);
+    rect(16, 33, 2, 1, P.redLight);
+    poly([9, 11, 24, 11, 24, 20, 22, 23, 12, 23, 9, 20], P.shade);
+    poly([10, 12, 23, 12, 23, 20, 21, 22, 13, 22, 10, 20], P.skin);
+    rect(10, 19, 3, 2, P.cheek);
+    rect(20, 19, 3, 2, P.cheek);
+    rect(11, 20, 1, 1, P.blush);
+    rect(21, 20, 1, 1, P.blush);
+    const blink = action === "idle" && phase === 3;
+    for (const x of [10, 19]) {
+      eye(x, 14, blink);
+    }
+    rect(16, 21, 2, 1, P.mouth);
+    poly([8, 7, 24, 7, 25, 10, 26, 13, 24, 13, 21, 9, 20, 11, 18, 13, 16, 13, 18, 9, 15, 11, 12, 13, 9, 13, 8, 15, 7, 14], P.darkHair);
+    poly([9, 7, 22, 7, 24, 10, 24, 11, 21, 8, 18, 10, 17, 11, 18, 8, 14, 10, 11, 12, 9, 12, 8, 13], P.hair);
+    poly([10, 6, 19, 6, 17, 8, 13, 9, 10, 11, 8, 11, 9, 8], P.lightHair);
+    for (const x of [7, 24]) {
+      rect(x, 13, 3, 15, P.darkHair);
+      rect(x, 14, 2, 13, P.hair);
+      rect(x, 18, 1, 8, P.lightHair);
+    }
+    for (const x of [8, 24]) {
+      rect(x, 21, 1, 2, P.lightHair);
+      rect(x, 24, 1, 3, P.lightHair);
+    }
+    if (action === "type") {
+      const dy = phase % 2;
+      rect(10, 28, 5, 3, P.coatLight);
+      rect(11, 28 + dy, 4, 2, P.skin);
+      rect(19, 31 - dy, 4, 2, P.skin);
+    } else if (action === "read") {
+      const bx = 13, by = 26 + (phase === 2 ? 1 : 0);
+      rect(bx - 1, by - 1, 8, 8, P.ink);
+      rect(bx, by, 6, 6, P.book);
+      rect(bx + 3, by, 1, 6, P.lightHair);
+      rect(bx + 1, by + 1, 2, 1, P.white);
+      rect(bx - 2, by + 4, 3, 2, P.skin);
+      rect(bx + 5, by + 4, 2, 2, P.skin);
+    } else {
+      const x = 8;
+      rect(x, 28 - step, 3, 6, P.coatLight);
+      rect(x, 33 - step, 3, 3, P.skin);
+      rect(22, 28 + step, 3, 6, P.coat);
+      rect(22, 33 + step, 3, 3, P.skin);
+      rect(8, 29 - step, 3, 1, P.red);
+      rect(22, 29 + step, 3, 1, P.red);
+    }
+    ctx.restore();
+    ctx.restore();
+  }
+  return __toCommonJS(yinyueArt_exports);
+})();
+
+var Feilen = (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // src/renderer/src/scene/office/feilenArt.ts
+  var feilenArt_exports = {};
+  __export(feilenArt_exports, {
+    FEILEN_DESK_HAIRLINE: () => FEILEN_DESK_HAIRLINE,
+    FEILEN_H: () => FEILEN_H,
+    FEILEN_W: () => FEILEN_W,
+    paintFeilen: () => paintFeilen
+  });
+  var FEILEN_W = 32;
+  var FEILEN_H = 48;
+  var FEILEN_DESK_HAIRLINE = 33;
+  var P = {
+    ink: "#302335",
+    hair: "#80508e",
+    darkHair: "#603968",
+    lightHair: "#ac79b4",
+    skin: "#ffebcf",
+    shade: "#e6bba4",
+    blush: "#e7b0ab",
+    white: "#fff7e9",
+    coat: "#33343e",
+    coatLight: "#484854",
+    coatDark: "#23232e",
+    shoe: "#44312e",
+    pupil: "#33273f",
+    iris: "#827093",
+    irisLight: "#b69cbe",
+    glint: "#fff6e4",
+    mouth: "#876064",
+    cheek: "#f2c5b6",
+    book: "#507767"
+  };
+  function paintFeilen(ctx, direction, action, frame = 0, seated = false) {
+    ctx.save();
+    ctx.clearRect(0, 0, FEILEN_W, FEILEN_H);
+    if (direction === "left") {
+      ctx.translate(FEILEN_W, 0);
+      ctx.scale(-1, 1);
+      direction = "right";
+    }
+    const walking = action === "walk";
+    const phase = frame % 4;
+    const step = walking ? [0, 1, 0, -1][phase] : 0;
+    const bob = walking && phase % 2 === 1 ? -1 : 0;
+    const work = action === "type" || action === "read";
+    const rect = (x, y, w, h, color) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+    };
+    const eye = (x, y, blink2) => {
+      if (blink2) {
+        rect(x, y + 2, 1, 1, P.pupil);
+        rect(x + 1, y + 3, 2, 1, P.pupil);
+        rect(x + 3, y + 2, 1, 1, P.pupil);
+        return;
+      }
+      rect(x, y, 4, 1, P.pupil);
+      rect(x, y + 1, 4, 4, P.white);
+      rect(x + 1, y + 1, 3, 2, P.pupil);
+      rect(x + 1, y + 3, 3, 1, P.iris);
+      rect(x + 1, y + 4, 2, 1, P.irisLight);
+      rect(x + 1, y + 1, 1, 1, P.glint);
+    };
+    if (direction === "right") {
+      for (const [x, dy, far] of [[18 - step * 2, 0, 1], [19 + step * 2, -Math.abs(step), 0]]) {
+        rect(x, 35 + dy, 5, 9, P.ink);
+        rect(x + 1, 36 + dy, 3, 6, far ? P.shade : P.skin);
+        rect(x + 1, 41 + dy, 3, 3, P.white);
+        rect(x - 1, 44 + dy, 8, 3, P.ink);
+        rect(x, 44 + dy, 6, 2, P.shoe);
+      }
+      ctx.save();
+      ctx.translate(0, bob);
+      poly([10, 1, 20, 1, 20, 2, 24, 2, 24, 4, 27, 4, 27, 7, 28, 7, 28, 12, 26, 12, 25, 21, 24, 28, 22, 34, 18, 37, 12, 37, 12, 36, 7, 36, 7, 34, 3, 34, 3, 31, 2, 31, 2, 27, 4, 27, 4, 19, 5, 19, 5, 7, 7, 7, 7, 4, 10, 4], P.ink);
+      poly([11, 3, 21, 3, 21, 4, 24, 4, 24, 7, 26, 7, 26, 11, 23, 11, 23, 24, 21, 32, 18, 35, 12, 35, 12, 34, 7, 34, 7, 31, 4, 31, 4, 28, 6, 28, 6, 19, 7, 19, 7, 7, 9, 7, 9, 4, 11, 4], P.hair);
+      rect(11, 3, 10, 1, P.lightHair);
+      rect(8, 6, 2, 5, P.lightHair);
+      poly([8, 18, 10, 18, 10, 25, 8, 25, 8, 31, 6, 31, 6, 27, 8, 27], P.lightHair);
+      poly([12, 22, 14, 22, 14, 29, 12, 29, 12, 35, 10, 35, 10, 30, 12, 30], P.darkHair);
+      poly([17, 23, 23, 23, 25, 28, 25, 36, 23, 38, 14, 38, 13, 35, 15, 29], P.ink);
+      poly([18, 25, 22, 25, 23, 29, 23, 36, 15, 36, 16, 30], P.coat);
+      rect(22, 24, 2, 5, P.white);
+      rect(21, 26, 2, 5, P.white);
+      poly([19, 11, 26, 11, 26, 15, 27, 16, 27, 19, 26, 21, 24, 22, 20, 22, 18, 20, 17, 16], P.ink);
+      poly([19, 12, 25, 12, 25, 15, 26, 16, 26, 19, 25, 20, 24, 21, 20, 21, 19, 19], P.skin);
+      rect(14, 15, 4, 5, P.ink);
+      rect(15, 16, 3, 3, P.skin);
+      poly([18, 9, 21, 9, 21, 14, 20, 14, 20, 25, 19, 30, 16, 29, 17, 23, 17, 13], P.darkHair);
+      rect(18, 13, 2, 14, P.hair);
+      rect(18, 19, 1, 8, P.lightHair);
+      poly([19, 7, 26, 7, 26, 13, 24, 13, 23, 11, 21, 12, 19, 11], P.hair);
+      rect(22, 7, 1, 4, P.darkHair);
+      if (action === "idle" && phase === 3) {
+        rect(21, 16, 1, 1, P.pupil);
+        rect(22, 17, 2, 1, P.pupil);
+        rect(24, 16, 1, 1, P.pupil);
+      } else {
+        rect(21, 13, 4, 1, P.pupil);
+        rect(21, 14, 4, 4, P.white);
+        rect(22, 14, 2, 2, P.pupil);
+        rect(22, 16, 2, 1, P.iris);
+        rect(22, 17, 2, 1, P.irisLight);
+        rect(22, 14, 1, 1, P.glint);
+      }
+      rect(21, 19, 2, 1, P.cheek);
+      if (action === "type") {
+        rect(19, 28, 4, 5, P.coatLight);
+        rect(22, 30, 6, 3, P.coat);
+        rect(27, 29 + phase % 2, 3, 2, P.skin);
+      } else if (action === "read") {
+        rect(24, 24, 7, 8, P.ink);
+        rect(25, 25, 5, 6, P.book);
+        rect(25, 25, 4, 1, P.white);
+        rect(22, 29, 4, 3, P.coatLight);
+        rect(25, 29 + phase % 2, 3, 2, P.skin);
+      } else {
+        rect(19, 27 - step, 4, 7, P.coatLight);
+        rect(20, 33 - step, 3, 3, P.skin);
+      }
+      ctx.restore();
+      ctx.restore();
+      return;
+    }
+    function poly(points, color) {
+      ctx.fillStyle = color;
+      for (let y = 0; y < FEILEN_H; y++) {
+        const intersections = [];
+        for (let i = 0; i < points.length; i += 2) {
+          const j = (i + 2) % points.length;
+          const x1 = points[i], y1 = points[i + 1], x2 = points[j], y2 = points[j + 1];
+          if (y1 <= y + 0.5 && y2 > y + 0.5 || y2 <= y + 0.5 && y1 > y + 0.5) {
+            intersections.push(x1 + (y + 0.5 - y1) * (x2 - x1) / (y2 - y1));
+          }
+        }
+        intersections.sort((a, b) => a - b);
+        for (let i = 0; i + 1 < intersections.length; i += 2) {
+          const start = Math.ceil(intersections[i] - 0.5);
+          rect(start, y, Math.ceil(intersections[i + 1] - 0.5) - start, 1, color);
+        }
+      }
+    }
+    ;
+    for (const [x, offset] of [[11, step], [18, -step]]) {
+      rect(x, 35 + offset, 4, 8, P.ink);
+      rect(x + 1, 36 + offset, 3, 5, P.skin);
+      rect(x, 41 + offset, 4, 3, P.white);
+      rect(x - 1, 44 + offset, 6, 3 - Math.max(0, offset), P.ink);
+      rect(x, 44 + offset, 4, 2 - Math.max(0, offset), P.shoe);
+    }
+    ctx.save();
+    ctx.translate(0, bob);
+    ctx.save();
+    if (seated && direction === "down") {
+      ctx.beginPath();
+      ctx.rect(0, 0, FEILEN_W, FEILEN_DESK_HAIRLINE);
+      ctx.clip();
+    }
+    poly([11, 1, 21, 1, 21, 2, 25, 2, 25, 4, 27, 4, 27, 7, 29, 7, 29, 21, 30, 21, 30, 27, 31, 27, 31, 32, 29, 32, 29, 35, 25, 35, 25, 37, 21, 37, 21, 36, 11, 36, 11, 37, 7, 37, 7, 35, 3, 35, 3, 31, 1, 31, 1, 27, 3, 27, 3, 20, 4, 20, 4, 7, 6, 7, 6, 4, 8, 4, 8, 2, 11, 2], P.ink);
+    poly([11, 3, 22, 3, 22, 4, 25, 4, 25, 7, 27, 7, 27, 23, 28, 23, 28, 29, 29, 29, 29, 32, 26, 32, 26, 35, 22, 35, 22, 34, 9, 34, 9, 35, 5, 35, 5, 31, 3, 31, 3, 28, 5, 28, 5, 20, 6, 20, 6, 7, 8, 7, 8, 4, 11, 4], P.hair);
+    rect(10, 3, 12, 1, P.lightHair);
+    rect(7, 6, 2, 5, P.lightHair);
+    rect(25, 9, 2, 12, P.darkHair);
+    rect(26, 25, 2, 7, P.lightHair);
+    ctx.restore();
+    if (direction === "up") {
+      poly([8, 32, 25, 32, 25, 37, 23, 39, 9, 39, 7, 37], P.ink);
+      rect(9, 33, 14, 4, P.coat);
+      rect(10, 37, 12, 1, P.coatLight);
+      rect(16, 34, 1, 4, P.coatDark);
+      rect(4, 26 - step, 4, 8, P.ink);
+      rect(5, 27 - step, 3, 5, P.coatLight);
+      rect(5, 32 - step, 3, 3, P.skin);
+      rect(25, 26 + step, 4, 8, P.ink);
+      rect(25, 27 + step, 3, 5, P.coat);
+      rect(25, 32 + step, 3, 3, P.skin);
+      poly([8, 24, 25, 24, 25, 30, 23, 30, 23, 33, 20, 33, 20, 35, 17, 35, 17, 33, 14, 33, 14, 35, 11, 35, 11, 32, 8, 32], P.darkHair);
+      poly([9, 24, 24, 24, 24, 29, 22, 29, 22, 32, 19, 32, 19, 33, 17, 33, 17, 31, 14, 31, 14, 33, 12, 33, 12, 30, 9, 30], P.hair);
+      rect(9, 13, 2, 15, P.darkHair);
+      rect(20, 11, 2, 20, P.darkHair);
+      rect(6, 23, 2, 9, P.lightHair);
+      rect(14, 21, 2, 13, P.lightHair);
+      rect(23, 19, 2, 14, P.lightHair);
+      rect(11, 31, 2, 5, P.darkHair);
+      rect(18, 32, 2, 4, P.darkHair);
+      if (work) {
+        rect(4, 27 + phase % 2, 3, 3, P.skin);
+        rect(27, 28 - phase % 2, 3, 3, P.skin);
+        if (action === "read") {
+          rect(28, 25, 3, 5, P.book);
+          rect(28, 25, 2, 1, P.white);
+        }
+      }
+      ctx.restore();
+      ctx.restore();
+      return;
+    }
+    poly([11, 23, 22, 23, 24, 26, 25, 35, 22, 38, 10, 38, 7, 35, 8, 27], P.ink);
+    poly([11, 25, 21, 25, 23, 29, 23, 35, 20, 36, 10, 36, 9, 33, 10, 28], P.coat);
+    rect(11, 28, 2, 6, P.coatLight);
+    rect(20, 29, 2, 6, P.coatDark);
+    poly([12, 24, 21, 24, 20, 27, 18, 27, 17, 31, 15, 28, 13, 27], P.white);
+    rect(16, 26, 1, 2, P.coatDark);
+    rect(17, 32, 1, 1, P.ink);
+    rect(17, 35, 1, 1, P.ink);
+    poly([9, 11, 24, 11, 24, 20, 22, 23, 12, 23, 9, 20], P.ink);
+    poly([10, 12, 23, 12, 23, 20, 21, 22, 13, 22, 10, 20], P.skin);
+    rect(10, 19, 3, 2, P.cheek);
+    rect(20, 19, 3, 2, P.cheek);
+    rect(11, 20, 1, 1, P.blush);
+    rect(21, 20, 1, 1, P.blush);
+    const blink = action === "idle" && phase === 3;
+    for (const x of [10, 19]) {
+      eye(x, 14, blink);
+    }
+    rect(16, 21, 2, 1, P.mouth);
+    poly([8, 7, 25, 7, 25, 13, 23, 14, 21, 13, 20, 10, 20, 14, 16, 14, 15, 10, 15, 14, 11, 14, 10, 12, 8, 13], P.hair);
+    rect(11, 7, 1, 6, P.darkHair);
+    rect(18, 6, 1, 7, P.darkHair);
+    rect(23, 8, 1, 4, P.darkHair);
+    for (const x of [7, 24]) {
+      rect(x, 13, 3, 15, P.darkHair);
+      rect(x, 14, 2, 13, P.hair);
+      rect(x, 18, 1, 8, P.lightHair);
+    }
+    if (action === "type") {
+      const dy = phase % 2;
+      rect(10, 28, 5, 3, P.coatLight);
+      rect(11, 28 + dy, 4, 2, P.skin);
+      rect(19, 31 - dy, 4, 2, P.skin);
+    } else if (action === "read") {
+      const bx = 13, by = 26 + (phase === 2 ? 1 : 0);
+      rect(bx - 1, by - 1, 8, 8, P.ink);
+      rect(bx, by, 6, 6, P.book);
+      rect(bx + 3, by, 1, 6, P.lightHair);
+      rect(bx + 1, by + 1, 2, 1, P.white);
+      rect(bx - 2, by + 4, 3, 2, P.skin);
+      rect(bx + 5, by + 4, 2, 2, P.skin);
+    } else {
+      const x = 8;
+      rect(x, 28 - step, 3, 6, P.coatLight);
+      rect(x, 33 - step, 3, 3, P.skin);
+      rect(22, 28 + step, 3, 6, P.coat);
+      rect(22, 33 + step, 3, 3, P.skin);
+    }
+    ctx.restore();
+    ctx.restore();
+  }
+  return __toCommonJS(feilenArt_exports);
+})();
+</script><script>
+const dirs=['down','up','right','left'], acts=['walk','type','read','idle'];
+const names={down:'正面',up:'背面',right:'右侧',left:'左侧',walk:'走路',type:'打字',read:'阅读',idle:'待机'};
+const items=[];
+function add(parent,d,a){const card=document.createElement('div');card.className='card';const c=document.createElement('canvas');c.width=32;c.height=48;const label=document.createElement('div');label.textContent=names[d]+' · '+names[a];card.append(c,label);document.getElementById(parent).append(card);items.push({ctx:c.getContext('2d'),d,a});}
+dirs.forEach(d=>add('directions',d,'walk'));['down','right'].forEach(d=>acts.forEach(a=>add('actions',d,a)));
+const seats=[];['idle','type','read'].forEach(a=>{const card=document.createElement('div');card.className='card';const c=document.createElement('canvas');c.width=64;c.height=64;c.style.width='192px';c.style.height='192px';const label=document.createElement('div');label.textContent='坐姿 · '+names[a];card.append(c,label);document.getElementById('seats').append(card);seats.push({ctx:c.getContext('2d'),a});});
+const sheet=document.getElementById('sheet').getContext('2d');sheet.imageSmoothingEnabled=false;
+const cell=document.createElement('canvas');cell.width=32;cell.height=48;const cc=cell.getContext('2d');
+dirs.forEach((d,row)=>acts.forEach((a,group)=>{for(let f=0;f<4;f++){Yinyue.paintYinyue(cc,d,a,f);sheet.drawImage(cell,(group*4+f)*64,row*96,64,96);}}));
+let paused=false,tick=0;document.getElementById('pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'继续动画':'暂停动画'};
+function draw(){const idle=tick%16===15?3:0;Yinyue.paintYinyue(document.getElementById('hero').getContext('2d'),'down','idle',idle);Yinyue.paintYinyue(document.getElementById('actual').getContext('2d'),'down','idle',idle);Feilen.paintFeilen(document.getElementById('friend').getContext('2d'),'down','idle',idle);items.forEach(({ctx,d,a})=>Yinyue.paintYinyue(ctx,d,a,a==='idle'?(tick%16===15?3:0):tick%4));seats.forEach(({ctx,a})=>{ctx.clearRect(0,0,64,64);ctx.fillStyle='#79583e';ctx.fillRect(3,41,58,19);ctx.fillStyle='#c7a56c';ctx.fillRect(5,42,54,15);Yinyue.paintYinyue(cc,'down',a,a==='idle'?(tick%16===15?3:0):tick%4,true);ctx.imageSmoothingEnabled=false;ctx.drawImage(cell,0,0,32,36,16,8,32,36);ctx.fillStyle='#515364';ctx.fillRect(23,43,20,12);ctx.fillStyle='#c4ccce';ctx.fillRect(25,45,16,7);ctx.fillStyle='#79583e';ctx.fillRect(3,57,58,3);});}draw();setInterval(()=>{if(!paused){tick++;draw()}},180);
+</script></html>

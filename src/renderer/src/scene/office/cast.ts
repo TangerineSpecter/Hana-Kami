@@ -11,6 +11,7 @@ import { paintPortrait, sceneFrameBufs, SCENE_W, SCENE_H } from './portraitArt';
 import { getAnyaFrames } from './anyaFrames';
 import { getKleeFrames } from './kleeFrames';
 import { getHutaoFrames } from './hutaoFrames';
+import { getYinyueFrames } from './yinyueFrames';
 import anyaPortrait from '@/assets/Anya.png';
 import hutaoPortrait from '@/assets/Hutao.png';
 import kleePortrait from '@/assets/Klee.png';
@@ -55,6 +56,7 @@ export const OFFICE_CAST: CastMember[] = [
   { name: 'angela',   displayName: '芙芙',     portrait: furinaPortrait, shirt: '#8a86a6', blurb: '芙芙' },
   { name: 'oscar',    displayName: '猫猫',     portrait: maomaoPortrait, shirt: '#7a4b6b', blurb: '猫猫' },
   { name: 'stanley',  displayName: '喜多川海梦', portrait: kitagawaPortrait, shirt: '#8c5a4b', blurb: '喜多川海梦' },
+  // Keep the saved character key; use Yinyue's custom scene animation.
   { name: 'phyllis',  displayName: '银月',     portrait: yinyuePortrait, shirt: '#b08bbf', blurb: '银月' },
   { name: 'andy',     displayName: '尼古喵喵', portrait: yaniNekoPortrait, shirt: '#6fae6f', blurb: '尼古喵喵' },
   { name: 'kelly',    displayName: '雷姆',     portrait: remPortrait, shirt: '#d16ba5', blurb: '雷姆' },
@@ -99,6 +101,7 @@ export async function getCastFrames(name: OfficeCharacterName): Promise<Texture[
   if (name === 'michael') return getAnyaFrames();
   if (name === 'pam') return getKleeFrames();
   if (name === 'jim') return getHutaoFrames();
+  if (name === 'phyllis') return getYinyueFrames();
   const cached = frameCache.get(name);
   if (cached) return cached;
   const { front, back } = sceneFrameBufs(name);
