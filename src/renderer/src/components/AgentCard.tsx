@@ -23,6 +23,8 @@ export interface AgentCardProps {
    *  looks identical to an idle agent with nothing to do. */
   ptyId?: string;
   project: string;
+  /** Hide the idle project line while retaining the working action line. */
+  showProject?: boolean;
   action?: string;
   /** Context gauge: 0..8 segments filled (session context ÷ context limit). */
   progress?: number;
@@ -35,6 +37,8 @@ export interface AgentCardProps {
    *  (`isGod` / the `god` agent id stay as-is internally; this is display only.) */
   isGod?: boolean;
   onClick?: () => void;
+  /** Global roster preference toggle, shown beside Michael's voice control. */
+  onToggleProjects?: () => void;
   /** Persists an inline display-name edit; identity and hive paths stay unchanged. */
   onRename?: (name: string) => Promise<{ ok: boolean; error?: string }>;
   /** Number of ledger tasks this agent is actively DOING — rendered as a blue
@@ -58,8 +62,8 @@ const fmtK = (n: number): string => `${Math.round(n / 1000)}k`;
  * and a slim gauge pinned to the bottom edge. Nothing overlaps anything.
  */
 export function AgentCard({
-  name, character, accent, jobTitle, jobColor, status, ptyId, project, action, progress = 0,
-  contextTokens, contextLimit, selected, isGod, onClick, onRename,
+  name, character, accent, jobTitle, jobColor, status, ptyId, project, showProject = true, action, progress = 0,
+  contextTokens, contextLimit, selected, isGod, onClick, onToggleProjects, onRename,
   doingCount = 0, onTaskNoteClick, draggable, note, onEditNote
 }: AgentCardProps) {
   const { t } = useTranslation();
@@ -133,7 +137,9 @@ export function AgentCard({
     .filter(Boolean).join(', ') || 'none';
 
   // One context line: what it's DOING while working, WHERE it lives while idle.
-  const infoLine = (status !== 'idle' && action) ? action : project;
+  const infoLine = (status !== 'idle' && action)
+    ? action
+    : (showProject || isGod) ? project : '';
   const noteFirstLine = (note ?? '').split('\n').find((l) => l.trim()) ?? '';
 
   return (
@@ -239,7 +245,7 @@ export function AgentCard({
 
             {/* Context line: action while working, repo while idle. */}
             <div
-              title={`${project}${action && status !== 'idle' ? ` — ${action}` : ''}`}
+              title={(showProject || isGod) ? `${project}${action && status !== 'idle' ? ` — ${action}` : ''}` : action}
               style={{
                 fontSize: 11, lineHeight: '14px',
                 color: 'var(--cth-ink-500)',
@@ -264,6 +270,28 @@ export function AgentCard({
               >
                 <RealtimeMichaelToggle />
                 <CostHud compact />
+                {onToggleProjects && (
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); onToggleProjects(); }}
+                    title={showProject ? t('agentStrip.hideProjectsTitle') : t('agentStrip.showProjectsTitle')}
+                    aria-label={showProject ? t('agentStrip.hideProjectsTitle') : t('agentStrip.showProjectsTitle')}
+                    aria-pressed={showProject}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 4,
+                      minWidth: 0, height: 26, marginLeft: 'auto', padding: '2px 7px 1px',
+                      border: 'none', cursor: 'pointer',
+                      background: showProject ? 'var(--cth-cream-100)' : 'var(--cth-sky-light)',
+                      boxShadow: 'inset 0 0 0 1px var(--cth-ink-300)',
+                      color: 'var(--cth-ink-900)',
+                      fontFamily: 'var(--cth-font-ui)', fontSize: 11,
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    <span aria-hidden="true">▣</span>
+                    {t('agentCard.projectToggle')}
+                  </button>
+                )}
               </div>
             ) : (
               <div

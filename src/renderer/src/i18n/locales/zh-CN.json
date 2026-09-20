@@ -105,6 +105,7 @@
     "steerAria": "给该智能体发送一条笔记"
   },
   "agentCard": {
+    "projectToggle": "项目名",
     "boss": "老板",
     "contextTitle": "上下文：{{used}} / {{limit}} 令牌（{{pct}}%）",
     "contextGaugeTitle": "上下文指示条——智能体上报活动后开始填充",
@@ -138,6 +139,10 @@
     "notePlaceholder": "每行一条…",
     "oneLineOneBullet": "一行 = 一条 · Esc 关闭",
     "addAgent": "添加智能体",
+    "hideProjects": "收起项目名",
+    "showProjects": "显示项目名",
+    "hideProjectsTitle": "收起项目名，卡片中不显示项目",
+    "showProjectsTitle": "显示项目名",
     "restoringTitle": "上次会话的智能体正在以原始 ID 重新生成，以便记忆和收件箱重新挂载。",
     "restoreTitle": "上次会话：{{names}}",
     "restoringTeam": "正在恢复你的团队…",

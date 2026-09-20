@@ -105,6 +105,7 @@
     "steerAria": "Send this agent a note"
   },
   "agentCard": {
+    "projectToggle": "Project",
     "boss": "BOSS",
     "contextTitle": "Context: {{used}} / {{limit}} tokens ({{pct}}%)",
     "contextGaugeTitle": "Context gauge — fills once the agent reports activity",
@@ -1156,6 +1157,10 @@
     "toggleTheme": "Toggle dark mode",
     "exitFullscreen": "Exit focus mode (Esc)",
     "addAgent": "Add agent",
+    "hideProjects": "Hide projects",
+    "showProjects": "Show projects",
+    "hideProjectsTitle": "Hide project names from agent cards",
+    "showProjectsTitle": "Show project names on agent cards",
     "respawnTitle": "Respawn from last session: {{names}} — same ids, memory and inboxes reattach automatically",
     "contextTitle": "Context: {{used}} / {{limit}} tokens ({{pct}}%)",
     "modelTitle": "Model: {{model}}",

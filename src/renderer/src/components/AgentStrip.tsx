@@ -26,6 +26,8 @@ export function AgentStrip({ config }: AgentStripProps) {
   const reorderAgents = useStore(s => s.reorderAgents);
   const renameAgent = useStore(s => s.renameAgent);
   const setAgentNote = useStore(s => s.setAgentNote);
+  const showAgentProjects = useStore(s => s.showAgentProjects);
+  const setShowAgentProjects = useStore(s => s.setShowAgentProjects);
   // Shared with the fullscreen roster so both show one restore in progress.
   const { restoring, autoRestoring, restoreTeam } = useRestoreTeam(config);
   // ONE restore control (bottom-right): a button whose dropdown OPENS UPWARD and
@@ -141,12 +143,14 @@ export function AgentStrip({ config }: AgentStripProps) {
             status={a.status}
             ptyId={a.ptyId}
             project={a.project}
+            showProject={a.isGod ? true : showAgentProjects}
             action={a.action}
             progress={a.progress}
             contextTokens={a.contextTokens}
             contextLimit={a.contextLimit}
             selected={a.id === selectedId}
             isGod={a.isGod}
+            onToggleProjects={a.isGod ? () => setShowAgentProjects(!showAgentProjects) : undefined}
             onClick={() => select(a.id)}
             onRename={(name) => renameAgent(a.id, name)}
             doingCount={doingByAgent[a.id]?.length ?? 0}

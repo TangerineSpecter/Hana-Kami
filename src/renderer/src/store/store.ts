@@ -211,6 +211,8 @@ interface State {
   ideAgentId: string | null;
   sidebarWidth: number;
   sidebarTab: SidebarTab;
+  /** Whether roster cards show the idle project line. */
+  showAgentProjects: boolean;
   godStatus: GodStatus;
   /** Per-agent outgoing message queue (agent id → messages awaiting delivery).
    *  Lets the user keep "talking" to a busy agent: messages park here and are
@@ -339,6 +341,7 @@ interface State {
   setIdeInitialFile: (path: string | null) => void;
   setSidebarWidth: (px: number) => void;
   setSidebarTab: (tab: SidebarTab) => void;
+  setShowAgentProjects: (show: boolean) => void;
   /** Drop persisted agents whose PTY is no longer alive in the main process.
    *  Called once at startup so a renderer reload (e.g. after the laptop sleeps)
    *  restores still-running agents and only removes truly-dead ones. */
@@ -347,6 +350,7 @@ interface State {
 
 const LS_SIDEBAR_WIDTH = 'cth.sidebarWidth';
 const LS_SIDEBAR_TAB = 'cth.sidebarTab';
+const LS_SHOW_AGENT_PROJECTS = 'cth.showAgentProjects';
 const LS_AGENTS = 'cth.agents';
 const LS_ARCHIVED = 'cth.archivedAgents';
 const LS_RESTORABLE = 'cth.restorableAgents';
@@ -630,6 +634,13 @@ const initialSidebarTab: SidebarTab = (() => {
   } catch { /* noop */ }
   return 'terminal';
 })();
+const initialShowAgentProjects = (() => {
+  try {
+    return window.localStorage.getItem(LS_SHOW_AGENT_PROJECTS) !== '0';
+  } catch {
+    return true;
+  }
+})();
 
 /** Does the user want focus mode as their default view?
  *
@@ -692,6 +703,7 @@ export const useStore = create<State>((set, get) => ({
   ideAgentId: null,
   sidebarWidth: initialSidebarWidth,
   sidebarTab: initialSidebarTab,
+  showAgentProjects: initialShowAgentProjects,
   godStatus: 'booting',
   messageQueues: initialQueues,
   toolCounts: {},
@@ -1035,6 +1047,10 @@ export const useStore = create<State>((set, get) => ({
   setSidebarTab: (tab) => {
     try { window.localStorage.setItem(LS_SIDEBAR_TAB, tab); } catch { /* noop */ }
     set({ sidebarTab: tab });
+  },
+  setShowAgentProjects: (show) => {
+    try { window.localStorage.setItem(LS_SHOW_AGENT_PROJECTS, show ? '1' : '0'); } catch { /* noop */ }
+    set({ showAgentProjects: show });
   }
 }));
 
