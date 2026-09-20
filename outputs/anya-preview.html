@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>阿尼亚 · 动作预览</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f8f2df;color:#362a42;font-family:system-ui;padding:32px}main{max-width:1000px;margin:auto}h1{font-size:28px;margin:0 0 8px}p{color:#766581;line-height:1.6}button{padding:8px 18px;background:#fff9ed;border:1px solid #8b7495;color:inherit;cursor:pointer}section{margin-top:26px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#e1ece6;border:1px solid #b3bdac;text-align:center;padding:14px 6px}.card canvas{display:block;width:128px;height:192px;image-rendering:pixelated;margin:auto}.card small{display:block;color:#74677a;margin-top:8px}.sheet{overflow:auto;background:#eee7d7;border:1px solid #cbbdd0;padding:16px}.sheet canvas{image-rendering:pixelated;display:block}@media(max-width:620px){body{padding:16px}.grid{grid-template-columns:repeat(2,1fr)}}
-</style><main><h1>阿尼亚 · 像素动作预览</h1><p>代码绘制 · 64 × 96 像素 · 四向造型<br>待机眨眼、交替迈步、打字抬手、阅读持书。场景中的桌椅独立绘制。</p><button id="pause">暂停动画</button>
+</style><main><h1>阿尼亚 · 像素动作预览</h1><p>代码绘制 · 32 × 48 像素，与菲伦同规格 · 四向造型<br>待机眨眼、交替迈步、打字抬手、阅读持书。场景中的桌椅独立绘制。</p><button id="pause">暂停动画</button>
 <section><h2>开心表情 · 放大检查</h2><div class="grid" id="faces"></div></section>
 <section><h2>同尺寸对比 · 菲伦 / 阿尼亚</h2><p>同一显示高度，检查绘制精度与整体比例。</p><div class="grid" id="compare"></div></section>
 <section><h2>坐姿桌沿遮挡 · 示意预览</h2><p>短发、白衬衫和蓝色背带裙；手和上身出现在桌面上。此处桌子是示意，非楼层截图。</p><div class="grid" id="seats"></div></section>
@@ -31,6 +31,7 @@
   // src/renderer/src/scene/office/anyaArt.ts
   var anyaArt_exports = {};
   __export(anyaArt_exports, {
+    ANYA_DESK_HAIRLINE: () => ANYA_DESK_HAIRLINE,
     ANYA_H: () => ANYA_H,
     ANYA_W: () => ANYA_W,
     paintAnya: () => paintAnya
@@ -38,39 +39,17 @@
 
   // src/renderer/src/scene/office/anyaHeadArt.ts
   function paintAnyaHead(ctx, direction, blink) {
-    const C = {
-      outline: "#704253",
-      hair: "#f3a1af",
-      shadow: "#d47b92",
-      deep: "#b85f7a",
-      light: "#ffd0ce",
-      skin: "#fff0dd",
-      skinShade: "#edc0ac",
-      blush: "#efb2a7",
-      white: "#fffbed",
-      lash: "#4c3540",
-      irisDark: "#354e38",
-      iris: "#608653",
-      green: "#8cb665",
-      lime: "#d0dd91",
-      horn: "#403c43",
-      hornLight: "#5e5056",
-      gold: "#e9c686",
-      mouth: "#925962",
-      tongue: "#f1aa99",
-      tongueLight: "#ffc4ac"
-    };
+    const C = { outline: "#624052", hair: "#f5a7b8", shadow: "#d87894", light: "#ffccd3", skin: "#fff0d9", shade: "#efc4ad", blush: "#f4b6ac", white: "#fff9eb", eye: "#3e5539", green: "#77a657", lime: "#bad783", horn: "#403c43", gold: "#e9c783", mouth: "#b8767f", tongue: "#f5ac9c" };
     const r = (x, y, w, h, c) => {
       ctx.fillStyle = c;
       ctx.fillRect(x, y, w, h);
     };
     const p = (v, c) => {
-      for (let y = 0; y < 62; y++) {
+      for (let y = 0; y < 48; y++) {
         const xs = [];
         for (let i = 0; i < v.length; i += 2) {
           const j = (i + 2) % v.length;
-          if (v[i + 1] <= y + 0.5 && v[j + 1] > y + 0.5 || v[j + 1] <= y + 0.5 && v[i + 1] > y + 0.5)
-            xs.push(v[i] + (y + 0.5 - v[i + 1]) * (v[j] - v[i]) / (v[j + 1] - v[i + 1]));
+          if (v[i + 1] <= y + 0.5 && v[j + 1] > y + 0.5 || v[j + 1] <= y + 0.5 && v[i + 1] > y + 0.5) xs.push(v[i] + (y + 0.5 - v[i + 1]) * (v[j] - v[i]) / (v[j + 1] - v[i + 1]));
         }
         xs.sort((a, b) => a - b);
         for (let i = 0; i + 1 < xs.length; i += 2) {
@@ -79,261 +58,244 @@
         }
       }
     };
-    const eye = (x, y, profile = false, rightEye = false) => {
-      const ex = (v) => x + 1 + Math.round((v - x) * 10 / 12);
-      const ey = (v) => y + 1 + Math.round((v - y) * 12 / 14);
-      const ep = (points, color) => p(points.map((v, i) => i % 2 ? ey(v) : ex(v)), color);
-      const er = (rx, ry, w, h, color) => r(ex(rx), ey(ry), ex(rx + w) - ex(rx), ey(ry + h) - ey(ry), color);
+    const eye = (x, y, side = false) => {
       if (blink) {
-        er(x + 1, y + 7, 2, 1, C.lash);
-        er(x + 3, y + 8, 5, 1, C.lash);
-        er(x + 8, y + 7, 2, 1, C.lash);
-        er(x, y + 6, 1, 1, C.lash);
+        r(x, y + 2, 1, 1, C.eye);
+        r(x + 1, y + 3, 2, 1, C.eye);
+        r(x + 3, y + 2, 1, 1, C.eye);
         return;
       }
-      ep([x + 3, y + 1, x + 8, y + 1, x + 11, y + 4, x + 12, y + 8, x + 10, y + 12, x + 8, y + 14, x + 3, y + 14, x + 1, y + 12, x, y + 8, x + 1, y + 4], C.white);
-      ep([x, y + 7, x, y + 4, x + 2, y + 1, x + 4, y, x + 8, y, x + 11, y + 3, x + 12, y + 6, x + 11, y + 6, x + 9, y + 3, x + 7, y + 2, x + 4, y + 2, x + 2, y + 4, x + 1, y + 7], C.lash);
-      const ix = x + (profile ? 4 : 3);
-      ep([ix + 2, y + 3, ix + 4, y + 3, ix + 6, y + 5, ix + 7, y + 9, ix + 5, y + 13, ix + 2, y + 14, ix, y + 12, ix - 1, y + 8, ix, y + 5], C.irisDark);
-      ep([ix + 2, y + 4, ix + 4, y + 4, ix + 5, y + 6, ix + 6, y + 9, ix + 4, y + 12, ix + 2, y + 13, ix + 1, y + 11, ix, y + 8, ix + 1, y + 5], C.iris);
-      ep([ix, y + 10, ix + 2, y + 9, ix + 5, y + 9, ix + 5, y + 12, ix + 4, y + 13, ix + 2, y + 13, ix + 1, y + 12], C.green);
-      ep([ix + 2, y + 5, ix + 3, y + 5, ix + 4, y + 7, ix + 4, y + 10, ix + 3, y + 11, ix + 2, y + 11, ix + 1, y + 9, ix + 1, y + 7], C.irisDark);
-      ep([ix, y + 3, ix + 2, y + 3, ix + 3, y + 4, ix + 3, y + 6, ix + 1, y + 7, ix - 1, y + 6, ix - 1, y + 4], C.white);
-      er(ix + 3, y + 11, 2, 2, C.lime);
-      const outer = x + (rightEye ? 11 : -1);
-      er(outer, y + 4, 2, 1, C.lash);
-      er(outer, y + 7, 2, 1, C.lash);
+      r(x, y, 4, 1, C.eye);
+      r(x, y + 1, 4, 4, C.white);
+      r(x + 1, y + 1, side ? 2 : 3, 2, C.eye);
+      r(x + 1, y + 3, side ? 2 : 3, 1, C.green);
+      r(x + 1, y + 4, 2, 1, C.lime);
+      r(x + 1, y + 1, 1, 1, C.white);
     };
-    if (direction === "right") {
-      p([28, 10, 29, 5, 34, 2, 40, 2, 37, 5, 33, 9, 42, 11, 49, 15, 53, 21, 55, 29, 53, 39, 50, 49, 45, 54, 37, 57, 32, 60, 23, 59, 17, 57, 11, 53, 8, 48, 9, 39, 11, 31, 11, 23, 15, 17, 21, 12], C.outline);
-      p([30, 11, 31, 6, 36, 3, 37, 3, 32, 8, 32, 11, 42, 13, 47, 16, 51, 22, 53, 29, 51, 39, 48, 48, 43, 52, 35, 55, 31, 58, 23, 57, 18, 55, 13, 51, 11, 47, 12, 39, 14, 30, 14, 23, 18, 17, 23, 13], C.hair);
-      p([16, 30, 18, 29, 16, 42, 17, 49, 23, 55, 20, 55, 15, 51, 13, 45], C.shadow);
-      p([24, 36, 26, 32, 24, 46, 27, 54, 30, 56, 25, 55, 21, 47], C.shadow);
-      p([39, 49, 46, 49, 45, 56, 48, 58, 41, 61, 37, 58], C.skinShade);
-      p([37, 26, 49, 26, 52, 28, 52, 34, 54, 37, 55, 40, 55, 44, 53, 48, 50, 51, 45, 53, 41, 53, 36, 50, 33, 45, 32, 35], C.outline);
-      p([38, 28, 48, 28, 50, 30, 50, 35, 52, 38, 53, 40, 53, 44, 51, 47, 49, 49, 45, 51, 41, 51, 38, 48, 35, 44, 34, 35], C.skin);
-      eye(39, 31, true);
-      r(39, 46, 4, 2, C.blush);
-      p([33, 18, 43, 20, 50, 25, 51, 29, 47, 31, 44, 27, 41, 30, 37, 32, 36, 39, 35, 48, 31, 56, 26, 57, 29, 52, 31, 43, 30, 34, 29, 27], C.hair);
-      p([35, 24, 36, 25, 34, 34, 34, 45, 31, 52, 30, 53, 32, 44, 32, 34], C.shadow);
-      p([30, 23, 27, 21, 23, 21, 20, 23, 18, 27, 18, 31, 21, 35, 25, 37, 29, 35, 32, 31, 32, 27], C.outline);
-      p([24, 23, 28, 24, 30, 27, 30, 31, 27, 34, 24, 35, 21, 32, 20, 28, 22, 25], C.gold);
-      p([24, 25, 28, 26, 29, 29, 27, 32, 23, 32, 22, 29], C.horn);
-      r(20, 17, 6, 2, C.light);
-      r(15, 23, 2, 4, C.light);
-      return;
-    }
-    ctx.save();
-    if (direction === "down") {
-      ctx.beginPath();
-      ctx.rect(0, 0, 64, 64);
-      ctx.rect(22, 51, 20, 13);
-      ctx.clip("evenodd");
-    }
-    p([27, 10, 27, 7, 30, 3, 37, 1, 42, 1, 40, 4, 34, 7, 32, 10, 42, 10, 49, 13, 54, 18, 57, 25, 58, 36, 59, 43, 62, 49, 60, 53, 56, 53, 55, 57, 50, 59, 44, 58, 40, 60, 25, 59, 21, 60, 17, 58, 11, 59, 6, 56, 3, 52, 3, 47, 5, 39, 6, 30, 7, 24, 10, 19, 15, 14, 21, 11], C.outline);
-    p([29, 11, 29, 7, 32, 4, 38, 3, 33, 6, 30, 10, 32, 12, 42, 12, 48, 15, 52, 19, 55, 25, 56, 36, 57, 44, 60, 49, 58, 51, 54, 51, 53, 55, 49, 57, 44, 55, 40, 58, 25, 57, 22, 58, 18, 55, 12, 57, 8, 54, 5, 51, 5, 47, 7, 39, 8, 30, 9, 25, 12, 20, 17, 15, 22, 13], C.hair);
-    p([11, 31, 13, 28, 11, 40, 10, 47, 12, 53, 16, 56, 13, 55, 9, 52, 8, 47], C.shadow);
-    p([51, 30, 53, 33, 54, 43, 56, 48, 53, 53, 51, 55, 52, 49, 51, 44], C.shadow);
-    ctx.restore();
-    const horn = (flip) => {
+    const ornament = (x, y, flip = false) => {
       ctx.save();
+      ctx.translate(x, y);
       if (flip) {
-        ctx.translate(64, 0);
+        ctx.translate(6, 0);
         ctx.scale(-1, 1);
       }
-      p([5, 20, 16, 16, 18, 18, 16, 29, 12, 34, 8, 29, 4, 23], C.outline);
-      p([6, 21, 15, 18, 16, 20, 15, 24, 14, 27, 12, 31, 10, 29, 7, 26], C.gold);
-      p([6, 22, 13, 20, 14, 22, 12, 24, 13, 26, 11, 29, 8, 26], C.horn);
-      r(7, 22, 3, 1, C.hornLight);
+      p([0, 1, 5, 0, 6, 2, 5, 5, 3, 7, 1, 5], C.horn);
+      p([1, 2, 4, 1, 5, 2, 4, 5, 3, 6, 2, 4], C.gold);
+      p([1, 2, 3, 2, 4, 3, 3, 5, 2, 4], C.horn);
       ctx.restore();
     };
-    if (direction === "up") {
-      p([19, 28, 21, 25, 19, 40, 19, 49, 23, 56, 20, 55, 16, 49, 17, 37], C.shadow);
-      p([39, 25, 41, 28, 42, 42, 46, 52, 48, 54, 43, 52, 39, 44], C.shadow);
-      p([29, 39, 31, 34, 29, 45, 32, 54, 30, 55, 27, 47], C.light);
-      r(18, 17, 9, 2, C.light);
-      r(41, 18, 6, 2, C.light);
-      horn(false);
-      horn(true);
+    if (direction === "right") {
+      p([10, 2, 20, 2, 24, 4, 27, 7, 28, 12, 26, 19, 25, 23, 22, 26, 18, 28, 11, 27, 6, 25, 4, 22, 5, 16, 5, 8, 7, 5], C.outline);
+      p([11, 4, 20, 4, 23, 6, 25, 8, 26, 12, 24, 19, 23, 23, 20, 25, 17, 26, 11, 25, 8, 23, 6, 21, 7, 16, 7, 9, 9, 6], C.hair);
+      p([8, 16, 10, 16, 9, 21, 12, 24, 11, 25, 7, 22], C.shadow);
+      p([19, 11, 26, 11, 26, 15, 27, 16, 27, 19, 26, 21, 24, 22, 20, 22, 18, 20, 17, 16], C.outline);
+      p([19, 12, 25, 12, 25, 15, 26, 16, 26, 19, 25, 20, 24, 21, 20, 21, 19, 19], C.skin);
+      p([18, 9, 21, 9, 21, 14, 20, 14, 20, 22, 18, 25, 16, 24, 17, 19, 17, 13], C.shadow);
+      r(18, 14, 1, 8, C.hair);
+      r(18, 19, 1, 3, C.light);
+      p([19, 7, 26, 7, 26, 13, 24, 13, 23, 11, 21, 12, 19, 11], C.hair);
+      eye(21, 13, true);
+      r(21, 19, 2, 1, C.blush);
+      ornament(10, 9);
+      r(9, 6, 4, 1, C.light);
       return;
     }
-    r(25, 53, 14, 7, C.white);
-    r(29, 51, 7, 7, C.skinShade);
-    r(30, 52, 5, 5, C.skin);
-    p([18, 26, 43, 25, 49, 30, 51, 38, 50, 45, 47, 50, 42, 54, 36, 56, 28, 56, 22, 54, 17, 50, 14, 44, 13, 36, 15, 30], C.outline);
-    p([19, 27, 42, 27, 47, 31, 49, 38, 48, 45, 45, 49, 41, 52, 35, 54, 29, 54, 23, 52, 19, 49, 16, 43, 15, 36, 17, 31], C.skin);
-    p([14, 23, 20, 17, 29, 14, 37, 15, 43, 18, 48, 23, 51, 30, 49, 35, 47, 34, 43, 28, 44, 33, 42, 34, 38, 33, 34, 29, 37, 33, 34, 34, 29, 33, 25, 29, 27, 33, 24, 34, 21, 32, 20, 29, 18, 34, 15, 37, 13, 36], C.hair);
-    p([26, 19, 27, 19, 25, 25, 25, 28, 29, 32, 27, 32, 23, 28, 24, 23], C.shadow);
-    p([35, 19, 36, 20, 36, 26, 40, 32, 38, 31, 34, 26], C.shadow);
-    p([44, 23, 46, 26, 48, 32, 46, 30], C.shadow);
-    p([13, 30, 16, 29, 16, 39, 18, 46, 23, 52, 24, 57, 20, 59, 17, 56, 13, 53, 10, 48, 10, 42], C.shadow);
-    p([13, 32, 15, 32, 14, 40, 16, 47, 20, 52, 22, 56, 20, 57, 17, 54, 13, 50, 12, 45], C.hair);
-    p([49, 30, 52, 33, 52, 43, 51, 50, 47, 56, 43, 59, 42, 55, 44, 50, 46, 45, 47, 37], C.shadow);
-    p([49, 33, 50, 36, 50, 44, 48, 51, 44, 56, 45, 52, 47, 46, 48, 38], C.hair);
-    const portraitEye = (x, y, rightEye = false) => {
-      if (blink) {
-        r(x, y + 6, 2, 1, C.lash);
-        r(x + 1, y + 7, 2, 1, C.lash);
-        r(x + 3, y + 8, 4, 1, C.lash);
-        r(x + 7, y + 7, 2, 1, C.lash);
-        r(x + 9, y + 6, 1, 1, C.lash);
-        r(rightEye ? x + 10 : x - 1, y + 5, 1, 1, C.lash);
-        return;
-      }
-      p([x + 3, y + 1, x + 7, y + 1, x + 9, y + 3, x + 10, y + 6, x + 9, y + 10, x + 7, y + 12, x + 3, y + 12, x + 1, y + 10, x, y + 6, x + 1, y + 3], C.white);
-      p([x, y + 6, x, y + 3, x + 2, y + 1, x + 4, y, x + 7, y, x + 9, y + 2, x + 10, y + 4, x + 9, y + 4, x + 7, y + 2, x + 4, y + 2, x + 2, y + 4, x + 1, y + 6], C.lash);
-      const ix = x + (rightEye ? 2 : 3);
-      p([ix + 1, y + 3, ix + 4, y + 3, ix + 5, y + 5, ix + 5, y + 9, ix + 4, y + 11, ix + 1, y + 12, ix - 1, y + 10, ix - 1, y + 6], "#405b39");
-      r(ix, y + 5, 5, 3, "#68994f");
-      r(ix, y + 8, 5, 2, "#b6d879");
-      r(ix + 1, y + 10, 3, 1, "#b6d879");
-      r(ix, y + 3, 2, 2, C.white);
-      r(rightEye ? x + 9 : x - 1, y + 4, 2, 1, C.lash);
-    };
-    portraitEye(18, 32);
-    portraitEye(37, 32, true);
-    r(19, 45, 5, 2, "#f4b6a6");
-    r(42, 45, 5, 2, "#f4b6a6");
-    p([28, 45, 31, 44, 35, 44, 38, 45, 38, 47, 36, 50, 33, 51, 30, 50, 28, 47], "#c87983");
-    p([29, 45, 32, 45, 35, 45, 37, 46, 36, 48, 34, 50, 32, 50, 30, 48], "#f5ac9c");
-    p([16, 23, 19, 21, 24, 21, 24, 23, 20, 23, 18, 25, 16, 25], C.light);
-    p([40, 20, 44, 22, 45, 25, 42, 24, 40, 23], C.light);
-    horn(false);
-    horn(true);
+    p([11, 1, 21, 1, 21, 2, 25, 2, 25, 4, 27, 4, 27, 7, 29, 7, 29, 19, 30, 23, 28, 26, 24, 27, 20, 26, 16, 27, 11, 26, 7, 27, 3, 25, 2, 22, 4, 18, 4, 7, 6, 7, 6, 4, 8, 4, 8, 2, 11, 2], C.outline);
+    p([11, 3, 22, 3, 22, 4, 25, 4, 25, 7, 27, 7, 27, 19, 28, 23, 26, 25, 23, 25, 20, 24, 16, 25, 11, 24, 7, 25, 5, 23, 4, 22, 6, 18, 6, 7, 8, 7, 8, 4, 11, 4], C.hair);
+    r(10, 3, 12, 1, C.light);
+    r(7, 7, 1, 9, C.light);
+    if (direction === "up") {
+      p([9, 13, 11, 12, 10, 20, 12, 24, 10, 24, 8, 20], C.shadow);
+      p([21, 12, 23, 13, 23, 20, 25, 23, 23, 25, 21, 20], C.shadow);
+      p([15, 18, 16, 17, 16, 21, 18, 24, 16, 24, 14, 21], C.light);
+      ornament(3, 6);
+      ornament(24, 6, true);
+      return;
+    }
+    r(12, 23, 10, 4, C.white);
+    p([10, 11, 23, 11, 23, 20, 21, 23, 13, 23, 10, 20], C.outline);
+    p([11, 12, 22, 12, 22, 20, 20, 22, 14, 22, 11, 20], C.skin);
+    r(11, 19, 2, 1, C.blush);
+    r(20, 19, 2, 1, C.blush);
+    eye(11, 14);
+    eye(18, 14);
+    r(15, 19, 1, 1, C.mouth);
+    r(18, 19, 1, 1, C.mouth);
+    r(16, 20, 2, 1, C.mouth);
+    p([8, 7, 25, 7, 25, 13, 23, 14, 21, 13, 20, 10, 20, 14, 16, 14, 15, 10, 15, 14, 11, 14, 10, 12, 8, 13], C.hair);
+    r(12, 8, 1, 4, C.shadow);
+    r(18, 8, 1, 4, C.shadow);
+    r(23, 9, 1, 3, C.shadow);
+    p([7, 13, 11, 13, 11, 20, 13, 23, 10, 26, 7, 24, 6, 20], C.shadow);
+    p([8, 14, 9, 14, 9, 21, 11, 23, 10, 24, 8, 23], C.hair);
+    p([22, 13, 27, 13, 27, 20, 26, 24, 23, 26, 21, 24, 22, 21], C.shadow);
+    r(25, 15, 1, 7, C.light);
+    ornament(3, 6);
+    ornament(24, 6, true);
   }
 
   // src/renderer/src/scene/office/anyaArt.ts
-  var ANYA_W = 64;
-  var ANYA_H = 96;
+  var ANYA_W = 32;
+  var ANYA_H = 48;
+  var ANYA_DESK_HAIRLINE = 33;
   var P = {
     ink: "#624052",
     hair: "#f5a7b8",
-    hairLight: "#ffccd3",
-    hairShade: "#d87894",
-    skin: "#fff0d9",
-    skinShade: "#efc4ad",
-    blush: "#f4b6ac",
-    white: "#fff9eb",
-    sleeveShade: "#dbd4c8",
-    dress: "#426b80",
-    dressLight: "#608ca0",
-    dressShade: "#304d65",
-    bow: "#d36b86",
-    bowLight: "#f6a2b2",
-    horn: "#53434b",
-    gold: "#e9c783",
-    eye: "#3e5539",
-    green: "#77a657",
-    lime: "#bad783",
+    darkHair: "#d87894",
+    lightHair: "#ffccd3",
+    skin: "#ffebcf",
+    shade: "#e6bba4",
+    blush: "#e7b0ab",
+    white: "#fff7e9",
+    coat: "#426b80",
+    coatLight: "#608ca0",
+    coatDark: "#304d65",
     shoe: "#54424b",
-    book: "#ad6884"
+    pupil: "#3e5539",
+    iris: "#77a657",
+    irisLight: "#bad783",
+    glint: "#fff6e4",
+    mouth: "#876064",
+    cheek: "#f2c5b6",
+    book: "#ad6884",
+    bow: "#d36b86",
+    bowLight: "#f6a2b2"
   };
   function paintAnya(ctx, direction, action, frame = 0, seated = false) {
     ctx.save();
     ctx.clearRect(0, 0, ANYA_W, ANYA_H);
-    ctx.scale(2, 2);
     if (direction === "left") {
-      ctx.translate(32, 0);
+      ctx.translate(ANYA_W, 0);
       ctx.scale(-1, 1);
       direction = "right";
     }
+    const walking = action === "walk";
     const phase = frame % 4;
-    const step = action === "walk" ? [0, 1, 0, -1][phase] : 0;
-    const bob = action === "walk" && phase % 2 ? -1 : 0;
-    const blink = action === "idle" && phase === 3;
-    const rect = (x, y, w, h, c) => {
-      ctx.fillStyle = c;
+    const step = walking ? [0, 1, 0, -1][phase] : 0;
+    const bob = walking && phase % 2 === 1 ? -1 : 0;
+    const work = action === "type" || action === "read";
+    const rect = (x, y, w, h, color) => {
+      ctx.fillStyle = color;
       ctx.fillRect(x, y, w, h);
     };
-    const poly = (p, c) => {
-      for (let y = 0; y < 48; y++) {
-        const xs = [];
-        for (let i = 0; i < p.length; i += 2) {
-          const j = (i + 2) % p.length;
-          if (p[i + 1] <= y + 0.5 && p[j + 1] > y + 0.5 || p[j + 1] <= y + 0.5 && p[i + 1] > y + 0.5)
-            xs.push(p[i] + (y + 0.5 - p[i + 1]) * (p[j] - p[i]) / (p[j + 1] - p[i + 1]));
+    const blink = action === "idle" && phase === 3;
+    if (direction === "right") {
+      for (const [x, dy, far] of [[18 - step * 2, 0, 1], [19 + step * 2, -Math.abs(step), 0]]) {
+        rect(x, 35 + dy, 5, 9, P.ink);
+        rect(x + 1, 36 + dy, 3, 6, far ? P.shade : P.skin);
+        rect(x + 1, 41 + dy, 3, 3, P.white);
+        rect(x - 1, 44 + dy, 8, 3, P.ink);
+        rect(x, 44 + dy, 6, 2, P.shoe);
+      }
+      ctx.save();
+      ctx.translate(0, bob);
+      poly([17, 23, 23, 23, 25, 28, 25, 36, 23, 38, 14, 38, 13, 35, 15, 29], P.ink);
+      poly([18, 25, 22, 25, 23, 29, 23, 36, 15, 36, 16, 30], P.coat);
+      rect(22, 24, 2, 5, P.white);
+      rect(21, 26, 2, 4, P.white);
+      rect(22, 25, 2, 1, P.bow);
+      paintAnyaHead(ctx, direction, blink);
+      if (action === "type") {
+        rect(19, 28, 4, 5, P.white);
+        rect(22, 30, 6, 3, P.white);
+        rect(27, 29 + phase % 2, 3, 2, P.skin);
+      } else if (action === "read") {
+        rect(24, 24, 7, 8, P.ink);
+        rect(25, 25, 5, 6, P.book);
+        rect(25, 25, 4, 1, P.white);
+        rect(22, 29, 4, 3, P.white);
+        rect(25, 29 + phase % 2, 3, 2, P.skin);
+      } else {
+        rect(19, 27 - step, 4, 4, P.white);
+        rect(20, 30 - step, 3, 5, P.skin);
+      }
+      ctx.restore();
+      ctx.restore();
+      return;
+    }
+    function poly(points, color) {
+      ctx.fillStyle = color;
+      for (let y = 0; y < ANYA_H; y++) {
+        const intersections = [];
+        for (let i = 0; i < points.length; i += 2) {
+          const j = (i + 2) % points.length;
+          const x1 = points[i], y1 = points[i + 1], x2 = points[j], y2 = points[j + 1];
+          if (y1 <= y + 0.5 && y2 > y + 0.5 || y2 <= y + 0.5 && y1 > y + 0.5) {
+            intersections.push(x1 + (y + 0.5 - y1) * (x2 - x1) / (y2 - y1));
+          }
         }
-        xs.sort((a, b) => a - b);
-        for (let i = 0; i + 1 < xs.length; i += 2) {
-          const x = Math.ceil(xs[i] - 0.5);
-          rect(x, y, Math.ceil(xs[i + 1] - 0.5) - x, 1, c);
+        intersections.sort((a, b) => a - b);
+        for (let i = 0; i + 1 < intersections.length; i += 2) {
+          const start = Math.ceil(intersections[i] - 0.5);
+          rect(start, y, Math.ceil(intersections[i + 1] - 0.5) - start, 1, color);
         }
       }
-    };
-    const legs = direction === "right" ? [[16 - step * 2, 0], [19 + step * 2, -Math.abs(step)]] : [[11, Math.min(0, step)], [18, Math.min(0, -step)]];
-    for (const [x, dy] of legs) {
-      rect(x, 38 + dy, 4, 7, P.ink);
-      rect(x + 1, 39 + dy, 2, 3, P.skin);
-      rect(x + 1, 42 + dy, 2, 2, P.white);
-      rect(x - 1, 44 + dy, 6, 3, P.ink);
-      rect(x, 44 + dy, 4, 2, P.shoe);
-      rect(x + 1, 44 + dy, 2, 1, P.white);
+    }
+    ;
+    for (const [x, offset] of [[11, step], [18, -step]]) {
+      rect(x, 35 + offset, 4, 8, P.ink);
+      rect(x + 1, 36 + offset, 3, 5, P.skin);
+      rect(x, 41 + offset, 4, 3, P.white);
+      rect(x - 1, 44 + offset, 6, 3 - Math.max(0, offset), P.ink);
+      rect(x, 44 + offset, 4, 2 - Math.max(0, offset), P.shoe);
     }
     ctx.save();
     ctx.translate(0, bob);
-    if (direction === "right") {
-      poly([16, 27, 22, 27, 24, 30, 23, 34, 25, 38, 24, 41, 14, 41, 12, 39, 14, 34], P.ink);
-      poly([17, 28, 21, 28, 23, 31, 21, 34, 24, 38, 23, 40, 15, 40, 14, 38, 16, 34], P.dress);
-      rect(20, 28, 3, 4, P.white);
-      rect(22, 29, 2, 2, P.bow);
-      rect(15, 36, 2, 3, P.dressLight);
-      rect(22, 37, 1, 3, P.dressShade);
-    } else {
-      poly([11, 27, 21, 27, 24, 29, 25, 32, 23, 35, 23, 37, 25, 39, 23, 41, 19, 42, 12, 42, 8, 41, 7, 39, 9, 36, 9, 34, 7, 33, 7, 30], P.ink);
-      poly([11, 28, 21, 28, 23, 30, 24, 32, 21, 34, 10, 34, 8, 32, 9, 30], P.white);
-      poly([11, 28, 13, 28, 13, 33, 19, 33, 19, 28, 21, 28, 21, 35, 23, 39, 21, 40, 12, 41, 9, 39, 11, 35], P.dress);
-      poly([12, 35, 14, 35, 13, 39, 11, 39], P.dressLight);
-      poly([19, 35, 20, 35, 22, 39, 20, 40], P.dressShade);
-      if (direction === "down") {
-        poly([13, 29, 16, 30, 19, 29, 19, 32, 16, 31, 13, 32], P.bow);
-        rect(15, 30, 2, 2, P.bowLight);
-      } else {
-        rect(13, 29, 6, 2, P.dressShade);
+    if (direction === "up") {
+      poly([11, 24, 22, 24, 24, 28, 23, 31, 25, 37, 23, 39, 9, 39, 7, 37, 9, 31, 8, 28], P.ink);
+      rect(10, 25, 12, 11, P.coat);
+      rect(9, 33, 14, 4, P.coat);
+      rect(10, 37, 12, 1, P.coatLight);
+      rect(16, 34, 1, 4, P.coatDark);
+      rect(4, 26 - step, 4, 8, P.ink);
+      rect(5, 27 - step, 3, 4, P.white);
+      rect(5, 32 - step, 3, 3, P.skin);
+      rect(25, 26 + step, 4, 8, P.ink);
+      rect(25, 27 + step, 3, 4, P.white);
+      rect(25, 32 + step, 3, 3, P.skin);
+      paintAnyaHead(ctx, direction, blink);
+      if (work) {
+        rect(4, 27 + phase % 2, 3, 3, P.skin);
+        rect(27, 28 - phase % 2, 3, 3, P.skin);
+        if (action === "read") {
+          rect(28, 25, 3, 5, P.book);
+          rect(28, 25, 2, 1, P.white);
+        }
       }
+      ctx.restore();
+      ctx.restore();
+      return;
     }
-    ctx.save();
-    ctx.scale(0.5, 0.5);
+    poly([11, 23, 22, 23, 24, 26, 25, 35, 22, 38, 10, 38, 7, 35, 8, 27], P.ink);
+    poly([11, 25, 21, 25, 23, 29, 23, 35, 20, 36, 10, 36, 9, 33, 10, 28], P.coat);
+    rect(11, 28, 2, 6, P.coatLight);
+    rect(20, 29, 2, 6, P.coatDark);
+    poly([12, 24, 21, 24, 20, 27, 18, 27, 17, 29, 15, 27, 13, 27], P.white);
+    rect(12, 26, 2, 4, P.coat);
+    rect(20, 26, 2, 4, P.coat);
     paintAnyaHead(ctx, direction, blink);
-    ctx.restore();
-    if (direction === "right") {
-      rect(18, 29, 4, 5, P.sleeveShade);
-      rect(18, 29, 3, 4, P.white);
-      if (action === "read") {
-        rect(25, 28, 6, 7, P.ink);
-        rect(26, 29, 4, 5, P.book);
-        rect(26, 29, 3, 1, P.white);
-        rect(22, 32, 5, 2, P.skin);
-      } else if (action === "type") {
-        rect(21, 31, 6, 3, P.white);
-        rect(26, 31 + phase % 2, 3, 2, P.skin);
-      } else {
-        rect(19, 33 - step, 3, 3, P.skin);
-      }
-    } else if (action === "read" && direction === "down") {
-      const y = 29 + (phase === 2 ? 1 : 0);
-      rect(11, y, 11, 7, P.ink);
-      rect(12, y + 1, 9, 5, P.book);
-      rect(16, y + 1, 1, 5, P.gold);
-      rect(13, y + 1, 2, 1, P.white);
-      rect(18, y + 1, 2, 1, P.white);
-      rect(10, y + 4, 3, 2, P.skin);
-      rect(20, y + 4, 3, 2, P.skin);
-    } else if (action === "type") {
-      rect(8, 29, 5, 3, P.white);
-      rect(19, 29, 5, 3, P.white);
-      rect(11, 31 + phase % 2, 3, 2, P.skin);
-      rect(18, 32 - phase % 2, 3, 2, P.skin);
+    rect(14, 25, 2, 2, P.bow);
+    rect(17, 25, 2, 2, P.bow);
+    rect(16, 26, 1, 1, P.bowLight);
+    if (action === "type") {
+      const dy = phase % 2;
+      rect(10, 28, 5, 3, P.white);
+      rect(11, 28 + dy, 4, 2, P.skin);
+      rect(19, 31 - dy, 4, 2, P.skin);
+    } else if (action === "read") {
+      const bx = 13, by = 26 + (phase === 2 ? 1 : 0);
+      rect(bx - 1, by - 1, 8, 8, P.ink);
+      rect(bx, by, 6, 6, P.book);
+      rect(bx + 3, by, 1, 6, P.lightHair);
+      rect(bx + 1, by + 1, 2, 1, P.white);
+      rect(bx - 2, by + 4, 3, 2, P.skin);
+      rect(bx + 5, by + 4, 2, 2, P.skin);
     } else {
-      poly([8, 29 - step, 10, 29 - step, 11, 32 - step, 10, 34 - step, 7, 33 - step, 7, 31 - step], P.sleeveShade);
-      rect(8, 30 - step, 2, 3, P.white);
-      rect(8, 33 - step, 2, 2, P.skin);
-      poly([22, 29 + step, 24, 30 + step, 25, 33 + step, 22, 34 + step, 21, 32 + step], P.sleeveShade);
-      rect(22, 30 + step, 2, 3, P.white);
-      rect(22, 33 + step, 2, 2, P.skin);
-      if (action === "read") {
-        rect(25, 30, 3, 5, P.book);
-        rect(25, 30, 2, 1, P.white);
-      }
+      const x = 8;
+      rect(x, 28 - step, 3, 3, P.white);
+      rect(x, 31 - step, 3, 5, P.skin);
+      rect(22, 28 + step, 3, 3, P.white);
+      rect(22, 31 + step, 3, 5, P.skin);
     }
     ctx.restore();
     ctx.restore();
@@ -613,15 +575,15 @@ const dirs=['down','up','right','left'], acts=['walk','type','read','idle'];
 const names={down:'正面',up:'背面',right:'右侧',left:'左侧',walk:'走路',type:'打字',read:'阅读',idle:'待机'};
 const items=[];
 for(const [d,label,f] of [['down','正面 · 开心',0],['down','正面 · 眨眼',3],['right','侧面 · 开心',0]]){
-  const source=document.createElement('canvas');source.width=64;source.height=96;
+  const source=document.createElement('canvas');source.width=32;source.height=48;
   Anya.paintAnya(source.getContext('2d'),d,'idle',f);
   const card=document.createElement('div');card.className='card';
-  const c=document.createElement('canvas');c.width=64;c.height=64;c.style.width='192px';c.style.height='192px';c.style.maxWidth='100%';c.style.objectFit='contain';
+  const c=document.createElement('canvas');c.width=32;c.height=32;c.style.width='192px';c.style.height='192px';c.style.maxWidth='100%';c.style.objectFit='contain';
   c.getContext('2d').drawImage(source,0,0);
   const name=document.createElement('div');name.textContent=label;
   card.append(c,name);document.getElementById('faces').append(card);
 }
-for(const [name,w,h,paint,d] of [['菲伦 · 正面',32,48,Feilen.paintFeilen,'down'],['阿尼亚 · 正面',64,96,Anya.paintAnya,'down'],['菲伦 · 侧面',32,48,Feilen.paintFeilen,'right'],['阿尼亚 · 侧面',64,96,Anya.paintAnya,'right']]){
+for(const [name,w,h,paint,d] of [['菲伦 · 正面',32,48,Feilen.paintFeilen,'down'],['阿尼亚 · 正面',32,48,Anya.paintAnya,'down'],['菲伦 · 侧面',32,48,Feilen.paintFeilen,'right'],['阿尼亚 · 侧面',32,48,Anya.paintAnya,'right']]){
   const card=document.createElement('div');card.className='card';
   const c=document.createElement('canvas');c.width=w;c.height=h;
   paint(c.getContext('2d'),d,'idle',0);
@@ -635,5 +597,5 @@ const sheet=document.getElementById('sheet').getContext('2d');sheet.imageSmoothi
 const cell=document.createElement('canvas');cell.width=Anya.ANYA_W;cell.height=Anya.ANYA_H;const cc=cell.getContext('2d');
 dirs.forEach((d,row)=>acts.forEach((a,group)=>{for(let f=0;f<4;f++){Anya.paintAnya(cc,d,a,f);sheet.drawImage(cell,(group*4+f)*64,row*96,64,96);}}));
 let paused=false,tick=0;document.getElementById('pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'继续动画':'暂停动画'};
-function draw(){items.forEach(({ctx,d,a})=>Anya.paintAnya(ctx,d,a,a==='idle'?(tick%16===15?3:0):tick%4));seats.forEach(({ctx,a})=>{ctx.clearRect(0,0,64,64);ctx.fillStyle='#79583e';ctx.fillRect(3,41,58,19);ctx.fillStyle='#c7a56c';ctx.fillRect(5,42,54,15);Anya.paintAnya(cc,'down',a,a==='idle'?(tick%16===15?3:0):tick%4,true);ctx.drawImage(cell,0,0,64,72,16,8,32,36);ctx.fillStyle='#515364';ctx.fillRect(23,43,20,12);ctx.fillStyle='#c4ccce';ctx.fillRect(25,45,16,7);ctx.fillStyle='#79583e';ctx.fillRect(3,57,58,3);});}draw();setInterval(()=>{if(!paused){tick++;draw()}},180);
+function draw(){items.forEach(({ctx,d,a})=>Anya.paintAnya(ctx,d,a,a==='idle'?(tick%16===15?3:0):tick%4));seats.forEach(({ctx,a})=>{ctx.clearRect(0,0,64,64);ctx.fillStyle='#79583e';ctx.fillRect(3,41,58,19);ctx.fillStyle='#c7a56c';ctx.fillRect(5,42,54,15);Anya.paintAnya(cc,'down',a,a==='idle'?(tick%16===15?3:0):tick%4,true);ctx.drawImage(cell,0,0,32,36,16,8,32,36);ctx.fillStyle='#515364';ctx.fillRect(23,43,20,12);ctx.fillStyle='#c4ccce';ctx.fillRect(25,45,16,7);ctx.fillStyle='#79583e';ctx.fillRect(3,57,58,3);});}draw();setInterval(()=>{if(!paused){tick++;draw()}},180);
 </script></html>

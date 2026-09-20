@@ -199,21 +199,21 @@ export function paintYinyue(ctx: CanvasRenderingContext2D, direction: YinyueDire
   rect(10,31,13,2,P.red); rect(11,31,11,1,P.redLight);
   poly([13,33,16,34,18,33,21,33,20,35,18,35,18,37,16,37,16,35,13,35],P.red);
   rect(16,33,2,1,P.redLight);
-  // Face and cheek contour.
-  poly([9,11,24,11,24,20,22,23,12,23,9,20],P.shade);
-  poly([10,12,23,12,23,20,21,22,13,22,10,20],P.skin);
-  rect(10,19,3,2,P.cheek); rect(20,19,3,2,P.cheek);
-  rect(11,20,1,1,P.blush); rect(21,20,1,1,P.blush);
+  // Slightly narrower cheeks and a rounded taper, retaining the soft skin edge.
+  poly([10,11,24,11,24,20,21,23,13,23,10,20],P.shade);
+  poly([11,12,23,12,23,20,20,22,14,22,11,20],P.skin);
+  rect(11,19,2,1,P.cheek); rect(21,19,2,1,P.cheek);
+  rect(12,20,1,1,P.blush); rect(21,20,1,1,P.blush);
   const blink = action === 'idle' && phase === 3;
-  for (const x of [10,19]) {
+  for (const x of [11,19]) {
     eye(x,14,blink);
   }
   rect(16,21,2,1,P.mouth);
-  // Swept fringe stays above the unchanged Feilen eye positions.
+  // Swept fringe stays above the eye line.
   poly([8,7,24,7,25,10,26,13,24,13,21,9,20,11,18,13,16,13,18,9,15,11,12,13,9,13,8,15,7,14],P.darkHair);
   poly([9,7,22,7,24,10,24,11,21,8,18,10,17,11,18,8,14,10,11,12,9,12,8,13],P.hair);
   poly([10,6,19,6,17,8,13,9,10,11,8,11,9,8],P.lightHair);
-  for (const x of [7,24]) { rect(x,13,3,15,P.darkHair); rect(x,14,2,13,P.hair); rect(x,18,1,8,P.lightHair); }
+  for (const x of [8,24]) { rect(x,13,3,15,P.darkHair); rect(x,14,2,13,P.hair); rect(x,18,1,8,P.lightHair); }
   // Tiny silver tassels occupy the hair, not the chin or cheeks.
   for (const x of [8,24]) { rect(x,21,1,2,P.lightHair); rect(x,24,1,3,P.lightHair); }
   // Work hands are drawn independently of the walking legs; no baked-in furniture.

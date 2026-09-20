@@ -147,15 +147,16 @@ export function paintKlee(ctx: CanvasRenderingContext2D, direction: KleeDirectio
       poly([27,57,37,57,36,63,32,66,28,63],P.cream);
       r(29,56,6,6,P.gold); r(30,56,4,5,P.cream);
       clover(28,68,P.gold);
-      // Oversized face, warm eyes, pale soft cheek pixels.
-      poly([18,27,44,27,49,33,50,40,49,46,45,50,39,53,26,53,20,50,16,46,14,40,15,33],P.ink);
-      poly([19,29,43,29,47,34,48,40,47,45,43,49,38,51,27,51,22,48,18,45,16,40,17,34],P.skin);
+      // Gently inset cheeks with the original eyes, hair, and head proportions.
+      poly([18,27,44,27,48,33,49,40,48,46,44,50,38,53,27,53,21,50,17,46,15,40,16,33],P.ink);
+      poly([19,29,43,29,46,34,47,40,46,45,42,49,37,51,28,51,23,48,19,45,17,40,18,34],P.skin);
       poly([7,38,18,36,20,44,15,45,7,41],P.ink);
       poly([9,39,17,38,18,42,15,43],P.skin); r(13,40,4,1,P.skinShade);
       poly([46,36,57,38,57,41,49,45,44,44],P.ink);
       poly([47,38,55,39,49,43,46,42],P.skin); r(47,40,4,1,P.skinShade);
       r(18,46,6,2,P.cheek); r(41,46,6,2,P.cheek);
-      r(30,47,1,1,P.eye); r(31,48,3,1,P.eye); r(34,47,1,1,P.eye);
+      // A shallow closed smile, with one gently lifted corner instead of a U.
+      r(31,48,3,1,'#b77878'); r(34,47,1,1,'#b77878');
       // Swept bangs frame the eyes; curled sidelocks leave the ears visible.
       poly([15,25,27,22,42,24,49,30,49,40,46,47,41,49,43,44,45,39,43,32,38,30,36,35,32,39,27,36,26,32,23,33,21,40,22,46,25,49,20,48,16,43,14,35],P.hairShade);
       poly([16,26,27,24,41,26,47,31,47,40,44,46,43,46,45,40,43,31,37,28,35,34,32,37,29,35,27,29,23,31,20,38,20,44,22,47,19,45,16,41,16,34],P.hair);

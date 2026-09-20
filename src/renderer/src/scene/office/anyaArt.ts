@@ -1,96 +1,128 @@
 import { paintAnyaHead } from './anyaHeadArt';
-/** Native pixel art, shared by the office sprite and the review page. */
-export const ANYA_W = 64;
-export const ANYA_H = 96;
+/** Code-drawn animation art. No reference image is loaded at runtime. */
+export const ANYA_W = 32;
+export const ANYA_H = 48;
+export const ANYA_DESK_HAIRLINE = 33;
 export type AnyaDirection = 'down' | 'up' | 'right' | 'left';
 export type AnyaAction = 'idle' | 'walk' | 'type' | 'read';
 const P = {
-  ink: '#624052', hair: '#f5a7b8', hairLight: '#ffccd3', hairShade: '#d87894',
-  skin: '#fff0d9', skinShade: '#efc4ad', blush: '#f4b6ac',
-  white: '#fff9eb', sleeveShade: '#dbd4c8', dress: '#426b80', dressLight: '#608ca0',
-  dressShade: '#304d65', bow: '#d36b86', bowLight: '#f6a2b2',
-  horn: '#53434b', gold: '#e9c783', eye: '#3e5539', green: '#77a657', lime: '#bad783',
-  shoe: '#54424b', book: '#ad6884',
+  ink: '#624052', hair: '#f5a7b8', darkHair: '#d87894', lightHair: '#ffccd3',
+  skin: '#ffebcf', shade: '#e6bba4', blush: '#e7b0ab', white: '#fff7e9',
+  coat: '#426b80', coatLight: '#608ca0', coatDark: '#304d65',
+  shoe: '#54424b', pupil: '#3e5539', iris: '#77a657', irisLight: '#bad783',
+  glint: '#fff6e4', mouth: '#876064', cheek: '#f2c5b6', book: '#ad6884', bow: '#d36b86', bowLight: '#f6a2b2',
 };
 
+/** Fixed foot baseline across all frames; integer coordinates keep pixels crisp. */
 export function paintAnya(ctx: CanvasRenderingContext2D, direction: AnyaDirection, action: AnyaAction, frame = 0, seated = false): void {
-  ctx.save(); ctx.clearRect(0, 0, ANYA_W, ANYA_H); ctx.scale(2, 2);
-  if (direction === 'left') { ctx.translate(32, 0); ctx.scale(-1, 1); direction = 'right'; }
+  ctx.save();
+  ctx.clearRect(0, 0, ANYA_W, ANYA_H);
+  if (direction === 'left') { ctx.translate(ANYA_W, 0); ctx.scale(-1, 1); direction = 'right'; }
+  const walking = action === 'walk';
   const phase = frame % 4;
-  const step = action === 'walk' ? [0, 1, 0, -1][phase] : 0;
-  const bob = action === 'walk' && phase % 2 ? -1 : 0;
+  const step = walking ? [0, 1, 0, -1][phase] : 0;
+  const bob = walking && phase % 2 === 1 ? -1 : 0;
+  const work = action === 'type' || action === 'read';
+  const rect = (x: number, y: number, w: number, h: number, color: string) => {
+    ctx.fillStyle = color; ctx.fillRect(x, y, w, h);
+  };
   const blink = action === 'idle' && phase === 3;
-  const rect = (x: number, y: number, w: number, h: number, c: string) => { ctx.fillStyle = c; ctx.fillRect(x, y, w, h); };
-  // Scan-converted polygons avoid antialiasing at the native resolution.
-  const poly = (p: number[], c: string) => {
-    for (let y = 0; y < 48; y++) {
-      const xs: number[] = [];
-      for (let i = 0; i < p.length; i += 2) {
-        const j = (i + 2) % p.length;
-        if ((p[i+1] <= y+.5 && p[j+1] > y+.5) || (p[j+1] <= y+.5 && p[i+1] > y+.5))
-          xs.push(p[i] + (y+.5-p[i+1]) * (p[j]-p[i]) / (p[j+1]-p[i+1]));
+  if (direction === 'right') {
+    // Profile has overlapping legs, a forward-facing toe, and a hair mass
+    // behind the shoulder. It is intentionally not the frontal body rotated.
+    for (const [x, dy, far] of [[18 - step * 2, 0, 1], [19 + step * 2, -Math.abs(step), 0]]) {
+      rect(x,35+dy,5,9,P.ink);
+      rect(x+1,36+dy,3,6,far ? P.shade : P.skin);
+      rect(x+1,41+dy,3,3,P.white);
+      rect(x-1,44+dy,8,3,P.ink); rect(x,44+dy,6,2,P.shoe);
+    }
+    ctx.save(); ctx.translate(0,bob);
+    poly([17,23,23,23,25,28,25,36,23,38,14,38,13,35,15,29],P.ink);
+    poly([18,25,22,25,23,29,23,36,15,36,16,30],P.coat);
+    rect(22,24,2,5,P.white); rect(21,26,2,4,P.white); rect(22,25,2,1,P.bow);
+    paintAnyaHead(ctx,direction,blink);
+    if (action === 'type') {
+      rect(19,28,4,5,P.white); rect(22,30,6,3,P.white);
+      rect(27,29+phase%2,3,2,P.skin);
+    } else if (action === 'read') {
+      rect(24,24,7,8,P.ink); rect(25,25,5,6,P.book);
+      rect(25,25,4,1,P.white); rect(22,29,4,3,P.white);
+      rect(25,29+phase%2,3,2,P.skin);
+    } else {
+      rect(19,27-step,4,4,P.white); rect(20,30-step,3,5,P.skin);
+    }
+    ctx.restore(); ctx.restore(); return;
+  }
+  function poly(points: number[], color: string): void {
+    // Rasterize to whole pixels instead of Canvas antialiased polygon edges.
+    ctx.fillStyle = color;
+    for (let y = 0; y < ANYA_H; y++) {
+      const intersections: number[] = [];
+      for (let i = 0; i < points.length; i += 2) {
+        const j = (i + 2) % points.length;
+        const x1 = points[i], y1 = points[i + 1], x2 = points[j], y2 = points[j + 1];
+        if ((y1 <= y + 0.5 && y2 > y + 0.5) || (y2 <= y + 0.5 && y1 > y + 0.5)) {
+          intersections.push(x1 + (y + 0.5 - y1) * (x2 - x1) / (y2 - y1));
+        }
       }
-      xs.sort((a,b) => a-b);
-      for (let i = 0; i+1 < xs.length; i += 2) {
-        const x = Math.ceil(xs[i]-.5); rect(x,y,Math.ceil(xs[i+1]-.5)-x,1,c);
+      intersections.sort((a, b) => a - b);
+      for (let i = 0; i + 1 < intersections.length; i += 2) {
+        const start = Math.ceil(intersections[i] - 0.5);
+        rect(start, y, Math.ceil(intersections[i + 1] - 0.5) - start, 1, color);
       }
     }
   };
-  // Short legs, cream socks, rounded Mary Janes, all anchored above y=47.
-  const legs = direction === 'right' ? [[16-step*2,0],[19+step*2,-Math.abs(step)]] : [[11,Math.min(0,step)],[18,Math.min(0,-step)]];
-  for (const [x,dy] of legs) {
-    rect(x,38+dy,4,7,P.ink); rect(x+1,39+dy,2,3,P.skin);
-    rect(x+1,42+dy,2,2,P.white); rect(x-1,44+dy,6,3,P.ink);
-    rect(x,44+dy,4,2,P.shoe); rect(x+1,44+dy,2,1,P.white);
+  // Legs, white socks and low brown shoes. Alternating feet share a fixed floor.
+  for (const [x, offset] of [[11, step], [18, -step]]) {
+    rect(x, 35 + offset, 4, 8, P.ink);
+    rect(x + 1, 36 + offset, 3, 5, P.skin);
+    rect(x, 41 + offset, 4, 3, P.white);
+    rect(x - 1, 44 + offset, 6, 3 - Math.max(0, offset), P.ink);
+    rect(x, 44 + offset, 4, 2 - Math.max(0, offset), P.shoe);
   }
-  ctx.save(); ctx.translate(0,bob);
-  // Soft A-line pinafore: a narrow waist, curved hem and puff sleeves.
-  if (direction === 'right') {
-    poly([16,27,22,27,24,30,23,34,25,38,24,41,14,41,12,39,14,34],P.ink);
-    poly([17,28,21,28,23,31,21,34,24,38,23,40,15,40,14,38,16,34],P.dress);
-    rect(20,28,3,4,P.white); rect(22,29,2,2,P.bow);
-    rect(15,36,2,3,P.dressLight); rect(22,37,1,3,P.dressShade);
+  ctx.save(); ctx.translate(0, bob);
+  if (direction === 'up') {
+    // Reveal the coat hem and sleeves below the hair so the body reads as a
+    // separate volume rather than legs attached directly to a hair silhouette.
+    poly([11,24,22,24,24,28,23,31,25,37,23,39,9,39,7,37,9,31,8,28],P.ink);
+    rect(10,25,12,11,P.coat); rect(9,33,14,4,P.coat); rect(10,37,12,1,P.coatLight);
+    rect(16,34,1,4,P.coatDark);
+    rect(4,26-step,4,8,P.ink); rect(5,27-step,3,4,P.white);
+    rect(5,32-step,3,3,P.skin);
+    rect(25,26+step,4,8,P.ink); rect(25,27+step,3,4,P.white);
+    rect(25,32+step,3,3,P.skin);
+    paintAnyaHead(ctx,direction,blink);
+    if (work) {
+      rect(4,27 + phase % 2,3,3,P.skin);
+      rect(27,28 - phase % 2,3,3,P.skin);
+      if (action === 'read') { rect(28,25,3,5,P.book); rect(28,25,2,1,P.white); }
+    }
+    ctx.restore(); ctx.restore(); return;
+  }
+  // Blue pinafore and white blouse on Feilen's body proportions.
+  poly([11,23,22,23,24,26,25,35,22,38,10,38,7,35,8,27],P.ink);
+  poly([11,25,21,25,23,29,23,35,20,36,10,36,9,33,10,28],P.coat);
+  rect(11,28,2,6,P.coatLight); rect(20,29,2,6,P.coatDark);
+  poly([12,24,21,24,20,27,18,27,17,29,15,27,13,27],P.white);
+  rect(12,26,2,4,P.coat); rect(20,26,2,4,P.coat);
+  paintAnyaHead(ctx,direction,blink);
+  rect(14,25,2,2,P.bow); rect(17,25,2,2,P.bow); rect(16,26,1,1,P.bowLight);
+  // Work hands are drawn independently of the walking legs; no baked-in furniture.
+  if (action === 'type') {
+    const dy = phase % 2;
+    rect(10,28,5,3,P.white);
+    rect(11,28 + dy,4,2,P.skin);
+    rect(19,31 - dy,4,2,P.skin);
+  } else if (action === 'read') {
+    const bx = 13, by = 26 + (phase === 2 ? 1 : 0);
+    rect(bx-1,by-1,8,8,P.ink); rect(bx,by,6,6,P.book);
+    rect(bx+3,by,1,6,P.lightHair); rect(bx+1,by+1,2,1,P.white);
+    rect(bx-2,by+4,3,2,P.skin); rect(bx+5,by+4,2,2,P.skin);
   } else {
-    poly([11,27,21,27,24,29,25,32,23,35,23,37,25,39,23,41,19,42,12,42,8,41,7,39,9,36,9,34,7,33,7,30],P.ink);
-    poly([11,28,21,28,23,30,24,32,21,34,10,34,8,32,9,30],P.white);
-    poly([11,28,13,28,13,33,19,33,19,28,21,28,21,35,23,39,21,40,12,41,9,39,11,35],P.dress);
-    poly([12,35,14,35,13,39,11,39],P.dressLight);
-    poly([19,35,20,35,22,39,20,40],P.dressShade);
-    if (direction === 'down') {
-      poly([13,29,16,30,19,29,19,32,16,31,13,32],P.bow);
-      rect(15,30,2,2,P.bowLight);
-    } else { rect(13,29,6,2,P.dressShade); }
+    const x = 8;
+    rect(x,28-step,3,3,P.white); rect(x,31-step,3,5,P.skin);
+    rect(22,28+step,3,3,P.white); rect(22,31+step,3,5,P.skin);
   }
-  // Head uses the finer native grid; body keeps the established chunky pixels.
-  ctx.save(); ctx.scale(0.5, 0.5);
-  paintAnyaHead(ctx, direction, blink);
-  ctx.restore();
-  // Hands remain above the existing desk mask; no furniture is baked into frames.
-  if (direction === 'right') {
-    rect(18,29,4,5,P.sleeveShade); rect(18,29,3,4,P.white);
-    if (action === 'read') {
-      rect(25,28,6,7,P.ink); rect(26,29,4,5,P.book); rect(26,29,3,1,P.white);
-      rect(22,32,5,2,P.skin);
-    } else if (action === 'type') {
-      rect(21,31,6,3,P.white); rect(26,31+phase%2,3,2,P.skin);
-    } else { rect(19,33-step,3,3,P.skin); }
-  } else if (action === 'read' && direction === 'down') {
-    const y = 29 + (phase === 2 ? 1 : 0);
-    rect(11,y,11,7,P.ink); rect(12,y+1,9,5,P.book); rect(16,y+1,1,5,P.gold);
-    rect(13,y+1,2,1,P.white); rect(18,y+1,2,1,P.white);
-    rect(10,y+4,3,2,P.skin); rect(20,y+4,3,2,P.skin);
-  } else if (action === 'type') {
-    rect(8,29,5,3,P.white); rect(19,29,5,3,P.white);
-    rect(11,31+phase%2,3,2,P.skin); rect(18,32-phase%2,3,2,P.skin);
-  } else {
-    poly([8,29-step,10,29-step,11,32-step,10,34-step,7,33-step,7,31-step],P.sleeveShade);
-    rect(8,30-step,2,3,P.white); rect(8,33-step,2,2,P.skin);
-    poly([22,29+step,24,30+step,25,33+step,22,34+step,21,32+step],P.sleeveShade);
-    rect(22,30+step,2,3,P.white); rect(22,33+step,2,2,P.skin);
-    if (action === 'read') { rect(25,30,3,5,P.book); rect(25,30,2,1,P.white); }
-  }
-  // The shared CharacterSprite mask crops the legs when seated.
-  // Keep the painter signature aligned with the standing/seated frame factory.
-  void seated;
+  void seated; // CharacterSprite crops the legs; the bob ends above the desk.
   ctx.restore(); ctx.restore();
 }
