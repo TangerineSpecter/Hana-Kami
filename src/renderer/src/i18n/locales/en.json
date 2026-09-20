@@ -1,4 +1,20 @@
 {
+  "agentJob": {
+    "employee": "Staff",
+    "title": "Job title (optional)",
+    "placeholder": "e.g. Frontend, QA, Design",
+    "preview": "Preview",
+    "color": "Badge color",
+    "hint": "Leave blank for “Staff”. Keep the job title short.",
+    "colors": {
+      "sky": "Teal",
+      "mint": "Mint",
+      "lilac": "Lilac",
+      "coral": "Coral",
+      "peach": "Peach",
+      "lemon": "Gold"
+    }
+  },
   "common": {
     "on": "on",
     "off": "off",

@@ -4,6 +4,8 @@ import { PixelPanel } from './PixelPanel';
 import { PixelButton } from './PixelButton';
 import { SpritePortrait } from './SpritePortrait';
 import { ProviderLogo } from './ProviderLogo';
+import { AgentJobFields } from './AgentJobFields';
+import { DEFAULT_JOB_COLOR } from './AgentJobBadge';
 import { useStore, type Agent } from '@/store/store';
 import { OFFICE_CAST, type OfficeCharacterName } from '@/scene/office/cast';
 import { type AccentColorName } from '@/design/tokens';
@@ -38,6 +40,8 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
   const [name, setName] = useState(agent.name);
   const [character, setCharacter] = useState<OfficeCharacterName>(agent.character);
   const [accent, setAccent] = useState<AccentColorName>(agent.accent);
+  const [jobTitle, setJobTitle] = useState(agent.jobTitle ?? '');
+  const [jobColor, setJobColor] = useState<AccentColorName>(agent.jobColor ?? DEFAULT_JOB_COLOR);
   const [provider, setProvider] = useState<AgentProvider>(
     inferAgentProvider(agent.command, agent.provider)
   );
@@ -54,6 +58,8 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
     setName(agent.name);
     setCharacter(agent.character);
     setAccent(agent.accent);
+    setJobTitle(agent.jobTitle ?? '');
+    setJobColor(agent.jobColor ?? DEFAULT_JOB_COLOR);
     setProvider(inferAgentProvider(agent.command, agent.provider));
     setModel(agent.model);
     setDescription(agent.description);
@@ -84,6 +90,8 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
       name: trimmedName,
       character,
       accent,
+      jobTitle: jobTitle.trim() || undefined,
+      jobColor,
       provider,
       model,
       command,
@@ -144,6 +152,10 @@ export function EditAgentModal({ agent, onClose }: EditAgentModalProps) {
                   autoFocus
                 />
               </Row>
+
+              {!agent.isGod && (
+                <AgentJobFields title={jobTitle} color={jobColor} onTitleChange={setJobTitle} onColorChange={setJobColor} />
+              )}
 
               <Row label={tr('editAgent.character')}>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>

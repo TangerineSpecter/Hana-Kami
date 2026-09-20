@@ -136,6 +136,8 @@ export function AgentStrip({ config }: AgentStripProps) {
             name={a.name}
             character={a.character}
             accent={a.accent}
+            jobTitle={a.jobTitle}
+            jobColor={a.jobColor}
             status={a.status}
             ptyId={a.ptyId}
             project={a.project}

@@ -1,4 +1,20 @@
 {
+  "agentJob": {
+    "employee": "员工",
+    "title": "岗位名称（可选）",
+    "placeholder": "例如：前端、后端、测试",
+    "preview": "预览",
+    "color": "标签颜色",
+    "hint": "留空显示“员工”，建议使用简短的岗位名称。",
+    "colors": {
+      "sky": "蓝绿",
+      "mint": "薄荷绿",
+      "lilac": "淡紫",
+      "coral": "珊瑚红",
+      "peach": "蜜桃橙",
+      "lemon": "金黄"
+    }
+  },
   "common": {
     "on": "开",
     "off": "关",

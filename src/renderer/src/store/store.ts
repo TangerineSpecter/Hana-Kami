@@ -44,6 +44,9 @@ export interface Agent {
   /** which Office character represents this agent on the floor */
   character: OfficeCharacterName;
   accent: AccentColorName;
+  /** Optional display-only badge, independent of the durable role and goal. */
+  jobTitle?: string;
+  jobColor?: AccentColorName;
   /** persistent job / hire one-liner — same string as hive registry `role`.
    *  Live status belongs on `status` / `action`, never here. */
   description: string;

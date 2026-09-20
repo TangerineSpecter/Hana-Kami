@@ -9,11 +9,14 @@ import { CostHud } from '@/realtime/CostHud';
 import { AccentColorName } from '@/design/tokens';
 import { OfficeCharacterName } from '@/scene/office/cast';
 import { AgentNameEditor } from './AgentNameEditor';
+import { AgentJobBadge } from './AgentJobBadge';
 
 export interface AgentCardProps {
   name: string;
   character: OfficeCharacterName;
   accent: AccentColorName;
+  jobTitle?: string;
+  jobColor?: AccentColorName;
   status: StatusKind;
   /** This agent's pty, if it has one. Only used to notice that the USER has
    *  unsent text on its prompt — which holds the agent's queue, and otherwise
@@ -55,7 +58,7 @@ const fmtK = (n: number): string => `${Math.round(n / 1000)}k`;
  * and a slim gauge pinned to the bottom edge. Nothing overlaps anything.
  */
 export function AgentCard({
-  name, character, accent, status, ptyId, project, action, progress = 0,
+  name, character, accent, jobTitle, jobColor, status, ptyId, project, action, progress = 0,
   contextTokens, contextLimit, selected, isGod, onClick, onRename,
   doingCount = 0, onTaskNoteClick, draggable, note, onEditNote
 }: AgentCardProps) {
@@ -105,7 +108,9 @@ export function AgentCard({
   // that gets cut. 236px still left too little room for localized names and the
   // voice controls, so keep one wider size for every card; AgentStrip already
   // scrolls horizontally when the roster exceeds the available window.
-  const width = 280;
+  // Job badges now appear on worker cards too; leave room for a five-character
+  // name beside a bounded badge and the fixed status chip on the same row.
+  const width = 308;
   const height = 84;
   const lift = (isGod ? -2 : 0) - (hover ? 1 : 0) - (selected ? 1 : 0);
   /** God's distinction: a tinted surface plus a thin accent border all the way
@@ -203,7 +208,7 @@ export function AgentCard({
           </div>
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-            {/* Identity row: name (+ BOSS tag) + status. The wider card gives
+            {/* Identity row: name + boss/job tag + status. The wider card gives
                 the name enough room without moving the status to another row. */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between', minWidth: 0 }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, minWidth: 0, flex: 1 }}>
@@ -219,12 +224,13 @@ export function AgentCard({
                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
                   }}>{name.toUpperCase()}</span>
                 )}
-                {isGod && (
+                {isGod ? (
                   <span style={{
                     fontFamily: 'var(--cth-font-ui)', fontSize: 12, lineHeight: '18px',
                     background: `var(--cth-${accent})`, color: 'var(--cth-ink-900)',
                     padding: '1px 8px 0', flexShrink: 0, whiteSpace: 'nowrap'
-                  }}>{t('agentCard.boss')}</span>                )}
+                  }}>{t('agentCard.boss')}</span>
+                ) : <AgentJobBadge title={jobTitle} color={jobColor} />}
               </span>
               {/* Keep the status chip fixed-width so it never steals the
                   newly available name space. */}

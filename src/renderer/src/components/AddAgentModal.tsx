@@ -5,6 +5,8 @@ import { PixelButton } from './PixelButton';
 import { SpritePortrait } from './SpritePortrait';
 import { Icon } from './Icon';
 import { ProviderLogo } from './ProviderLogo';
+import { AgentJobFields } from './AgentJobFields';
+import { DEFAULT_JOB_COLOR } from './AgentJobBadge';
 import { useStore, type Agent } from '@/store/store';
 import { OFFICE_CAST, DEFAULT_CHARACTER, type OfficeCharacterName } from '@/scene/office/cast';
 import { type AccentColorName } from '@/design/tokens';
@@ -192,6 +194,8 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
   const [name, setName] = useState(pendingHire?.name ?? 'Jim');
   const [character, setCharacter] = useState<OfficeCharacterName>(knownCharacter(pendingHire?.character));
   const [accent, setAccent] = useState<AccentColorName>(knownAccent(pendingHire?.accent));
+  const [jobTitle, setJobTitle] = useState('');
+  const [jobColor, setJobColor] = useState<AccentColorName>(DEFAULT_JOB_COLOR);
   const [cwd, setCwd] = useState<string>(config.registeredRepos[0] ?? '');
   // Local mirror of the registered projects so one added from here shows as a
   // quick-pick immediately (the `config` prop is a snapshot taken at open time).
@@ -343,6 +347,8 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
     // matching avatar rather than the Jim default (issue #191).
     setCharacter(m.character ? knownCharacter(m.character) : (characterForName(m.name ?? '') ?? knownCharacter(undefined)));
     setAccent(knownAccent(m.accent));
+    setJobTitle('');
+    setJobColor(DEFAULT_JOB_COLOR);
     setProvider(m.provider ?? initialProvider);
     setModel(m.model);
     setCommand(hireCommand(m));
@@ -456,6 +462,8 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
       name: name.trim(),
       character,
       accent,
+      jobTitle: jobTitle.trim() || undefined,
+      jobColor,
       description: description.trim() || 'a fresh harness',
       project: basename(projectCwd),
       tmuxTarget: '',
@@ -687,6 +695,8 @@ export function AddAgentModal({ onClose, config, onConfigChange }: AddAgentModal
                         style={inputStyle}
                       />
                     </Row>
+
+                    <AgentJobFields title={jobTitle} color={jobColor} onTitleChange={setJobTitle} onColorChange={setJobColor} />
 
                     <Row label={tr('addAgent.character')}>
                       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
