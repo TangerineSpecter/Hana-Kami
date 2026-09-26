@@ -757,38 +757,52 @@
       "water": [
         "watering the plants 🌿",
         "giving the plants a drink",
-        "they grow so fast"
+        "they grow so fast",
+        "this one will outlive me",
+        "overwatered. call it overtime"
       ],
       "window": [
         "letting some air in 🍃",
         "a bit of fresh air",
-        "nice breeze today"
+        "nice breeze today",
+        "air out the room, air out the code",
+        "bright out there. dim in here"
       ],
       "dispenser": [
         "getting some water 💧",
         "hydration break",
-        "staying sharp"
+        "staying sharp",
+        "water is the free paycheck",
+        "one more cup so I look busy"
       ],
       "fridge": [
         "anything good in the fridge?",
         "who took my yogurt?",
-        "just looking…"
+        "just looking…",
+        "three days expired. still in the fight",
+        "the label says don't eat. so I'm looking"
       ],
       "shelf": [
         "checking out the shelf 📚",
         "anything new in here?",
-        "so much good stuff"
+        "so much good stuff",
+        "nobody ever borrowed this. noted",
+        "the manual is still in plastic"
       ],
       "bin": [
         "out with the scrap paper 🗑️",
         "desk cleanup day",
-        "tidying up a little"
+        "tidying up a little",
+        "weekly-report drafts go in here",
+        "strikethrough is a kind of manners"
       ],
       "smoke": [
         "the floor runs itself 🚬",
         "boss break.",
         "thinking big thoughts 🚬",
-        "I DECLARE… a break"
+        "I DECLARE… a break",
+        "the progress bar is smoking. I'm thinking",
+        "the floor is mine for a minute"
       ]
     },
     "suckUp": [
@@ -798,16 +812,29 @@
       "I was JUST about to do exactly that!",
       "love the tie today, {{godName}}",
       "working hard, boss! 💪",
-      "best boss ever. genuinely."
+      "best boss ever. genuinely.",
+      "I work extra hard when {{godName}} is watching",
+      "you're right. I'll change it now",
+      "I was just waiting for you to walk by",
+      "already on it. really",
+      "you go first. I'll stay a bit longer",
+      "starred your plan. obviously"
     ],
     "gossip": [
-      "has he ever actually written code?",
+      "has {{godName}} ever actually written code?",
       "another 'quick sync' that took an hour…",
-      "'world's best boss' — he bought that mug himself",
-      "he pinned MY task as his idea",
-      "the cigar smell, honestly…",
-      "he watered the plant. ONE plant. his own.",
-      "did you hear him? 'I DECLARE… a break'"
+      "'world's best boss' — bought that mug personally",
+      "{{godName}} pinned MY task as their idea",
+      "that 'I'm thinking' smell, honestly…",
+      "{{godName}} watered the plant. ONE plant. their own.",
+      "did you hear that? another 'I declare'",
+      "'almost done' is on day three",
+      "standup notes: none",
+      "{{godName}}'s todo is 'make them do it'",
+      "the direction changed. it's now 'think more'",
+      "P0 means 'have a meeting first'",
+      "said 'I'll own it'. owned the talking",
+      "the docs live in {{godName}}'s head. so they don't"
     ],
     "cheer": [
       "done! ✔",
@@ -816,7 +843,13 @@
       "ship it 🚀",
       "another one done",
       "crushed it",
-      "in the books"
+      "in the books",
+      "we're green ✔",
+      "can I go home now",
+      "it's in",
+      "green light!",
+      "this one goes in the weekly",
+      "next!"
     ],
     "mugs": {
       "empty": "no clean mugs left…",
